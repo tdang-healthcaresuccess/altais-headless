@@ -60,7 +60,7 @@ export default function FrontPage(props) {
             rel="noopener noreferrer"
             className={style.card}
           >
-            <h3>Blueprints →</h3>
+            <h3>Blueprints Plus→</h3>
             <p>Explore production ready Faust.js starter kits.</p>
           </Link>
 
