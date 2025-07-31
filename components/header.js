@@ -10,7 +10,7 @@ export default function Header({ siteTitle, siteDescription, menuItems }) {
       <div className={`container ${style.container}`}>
         {/* Logo on the left */}
         <Link href="/" className={style.logo}>
-          <Image src={logo} alt="Logo" width={48} height={48} />
+          
         </Link>
 
         {/* Site title and description */}
