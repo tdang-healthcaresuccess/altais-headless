@@ -1,13 +1,13 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-     './pages/**/*.{js,ts,jsx,tsx}',       // Pages
-    './components/**/*.{js,ts,jsx,tsx}',  // Components
-    './faust/**/*.{js,ts,jsx,tsx}',       // Faust-specific files if applicable
+      './pages/**/*.{js,ts,jsx,tsx}',
+      './components/**/*.{js,ts,jsx,tsx}',
+      './faust/**/*.{js,ts,jsx,tsx}',
+      './app/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
       extend: {},
     },
     plugins: [],
-  }
+  };
   
