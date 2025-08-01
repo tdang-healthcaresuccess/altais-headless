@@ -1,13 +1,10 @@
 import Head from "next/head";
-import Link from "next/link";
-import Header from "../components/Header";
-import EntryHeader from "../components/EntryHeader";
-import Footer from "../components/Footer";
-import style from "../styles/front-page.module.css";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useQuery } from "@apollo/client";
 import { getNextStaticProps } from "@faustwp/core";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function FrontPage(props) {
   // Loading state for previews
@@ -31,13 +28,10 @@ export default function FrontPage(props) {
         <title>{siteTitle}</title>
       </Head>
 
-      <Header
-        siteTitle={siteTitle}
-        siteDescription={siteDescription}
-        menuItems={menuItems}
-      />
+      <Header />
 
       <main className="container">
+<<<<<<< HEAD
         <EntryHeader title="Welcome to the Faust Scaffold Blueprint" />
 
         <section className={style.cardGrid}>
@@ -243,6 +237,9 @@ export default function FrontPage(props) {
             </li>
           </ul>
         </section>
+=======
+          Home Page
+>>>>>>> 7006fd5c25ba382b500291fdfd7ecfd8e5e611a1
       </main>
 
       <Footer />
