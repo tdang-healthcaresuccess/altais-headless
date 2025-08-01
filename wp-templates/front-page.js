@@ -212,7 +212,7 @@ export default function FrontPage(props) {
             </li>
           </ul>
 
-          <h2>Documentation 🔎</h2>
+          <h2 className="text-sm text-red-500">Documentation</h2>
           <ul>
             <li>
               <Link
