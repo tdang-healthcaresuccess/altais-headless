@@ -30,7 +30,6 @@ export default function FrontPage(props) {
       </Head>
 
       <Header />
-
       <main className="block">
         {/* Landing Page Banner Start */}
         <LandingBanner />
