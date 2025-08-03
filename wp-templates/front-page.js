@@ -9,6 +9,7 @@ import LandingBanner from "@/components/front-page/landing-banner";
 import RibbonBanner from "@/components/front-page/ribbon-banner";
 import ContactJourney from "@/components/front-page/contact-journey";
 import CounterCondition from "@/components/front-page/counter-condition";
+import OurServices from "@/components/front-page/our-services";
 export default function FrontPage(props) {
   // Loading state for previews
   if (props.loading) {
@@ -40,6 +41,10 @@ export default function FrontPage(props) {
         {/* Ribbon Banner Start */}
         <RibbonBanner />
         {/* Ribbon Banner End */}
+        
+        {/* Our Services Start */}
+        <OurServices />
+        {/* Our Services End */}
 
         {/* Counter Condition Start */}
         <CounterCondition />
