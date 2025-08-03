@@ -34,7 +34,7 @@ export default function OurServices() {
         </div>
       </div>
       <div className="flex-center">
-        <Link>See All Services</Link>
+        <Link href="/#">See All Services</Link>
       </div>
     </section>
   );
