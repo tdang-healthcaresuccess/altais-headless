@@ -29,7 +29,7 @@ export default function Header() {
           {/* Desktop Nav */}
           <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
             {/* Menu Items */}
-            <nav className="hidden md:flex items-end gap-6">
+            <nav className="hidden lg:flex items-end gap-6">
               <Link href="#" className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"><span className="font-normal">For</span> Patients</Link>
               <Link href="#" className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"><span className="font-normal">For</span> Providers</Link>
               <Link href="#" className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"><span className="font-normal">For</span> Partners</Link>

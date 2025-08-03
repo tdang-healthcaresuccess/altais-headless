@@ -16,7 +16,7 @@ export default function RibbonBanner() {
           className="h-[375px] sm:h-[300px] md:h-[200px]"
         />
       </div>
-      <div className="block absolute top-0 left-0 flex-center md:items-start flex-col w-[254px] md:w-full pl-6 md:pl-0 h-full">
+      <div className="absolute top-0 left-0 flex justify-center items-center flex-col w-[254px] md:w-full pl-6 md:pl-0 h-full">
         <h2 className="text-[28px] md:text-[32px] leading-[36px] text-white">
           Healthcare Built Around You
         </h2>

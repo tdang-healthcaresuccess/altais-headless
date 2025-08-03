@@ -26,7 +26,7 @@ export default function LandingBanner() {
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-[#083D78]">
               Shaping the future of healthcare.
             </h1>
-            <button className="btn-gradient btn-md w-full md:w-auto flex-center gap-1 mt-8 md:mt-15">
+            <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">
               Find Care <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
             </button>
           </div>
