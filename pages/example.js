@@ -1,13 +1,13 @@
-import { gql, useQuery } from "@apollo/client";
+/** import { gql, useQuery } from "@apollo/client";
 import Head from "next/head";
 import Header from "@/components/header";
 import EntryHeader from "../components/EntryHeader";
 import Footer from "@/components/footer";
 import { getNextStaticProps } from "@faustwp/core";
 
-/**
+
  * Next.js file based page example with Faust helpers.
- */
+
 export default function Page() {
   const { data } = useQuery(Page.query);
 
@@ -49,3 +49,4 @@ export function getStaticProps(ctx) {
     Page,
   });
 }
+ */
