@@ -1,15 +1,196 @@
-import styles from "../styles/footer.module.css";
+import BrandLogo from "@/public/media/altais-logo-white.svg";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
-      Powered by{" "}
-      <a href="https://wpengine.com" target="_blank" rel="noopener noreferrer">
-        WP Engine
-      </a>
-      <span>
-        &copy; {new Date().getFullYear()}
-      </span>
+    <footer className="block">
+      <div className="block bg-[#111638] px-6 md:px-0">
+        <div className="container mx-auto">
+          <div className="block pt-10 pb-12">
+            <div className="block md:flex justify-between gap-4">
+              <div className="flex md:block w-full md:w-auto md:border-none border-b border-[#008889] pb-8 md:pb-0 mb-8 md:mb-0 ">
+                <Image
+                  src={BrandLogo}
+                  alt="Altais"
+                  width={180}
+                  height={55}
+                  priority
+                />
+                <div className="flex md:hidden w-full justify-end gap-4 pt-7">
+                  <Link href="/" type="button" className="btn btn-social"></Link>
+                  <Link href="/" type="button" className="btn btn-social"></Link>
+                  <Link href="/" type="button" className="btn btn-social"></Link>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full md:w-[75%]">
+                <div className="block pt-5">
+                <div className="flex flex-col gap-5">
+                  <Link
+                    href="#"
+                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                  >
+                    <span className="font-normal">For</span> Patients
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                  >
+                    <span className="font-normal">For</span> Providers
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                  >
+                    <span className="font-normal">For</span> Partners
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                  >
+                    <span className="font-normal">Our</span> Clinics
+                  </Link>
+                </div>
+              </div>
+              <div className="block pt-5">
+                <ul className="flex flex-col gap-5">
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-white text-[15px] leading-[19px] font-semibold"
+                    >
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-white text-[15px] leading-[19px] font-semibold"
+                    >
+                      Resources
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-white text-[15px] leading-[19px] font-semibold"
+                    >
+                      Contact Us
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="block pt-5">
+                <ul className="flex flex-col gap-5">
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                    >
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                    >
+                      News
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="#/"
+                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                    >
+                      Careers
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="block pt-5">
+                <ul className="flex flex-col gap-3">
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Website Privacy{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Patient Privacy{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Cookies{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Terms of Use{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Patient Bill of Rights{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Non-Discrimination Notice{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="text-white text-xs leading-[16px] font-normal"
+                    >
+                      {" "}
+                      Consent Preferences{" "}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="hidden md:flex gap-4 pt-7">
+                <Link href="/" type="button" className="btn btn-social"></Link>
+                <Link href="/" type="button" className="btn btn-social"></Link>
+                <Link href="/" type="button" className="btn btn-social"></Link>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="block pt-4 pb-7 md:pb-8 border-t border-[#84D0D2]">
+            <p className="flex justify-start md:justify-end text-white text-xs">
+              © 2025 Copyright Altais Inc.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="block bg-custom-gradient w-full h-[15px] border-t-[3px] border-white"></div>
     </footer>
   );
 }
