@@ -38,7 +38,10 @@ button{
   @apply text-[65px] leading-[60px] pb-6 text-[#008889];
 }
 .countlist-p{
-  @apply text-[20px] leading-[24px] text-[#083D78];
+  @apply text-[20px] leading-[24px] text-[#083D78] ;
+}
+.list-items1{
+@apply text-[#C75327] text-[17px] leading-[35px] flex items-center gap-1;
 }
 
 
@@ -51,4 +54,7 @@ button{
 }
 .bg-landing-banner-mobile{
   background-image: url("./../public/media/landing-banner-mobile.png");
+}
+.bg-half-star-slider{
+  background-image: url("./../public/media/half-star-art.png");
 }
