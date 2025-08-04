@@ -18,7 +18,7 @@ export default function FrontPage(props) {
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
 
   const siteData = siteDataQuery?.data?.generalSettings || {};
-  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
+const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
@@ -29,8 +29,10 @@ export default function FrontPage(props) {
         <title>{siteTitle}</title>
       </Head>
 
-      <Header />
-      
+      <Header
+        menuItems={menuItems}
+      />
+
       <main className="block">
         {/* Landing Page Banner Start */}
         <LandingBanner />
