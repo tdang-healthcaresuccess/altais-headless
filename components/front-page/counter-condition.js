@@ -50,7 +50,7 @@ export default function CounterCondition() {
                 <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
               </Link>
             </div>
-            <div className="block w-full">
+            <div className="block w-full order-1 md:order-2">
               <Image
                 src={ConditionTreatBanner}
                 alt="banner"
