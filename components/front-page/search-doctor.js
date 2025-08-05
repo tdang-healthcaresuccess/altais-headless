@@ -4,7 +4,7 @@ export default function SearchDoctor() {
   return (
     <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0">
       <div className="container mx-auto">
-        <div className="flex gap-10">
+        <div className="flex flex-wrap gap-10">
           <div className="block w-full md:w-[40%] max-w-[470px]">
             <p className="text-lg leading-[35px]">
               <b className="text-[#1D3F76]">Everyone deserves care that's compassionate, </b>
