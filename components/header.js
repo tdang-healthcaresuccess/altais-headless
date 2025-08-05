@@ -11,6 +11,8 @@ import { AlignJustify } from 'lucide-react';
 export default function Header({ siteTitle, siteDescription, menuItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
+
+
   return (
     <header className="block">
       <div className="container mx-auto bg-white">
@@ -24,11 +26,13 @@ export default function Header({ siteTitle, siteDescription, menuItems }) {
               height={55}
               priority
             />
+            
           </div>
 
           {/* Desktop Nav */}
           <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
             {/* Menu Items */}
+
             <nav className="hidden lg:flex items-end gap-6">
               {(Array.isArray(menuItems) ? menuItems : []).map((item, idx) => (
               <div key={item.id}>
@@ -83,7 +87,7 @@ export default function Header({ siteTitle, siteDescription, menuItems }) {
         {isOpen && (
           <div className="lg:hidden px-4 pt-4 pb-6 space-y-4 bg-white">
             <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700">
-              <Link href="#">Home</Link>
+              <Link href="#">Home </Link>
               <Link href="#">About</Link>
               <Link href="#">Services</Link>
               <Link href="#">Doctors</Link>
@@ -138,3 +142,13 @@ Header.fragments = {
     }
   `,
 };
+
+const FIND_CARE_QUERY = gql`
+  query FindCareQuery {
+    globalthemeoptions {
+      headerSettings {
+        findCareUrl
+      }
+    }
+  }
+`;
