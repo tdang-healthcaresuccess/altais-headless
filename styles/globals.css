@@ -64,7 +64,7 @@ button{
   @apply bg-[linear-gradient(to_right,_#083D78_30%,_#008889_100%)] text-white py-2 px-4 rounded hover:bg-blue-700;
 }
 .btn-sm{
-    @apply text-[18px] md:text-xs md:text-[15px] leading-[24px] h-[50px] md:h-[35px] w-full md:w-auto py-1 px-2 md:px-8;
+    @apply text-[18px] md:text-xs font-semibold md:text-[15px] leading-[24px] h-[50px] md:h-[35px] w-full md:w-auto py-1 px-2 md:px-8;
 }
 .btn-action{
    @apply text-xs md:text-[15px] leading-[24px] h-[26px] md:h-9 py-1 px-4 md:px-8;
@@ -94,6 +94,9 @@ button{
 }
 .btn-outline-primary{
   @apply border border-[#C75327] text-[#C75327];
+}
+.input-style{
+  @apply border border-inputBorder placeholder-[#083d78] text-[#083d78] text-lg leading-[24px] rounded-[5px] h-[50px] py-3 px-4 outline-0;
 }
 
 
