@@ -1,11 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* @import url("https://use.typekit.net/uoi7ptf.css"); */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
 
+ 
 html,
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "poppins",sans-serif;;
 }
 
 button{
@@ -41,7 +43,7 @@ button{
   @apply text-[20px] leading-[24px] text-[#083D78] ;
 }
 .list-items1{
-@apply text-[#C75327] text-[17px] leading-[35px] flex items-center gap-1;
+  @apply text-[#C75327] text-[17px] leading-[35px] flex items-center gap-1;
 }
 
 

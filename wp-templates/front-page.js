@@ -31,6 +31,7 @@ export default function FrontPage(props) {
     <>
       <Head>
         <title>{siteTitle}</title>
+        <link srel="stylesheet"href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
 
       <Header />
