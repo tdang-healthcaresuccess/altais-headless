@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactJourney() {
   return (
@@ -24,10 +25,10 @@ export default function ContactJourney() {
               the care you deserve — delivered by doctors who listen to provide
               personalized care.
             </p>
-            <button className="btn-gradient btn-sm flex-center gap-1 mt-8">
+            <Link href="/#" className="btn-gradient btn-sm flex-center gap-1 mt-8">
               Find Care{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

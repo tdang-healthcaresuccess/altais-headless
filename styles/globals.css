@@ -15,6 +15,27 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 
 
 /* Add other weights as needed */
@@ -63,6 +84,9 @@ button{
 }
 .list-items1{
   @apply text-[#C75327] text-[17px] leading-[35px] flex items-center gap-1;
+}
+.btn-outline-primary{
+  @apply border border-[#C75327] text-[#C75327];
 }
 
 
