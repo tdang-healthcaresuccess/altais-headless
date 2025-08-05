@@ -2,12 +2,14 @@ import frontPage from "./front-page";
 import page from "./page";
 import single from "./single";
 import archive from "./archive";
-import findCare from "./find-page";
+import findCare from "./findcare-page";
+import samplePage from "./sample-page";
 
 export default {
   "front-page": frontPage,
   page,
   single,
-  archive,
-  "find-page": findCare,
+  "page-findcare-page": findCare,
+  "page-sample-page": samplePage,
+  archive
 };
