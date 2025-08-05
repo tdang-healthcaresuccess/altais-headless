@@ -12,7 +12,7 @@ module.exports = {
         bluePrimary: "#083D78",
       },
       fontFamily: {
-        poppins: ["poppins", "sans-serif"],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
