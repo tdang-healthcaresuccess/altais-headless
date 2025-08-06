@@ -10,7 +10,7 @@ import ServicesMedia4 from "@/public/media/services-4.png";
 
 export default function OurServices() {
   return (
-    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 shadow-[inset_0px_2px_4px_0px_#3D3D3D]">
+    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 shadow-custom">
       <div className="block container mx-auto">
         <div className="flex flex-wrap gap-10">
           <div className="block mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">

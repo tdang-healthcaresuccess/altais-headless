@@ -92,8 +92,25 @@ export default function CounterCondition() {
                 </h3>
               </div>
               <div className="block w-full order-1 md:order-2">
-                <div className="bg-half-star-slider inset-0 bg-contain bg-no-repeat bg-right min-h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-[5px] p-7">
-                  sdasd
+                <div className="bg-half-star-slider inset-0 bg-contain bg-no-repeat bg-right min-h-[350px] md:min-h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-[5px] p-7 pr-[100px]">
+                  <div className="block md:flex justify-center items-start">
+                    {/* Left Column */}
+                    <div className="flex justify-start md:justify-end">
+                      <h3 className="flex flex-col font-light text-[15px] md:text-xl leading-[25%] text-left max-w-[250px] text-[#84d0d2]">
+                        <b className="font-medium">Featured Blogs</b>
+                      </h3>
+                    </div>
+
+                    {/* Vertical Separator */}
+                    <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
+
+                    {/* Right Column */}
+                    <div className="block max-w-full md:max-w-[540px]">
+                      <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left">
+                        Leveraging Digital Health Tools to Enhance Outcomes
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
