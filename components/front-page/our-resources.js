@@ -58,10 +58,10 @@ export default function OurResources() {
       </div>
       <div className="container mx-auto">
         <div className="w-full h-[1px] bg-[#00888980] mb-[35px]"></div>
-        <div className="flex flex-wrap gap-8">
-          <div className="block flex-1">
+        <div className="flex flex-wrap gap-12 md:gap-8">
+          <div className="block flex-auto md:flex-1">
             <h3 className="mb-4 text-[#083D78] font-medium text-[22px] leading-[32px]">
-              Compassion <br />
+              Compassion <br className="hidden md:block" />
               at the Core
             </h3>
             <p className="mb-6 text-[#3d3d3d]">
@@ -78,9 +78,9 @@ export default function OurResources() {
             </Link>
           </div>
           {/* 1 */}
-          <div className="block flex-1">
+          <div className="block flex-auto md:flex-1">
             <h3 className="mb-4 text-[#083D78] font-medium text-[22px] leading-[32px]">
-              Partnerships <br />
+              Partnerships <br className="hidden md:block" />
               that Deliver
             </h3>
             <p className="mb-6 text-[#3d3d3d]">
@@ -95,9 +95,9 @@ export default function OurResources() {
             </Link>
           </div>
           {/* 2 */}
-          <div className="block flex-1">
+          <div className="block flex-auto md:flex-1">
             <h3 className="mb-4 text-[#083D78] font-medium text-[22px] leading-[32px]">
-              Innovation <br />
+              Innovation <br className="hidden md:block" />
               that Anticipates Change
             </h3>
             <p className="mb-6 text-[#3d3d3d]">

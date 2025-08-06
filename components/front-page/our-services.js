@@ -13,12 +13,12 @@ export default function OurServices() {
     <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 shadow-[inset_0px_2px_4px_0px_#3D3D3D]">
       <div className="block container mx-auto">
         <div className="flex flex-wrap gap-10">
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
+          <div className="block mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
             <div className="block border border-[#008889] rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia1}
                 alt="primary care"
-                className="object-cover max-h-[170px]"
+                className="object-cover max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -40,12 +40,12 @@ export default function OurServices() {
             </div>
           </div>
           {/* Services 1 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
+          <div className="block mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
             <div className="block border border-[#008889] rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia2}
                 alt="Mental Health"
-                className="object-cover max-h-[170px]"
+                className="object-cover max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -66,12 +66,12 @@ export default function OurServices() {
             </div>
           </div>
           {/* Services 2 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
+          <div className="block mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
             <div className="block border border-[#008889] rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia3}
                 alt="Pediatrics"
-                className="object-cover max-h-[170px]"
+                className="object-cover max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -97,7 +97,7 @@ export default function OurServices() {
               <Image
                 src={ServicesMedia4}
                 alt="Senior Health Care"
-                className="object-cover max-h-[170px]"
+                className="object-cover max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">

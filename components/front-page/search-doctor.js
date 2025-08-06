@@ -23,7 +23,7 @@ export default function SearchDoctor() {
           <div className="block flex-1">
             <h2 className="text-[26px] leading-[36px] text-[#083D78] pb-7">Search Doctors</h2>
             <div className="block w-full">
-              <div className="flex gap-5 justify-between mb-5">
+              <div className="flex flex-col md:flex-row gap-5 justify-between mb-5">
                 <div className="block w-full">
                   <input type="text" placeholder="Doctor Name" className="input-style w-full" />
                 </div>
