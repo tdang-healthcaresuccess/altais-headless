@@ -5,6 +5,10 @@ import ConditionTreatBanner from "@/public/media/condition-treat.png";
 import FindDoctorBanner from "@/public/media/find-doctor-banner.png";
 import Image from "next/image";
 import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function CounterCondition() {
   return (
@@ -85,32 +89,82 @@ export default function CounterCondition() {
           {/* New Education Slider Section */}
           <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] p-0 md:p-7 items-start">
             <div className="flex flex-col md:flex-row gap-5 md:gap-7 w-full">
-              <div className="block w-full md:max-w-[170px] order-2 md:order-1 px-7 md:px-0">
+              <div className="block w-full md:max-w-[170px] min-w-[165px] order-2 md:order-1 px-7 md:px-0">
                 <h3 className="text-[#083D78] text-[26px] border-b md:border-none border-[#00888980] pb-7 md:pb-0 leading-[36px] font-light">
                   <b className="font-medium"> News, Education + Insights</b>
                   <br /> from Altais
                 </h3>
               </div>
               <div className="block w-full order-1 md:order-2">
-                <div className="bg-half-star-slider inset-0 bg-contain bg-no-repeat bg-right min-h-[350px] md:min-h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-[5px] p-7 pr-[100px]">
-                  <div className="block md:flex justify-center items-start">
-                    {/* Left Column */}
-                    <div className="flex justify-start md:justify-end">
-                      <h3 className="flex flex-col font-light text-[15px] md:text-xl leading-[25%] text-left max-w-[250px] text-[#84d0d2]">
-                        <b className="font-medium">Featured Blogs</b>
-                      </h3>
-                    </div>
+                <div className="bg-half-star-slider w-full md:w-[608px] inset-0 bg-contain bg-no-repeat bg-right min-h-[350px] md:min-h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-[5px] p-7 pr-[100px]">
+                  <Swiper
+                    modules={[Pagination]}
+                    spaceBetween={10}
+                    slidesPerView={1}
+                    pagination={{ clickable: true }}
+                    loop={true} 
+                  >
+                    <SwiperSlide>
+                      <div className="block md:flex justify-center items-start swiper-parent">
+                        {/* Left Column */}
+                        <div className="flex justify-start md:justify-end">
+                          <h3 className="flex flex-col font-light text-[15px] md:text-xl leading-[25%] text-left max-w-[250px] text-[#84d0d2]">
+                            <b className="font-medium">Featured Blogs</b>
+                          </h3>
+                        </div>
 
-                    {/* Vertical Separator */}
-                    <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
+                        {/* Vertical Separator */}
+                        <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
 
-                    {/* Right Column */}
-                    <div className="block max-w-full md:max-w-[540px]">
-                      <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left">
-                        Leveraging Digital Health Tools to Enhance Outcomes
-                      </p>
-                    </div>
-                  </div>
+                        {/* Right Column */}
+                        <div className="block max-w-full md:max-w-[540px]">
+                          <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left">
+                            Leveraging Digital Health Tools to Enhance Outcomes
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className="block md:flex justify-center items-start swiper-parent">
+                        {/* Left Column */}
+                        <div className="flex justify-start md:justify-end">
+                          <h3 className="flex flex-col font-light text-[15px] md:text-xl leading-[25%] text-left max-w-[250px] text-[#84d0d2]">
+                            <b className="font-medium">Featured Blogs</b>
+                          </h3>
+                        </div>
+
+                        {/* Vertical Separator */}
+                        <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
+
+                        {/* Right Column */}
+                        <div className="block max-w-full md:max-w-[540px]">
+                          <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left">
+                            Leveraging Digital Health Tools to Enhance Outcomes
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className="block md:flex justify-center items-start swiper-parent">
+                        {/* Left Column */}
+                        <div className="flex justify-start md:justify-end">
+                          <h3 className="flex flex-col font-light text-[15px] md:text-xl leading-[25%] text-left max-w-[250px] text-[#84d0d2]">
+                            <b className="font-medium">Featured Blogs</b>
+                          </h3>
+                        </div>
+
+                        {/* Vertical Separator */}
+                        <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
+
+                        {/* Right Column */}
+                        <div className="block max-w-full md:max-w-[540px]">
+                          <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left">
+                            Leveraging Digital Health Tools to Enhance Outcomes
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  </Swiper>
                 </div>
               </div>
             </div>
