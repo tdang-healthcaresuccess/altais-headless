@@ -113,3 +113,10 @@ button{
 .bg-half-star-slider{
   background-image: url("./../public/media/half-star-art.png");
 }
+/* Services Page */
+.bg-services-banner{
+  background-image: url("./../public/media/services-banner.png");
+}
+.bg-services-banner-mobile{
+  background-image: url("./../public/media/services-banner-mobile.png");
+}
