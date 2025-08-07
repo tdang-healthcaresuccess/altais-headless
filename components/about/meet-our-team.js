@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function MeetOurTeam() {
   return (
-    <section className="block py-12 bg-[#d9d9d926] box-shadow-custom2">
+    <section className="block py-12 bg-[#d9d9d926]">
       <div className="container mx-auto">
         <div className="block">
             <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] mb-[45px]">

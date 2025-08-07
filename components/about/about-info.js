@@ -1,6 +1,6 @@
 export default function AboutInfo() {
   return (
-    <section className="block pt-[50px] bg-white md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0 box-shadow-custom3">
+    <section className="block pt-[50px] bg-white md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0 shadow-[0px_2px_3px_1px_rgba(0,0,0,0.1)]">
       <div className="container mx-auto">
         <div className="block md:flex justify-center items-start">
           {/* Left Column */}

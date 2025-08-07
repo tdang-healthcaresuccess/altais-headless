@@ -1,6 +1,8 @@
 import AboutInfo from "@/components/about/about-info";
 import AltaisNetwork from "@/components/about/altais-network";
+import CounterProvider from "@/components/about/counter-provider";
 import MeetOurTeam from "@/components/about/meet-our-team";
+import OurValues from "@/components/about/our-values";
 import VisionMission from "@/components/about/vision-mission";
 import ContactJourney from "@/components/common/contact-journey";
 import InnerPageBanner from "@/components/common/inner-page-banner";
@@ -20,9 +22,17 @@ export default function AboutUs() {
         <AboutInfo />
         {/* About Us Short Info End */}
 
+        {/* Counter Provider Start */}
+        <CounterProvider />
+        {/* Counter Provider End */}
+
         {/* Vision Mission Start */}
         <VisionMission />
         {/* Vision Mission End */}
+
+        {/* Our Values Start */}
+        <OurValues />
+        {/* Our Values End */}
 
         {/* Meet Our Team Start */}
         <MeetOurTeam />

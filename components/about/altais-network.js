@@ -12,7 +12,7 @@ export default function AltaisNetwork() {
               <Image
                 src={NetworkMedia}
                 alt="Altais Network"
-                className="rounded-[5px] border border-[#C75327]"
+                className="rounded-[5px] border border-[#008889]"
               />
             </div>
             <Link

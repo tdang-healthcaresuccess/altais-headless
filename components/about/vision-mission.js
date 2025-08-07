@@ -3,9 +3,9 @@ import VisionMissionMedia from "@/public/media/vision-mission-media.png";
 
 export default function VisionMission() {
   return (
-    <section className="block pt-[50px] bg-white md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0 box-shadow-custom3">
+    <section className="block pt-[75px] bg-white md:pt-[75px] px-4 md:px-0 box-shadow-custom3">
       <div className="container mx-auto">
-        <div className="block md:flex justify-between items-start gap-[75px]">
+        <div className="block md:flex justify-between items-start gap-[75px] pb-[75px]">
           {/* Left Column */}
           <div className="flex justify-center md:justify-end min-w-full md:min-w-[425px]">
             <Image
@@ -28,7 +28,7 @@ export default function VisionMission() {
               </p>
             </div>
             {/* Vertical Separator */}
-            <div className="w-full h-[1px]  bg-[#008889] my-12"></div>
+            <div className="w-full h-[1px] bg-[#00888980] my-12"></div>
             <div className="block">
               <h4 className="text-[22px] leading-[32px] text-[#083D78] mb-2">
                 Our Vision
@@ -41,6 +41,7 @@ export default function VisionMission() {
             </div>
           </div>
         </div>
+        <div className="w-full h-[1px] bg-[#00888980]"></div>
       </div>
     </section>
   );
