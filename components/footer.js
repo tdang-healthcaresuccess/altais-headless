@@ -18,168 +18,196 @@ export default function Footer() {
                   priority
                 />
                 <div className="flex md:hidden w-full justify-end gap-4 pt-7">
-                  <Link href="/" type="button" className="btn btn-social"></Link>
-                  <Link href="/" type="button" className="btn btn-social"></Link>
-                  <Link href="/" type="button" className="btn btn-social"></Link>
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
                 </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full md:w-[75%]">
+              <div className="grid grid-flow-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full md:w-[80%]">
                 <div className="block pt-5">
-                <div className="flex flex-col gap-5">
-                  <Link
-                    href="#"
-                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
-                  >
-                    <span className="font-normal">For</span> Patients
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
-                  >
-                    <span className="font-normal">For</span> Providers
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
-                  >
-                    <span className="font-normal">For</span> Partners
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex flex-col text-white text-sm leading[18px] font-semibold"
-                  >
-                    <span className="font-normal">Our</span> Clinics
-                  </Link>
+                  <div className="flex flex-col gap-5">
+                    <Link
+                      href="#"
+                      className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                    >
+                      <span className="font-normal">For</span> Patients
+                    </Link>
+                    <Link
+                      href="#"
+                      className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                    >
+                      <span className="font-normal">For</span> Providers
+                    </Link>
+                    <Link
+                      href="#"
+                      className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                    >
+                      <span className="font-normal">For</span> Partners
+                    </Link>
+                    <Link
+                      href="#"
+                      className="flex flex-col text-white text-sm leading[18px] font-semibold"
+                    >
+                      <span className="font-normal">Our</span> Clinics
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className="block pt-5">
-                <ul className="flex flex-col gap-5">
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-white text-[15px] leading-[19px] font-semibold"
-                    >
-                      About
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-white text-[15px] leading-[19px] font-semibold"
-                    >
-                      Resources
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-white text-[15px] leading-[19px] font-semibold"
-                    >
-                      Contact Us
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="block pt-5">
-                <ul className="flex flex-col gap-5">
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
-                    >
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
-                    >
-                      News
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="#/"
-                      className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
-                    >
-                      Careers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="block pt-5">
-                <ul className="flex flex-col gap-3">
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Website Privacy{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Patient Privacy{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Cookies{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Terms of Use{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Patient Bill of Rights{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Non-Discrimination Notice{" "}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-white text-xs leading-[16px] font-normal"
-                    >
-                      {" "}
-                      Consent Preferences{" "}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="hidden md:flex gap-4 pt-7">
-                <Link href="/" type="button" className="btn btn-social"></Link>
-                <Link href="/" type="button" className="btn btn-social"></Link>
-                <Link href="/" type="button" className="btn btn-social"></Link>
-              </div>
+                <div className="block pt-5 order-3 sm:order-3 md:order-3 lg:order-2">
+                  <ul className="flex flex-col gap-5">
+                    <li>
+                      <Link
+                        href="#/"
+                        className="text-white text-[15px] leading-[19px] font-semibold"
+                      >
+                        About
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="#/"
+                        className="text-white text-[15px] leading-[19px] font-semibold"
+                      >
+                        Resources
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="#/"
+                        className="text-white text-[15px] leading-[19px] font-semibold"
+                      >
+                        Contact Us
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+                <div className="row-span-2 md:row-span-1 col-span-1 md:col-span-2 lg:col-span-2 gap-4 order-2 sm:order-2 lg:order-3">
+                  <div className="block md:grid grid-cols-2 gap-4">
+                    <div className="block pt-5">
+                      <ul className="flex flex-col gap-5">
+                        <li>
+                          <Link
+                            href="#/"
+                            className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                          >
+                            Blog
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="#/"
+                            className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                          >
+                            News
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="#/"
+                            className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
+                          >
+                            Careers
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="block pt-5">
+                      <ul className="flex flex-col gap-3">
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Website Privacy{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Patient Privacy{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Cookies{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Terms of Use{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Patient Bill of Rights{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Non-Discrimination Notice{" "}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Consent Preferences{" "}
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden md:flex gap-4 pt-7 order-4">
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
+                  <Link
+                    href="/"
+                    type="button"
+                    className="btn btn-social"
+                  ></Link>
+                </div>
               </div>
             </div>
           </div>
