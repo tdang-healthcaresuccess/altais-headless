@@ -69,7 +69,7 @@ export default function Header() {
                 <span className="font-normal">Our</span> Clinics
               </Link>
               <Link
-                href="#"
+                href="/about"
                 className="text-[#083D78] text-sm leading[18px] font-semibold"
               >
                 About
@@ -152,7 +152,7 @@ export default function Header() {
                 <span className="font-normal">Our</span> Clinics
               </Link>
               <Link
-                href="#"
+                href="/about"
                 className="text-[#083D78] text-sm leading[18px] font-semibold"
               >
                 About

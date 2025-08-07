@@ -158,3 +158,9 @@ button {
 .bg-half-star-slider {
   background-image: url("./../public/media/half-star-art.png");
 }
+.bg-about-landing-banner-mobile{
+  background-image: url("./../public/media/about-banner-mobile.png");
+}
+.bg-about-landing-banner{
+  background-image: url("./../public/media/about-banner.png");
+}

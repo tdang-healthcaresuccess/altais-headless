@@ -9,14 +9,14 @@ import PartnersMedia from "@/public/media/partners-home.png"
 
 export default function OurResources() {
   return (
-    <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-[75px] px-4 md:px-0">
+    <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-[75px] px-6 md:px-0">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-7">
-          <div className="flex flex-1 mb-12 gap-6">
+          <div className="flex flex-1 mb-4 md:mb-12 gap-6">
             <div className="block">
               <Image src={PatientsMedia} alt="Patients" className="rounded-[5px] border border-[#C75327] w-[130px] min-w-[130px] h-[130px]" />
             </div>
-            <div className="block">
+            <div className="block w-full md:w-auto">
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Patients</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" /> Patient Resources</Link></li>
@@ -26,11 +26,11 @@ export default function OurResources() {
             </div>
           </div>
           {/* 1 */}
-          <div className="flex flex-1 mb-12 gap-6">
+          <div className="flex flex-1 mb-4 md:mb-12 gap-6">
             <div className="block">
               <Image src={ProvidersMedia} alt="Providers" className="rounded-[5px] border border-[#C75327] w-[130px] min-w-[130px] h-[130px]" />
             </div>
-            <div className="block">
+            <div className="block w-full md:w-auto"> 
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Providers</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Provider Resources</Link></li>
@@ -40,11 +40,11 @@ export default function OurResources() {
             </div>
           </div>
           {/* 2 */}
-          <div className="flex flex-1 mb-12 gap-6">
+          <div className="flex flex-1 mb-[75px] md:mb-12 gap-6">
             <div className="block">
               <Image src={PartnersMedia} alt="Partners" className="rounded-[5px] border border-[#C75327] w-[130px] min-w-[130px] h-[130px]" />
             </div>
-            <div className="block">
+            <div className="block w-full md:w-auto">
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Partners</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Locations</Link></li>

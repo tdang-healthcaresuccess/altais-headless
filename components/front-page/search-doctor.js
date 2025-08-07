@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SearchDoctor() {
   return (
-    <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0 shadow-custom2">
+    <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-15 px-6 md:px-0 shadow-custom2">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-10">
           <div className="block w-full md:w-[40%] max-w-[470px]">
