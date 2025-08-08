@@ -1,5 +1,5 @@
 "use client";
-
+import { gql } from "@apollo/client";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { ChevronRight, Search } from "lucide-react";
 import { AlignJustify } from "lucide-react";
 import { X } from "lucide-react";
 
-export default function Header() {
+export default function Header({ siteTitle, siteDescription, menuItems }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const handleToggle = () => {
@@ -25,6 +25,8 @@ export default function Header() {
     setIsOpenSearch(!isOpenSearch);
   };
 
+
+
   return (
     <header className="block">
       <div className="container mx-auto bg-white">
@@ -38,54 +40,34 @@ export default function Header() {
               height={55}
               priority
             />
+            
           </div>
 
           {/* Desktop Nav */}
           <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
             {/* Menu Items */}
+
             <nav className="hidden lg:flex items-end gap-6">
-              <Link
-                href="#"
-                className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                <span className="font-normal">For</span> Patients
-              </Link>
-              <Link
-                href="#"
-                className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                <span className="font-normal">For</span> Providers
-              </Link>
-              <Link
-                href="#"
-                className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                <span className="font-normal">For</span> Partners
-              </Link>
-              <Link
-                href="#"
-                className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                <span className="font-normal">Our</span> Clinics
-              </Link>
-              <Link
-                href="/about"
-                className="text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                About
-              </Link>
-              <Link
-                href="#"
-                className="text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                Resources
-              </Link>
-              <Link
-                href="#"
-                className="text-[#083D78] text-sm leading[18px] font-semibold"
-              >
-                Contact Us
-              </Link>
+              {(Array.isArray(menuItems) ? menuItems : []).map((item, idx) => (
+              <div key={item.id}>
+                <Link
+                  className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
+                  href={item.uri}
+                >
+                  {idx < 3 ? (
+                    <>
+                      <span className="font-normal">For</span> {item.label}
+                    </>
+                  ) : idx === 3 ? (
+                    <>
+                      <span className="font-normal">Our</span> {item.label}
+                    </>
+                  ) : (
+                    item.label
+                  )}
+                </Link>
+              </div>
+            ))}
             </nav>
 
             {/* Find Care Button */}
@@ -195,3 +177,39 @@ export default function Header() {
     </header>
   );
 }
+
+Header.fragments = {
+  entry: gql`
+    fragment HeaderFragment on RootQuery {
+      generalSettings {
+        title
+        description
+      }
+      primaryMenuItems: menuItems(where: { location: PRIMARY }) {
+        nodes {
+          id
+          uri
+          path
+          label
+          parentId
+          cssClasses
+          menu {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  `,
+};
+
+const FIND_CARE_QUERY = gql`
+  query FindCareQuery {
+    globalthemeoptions {
+      headerSettings {
+        findCareUrl
+      }
+    }
+  }
+`;

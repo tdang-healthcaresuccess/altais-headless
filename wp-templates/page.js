@@ -72,8 +72,10 @@ export default function SinglePage(props) {
       />
 
       <main className="container">
+
         <EntryHeader title={title} />
         <div dangerouslySetInnerHTML={{ __html: content }} />
+        
       </main>
 
       <Footer />

@@ -5,15 +5,11 @@ import { useQuery } from "@apollo/client";
 import { getNextStaticProps } from "@faustwp/core";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import LandingBanner from "@/components/front-page/landing-banner";
-import RibbonBanner from "@/components/front-page/ribbon-banner";
-import ContactJourney from "@/components/common/contact-journey";
-import CounterCondition from "@/components/front-page/counter-condition";
-import OurServices from "@/components/front-page/our-services";
-import SearchDoctor from "@/components/front-page/search-doctor";
-import OurResources from "@/components/front-page/our-resources";
-
-const ContactSummaryDescription = "Wherever you are in your health journey, Altais connects you to the care you deserve — delivered by doctors who listen to provide personalized care."
+import Banner from "@/components/Banner";
+import OurServices from "@/components/services-page/our-services";
+import ContactJourney from "@/components//services-page/contact-journey";
+import HeroJourney from "@/components/services-page/hero-journey";
+import SearchServices from "@/components/services-page/search-services";
 export default function FrontPage(props) {
   // Loading state for previews
   if (props.loading) {
@@ -39,37 +35,23 @@ const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
       <Header
         menuItems={menuItems}
       />
-
+      <Header />
+      
       <main className="block">
         {/* Landing Page Banner Start */}
-        <LandingBanner />
+        <Banner />
         {/* Landing Page Banner End */}
 
-        {/* Search Doctor Start */}
-        <SearchDoctor />
-        {/* Search Doctor End */}
-
-        {/* Our Resources Start */}
-        <OurResources />
-        {/* Our Resources End */}
-
-        {/* Ribbon Banner Start */}
-        <RibbonBanner />
-        {/* Ribbon Banner End */}
-        
+       <HeroJourney />
+       <SearchServices />
         {/* Our Services Start */}
         <OurServices />
         {/* Our Services End */}
 
-        {/* Counter Condition Start */}
-        <CounterCondition />
-        {/* Counter Condition End */}
-
-        {/* Lets Redefine Start */}
-        <ContactJourney heading="Let’s Redefine" subheading="What Care Feels Like" description={ContactSummaryDescription} />
-        {/* Lets Redefine End */}
       </main>
-
+             {/* Lets Redefine Start */}
+        <ContactJourney />
+        {/* Lets Redefine End */}
       <Footer />
     </>
   );
