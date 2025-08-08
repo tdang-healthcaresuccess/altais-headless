@@ -31,14 +31,8 @@ const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
 
   return (
     <>
-      <Head>
-        <title>{siteTitle}</title>
-        <link srel="stylesheet"href="https://use.typekit.net/uoi7ptf.css" />
-      </Head>
 
-      <Header
-        menuItems={menuItems}
-      />
+      <Header siteTitle={siteTitle} />
 
       <main className="block">
         {/* Landing Page Banner Start */}
