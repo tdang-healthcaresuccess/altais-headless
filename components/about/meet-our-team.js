@@ -1,19 +1,24 @@
+"use client";
+
 import LeadershipTeamMedia from "@/public/media/leadership-team.png"
-import { ChevronRight } from "lucide-react";
+import LeadershipTeamMobileMedia from "@/public/media/leadership-team-mobile.png"
+import { ChevronRight } from "lucide-react"; 
 import Image from "next/image";
 import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
 
 export default function MeetOurTeam() {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
-    <section className="block py-12 bg-[#d9d9d926]">
+    <section className="block py-12 px-6 md:px-0 bg-[#d9d9d926]">
       <div className="container mx-auto">
         <div className="block">
             <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] mb-[45px]">
             <div className="block w-full">
               <Image
-                src={LeadershipTeamMedia}
+                src={isMobile ? LeadershipTeamMobileMedia : LeadershipTeamMedia}
                 alt="Meet Our Leadership Team"
-                className="w-full rounded-tl-[4px] rounded-bl-[0px] rounded-tr-[4px] md:rounded-tr-[0px]"
+                className="h-[350px] md:h-auto object-cover w-full rounded-tl-[4px] rounded-bl-[0px] rounded-tr-[4px] md:rounded-tr-[0px]"
               />
             </div>
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px]">

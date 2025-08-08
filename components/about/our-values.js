@@ -80,7 +80,7 @@ const values = [
 
 export default function OurValues() {
   return (
-    <section className="block pt-[75px] pb-[100px] bg-white box-shadow-custom3">
+    <section className="block pt-0 md:pt-[75px pb-[75px] md:]pb-[100px] bg-white box-shadow-custom3 px-6 md:px-0">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Left Static Box */}
@@ -96,11 +96,11 @@ export default function OurValues() {
           {values.map((item, index) => (
             <div
               key={index}
-              className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-3 border"
+              className="bg-white flex flex-col gap-3"
             >
               <div className="flex items-center gap-4">
                 <div className="w-[40px] h-[40px] flex-center rounded-full border border-[#008889]">
-                  <Image src={item.icon} alt="values" className="w-[17px] h-[17px] object-contain" />
+                  <Image src={item.icon} alt="values" className="w-full h-full p-2 object-contain" />
                 </div>
                 <h3 className="text-[18px] leading-[32px] text-[#083D78] font-semibold">
                   {item.title}
