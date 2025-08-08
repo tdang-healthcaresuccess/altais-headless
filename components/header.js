@@ -89,10 +89,10 @@ export default function Header() {
             </nav>
 
             {/* Find Care Button */}
-            <button className="btn-gradient btn-action flex-center gap-1">
+            <Link href="/find-doctor" className="btn-gradient btn-action flex-center gap-1">
               Find Care{" "}
               <ChevronRight className="w-[10px] h-[10px] md:w-[18px] md:h-[18px]" />
-            </button>
+            </Link>
 
             {/* Search Input */}
             <div className="flex items-center">

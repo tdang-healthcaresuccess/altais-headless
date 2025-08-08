@@ -15,7 +15,7 @@ export default function AboutUs() {
     <Layout>
       <div className="block">
         {/* Inner Page Banner start */}
-        <InnerPageBanner heading="Shaping the future of healthcare." />
+        <InnerPageBanner DesktopBanner="bg-about-landing-banner" MobileBanner="bg-about-landing-banner-mobile" heading="Shaping the future of healthcare." />
         {/* Inner Page Banner End */}
 
         {/* About Us Short Info Start */}

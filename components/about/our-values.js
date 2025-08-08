@@ -80,7 +80,7 @@ const values = [
 
 export default function OurValues() {
   return (
-    <section className="block pt-0 md:pt-[75px pb-[75px] md:]pb-[100px] bg-white box-shadow-custom3 px-6 md:px-0">
+    <section className="block pt-0 md:pt-[75px] pb-[75px] md:]pb-[100px] bg-white box-shadow-custom3 px-6 md:px-0">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Left Static Box */}

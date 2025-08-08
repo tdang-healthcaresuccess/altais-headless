@@ -1,10 +1,13 @@
-
 "use client";
 
 import { clsx } from "clsx";
 import { useMediaQuery } from "react-responsive";
 
-export default function InnerPageBanner({heading}) {
+export default function InnerPageBanner({
+  heading,
+  DesktopBanner,
+  MobileBanner,
+}) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <section className="flex items-center">
@@ -12,10 +15,8 @@ export default function InnerPageBanner({heading}) {
         {/* Background image */}
         <div
           className={clsx(
-            "md:absolute inset-0 bg-cover bg-center",
-            isMobile
-              ? "bg-about-landing-banner-mobile min-h-[400px]"
-              : "bg-about-landing-banner"
+            "md:absolute inset-0 bg-cover bg-right",
+            isMobile ? `${MobileBanner} min-h-[400px]` : DesktopBanner
           )}
         ></div>
 

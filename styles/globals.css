@@ -170,6 +170,12 @@ button {
 .bg-about-landing-banner{
   background-image: url("./../public/media/about-banner.png");
 }
+.bg-findDoc-landing-banner{
+  background-image: url("./../public/media/findDoc-banner.png");
+}
+.bg-findDoc-landing-banner-mobile{
+  background-image: url("./../public/media/findDoc-banner-mobile.png");
+}
 .bg-arc2{
   background-image: url("./../public/media/banner2-mobile.jpg");
 }
@@ -184,4 +190,7 @@ button {
 }
 .box-shadow-custom3{
    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.1);
+}
+.box-shadow-custom5{
+   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
 }
