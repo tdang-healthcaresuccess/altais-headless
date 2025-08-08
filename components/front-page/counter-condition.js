@@ -32,7 +32,7 @@ export default function CounterCondition() {
               <h3 className="countlist-h3">02</h3>
               <p className="countlist-p">Medi-Cal Plans</p>
             </li>
-            <li className="countlist">
+            <li className="countlist px-5 md:px-0">
               <h3 className="countlist-h3">30+</h3>
               <p className="countlist-p">Hospitals + Centers of Excellence</p>
             </li>

@@ -120,7 +120,7 @@ export default function OurServices() {
         </div>
         <div className="flex-center">
           <Link
-            href="/our-services"
+            href="/services"
             className="btn-gradient btn-md flex-center gap-1 mt-0 md:mt-8 w-full md:w-[534px]"
           >
             See All Services{" "}

@@ -87,7 +87,7 @@ export default function OurResources() {
               We’re shaping the future of care where smarter systems, technology and teamwork to make care better, more affordable, and more accessible.
             </p>
             <Link
-              href="/#"
+              href="/services"
               className="btn-outline-primary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
             >
               Our Services{" "}

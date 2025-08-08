@@ -183,6 +183,12 @@ button {
 .bg-findDoc-landing-banner-mobile{
   background-image: url("./../public/media/findDoc-banner-mobile.png");
 }
+.bg-services-landing-banner{
+  background-image: url("./../public/media/services-banner.png");
+}
+.bg-services-landing-banner-mobile{
+  background-image: url("./../public/media/services-banner-mobile.png");
+}
 .bg-arc2{
   background-image: url("./../public/media/banner2-mobile.jpg");
 }

@@ -1,6 +1,6 @@
 "use client";
 import { gql } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BrandLogo from "@/public/media/altais-logo.svg";
@@ -12,6 +12,7 @@ import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
+import { useRouter } from "next/router";
 export default function Header({ siteTitle, siteDescription }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -27,6 +28,24 @@ export default function Header({ siteTitle, siteDescription }) {
     }
     setIsOpenSearch(!isOpenSearch);
   };
+  const router = useRouter();
+  const menuRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
@@ -40,15 +59,18 @@ export default function Header({ siteTitle, siteDescription }) {
     <>
       <Head>
         <title>{siteTitle}</title>
-        <meta name="description" content={siteDescription ? siteDescription : ""} />
+        <meta
+          name="description"
+          content={siteDescription ? siteDescription : ""}
+        />
         <link srel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
-      <header className="block">
+      <header className="block relative">
         <div className="container mx-auto bg-white">
           <div className="w-full flex items-center justify-between pt-3 md:pt-4 pb-4 md:pb-7 px-4 md:px-0">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/">
+              <Link href="/"> 
                 <Image
                   src={BrandLogo}
                   alt="Altais"
@@ -106,11 +128,15 @@ export default function Header({ siteTitle, siteDescription }) {
                   type="button"
                   className="border border-primary rounded-sm md:w-9 w-[26px] md:h-9 h-[26px] flex-center"
                 >
-                  <Image
-                    src={SearchIcon}
-                    className="w-[13px] md:w-[18px]"
-                    alt="Search"
-                  />
+                  {isOpenSearch ? (
+                    <X size={28} color="#008889" />
+                  ) : (
+                    <Image
+                      src={SearchIcon}
+                      className="w-[15px] md:w-[18px]"
+                      alt="Search"
+                    />
+                  )}
                 </button>
               </div>
             </div>
@@ -130,73 +156,68 @@ export default function Header({ siteTitle, siteDescription }) {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="lg:hidden absolute bg-white top-[60.9px] px-4 pt-4 pb-6 space-y-4 z-50 h-full w-full shadow-[inset_0px_2px_4px_0px_rgba(61,61,61,0.15)]">
-              <nav className="flex flex-col gap-6 text-sm font-medium text-gray-700">
-                <Link
-                  href="#"
-                  className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  <span className="font-normal">For</span> Patients
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  <span className="font-normal">For</span> Providers
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  <span className="font-normal">For</span> Partners
-                </Link>
-                <Link
-                  href="#"
-                  className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  <span className="font-normal">Our</span> Clinics
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  About
-                </Link>
-                <Link
-                  href="#"
-                  className="text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  Resources
-                </Link>
-                <Link
-                  href="#"
-                  className="text-[#083D78] text-sm leading[18px] font-semibold"
-                >
-                  Contact Us
-                </Link>
-              </nav>
+            <div className="lg:hidden absolute min-h-screen flex justify-end items-start top-[100%] h-full w-full bg-[#d9d9d9e6] z-50">
+              <div
+                ref={menuRef}
+                className="w-[210px] bg-[#f9f9f9] pt-[32px] pb-[27px]"
+              >
+                <nav className="flex flex-col text-sm font-medium text-gray-700">
+                  {(Array.isArray(menuItems) ? menuItems : []).map(
+                    (item, idx) => {
+                      const isActive = router.asPath === item.uri;
 
-              <div className="mt-10 pt-5 flex flex-col gap-3">
-                <button className="btn-gradient btn-sm flex-center w-full gap-1">
-                  Find Care{" "}
-                  <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
-                </button>
-              </div>
-            </div>
-          )}
-          {isOpenSearch && (
-            <div className="flex absolute bg-white rounded-none md:rounded-lg p-5 top-[60.9px] mt-0 md:mt-10 z-50 pb-10 md:pb-5 right-0 md:right-[90px] w-full shadow-[inset_0px_2px_4px_0px_rgba(61,61,61,0.15)] md:shadow-none max-w-full md:max-w-[340px]">
-              <div className="input-style flex gap-2 items-center w-full">
-                <Search size={20} className="text-gray-500" />
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="ml-2 outline-none text-sm bg-transparent"
-                />
+                      return (
+                        <div key={item.id}>
+                          <Link
+                            className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
+                              isActive
+                                ? "bg-[#d9d9d980]"
+                                : ""
+                            }`}
+                            href={item.uri}
+                          >
+                            {idx < 3 ? (
+                              <>
+                                <span className="font-normal">For</span>{" "}
+                                {item.label}
+                              </>
+                            ) : idx === 3 ? (
+                              <>
+                                <span className="font-normal">Our</span>{" "}
+                                {item.label}
+                              </>
+                            ) : (
+                              item.label
+                            )}
+                          </Link>
+                        </div>
+                      );
+                    }
+                  )}
+                </nav>
               </div>
             </div>
           )}
         </div>
+        {isOpenSearch && (
+          <div className="absolute bg-[#f9f9f9] py-5 px-6 top-[100%] left-0 right-0 z-50 w-full box-shadow-custom3">
+            <div className="flex gap-3 max-w-full md:max-w-[340px] mx-auto">
+              <div className="input-style flex gap-2 items-center w-full py-3 px-[14px]">
+                <input
+                  type="text"
+                  placeholder="Keyword, Insurance, Spec..."
+                  className="ml-2 outline-none text-lg leading-[24px] bg-transparent w-full min-w-full md:min-w-[318px]"
+                />
+              </div>
+              <button
+                type="button"
+                className="bg-custom-gradient min-w-12 w-12 h-12 rounded-[5px] flex-center"
+              >
+                <Image src={SearchIcon} alt="search" />
+              </button>
+            </div>
+          </div>
+        )}
       </header>
     </>
   );
