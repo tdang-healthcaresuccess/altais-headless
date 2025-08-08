@@ -7,11 +7,13 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import LandingBanner from "@/components/front-page/landing-banner";
 import RibbonBanner from "@/components/front-page/ribbon-banner";
-import ContactJourney from "@/components/front-page/contact-journey";
+import ContactJourney from "@/components/common/contact-journey";
 import CounterCondition from "@/components/front-page/counter-condition";
 import OurServices from "@/components/front-page/our-services";
 import SearchDoctor from "@/components/front-page/search-doctor";
 import OurResources from "@/components/front-page/our-resources";
+
+const ContactSummaryDescription = "Wherever you are in your health journey, Altais connects you to the care you deserve — delivered by doctors who listen to provide personalized care."
 export default function FrontPage(props) {
   // Loading state for previews
   if (props.loading) {
@@ -64,7 +66,7 @@ const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
         {/* Counter Condition End */}
 
         {/* Lets Redefine Start */}
-        <ContactJourney />
+        <ContactJourney heading="Let’s Redefine" subheading="What Care Feels Like" description={ContactSummaryDescription} />
         {/* Lets Redefine End */}
       </main>
 

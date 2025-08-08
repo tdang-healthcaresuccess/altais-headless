@@ -2,115 +2,166 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-regular.eot'); /* IE9 Compat Modes */
-  src: url('/fonts/poppins-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/fonts/poppins-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('/fonts/poppins-regular.woff') format('woff'),   /* Modern Browsers */
-       url('/fonts/poppins-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('/fonts/poppins-regular.svg#Poppins') format('svg'); /* Legacy iOS */
+  font-family: "Poppins";
+  src: url("/fonts/poppins-regular.eot"); /* IE9 Compat Modes */
+  src:
+    url("/fonts/poppins-regular.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("/fonts/poppins-regular.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("/fonts/poppins-regular.svg#Poppins")
+      format("svg"); /* Legacy iOS */
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-semibold.ttf') format('truetype');
+  font-family: "Poppins";
+  src: url("/fonts/poppins-semibold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-Bold.ttf') format('truetype');
+  font-family: "Poppins";
+  src: url("/fonts/poppins-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-Light.ttf') format('truetype');
+  font-family: "Poppins";
+  src: url("/fonts/poppins-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-Medium.ttf') format('truetype');
+  font-family: "Poppins";
+  src: url("/fonts/poppins-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-
 /* Add other weights as needed */
-
 
 /* @import url("https://use.typekit.net/uoi7ptf.css"); */
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); */
 
- 
 html,
 body {
-  font-family: "poppins",sans-serif;;
+  font-family: "poppins", sans-serif;
 }
 
-button{
-    @apply cursor-pointer;
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0px 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding: 0px 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+button {
+  @apply cursor-pointer;
 }
 .btn-gradient {
   @apply bg-[linear-gradient(to_right,_#083D78_30%,_#008889_100%)] text-white py-2 px-4 rounded hover:bg-blue-700;
 }
-.btn-sm{
-    @apply text-[18px] md:text-xs font-semibold md:text-[15px] leading-[24px] h-[50px] md:h-[35px] w-full md:w-auto py-1 px-2 md:px-8;
+.btn-sm {
+  @apply text-[18px] md:text-xs font-semibold md:text-[15px] leading-[24px] h-[50px] md:h-[35px] w-full sm:w-auto md:w-auto py-1 px-2 md:px-8;
 }
-.btn-action{
-   @apply text-xs md:text-[15px] leading-[24px] h-[26px] md:h-9 py-1 px-4 md:px-8;
+.btn-action {
+  @apply text-xs md:text-[15px] leading-[24px] h-[26px] md:h-9 py-1 px-4 md:px-8;
 }
-.btn-md{
-    @apply text-[18px] leading-[24px] h-[50px] py-2 px-8 w-full md:w-[250px]; 
+.btn-md {
+  @apply text-[18px] leading-[24px] h-[50px] py-2 px-8 w-full md:w-[250px];
 }
-.btn-social{
+.btn-social {
   @apply w-5 h-5 rounded-[3px] border border-white bg-[#84D0D2];
 }
 
-
-.flex-center{
-    @apply flex items-center justify-center;
+.flex-center {
+  @apply flex items-center justify-center;
 }
-.countlist{
-  @apply flex-1 text-center;
+.countlist {
+  @apply flex-auto md:flex-1 text-center w-[calc(50%-20px)] md:w-auto;
 }
-.countlist-h3{
+.countlist-h3 {
   @apply text-[65px] leading-[60px] pb-6 text-[#008889];
 }
-.countlist-p{
-  @apply text-[20px] leading-[24px] text-[#083D78] ;
+.countlist-h4{
+  @apply text-[30px] leading-[45px] text-[#008889];
 }
-.list-items1{
-  @apply text-[#C75327] text-[17px] leading-[35px] flex items-center gap-1;
+.countlist-p {
+  @apply text-[20px] leading-[24px] text-[#083D78];
 }
-.btn-outline-primary{
+.countlist-p1{
+  @apply text-[12px] leading-[17px] text-[#3D3D3D];
+}
+.list-items1 {
+  @apply text-[#C75327] text-[17px] leading-[35px] font-medium flex items-center gap-1;
+}
+.btn-outline-primary {
   @apply border border-[#C75327] text-[#C75327];
 }
-.input-style{
+.input-style {
   @apply border border-inputBorder placeholder-[#083d78] text-[#083d78] text-lg leading-[24px] rounded-[5px] h-[50px] py-3 px-4 outline-0;
 }
 
+/* styles/globals.css or styles/custom.css */
+.swiper-pagination-bullet {
+  background-color: rgba(132, 208, 210, 1);
+  opacity: 1; /* Override Swiper default */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: rgba(255, 255, 255, 1);
+}
+.swiper-pagination {
+  justify-content: flex-start;
+  display: flex;
+  bottom: 0px;
+}
+.swiper-initialized {
+  min-height: 290px;
+}
+
+@media screen and (max-width: 767px) {
+  .swiper-parent {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .swiper-parent h3{
+    position: relative;
+    top: 10px;
+  }
+}
 
 /* Landing Page */
 .bg-custom-gradient {
-  background-image: linear-gradient(to right, #083D78 30%, #008889 100%);
+  background-image: linear-gradient(to right, #083d78 30%, #008889 100%);
 }
-.bg-landing-banner{
+.bg-landing-banner {
   background-image: url("./../public/media/landing-banner.png");
 }
-.bg-landing-banner-mobile{
+.bg-landing-banner-mobile {
   background-image: url("./../public/media/landing-banner-mobile.png");
 }
-.bg-half-star-slider{
+.bg-half-star-slider {
   background-image: url("./../public/media/half-star-art.png");
 }
 /* Services Page */
@@ -119,4 +170,25 @@ button{
 }
 .bg-services-banner-mobile{
   background-image: url("./../public/media/services-banner-mobile.png");
+}
+.bg-about-landing-banner-mobile{
+  background-image: url("./../public/media/about-banner-mobile.png");
+}
+.bg-about-landing-banner{
+  background-image: url("./../public/media/about-banner.png");
+}
+.bg-arc2{
+  background-image: url("./../public/media/banner2-mobile.jpg");
+}
+
+
+/* Custom Shadows */
+.box-shadow-custom2{
+  box-shadow: 0px 2px 4px 0px rgb(61 61 61 / 15%);
+}
+.box-shadow-custom4{
+  box-shadow: 0px 2px 4px 0px #3D3D3D;
+}
+.box-shadow-custom3{
+   box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.1);
 }
