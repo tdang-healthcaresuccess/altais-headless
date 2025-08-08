@@ -28,8 +28,8 @@ export default function FrontPage(props) {
     <>
       <Layout>
         {/* Landing Page Banner Start */}
-        <InnerPageBanner 
-        DesktopBanner="bg-services-landing-banner"
+        <InnerPageBanner
+          DesktopBanner="bg-services-landing-banner"
           MobileBanner="bg-services-landing-banner-mobile"
           heading="Compassionate, Affordable Care"
         />

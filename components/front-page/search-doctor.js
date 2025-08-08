@@ -67,7 +67,7 @@ export default function SearchDoctor() {
             </Link>
               <Link
               href="/#"
-              className="btn-outline-primary btn-sm flex-center !w-[135px] !px-2 rounded-[5px] !h-[50px] gap-1"
+              className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-[5px] !h-[50px] gap-1"
             >
               Search
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />

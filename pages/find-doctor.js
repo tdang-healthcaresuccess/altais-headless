@@ -1,4 +1,5 @@
 import InnerPageBanner from "@/components/common/inner-page-banner";
+import DoctorSearchResults from "@/components/find-doc/doctor-search-result";
 import DocSearchForm from "@/components/find-doc/search-form";
 import Layout from "@/components/Layout";
 
@@ -17,6 +18,10 @@ export default function FindDoctor() {
         {/* Doc Search Form Start*/}
         <DocSearchForm />
         {/* Doc. Search Form End */}
+
+        {/* Doctor Search Result */}
+        <DoctorSearchResults />
+        {/* Doctor Search Result */}
       </div>
     </Layout>
   );

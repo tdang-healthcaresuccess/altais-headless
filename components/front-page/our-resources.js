@@ -71,7 +71,7 @@ export default function OurResources() {
             </p>
             <Link
               href="/#"
-              className="btn-outline-primary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
+              className="btn-outline-secondary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
             >
               Find Care{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
@@ -88,7 +88,7 @@ export default function OurResources() {
             </p>
             <Link
               href="/services"
-              className="btn-outline-primary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
+              className="btn-outline-secondary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
             >
               Our Services{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
@@ -105,7 +105,7 @@ export default function OurResources() {
             </p>
             <Link
               href="/#"
-              className="btn-outline-primary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
+              className="btn-outline-secondary btn-sm flex-center !w-[165px] !px-2 rounded-[5px] gap-1 mt-8"
             >
               Learn More{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
