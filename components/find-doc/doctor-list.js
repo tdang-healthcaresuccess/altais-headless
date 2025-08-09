@@ -4,10 +4,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function DocSearchList() {
   return (
-    <div className="flex flex-wrap gap-6">
-      <div className="block border border-primary rounded-[5px] p-3 w-[calc(50%-12px)]">
+    <div className="flex flex-col md:flex-row flex-wrap gap-6">
+      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-[calc(50%-12px)]">
         <div className="flex pb-6 gap-6">
-          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[133px] h-[140px]">
+          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]">
             <Image src={Doctor1} alt="John Doe" className="rounded-[5px] image-responsive" />
           </div>
           <div className="block">
@@ -42,16 +42,16 @@ export default function DocSearchList() {
           </button>
           <button
             type="button"
-            className="btn-md btn-outline-secondary rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
         </div>
       </div>
       {/* Doc 1 */}
-      <div className="block border border-primary rounded-[5px] p-3 w-[calc(50%-12px)]">
+      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-[calc(50%-12px)]">
         <div className="flex pb-6 gap-6">
-          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[133px] h-[140px]">
+          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]">
             <Image src={Doctor1} alt="John Doe" className="rounded-[5px] image-responsive" />
           </div>
           <div className="block">
@@ -86,16 +86,16 @@ export default function DocSearchList() {
           </button>
           <button
             type="button"
-            className="btn-md btn-outline-secondary rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
         </div>
       </div>
       {/* Doc 1 */}
-      <div className="block border border-primary rounded-[5px] p-3 w-[calc(50%-12px)]">
+      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-[calc(50%-12px)]">
         <div className="flex pb-6 gap-6">
-          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[133px] h-[140px]">
+          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]">
             <Image src={Doctor1} alt="John Doe" className="rounded-[5px] image-responsive" />
           </div>
           <div className="block">
@@ -130,16 +130,16 @@ export default function DocSearchList() {
           </button>
           <button
             type="button"
-            className="btn-md btn-outline-secondary rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
         </div>
       </div>
       {/* Doc 1 */}
-      <div className="block border border-primary rounded-[5px] p-3 w-[calc(50%-12px)]">
+      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-[calc(50%-12px)]">
         <div className="flex pb-6 gap-6">
-          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[133px] h-[140px]">
+          <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]">
             <Image src={Doctor1} alt="John Doe" className="rounded-[5px] image-responsive" />
           </div>
           <div className="block">
@@ -174,7 +174,7 @@ export default function DocSearchList() {
           </button>
           <button
             type="button"
-            className="btn-md btn-outline-secondary rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
@@ -183,7 +183,7 @@ export default function DocSearchList() {
       {/* Doc 1 */}
       <div className="flex justify-end w-full">
         <ul className="flex gap-3">
-            <li className="pagination-li pag-action"><ChevronLeft className="w-[20px] h-[20px] text-secondary" /> Previous Page</li>
+            {/* <li className="pagination-li pag-action"><ChevronLeft className="w-[20px] h-[20px] text-secondary" /> Previous Page</li> */}
             <li className="pagination-li active">1</li>
             <li className="pagination-li">2</li>
             <li className="pagination-li">3</li>

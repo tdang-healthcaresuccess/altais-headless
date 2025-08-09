@@ -89,7 +89,7 @@ button {
   @apply text-[18px] leading-[24px] h-[50px] py-2 px-8 w-full md:w-[250px];
 }
 .btn-normal{
-  @apply border border-primary rounded-[5px] text-bluePrimary text-lg leading-[24px] p-3 h-[50px];
+  @apply border border-primary rounded-[5px] text-bluePrimary text-sm md:text-lg leading-[24px] p-3 h-[50px];
 }
 .btn-social {
   @apply w-5 h-5 rounded-[3px] border border-white bg-[#84D0D2];
@@ -130,6 +130,9 @@ button {
 }
 .image-responsive{
   @apply w-full h-auto object-cover;
+}
+.filter-select{
+  @apply border border-inputBorder h-[30px] w-full rounded-[5px] text-bluePrimary text-xs flex items-center outline-none px-1.5 font-medium cursor-pointer; 
 }
 
 /* styles/globals.css or styles/custom.css */
