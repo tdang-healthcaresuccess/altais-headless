@@ -85,7 +85,7 @@ export default function OurValues() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Left Static Box */}
           <div className="p-8 rounded-xl text-white flex items-center justify-start min-h-[280px] bg-arc2 inset-0 bg-cover bg-center">
-            <h2 className="text-[50px] leading-[55px] font-medium">
+            <h2 className="text-[50px] leading-[55px] font-regular">
               Our
               <br />
               Values

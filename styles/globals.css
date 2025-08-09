@@ -150,7 +150,7 @@ button {
 .swiper-pagination {
   justify-content: flex-start;
   display: flex;
-  bottom: 0px;
+  bottom: 0px !important;
 }
 .swiper-initialized {
   min-height: 290px;
@@ -167,6 +167,10 @@ button {
     position: relative;
     top: 10px;
   }
+}
+
+.swiper-initialized {
+    min-height: auto;
 }
 
 /* Landing Page */

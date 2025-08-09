@@ -22,7 +22,7 @@ export default function InnerPageBanner({
 
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full pt-6 md:pt-0">
-          <div className="md:p-0 md:w-[40%] h-full flex flex-col justify-center">
+          <div className="md:p-0 md:w-[40%] h-full flex flex-col justify-center px-6 md:px-0">
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-[#083D78]">
               {heading}
             </h1>
