@@ -33,15 +33,15 @@ export default function DocSearchForm() {
           
           <div className="flex flex-col md:flex-row pb-9 gap-6 px-6 md:px-0">
             <div className="block relative">
-              <Image src={PinMarker} alt="Pin Marker" className="absolute left-2 top-4" />
-              <input type="text" placeholder="City or Zip" className="input-style2 !pl-9 w-full md:w-[400px]" />
+              <Image src={PinMarker} alt="Pin Marker" className="absolute left-3 top-4" />
+              <input type="text" placeholder="City or Zip" className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]" />
               <button type="button">
-                <Image src={SearchLaunchIcon} alt="Launch" className="absolute right-2 top-4" />
+                <Image src={SearchLaunchIcon} alt="Launch" className="absolute right-3 top-4" />
               </button>
             </div>
             <div className="block relative">
-              <Image src={SearchIcon} alt="Search" className="absolute left-2 top-4" />
-              <input type="text" placeholder="Doctor's Name, Insurance, Specialty, etc." className="input-style2 !pl-9 w-full md:w-[400px]" />
+              <Image src={SearchIcon} alt="Search" className="absolute left-3 top-4" />
+              <input type="text" placeholder="Doctor's Name, Insurance, Specialty, etc." className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]" />
             </div>
             <div className="flex justify-end">
               <button type="button" className="btn-md max-w-[175px] btn-outline-secondary rounded-[5px] flex-center gap-1">

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function DocSearchList() {
   return (
     <div className="flex flex-col md:flex-row flex-wrap gap-6">
-      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-[calc(50%-12px)]">
+      <div className="block border border-primary rounded-[5px] p-3 w-full md:w-full lg:w-[calc(50%-12px)]">
         <div className="flex pb-6 gap-6">
           <div className="block border border-lightPrimary rounded-[5px] w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]">
             <Image src={Doctor1} alt="John Doe" className="rounded-[5px] image-responsive" />
@@ -36,13 +36,13 @@ export default function DocSearchList() {
         <div className="flex w-full gap-3 border-t border-lightPrimary pt-3">
           <button
             type="button"
-            className="btn-md btn-outline-secondary font-semibold rounded-[5px] flex-1"
+            className="btn-md btn-outline-secondary !w-50 !px-1 font-semibold rounded-[5px] flex-1"
           >
             View Profile
           </button>
           <button
             type="button"
-            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-outline-ternery !w-50 !px-1 rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
@@ -80,13 +80,13 @@ export default function DocSearchList() {
         <div className="flex w-full gap-3 border-t border-lightPrimary pt-3">
           <button
             type="button"
-            className="btn-md btn-outline-secondary font-semibold rounded-[5px] flex-1"
+            className="btn-md btn-outline-secondary !w-50 !px-1 font-semibold rounded-[5px] flex-1"
           >
             View Profile
           </button>
           <button
             type="button"
-            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-outline-ternery !w-50 !px-1 rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
@@ -124,13 +124,13 @@ export default function DocSearchList() {
         <div className="flex w-full gap-3 border-t border-lightPrimary pt-3">
           <button
             type="button"
-            className="btn-md btn-outline-secondary font-semibold rounded-[5px] flex-1"
+            className="btn-md btn-outline-secondary !w-50 !px-1 font-semibold rounded-[5px] flex-1"
           >
             View Profile
           </button>
           <button
             type="button"
-            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-outline-ternery !w-50 !px-1 rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>
@@ -168,13 +168,13 @@ export default function DocSearchList() {
         <div className="flex w-full gap-3 border-t border-lightPrimary pt-3">
           <button
             type="button"
-            className="btn-md btn-outline-secondary font-semibold rounded-[5px] flex-1"
+            className="btn-md btn-outline-secondary !w-50 !px-1 font-semibold rounded-[5px] flex-1"
           >
             View Profile
           </button>
           <button
             type="button"
-            className="btn-md btn-normal rounded-[5px] font-semibold flex-1"
+            className="btn-md btn-outline-ternery !w-50 !px-1 rounded-[5px] font-semibold flex-1"
           >
             Click to Call
           </button>

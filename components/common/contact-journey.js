@@ -16,7 +16,7 @@ export default function ContactJourney({heading, subheading,description}) {
           </div>
 
           {/* Vertical Separator */}
-          <div className="w-full md:w-[1px] h-[1px] md:h-[155px] bg-[#008889] my-6 md:my-0 max-0 md:mx-10"></div>
+          <div className="w-full md:w-[1px] h-[1px] md:h-[155px] bg-primary my-6 md:my-0 max-0 md:mx-10"></div>
 
           {/* Right Column */}
           <div className="block max-w-full md:max-w-[540px]">

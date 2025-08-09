@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="container mx-auto">
           <div className="block pt-10 pb-12">
             <div className="block md:flex justify-between gap-4">
-              <div className="flex md:block w-full md:w-auto md:border-none border-b border-[#008889] pb-8 md:pb-0 mb-8 md:mb-0 ">
+              <div className="flex md:block w-full md:w-auto md:border-none border-b border-primary pb-8 md:pb-0 mb-8 md:mb-0 ">
                 <Image
                   src={BrandLogo}
                   alt="Altais"

@@ -40,7 +40,7 @@ export default function CounterCondition() {
 
           <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
 
-          <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] mb-10 md:mb-[45px]">
+          <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-10 md:mb-[45px]">
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px] order-2 md:order-1">
               <h3 className="text-[#083D78] text-[26px] sm:text-[18px] md:text-[18px] lg:text-[26px] md:leading-[20px] lg:leading-[36px] font-light mb-12">
                 <b className="font-medium">Conditions We Treat</b>
@@ -63,7 +63,7 @@ export default function CounterCondition() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] mb-[45px]">
+          <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-[45px]">
             <div className="block w-full">
               <Image
                 src={FindDoctorBanner}
@@ -87,7 +87,7 @@ export default function CounterCondition() {
           </div>
 
           {/* New Education Slider Section */}
-          <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] p-0 md:p-7 items-start">
+          <div className="flex flex-col md:flex-row border border-primary rounded-[5px] p-0 md:p-7 items-start">
             <div className="flex flex-col md:flex-row gap-5 md:gap-7 w-full">
               <div className="block w-full md:max-w-[170px] min-w-[165px] order-2 md:order-1 px-7 md:px-0">
                 <h3 className="text-[#083D78] text-[26px] border-b md:border-none border-[#00888980] pb-7 md:pb-0 leading-[36px] font-light">

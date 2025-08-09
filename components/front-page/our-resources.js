@@ -20,7 +20,7 @@ export default function OurResources() {
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Patients</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" /> Patient Resources</Link></li>
-                <div className="w-full h-[1px] bg-[#008889] my-3"></div>
+                <div className="w-full h-[1px] bg-primary my-3"></div>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" /> Accepted Insurance</Link></li>
               </ul>
             </div>
@@ -34,7 +34,7 @@ export default function OurResources() {
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Providers</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Provider Resources</Link></li>
-                <div className="w-full h-[1px] bg-[#008889] my-3"></div>
+                <div className="w-full h-[1px] bg-primary my-3"></div>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Join Our Care Network</Link></li>
               </ul>
             </div>
@@ -48,7 +48,7 @@ export default function OurResources() {
               <h3 className="text-[22px] leading-[36px] text-[#083D78] mb-3">Partners</h3>
               <ul>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Locations</Link></li>
-                <div className="w-full h-[1px] bg-[#008889] my-3"></div>
+                <div className="w-full h-[1px] bg-primary my-3"></div>
                 <li><Link href="/#" className="text-[16px] leading-[24px] text-[#C75327] flex gap-1"><ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />  Services & Solutions</Link></li>
               </ul>
             </div>

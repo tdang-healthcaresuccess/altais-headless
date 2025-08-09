@@ -13,7 +13,7 @@ export default function MeetOurTeam() {
     <section className="block py-12 px-6 md:px-0 bg-[#d9d9d926]">
       <div className="container mx-auto">
         <div className="block">
-            <div className="flex flex-col md:flex-row border border-[#008889] rounded-[5px] mb-[45px]">
+            <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-[45px]">
             <div className="block w-full">
               <Image
                 src={isMobile ? LeadershipTeamMobileMedia : LeadershipTeamMedia}

@@ -11,7 +11,7 @@ export default function VisionMission() {
             <Image
               src={VisionMissionMedia}
               alt="Vision Mission"
-              className="w-full border border-[#008889] rounded-[5px]"
+              className="w-full border border-primary rounded-[5px]"
             />
           </div>
 

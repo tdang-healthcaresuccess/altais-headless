@@ -59,8 +59,8 @@ export default function SearchDoctor() {
             </div>
             <div className="flex justify-between items-center mt-6">
               <Link
-              href="/#"
-              className="flex-center text-[#008889]"
+              href="/find-doctor"
+              className="flex-center text-primary"
             >
               Advanced Search
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />

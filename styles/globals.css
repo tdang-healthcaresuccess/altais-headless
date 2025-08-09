@@ -102,10 +102,10 @@ button {
   @apply flex-auto md:flex-1 text-center w-[calc(50%-20px)] md:w-auto;
 }
 .countlist-h3 {
-  @apply text-[65px] leading-[60px] pb-6 text-[#008889];
+  @apply text-[65px] leading-[60px] pb-6 text-primary;
 }
 .countlist-h4{
-  @apply text-[30px] leading-[45px] text-[#008889];
+  @apply text-[30px] leading-[45px] text-primary;
 }
 .countlist-p {
   @apply text-[20px] leading-[24px] text-[#083D78];
@@ -118,6 +118,9 @@ button {
 }
 .btn-outline-secondary {
   @apply border border-[#C75327] text-[#C75327];
+}
+.btn-outline-ternery {
+  @apply border border-primary text-bluePrimary;
 }
 .btn-outline-primary {
   @apply border border-primary text-primary;

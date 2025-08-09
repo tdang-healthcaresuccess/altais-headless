@@ -1,14 +1,13 @@
-import Head from "next/head";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useQuery } from "@apollo/client";
 import { getNextStaticProps } from "@faustwp/core";
-import OurServices from "@/components/services-page/our-services";
-import ContactJourney from "@/components//services-page/contact-journey";
-import HeroJourney from "@/components/services-page/hero-journey";
 import SearchServices from "@/components/services-page/search-services";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
+import ContactJourney from "@/components/common/contact-journey";
+import HeroJourney from "@/components/services-page/hero-journey";
+import OurServices from "@/components/common/our-services";
 export default function FrontPage(props) {
   // Loading state for previews
   if (props.loading) {
@@ -23,6 +22,8 @@ export default function FrontPage(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
+
+  const ContactSummaryDescription = "From preventive checkups to specialty support, our network of healthcare providers delivers high-quality, compassionate care tailored to your life — wherever it leads."
 
   return (
     <>
@@ -44,11 +45,11 @@ export default function FrontPage(props) {
         {/* Search Services End */}
 
         {/* Our Services Start */}
-        <OurServices />
+        <OurServices hideViewAll={false} />
         {/* Our Services End */}
 
         {/* Lets Redefine Start */}
-        <ContactJourney />
+        <ContactJourney heading="Care That Covers" subheading="the Whole You" description={ContactSummaryDescription} />
         {/* Lets Redefine End */}
       </Layout>
     </>

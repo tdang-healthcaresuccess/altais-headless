@@ -9,7 +9,7 @@ import LandingBanner from "@/components/front-page/landing-banner";
 import RibbonBanner from "@/components/front-page/ribbon-banner";
 import ContactJourney from "@/components/common/contact-journey";
 import CounterCondition from "@/components/front-page/counter-condition";
-import OurServices from "@/components/front-page/our-services";
+import OurServices from "@/components/common/our-services";
 import OurResources from "@/components/front-page/our-resources";
 import SearchDoctor from "@/components/front-page/search-doctor";
 

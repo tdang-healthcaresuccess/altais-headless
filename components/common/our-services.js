@@ -7,20 +7,18 @@ import ServicesMedia1 from "@/public/media/services-1.png";
 import ServicesMedia2 from "@/public/media/services-2.png";
 import ServicesMedia3 from "@/public/media/services-3.png";
 import ServicesMedia4 from "@/public/media/services-4.png";
-import ServicesMedia5 from "@/public/media/services-5.png";
-import ServicesMedia6 from "@/public/media/services-6.png";
 
-export default function OurServices() {
+export default function OurServices({ hideViewAll = true }) {
   return (
-    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 ">
+    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 shadow-custom">
       <div className="block container mx-auto">
-        <div className="flex flex-wrap gap-10">
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
+        <div className="flex flex-wrap gap-10 items-stretch">
+          <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia1}
                 alt="primary care"
-                className="object-cover max-h-[170px]"
+                className="object-cover min-h-[170px] w-full max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -42,12 +40,12 @@ export default function OurServices() {
             </div>
           </div>
           {/* Services 1 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
+          <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia2}
                 alt="Mental Health"
-                className="object-cover max-h-[170px]"
+                className="object-cover min-h-[170px] w-full max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -62,18 +60,18 @@ export default function OurServices() {
                 href="/#"
                 className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
               >
-                 Learn More
+                See Mental Health Services
                 <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
               </Link>
             </div>
           </div>
           {/* Services 2 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
+          <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia3}
                 alt="Pediatrics"
-                className="object-cover max-h-[170px]"
+                className="object-cover min-h-[170px] w-full max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -88,18 +86,18 @@ export default function OurServices() {
                 href="/#"
                 className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
               >
-                 Learn More
+                Learn About Pediatric Care
                 <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
               </Link>
             </div>
           </div>
           {/* Services 3 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
+          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-[5px] mb-6">
               <Image
                 src={ServicesMedia4}
                 alt="Senior Health Care"
-                className="object-cover max-h-[170px]"
+                className="object-cover min-h-[170px] w-full max-h-[170px] rounded-[5px]"
               />
             </div>
             <div className="block">
@@ -107,70 +105,31 @@ export default function OurServices() {
                 Senior Health Care
               </h3>
               <p className="text-lg leading-[32px] text-[#3D3D3D] mb-7">
-                Stay well and active with care programs to support you at every step, from Medicare Advantage plans to Annual Wellness exams.
+                Stay well and active with care programs to support you at every
+                step, from Medicare Advantage plans to Annual Wellness exams.
               </p>
               <Link
                 href="/#"
                 className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
               >
-               Learn More
+                Explore Senior Services
                 <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
               </Link>
             </div>
           </div>
           {/* Services 4 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
-              <Image
-                src={ServicesMedia5}
-                alt="Senior Health Care"
-                className="object-cover max-h-[170px]"
-              />
-            </div>
-            <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-[#083D78] mb-3">
-                OB/GYN
-              </h3>
-              <p className="text-lg leading-[32px] text-[#3D3D3D] mb-7">
-                From adolescence to menopause and beyond, our OB/GYN services support every stage of life with expert care that puts your comfort and choices first. Learn more.
-              </p>
-              <Link
-                href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
-              >
-                Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
-              </Link>
-            </div>
-          </div>
-          {/* Services 5 */}
-          <div className="block mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-[#008889] rounded-[5px] mb-6">
-              <Image
-                src={ServicesMedia6}
-                alt="Senior Health Care"
-                className="object-cover max-h-[170px]"
-              />
-            </div>
-            <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-[#083D78] mb-3">
-                Urgent Care
-              </h3>
-              <p className="text-lg leading-[32px] text-[#3D3D3D] mb-7">
-                Receive quality urgent care when you need it most. We provide adult and pediatric urgent care services close to home.
-              </p>
-              <Link
-                href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
-              >
-                Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
-              </Link>
-            </div>
-          </div>
-          {/* Services 6 */}
         </div>
-       
+        {hideViewAll && (
+          <div className="flex-center">
+            <Link
+              href="/services"
+              className="btn-gradient btn-md flex-center gap-1 mt-0 md:mt-8 w-full md:w-[534px]"
+            >
+              See All Services{" "}
+              <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
