@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { getNextStaticProps } from "@faustwp/core";
+import Banner from "@/components/Banner";
 
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
@@ -70,10 +71,12 @@ export default function SinglePage(props) {
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
-
+          {/* Landing Page Banner Start */}
+          <Banner heading={title} />
+          {/* Landing Page Banner End */}
       <main className="container">
 
-        <EntryHeader title={title} />
+        
         <div dangerouslySetInnerHTML={{ __html: content }} />
         
       </main>

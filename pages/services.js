@@ -35,7 +35,6 @@ const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
       <Header
         menuItems={menuItems}
       />
-      <Header />
       
       <main className="block">
         {/* Landing Page Banner Start */}
