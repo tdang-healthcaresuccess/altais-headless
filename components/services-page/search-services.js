@@ -13,7 +13,7 @@ export default function HowCanWeHelp() {
           and the content takes the remaining 1/4.
           On smaller screens, they will stack.
         */}
-        <div className="flex flex-wrap md:flex-nowrap items-center border border-primary bg-[#ffffff] rounded-[5px] ">
+        <div className="flex flex-wrap bg-white md:flex-nowrap items-center border-none md:border border-primary rounded-[5px]"> 
           {/* Image section, taking 3/4 width on md and up.
               Using a standard `<img>` tag with a placeholder image.
           */}
@@ -26,16 +26,16 @@ export default function HowCanWeHelp() {
           </div>
 
           {/* Content section, taking 1/4 width on md and up */}
-          <div className="w-full md:w-1/2 lg:w-1/4 p-8 flex flex-col justify-center bg-[#ffffff]">
+          <div className="w-full h-full md:w-1/2 lg:w-1/4 pb-[60px] md:pb-8 p-8 flex flex-col justify-center">
             {/* Headline */}
-            <h2 className="text-[26px] leading-[36px] text-bluePrimary font-light mb-4">
+            <h2 className="text-[26px] leading-[36px] text-bluePrimary font-light mb-9">
               <span className="font-medium">How</span>
               <br />
               Can we Help?
             </h2>
 
             {/* Dropdown for Services */}
-            <div className="relative mb-4">
+            <div className="relative mb-[55px]">
               <select className="block w-full appearance-none bg-white border border-[#999795] rounded-[5px] py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary">
                 <option>Services</option>
                 {/* You can add more options here */}
@@ -44,7 +44,7 @@ export default function HowCanWeHelp() {
                 <option>Pediatrics</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#083D78]">
-                <ChevronDown className="w-5 h-5" />
+                <ChevronDown className="w-5 h-5" color="#008889" />
               </div>
             </div>
 

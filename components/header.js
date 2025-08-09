@@ -156,7 +156,7 @@ export default function Header({ siteTitle, siteDescription }) {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="lg:hidden absolute min-h-screen flex justify-end items-start top-[100%] h-full w-full bg-[#d9d9d9e6] z-50">
+            <div className="lg:hidden absolute min-h-screen flex justify-end items-start top-[100%] h-full w-full bg-[#d9d9d9e6] z-50 right-0">
               <div
                 ref={menuRef}
                 className="w-[210px] bg-[#f9f9f9] pt-[32px] pb-[27px]"

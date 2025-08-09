@@ -6,7 +6,7 @@ import SearchServices from "@/components/services-page/search-services";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import ContactJourney from "@/components/common/contact-journey";
-import HeroJourney from "@/components/services-page/hero-journey";
+import HeroJourney from "@/components/common/hero-journey";
 import OurServices from "@/components/common/our-services";
 export default function FrontPage(props) {
   // Loading state for previews
@@ -25,6 +25,8 @@ export default function FrontPage(props) {
 
   const ContactSummaryDescription = "From preventive checkups to specialty support, our network of healthcare providers delivers high-quality, compassionate care tailored to your life — wherever it leads."
 
+  const HeroJourneyDescription = "With more than 10K highly skilled professionals dedicated to delivering high-quality care with compassion, Altais is ready to honor every healthcare journey."
+
   return (
     <>
       <Layout>
@@ -37,7 +39,7 @@ export default function FrontPage(props) {
         {/* Landing Page Banner End */}
 
         {/* Hero Journey Start */}
-        <HeroJourney />
+        <HeroJourney heading="Our Patient Services" heading2={false} description={HeroJourneyDescription} />
         {/* Hero Journey End */}
 
         {/* Search Services Start */}
