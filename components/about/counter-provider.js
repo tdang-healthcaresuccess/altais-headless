@@ -33,7 +33,7 @@ export default function CounterProvider() {
           </ul>
 
           <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
-          <div className="block">
+          <div className="block pb-12">
             <Swiper
               modules={[Navigation, Pagination]}
               navigation={true}
