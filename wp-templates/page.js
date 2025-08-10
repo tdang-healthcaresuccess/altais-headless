@@ -13,6 +13,11 @@ const PAGE_QUERY = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      contentTemplates{
+      fieldGroupName
+      templateSelection
+      templateC
+    }
     }
   }
 `;
@@ -52,13 +57,15 @@ export default function SinglePage(props) {
     return <p>No pages have been published</p>;
   }
 
-
   const siteData = siteDataQuery?.data?.generalSettings || {};
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content } = data?.page || {};
+  const { title, content, contentTemplates } = data?.page || {};
+
+  const templateSelection = contentTemplates?.templateSelection;
+  const templateCContent = contentTemplates?.templateC;
 
   return (
     <>
@@ -71,21 +78,20 @@ export default function SinglePage(props) {
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
-          {/* Landing Page Banner Start */}
-     
-          {/* Landing Page Banner End */}
+      {/* Landing Page Banner Start */}
+      {/* Landing Page Banner End */}
       <main className="container">
-
-        
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-        
+        {templateSelection === "Template C" ? (
+          <TemplateC content={templateCContent} />
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        )}
       </main>
 
       <Footer />
     </>
   );
 }
-
 
 SinglePage.queries = [
   {
