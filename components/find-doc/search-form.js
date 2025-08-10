@@ -1,12 +1,40 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import GridIcon from "@/public/icons/grid-icon.svg";
-import PinMarker from "@/public/icons/pin-marker.svg"
-import SearchLaunchIcon from "@/public/icons/tabler_location-filled.svg"
-import SearchIcon from "@/public/icons/icomoon-free_search.svg"
+import PinMarker from "@/public/icons/pin-marker.svg";
+import SearchLaunchIcon from "@/public/icons/tabler_location-filled.svg";
+import SearchIcon from "@/public/icons/icomoon-free_search.svg";
+import { LayoutGrid } from "lucide-react";
+import { AlignJustify } from "lucide-react";
+import { Check } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function DocSearchForm() {
+  const [showLayoutGrid, setShowLayoutGrid] = useState(false);
+  const handleToggleLayout = () => setShowLayoutGrid(!showLayoutGrid);
+  const [activeLayout, setActiveLayout] = useState("grid");
+
+  const LayoutRef = useRef(null); 
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (LayoutRef.current && !LayoutRef.current.contains(event.target)) {
+          setShowLayoutGrid(false);
+        }
+      }
+      if (showLayoutGrid) {
+        document.addEventListener("mousedown", handleClickOutside);
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [showLayoutGrid]);
+
   return (
     <div className="block">
       <section className="block box-shadow-custom5">
@@ -30,21 +58,44 @@ export default function DocSearchForm() {
           <div className="block md:hidden px-6 py-8">
             <div className=" w-full h-[1px] bg-secondary"></div>
           </div>
-          
+
           <div className="flex flex-col md:flex-row pb-9 gap-6 px-6 md:px-0">
             <div className="block relative">
-              <Image src={PinMarker} alt="Pin Marker" className="absolute left-3 top-4" />
-              <input type="text" placeholder="City or Zip" className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]" />
+              <Image
+                src={PinMarker}
+                alt="Pin Marker"
+                className="absolute left-3 top-4"
+              />
+              <input
+                type="text"
+                placeholder="City or Zip"
+                className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
+              />
               <button type="button">
-                <Image src={SearchLaunchIcon} alt="Launch" className="absolute right-3 top-4" />
+                <Image
+                  src={SearchLaunchIcon}
+                  alt="Launch"
+                  className="absolute right-3 top-4"
+                />
               </button>
             </div>
             <div className="block relative">
-              <Image src={SearchIcon} alt="Search" className="absolute left-3 top-4" />
-              <input type="text" placeholder="Doctor's Name, Insurance, Specialty, etc." className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]" />
+              <Image
+                src={SearchIcon}
+                alt="Search"
+                className="absolute left-3 top-4"
+              />
+              <input
+                type="text"
+                placeholder="Doctor's Name, Insurance, Specialty, etc."
+                className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
+              />
             </div>
             <div className="flex justify-end">
-              <button type="button" className="btn-md max-w-[175px] btn-outline-secondary rounded-[5px] flex-center gap-1">
+              <button
+                type="button"
+                className="btn-md max-w-[175px] btn-outline-secondary rounded-[5px] flex-center gap-1"
+              >
                 Search{" "}
                 <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </button>
@@ -65,17 +116,64 @@ export default function DocSearchForm() {
             </div>
             <div className="flex justify-between items-end w-full md:w-[calc(75%-35px)]">
               <div className="flex w-full md:w-auto gap-6">
-                <button type="button" className="flex-1 whitespace-nowrap btn-normal">
+                <button
+                  type="button"
+                  className="flex-1 whitespace-nowrap btn-normal"
+                >
                   Find Primary Care
                 </button>
                 <button type="button" className="flex-1 btn-normal">
                   Find Urgent Care
                 </button>
               </div>
-              <div className="hidden md:block">
-                <button type="button" className="btn">
+              <div className="hidden md:block relative">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={handleToggleLayout}
+                >
                   <Image src={GridIcon} alt="category" width={26} height={25} />
                 </button>
+                {showLayoutGrid && (
+                  <div ref={LayoutRef} className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-[5px]">
+                    <h4 className="text-lg text-secondary font-medium px-2 py-1.5 border-b border-inputBorder">
+                      Layout
+                    </h4>
+                    <ul>
+                      {/* Grid Option */}
+                      <li
+                        className={`flex items-center text-[#083d7880] justify-between cursor-pointer p-2 gap-2 text-base font-normal ${
+                          activeLayout === "grid" ? "bg-greyF5" : ""
+                        }`}
+                        onClick={() => setActiveLayout("grid")}
+                      >
+                        <Check
+                          size={22}
+                          color={activeLayout === "grid" ? "#999795" : "#fff"}
+                          className="mr-3"
+                        />
+                        Grid
+                        <LayoutGrid color="#083d7880" size={26} />
+                      </li>
+
+                      {/* List Option */}
+                      <li
+                        className={`flex items-center text-[#083d7880] justify-between cursor-pointer p-2 gap-2 text-base font-normal ${
+                          activeLayout === "list" ? "bg-greyF5" : ""
+                        }`}
+                        onClick={() => setActiveLayout("list")}
+                      >
+                        <Check
+                          size={22}
+                          color={activeLayout === "list" ? "#999795" : "#fff"}
+                          className="mr-3"
+                        />
+                        List
+                        <AlignJustify color="#083d7880" size={26} />
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           </div>
