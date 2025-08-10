@@ -26,14 +26,14 @@ export default function CounterProvider() {
               <h3 className="countlist-h3">02</h3>
               <p className="countlist-p">Medi-Cal Plans</p>
             </li>
-            <li className="countlist">
+            <li className="countlist px-5 md:px-0">
               <h3 className="countlist-h3">30+</h3>
               <p className="countlist-p">Hospitals + Centers of Excellence</p>
             </li>
           </ul>
 
           <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
-          <div className="block">
+          <div className="block pb-12">
             <Swiper
               modules={[Navigation, Pagination]}
               navigation={true}

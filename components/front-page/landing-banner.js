@@ -22,8 +22,8 @@ export default function LandingBanner() {
 
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full">
-          <div className="p-6 pb-0 md:pb-6 md:p-0 md:w-[40%] h-full flex flex-col justify-center">
-            <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-[#083D78]">
+          <div className="pt-[25px] px-6 md:px-0 md:pt-0 md:w-[40%] h-full flex flex-col justify-center">
+            <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
               Shaping the future of healthcare.
             </h1>
             <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">

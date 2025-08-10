@@ -10,17 +10,17 @@ export default function ContactJourney({heading, subheading,description}) {
         <div className="block md:flex justify-center items-start">
           {/* Left Column */}
           <div className="flex justify-center md:justify-end">
-            <h3 className="flex flex-col font-light text-center md:text-left max-w-[250px] text-[#083D78]">
+            <h3 className="flex flex-col font-light text-center md:text-left max-w-[250px] text-bluePrimary">
               <b className="font-medium">{heading}</b> {subheading}
             </h3>
           </div>
 
           {/* Vertical Separator */}
-          <div className="w-full md:w-[1px] h-[1px] md:h-[155px] bg-[#008889] my-6 md:my-0 max-0 md:mx-10"></div>
+          <div className="w-full md:w-[1px] h-[1px] md:h-[155px] bg-primary my-6 md:my-0 max-0 md:mx-10"></div>
 
           {/* Right Column */}
           <div className="block max-w-full md:max-w-[540px]">
-            <p className="text-[#3D3D3D] text-lg leading-[32px] font-normal text-center md:text-left">
+            <p className="text-grey3d text-lg leading-[32px] font-normal text-center md:text-left">
               {description}
             </p>
             <Link href="/#" className="btn-gradient btn-sm flex-center w-full md:w-[180px] gap-1 mt-8">

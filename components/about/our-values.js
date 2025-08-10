@@ -11,7 +11,7 @@ const values = [
     title: "Compassion",
     description: (
       <>
-        <span className="font-medium text-[#008889]">We act with empathy</span>{" "}
+        <span className="font-medium text-primary">We act with empathy</span>{" "}
         and a deep respect for the challenges faced by physicians and their
         patients. Our work is driven by a genuine commitment to improving lives
         and ensuring that care is delivered with dignity, understanding, and
@@ -24,7 +24,7 @@ const values = [
     title: "Community",
     description: (
       <>
-        <span className="font-medium text-[#008889]">
+        <span className="font-medium text-primary">
           We foster a culture of collaboration
         </span>{" "}
         with physicians, patients across the healthcare ecosystem, and among our
@@ -38,7 +38,7 @@ const values = [
     title: "Leadership",
     description: (
       <>
-        <span className="font-medium text-[#008889]">
+        <span className="font-medium text-primary">
           We lead with integrity and vision,
         </span>{" "}
         setting the standard for excellence in physician support and healthcare
@@ -52,7 +52,7 @@ const values = [
     title: "Excellence",
     description: (
       <>
-        <span className="font-medium text-[#008889]">
+        <span className="font-medium text-primary">
           We are relentlessly focused,
         </span>{" "}
         results-driven, and accountable for delivering measurable value to
@@ -67,7 +67,7 @@ const values = [
     title: "Agility",
     description: (
       <>
-        <span className="font-medium text-[#008889]">
+        <span className="font-medium text-primary">
           We embrace change as a constant
         </span>{" "}
         and respond swiftly to the evolving needs of the healthcare industry.
@@ -80,12 +80,12 @@ const values = [
 
 export default function OurValues() {
   return (
-    <section className="block pt-[75px] pb-[100px] bg-white box-shadow-custom3">
+    <section className="block pt-0 md:pt-[75px] pb-[75px] md:]pb-[100px] bg-white box-shadow-custom3 px-6 md:px-0">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Left Static Box */}
           <div className="p-8 rounded-xl text-white flex items-center justify-start min-h-[280px] bg-arc2 inset-0 bg-cover bg-center">
-            <h2 className="text-[50px] leading-[55px] font-medium">
+            <h2 className="text-[50px] leading-[55px] font-regular">
               Our
               <br />
               Values
@@ -96,17 +96,17 @@ export default function OurValues() {
           {values.map((item, index) => (
             <div
               key={index}
-              className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-3 border"
+              className="bg-white flex flex-col gap-3"
             >
               <div className="flex items-center gap-4">
-                <div className="w-[40px] h-[40px] flex-center rounded-full border border-[#008889]">
-                  <Image src={item.icon} alt="values" className="w-[17px] h-[17px] object-contain" />
+                <div className="w-[40px] h-[40px] flex-center rounded-full border border-primary">
+                  <Image src={item.icon} alt="values" className="w-full h-full p-2 object-contain" />
                 </div>
-                <h3 className="text-[18px] leading-[32px] text-[#083D78] font-semibold">
+                <h3 className="text-[18px] leading-[32px] text-bluePrimary font-semibold">
                   {item.title}
                 </h3>
               </div>
-              <p className="text-[#3D3D3D] text-lg leading-[32px]">
+              <p className="text-grey3d text-lg leading-[32px]">
                 {item.description}
               </p>
             </div>

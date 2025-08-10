@@ -88,6 +88,9 @@ button {
 .btn-md {
   @apply text-[18px] leading-[24px] h-[50px] py-2 px-8 w-full md:w-[250px];
 }
+.btn-normal{
+  @apply border border-primary rounded-normal text-bluePrimary text-sm md:text-lg leading-[24px] p-3 h-[50px];
+}
 .btn-social {
   @apply w-5 h-5 rounded-[3px] border border-white bg-[#84D0D2];
 }
@@ -99,25 +102,46 @@ button {
   @apply flex-auto md:flex-1 text-center w-[calc(50%-20px)] md:w-auto;
 }
 .countlist-h3 {
-  @apply text-[65px] leading-[60px] pb-6 text-[#008889];
+  @apply text-[65px] leading-[60px] pb-6 text-primary;
 }
 .countlist-h4{
-  @apply text-[30px] leading-[45px] text-[#008889];
+  @apply text-[30px] leading-[45px] text-primary;
 }
 .countlist-p {
-  @apply text-[20px] leading-[24px] text-[#083D78];
+  @apply text-[20px] leading-[24px] text-bluePrimary;
 }
 .countlist-p1{
-  @apply text-[12px] leading-[17px] text-[#3D3D3D];
+  @apply text-[12px] leading-[17px] text-grey3d;
 }
 .list-items1 {
   @apply text-[#C75327] text-[17px] leading-[35px] font-medium flex items-center gap-1;
 }
-.btn-outline-primary {
+.btn-outline-secondary {
   @apply border border-[#C75327] text-[#C75327];
 }
+.btn-outline-ternery {
+  @apply border border-primary text-bluePrimary;
+}
+.btn-outline-primary {
+  @apply border border-primary text-primary;
+}
 .input-style {
-  @apply border border-inputBorder placeholder-[#083d78] text-[#083d78] text-lg leading-[24px] rounded-[5px] h-[50px] py-3 px-4 outline-0;
+  @apply border border-inputBorder placeholder-bluePrimary text-bluePrimary text-lg leading-[24px] rounded-normal h-[50px] py-3 px-4 outline-0;
+}
+.input-style2{
+  @apply border border-inputBorder placeholder-[#083d7880] text-[#083d7880] text-lg leading-[24px] rounded-normal h-[50px] py-3 px-4 outline-0;
+}
+.image-responsive{
+  @apply w-full h-auto object-cover;
+}
+.filter-select{
+  @apply border border-inputBorder h-[30px] w-full rounded-normal text-bluePrimary text-xs flex items-center outline-none px-1.5 font-medium cursor-pointer; 
+}
+.filter-input{
+  @apply border border-inputBorder h-[40px] w-full rounded-normal text-bluePrimaryLite text-sm flex items-center outline-none px-2.5 font-medium; 
+}
+.btn-core{
+@apply whitespace-nowrap rounded-normal px-3 py-1.5 flex-center text-sm;
 }
 
 /* styles/globals.css or styles/custom.css */
@@ -132,7 +156,7 @@ button {
 .swiper-pagination {
   justify-content: flex-start;
   display: flex;
-  bottom: 0px;
+  bottom: 0px !important;
 }
 .swiper-initialized {
   min-height: 290px;
@@ -149,6 +173,10 @@ button {
     position: relative;
     top: 10px;
   }
+}
+
+.swiper-initialized {
+    min-height: auto;
 }
 
 /* Landing Page */
@@ -177,6 +205,24 @@ button {
 .bg-about-landing-banner{
   background-image: url("./../public/media/about-banner.png");
 }
+.bg-findDoc-landing-banner{
+  background-image: url("./../public/media/findDoc-banner.png");
+}
+.bg-findDoc-landing-banner-mobile{
+  background-image: url("./../public/media/findDoc-banner-mobile.png");
+}
+.bg-services-landing-banner{
+  background-image: url("./../public/media/services-banner.png");
+}
+.bg-services-landing-banner-mobile{
+  background-image: url("./../public/media/services-banner-mobile.png");
+}
+.bg-single-landing-banner{
+  background-image: url("./../public/media/single-page-banner.png");
+}
+.bg-single-landing-banner-mobile{
+  background-image: url("./../public/media/single-page-banner.png");
+}
 .bg-arc2{
   background-image: url("./../public/media/banner2-mobile.jpg");
 }
@@ -191,4 +237,28 @@ button {
 }
 .box-shadow-custom3{
    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.1);
+}
+.box-shadow-custom5{
+   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+}
+.box-shadow-dark{
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Custom Paginagtion design */
+.pagination-li{
+  @apply border border-primary cursor-pointer w-[35px] h-[35px] rounded-[4px] flex-center text-primary text-[15px] font-semibold;
+}
+.pagination-li.active{
+  @apply text-secondary border-secondary;
+}
+.pag-action{
+  @apply w-auto px-5 py-2 font-normal text-secondary border-secondary flex-center gap-1;
+}
+
+
+/* Typograpgy */
+h1{
+  @apply text-[40px] leading-[60px];
 }
