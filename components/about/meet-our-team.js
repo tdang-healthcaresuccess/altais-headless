@@ -13,7 +13,7 @@ export default function MeetOurTeam() {
     <section className="block py-12 px-6 md:px-0 bg-[#d9d9d926]">
       <div className="container mx-auto">
         <div className="block">
-            <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-[45px]">
+            <div className="flex flex-col md:flex-row border border-primary rounded-normal mb-[45px]">
             <div className="block w-full">
               <Image
                 src={isMobile ? LeadershipTeamMobileMedia : LeadershipTeamMedia}
@@ -22,7 +22,7 @@ export default function MeetOurTeam() {
               />
             </div>
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px]">
-              <h3 className="text-[#083D78] text-[26px] sm:text-[18px] md:text-[24px] lg:-[26px] leading-[36px] font-light mb-12">
+              <h3 className="text-bluePrimary text-[26px] sm:text-[18px] md:text-[24px] lg:-[26px] leading-[36px] font-light mb-12">
                 <b className="font-medium">Meet Our Leadership Team</b>
                 <br /> Discover the decision-makers behind Altais
               </h3>

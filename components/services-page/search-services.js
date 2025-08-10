@@ -13,7 +13,7 @@ export default function HowCanWeHelp() {
           and the content takes the remaining 1/4.
           On smaller screens, they will stack.
         */}
-        <div className="flex flex-wrap bg-white md:flex-nowrap items-center border-none md:border border-primary rounded-[5px]"> 
+        <div className="flex flex-wrap bg-white md:flex-nowrap items-center border-none md:border border-primary rounded-normal"> 
           {/* Image section, taking 3/4 width on md and up.
               Using a standard `<img>` tag with a placeholder image.
           */}
@@ -36,14 +36,14 @@ export default function HowCanWeHelp() {
 
             {/* Dropdown for Services */}
             <div className="relative mb-[55px]">
-              <select className="block w-full appearance-none bg-white border border-[#999795] rounded-[5px] py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary">
+              <select className="block w-full appearance-none bg-white border border-[#999795] rounded-normal py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary">
                 <option>Services</option>
                 {/* You can add more options here */}
                 <option>Primary Care</option>
                 <option>Mental Health</option>
                 <option>Pediatrics</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#083D78]">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-bluePrimary">
                 <ChevronDown className="w-5 h-5" color="#008889" />
               </div>
             </div>

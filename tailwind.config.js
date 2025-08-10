@@ -11,11 +11,15 @@ module.exports = {
         primary: "#008889", // rgba(0, 136, 137, 1)
         secondary: "#c75327", // rgba(199, 83, 39, 1)
         bluePrimary: "#083D78",
+        bluePrimaryLite: "#083d7880",
         inputBorder: "#999795",
         lightPrimary: "#00888980",
         grey3d:"#3d3d3d",
         greyF9: "#f9f9f9",
         greyF5: "#f5f5f5",
+      },
+      borderRadius: {
+        normal: "5px", // custom radius
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

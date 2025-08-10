@@ -11,13 +11,12 @@ import { LayoutGrid } from "lucide-react";
 import { AlignJustify } from "lucide-react";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import SpecialityShortInfo from "../common/specialty-short-info";
 
-export default function DocSearchForm() {
-  const [showLayoutGrid, setShowLayoutGrid] = useState(false);
-  const handleToggleLayout = () => setShowLayoutGrid(!showLayoutGrid);
-  const [activeLayout, setActiveLayout] = useState("grid");
-
-  const LayoutRef = useRef(null); 
+export default function DocSearchForm({handleToggleLayout, showLayoutGrid, activeLayout, setActiveLayout, setShowLayoutGrid}) {
+  console.log(activeLayout);
+  
+  const LayoutRef = useRef(null);
     useEffect(() => {
       function handleClickOutside(event) {
         if (LayoutRef.current && !LayoutRef.current.contains(event.target)) {
@@ -94,7 +93,7 @@ export default function DocSearchForm() {
             <div className="flex justify-end">
               <button
                 type="button"
-                className="btn-md max-w-[175px] btn-outline-secondary rounded-[5px] flex-center gap-1"
+                className="btn-md max-w-[175px] btn-outline-secondary rounded-normal flex-center gap-1"
               >
                 Search{" "}
                 <ChevronRight className="w-[20px] h-[20px] text-secondary" />
@@ -103,9 +102,10 @@ export default function DocSearchForm() {
           </div>
         </div>
       </section>
-      <section className="flex pt-[44px] px-6 md:px-0">
+      <section className="flex px-6 md:px-0">
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between pb-9 border-b border-primary">
+          <SpecialityShortInfo />
+          <div className="flex flex-col md:flex-row justify-between pt-4 pb-9 border-b border-primary">
             <div className="block w-full md:w-[calc(25%-35px)] pb-6 md:pb-0">
               <p className="text-[14px] text-bluePrimary leading-[19px] font-light pb-2">
                 1 - 20 of 5117 results
@@ -135,7 +135,7 @@ export default function DocSearchForm() {
                   <Image src={GridIcon} alt="category" width={26} height={25} />
                 </button>
                 {showLayoutGrid && (
-                  <div ref={LayoutRef} className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-[5px]">
+                  <div ref={LayoutRef} className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-normal">
                     <h4 className="text-lg text-secondary font-medium px-2 py-1.5 border-b border-inputBorder">
                       Layout
                     </h4>

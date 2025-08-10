@@ -102,11 +102,11 @@ export default function OurValues() {
                 <div className="w-[40px] h-[40px] flex-center rounded-full border border-primary">
                   <Image src={item.icon} alt="values" className="w-full h-full p-2 object-contain" />
                 </div>
-                <h3 className="text-[18px] leading-[32px] text-[#083D78] font-semibold">
+                <h3 className="text-[18px] leading-[32px] text-bluePrimary font-semibold">
                   {item.title}
                 </h3>
               </div>
-              <p className="text-[#3D3D3D] text-lg leading-[32px]">
+              <p className="text-grey3d text-lg leading-[32px]">
                 {item.description}
               </p>
             </div>

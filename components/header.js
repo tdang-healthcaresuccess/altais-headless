@@ -90,7 +90,7 @@ export default function Header({ siteTitle, siteDescription }) {
                   (item, idx) => (
                     <div key={item.id}>
                       <Link
-                        className="flex flex-col text-[#083D78] text-sm leading[18px] font-semibold"
+                        className="flex flex-col text-bluePrimary text-sm leading[18px] font-semibold"
                         href={item.uri}
                       >
                         {idx < 3 ? (
@@ -211,7 +211,7 @@ export default function Header({ siteTitle, siteDescription }) {
               </div>
               <button
                 type="button"
-                className="bg-custom-gradient min-w-12 w-12 h-12 rounded-[5px] flex-center"
+                className="bg-custom-gradient min-w-12 w-12 h-12 rounded-normal flex-center"
               >
                 <Image src={SearchIcon} alt="search" />
               </button>

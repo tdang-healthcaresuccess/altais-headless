@@ -11,17 +11,17 @@ export default function VisionMission() {
             <Image
               src={VisionMissionMedia}
               alt="Vision Mission"
-              className="w-full border border-primary rounded-[5px]"
+              className="w-full border border-primary rounded-normal"
             />
           </div>
 
           {/* Right Column */}
           <div className="block w-full">
             <div className="block">
-              <h4 className="text-[22px] leading-[32px] text-[#083D78] mb-2">
+              <h4 className="text-[22px] leading-[32px] text-bluePrimary mb-2">
                 Our Mission
               </h4>
-              <p className="text-[18px] leading-[32px] text-[#3d3d3d]">
+              <p className="text-[18px] leading-[32px] text-grey3d">
                 To ignite an exceptional healthcare system that cultivates the
                 health and well-being of physicians, patients, and the clinical
                 community.
@@ -30,10 +30,10 @@ export default function VisionMission() {
             {/* Vertical Separator */}
             <div className="w-full h-[1px] bg-[#00888980] my-12"></div>
             <div className="block">
-              <h4 className="text-[22px] leading-[32px] text-[#083D78] mb-2">
+              <h4 className="text-[22px] leading-[32px] text-bluePrimary mb-2">
                 Our Vision
               </h4>
-              <p className="text-[18px] leading-[32px] text-[#3d3d3d]">
+              <p className="text-[18px] leading-[32px] text-grey3d">
                 We envision a future where every person receives exceptional
                 care — led by supported physicians, connected by innovative
                 technology, and rooted in trust, compassion, and community.

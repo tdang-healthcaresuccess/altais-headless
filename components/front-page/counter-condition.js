@@ -40,9 +40,9 @@ export default function CounterCondition() {
 
           <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
 
-          <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-10 md:mb-[45px]">
+          <div className="flex flex-col md:flex-row border border-primary rounded-normal mb-10 md:mb-[45px]">
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px] order-2 md:order-1">
-              <h3 className="text-[#083D78] text-[26px] sm:text-[18px] md:text-[18px] lg:text-[26px] md:leading-[20px] lg:leading-[36px] font-light mb-12">
+              <h3 className="text-bluePrimary text-[26px] sm:text-[18px] md:text-[18px] lg:text-[26px] md:leading-[20px] lg:leading-[36px] font-light mb-12">
                 <b className="font-medium">Conditions We Treat</b>
                 <br /> Patient Resources & Health Information
               </h3>
@@ -63,7 +63,7 @@ export default function CounterCondition() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row border border-primary rounded-[5px] mb-[45px]">
+          <div className="flex flex-col md:flex-row border border-primary rounded-normal mb-[45px]">
             <div className="block w-full">
               <Image
                 src={FindDoctorBanner}
@@ -72,7 +72,7 @@ export default function CounterCondition() {
               />
             </div>
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px]">
-              <h3 className="text-[#083D78] text-[26px] sm:text-[18px] md:text-[24px] lg:-[26px] leading-[36px] font-light mb-12">
+              <h3 className="text-bluePrimary text-[26px] sm:text-[18px] md:text-[24px] lg:-[26px] leading-[36px] font-light mb-12">
                 <b className="font-medium">Find a Doctor</b>
                 <br /> or Clinic Near You
               </h3>
@@ -87,16 +87,16 @@ export default function CounterCondition() {
           </div>
 
           {/* New Education Slider Section */}
-          <div className="flex flex-col lg:flex-row border border-primary rounded-[5px] p-0 md:p-7 lg:p-7 items-start">
+          <div className="flex flex-col lg:flex-row border border-primary rounded-normal p-0 md:p-7 lg:p-7 items-start">
             <div className="flex flex-col lg:flex-row gap-5 lg:gap-7 w-full">
               <div className="block w-full lg:max-w-[170px] min-w-[165px] order-2 lg:order-1 px-7 md:px-0">
-                <h3 className="text-[#083D78] text-[26px] border-b md:border-none border-[#00888980] pb-7 md:pb-0 leading-[36px] font-light">
+                <h3 className="text-bluePrimary text-[26px] border-b md:border-none border-[#00888980] pb-7 md:pb-0 leading-[36px] font-light">
                   <b className="font-medium"> News, Education + Insights</b>
                   <br /> from Altais
                 </h3>
               </div>
               <div className="block w-full order-1 md:order-2">
-                <div className="bg-half-star-slider w-full md:w-[608px] inset-0 bg-contain bg-no-repeat bg-right h-[350px] md:h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-[5px] p-7 pr-[100px]">
+                <div className="bg-half-star-slider w-full md:w-[608px] inset-0 bg-contain bg-no-repeat bg-right h-[350px] md:h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-normal p-7 pr-[100px]">
                   <Swiper
                     modules={[Pagination]}
                     spaceBetween={10}

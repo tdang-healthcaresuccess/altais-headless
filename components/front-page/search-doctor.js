@@ -21,7 +21,7 @@ export default function SearchDoctor() {
           <div className="hidden sm:block w-full md:w-[1px] h-[1px] md:h-[155px] bg-[#C75327] my-6 md:my-0 max-0 md:mx-10"></div>
 
           <div className="block flex-1">
-            <h2 className="text-[26px] leading-[36px] text-[#083D78] pb-7">Search Doctors</h2>
+            <h2 className="text-[26px] leading-[36px] text-bluePrimary pb-7">Search Doctors</h2>
             <div className="block w-full">
               <div className="flex flex-col md:flex-row gap-5 justify-between mb-5">
                 <div className="block w-full">
@@ -67,7 +67,7 @@ export default function SearchDoctor() {
             </Link>
               <Link
               href="/#"
-              className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-[5px] !h-[50px] gap-1"
+              className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-normal !h-[50px] gap-1"
             >
               Search
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />

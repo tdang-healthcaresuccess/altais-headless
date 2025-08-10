@@ -3,7 +3,7 @@ import DocSearchList from "./doctor-list";
 import DocSearchFilterSidebar from "./search-filter-sidebar";
 import FilterSorting from "@/public/icons/filter-sorting.svg"
 
-export default function DoctorSearchResults() {
+export default function DoctorSearchResults({activeLayout}) {
   return (
     <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px] px-6 md:px-0">
       <div className="container mx-auto">
@@ -20,7 +20,7 @@ export default function DoctorSearchResults() {
             </div>
           </div>
           <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
-            <DocSearchList />
+            <DocSearchList activeLayout={activeLayout} />
           </div>
         </div>
       </div>

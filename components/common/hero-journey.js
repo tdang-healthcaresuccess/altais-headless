@@ -7,7 +7,7 @@ export default function HeroJourney({ heading, heading2, description }) {
         <div className="block md:flex justify-center items-start">
           {/* Left Column */}
           <div className="flex justify-start md:justify-end">
-            <h3 className="flex flex-col font-medium text-[22px] leading-[32px] text-left max-w-full md:max-w-[250px] text-[#083D78] mb-3 md:mb-0">
+            <h3 className="flex flex-col font-medium text-[22px] leading-[32px] text-left max-w-full md:max-w-[250px] text-bluePrimary mb-3 md:mb-0">
               {heading}
               {heading2 && (
                 <>
