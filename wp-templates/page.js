@@ -13,7 +13,9 @@ import Section3a from "../components/acf/Section3a";
 import Section4a from "../components/acf/Section4a";
 import Section5a from "../components/acf/Section5a";
 import TemplateC from "@/components/acf/TemplateC";
-
+import Breadcrumb from "@/components/common/breadcrumb";
+import InnerPageBanner from "@/components/common/inner-page-banner";
+import Layout from "@/components/Layout";
 
 
 
@@ -130,17 +132,26 @@ export default function SinglePage(props) {
   const templateCContent = contentTemplates?.templateC;
 
   return (
-    <>
+    <Layout>
       <Head>
         <title>{`${title} - ${siteTitle}`}</title>
       </Head>
 
-      <Header
-        siteTitle={siteTitle}
-        siteDescription={siteDescription}
-        menuItems={menuItems}
-        
-      />
+    
+       <div className="block">
+              {/* Inner Page Banner start */}
+              <InnerPageBanner
+                DesktopBanner="bg-services-landing-banner"
+                MobileBanner="bg-services-landing-banner-mobile"
+                heading="H1: Lorem ipsum dolor sit amet consectetur"
+              />
+            </div>
+      
+            {/* Breadcrumb Start */}
+            <Breadcrumb
+              items={[{ label: "Home", link: "/" }, { label: "Template A" }]}
+            />
+            {/* Breadcrumb End */}
       {console.log(templateAContent )}
       {/* Landing Page Banner Start */}
       {/* Landing Page Banner End */}
@@ -174,10 +185,7 @@ export default function SinglePage(props) {
         )}
       </main>
 
-
-
-      <Footer />
-    </>
+    </Layout>
   );
 }
 
