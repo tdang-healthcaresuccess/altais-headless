@@ -26,9 +26,9 @@ export default function InnerPageBanner({
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
               {heading}
             </h1>
-          </div>
-          {/* Vertical Separator */}
+            {/* Vertical Separator */}
           <div className="flex md:hidden w-full md:w-[1px] h-[1px] md:h-[113px] bg-[#C75327] my-7 md:my-0 max-0 md:mx-10"></div>
+          </div>
         </div>
       </div>
     </section>
