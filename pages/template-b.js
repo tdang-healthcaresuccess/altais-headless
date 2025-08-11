@@ -1,6 +1,7 @@
 
 
 import Breadcrumb from "@/components/common/breadcrumb";
+import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";
 import TemplateBContent from "@/components/template-content/template-b-content";
 
