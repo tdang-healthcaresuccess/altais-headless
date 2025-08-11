@@ -1,3 +1,4 @@
+import Section1a from "@/components/acf/Section1a";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";
@@ -22,7 +23,7 @@ export default function TemplateA() {
       {/* Breadcrumb End */}
 
       {/* Template A Start */}
-      <TemplateAContent />
+      <Section1a />
       {/* Template A End */}
     </Layout>
   );
