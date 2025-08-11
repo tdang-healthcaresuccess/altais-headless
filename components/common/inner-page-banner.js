@@ -7,6 +7,9 @@ export default function InnerPageBanner({
   heading,
   DesktopBanner,
   MobileBanner,
+  desktopImageUrl,
+  mobileImageUrl,
+  useDefaultImage = true,
 }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
@@ -18,6 +21,17 @@ export default function InnerPageBanner({
             "md:absolute inset-0 bg-cover bg-right",
             isMobile ? `${MobileBanner} min-h-[400px]` : DesktopBanner
           )}
+          style={
+            useDefaultImage
+              ? {}
+              : {
+                  backgroundImage: `url('${
+                    isMobile
+                      ? mobileImageUrl || desktopImageUrl
+                      : desktopImageUrl
+                  }')`,
+                }
+          }
         ></div>
 
         {/* Content container over the image */}

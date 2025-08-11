@@ -22,6 +22,18 @@ const PAGE_QUERY = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      heroBanner {
+      heroBannerImage {
+        node {
+          sourceUrl
+        }
+      }
+      heroBannerImageMobile {
+        node {
+          sourceUrl
+        }
+      }
+    }
       contentTemplates {
         templateSelection
         templateC
@@ -121,15 +133,18 @@ export default function SinglePage(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, contentTemplates } = data?.page || {};
-
+  const { title, content, contentTemplates, heroBanner } = data?.page || {};
+  const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
+  const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
   const templateSelection = contentTemplates?.templateSelection?.[0];
   const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
-  console.log(templateCContent);
-  
+  const useDefaultImage = !heroDesktop;
+  const desktopImageUrl = heroDesktop;
+  const mobileImageUrl = heroMobile ;
   return (
     <Layout>
+   
       <Head>
         <title>{`${title} - ${siteTitle}`}</title>
       </Head>
@@ -137,12 +152,16 @@ export default function SinglePage(props) {
       <div className="block">
         {/* Inner Page Banner start */}
         <InnerPageBanner
+          desktopImageUrl={desktopImageUrl}
+          mobileImageUrl={mobileImageUrl}
+          useDefaultImage={useDefaultImage}
           DesktopBanner="bg-services-landing-banner"
           MobileBanner="bg-services-landing-banner-mobile"
           heading={title}
         />
       </div>
-
+ 
+     
       {/* Breadcrumb Start */}
       <Breadcrumb
         items={[{ label: "Home", link: "/" }, { label: "Template A" }]}
