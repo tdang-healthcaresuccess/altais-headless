@@ -20,7 +20,7 @@ export default function ProviderDetails() {
           items={[
             { label: "Home", link: "/" },
             { label: "Find Doctor", link: "/find-doctor" },
-            { label: "Brittany Camille, FNP-C" }, // No link for last one
+            { label: "Brittany Camille, FNP-C" }, 
           ]}
         />
         {/* Breadcrumb End */}

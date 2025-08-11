@@ -1,8 +1,11 @@
-import Breadcrumb from "@/components/common/breadcrumb";
-import Layout from "@/components/Layout";
-import TemplateAContent from "@/components/template-content/template-a-content";
 
-export default function TemplateA() {
+
+import Breadcrumb from "@/components/common/breadcrumb";
+import InnerPageBanner from "@/components/common/inner-page-banner";
+import Layout from "@/components/Layout";
+import TemplateBAlternateContent from "@/components/template-content/template-b-alternate-content";
+
+export default function TemplateBAlternate() {
   return (
     <Layout>
       <div className="block">
@@ -16,13 +19,13 @@ export default function TemplateA() {
 
       {/* Breadcrumb Start */}
       <Breadcrumb
-        items={[{ label: "Home", link: "/" }, { label: "Template A" }]}
+        items={[{ label: "Home", link: "/" },{ label: "Services", link: "/#" }, { label: "Vaccinations" }]}
       />
       {/* Breadcrumb End */}
 
-      {/* Template A Start */}
-      <TemplateAContent />
-      {/* Template A End */}
+      {/* Template B Alternate Start */}
+      <TemplateBAlternateContent />
+      {/* Template B Alternate End */}
     </Layout>
   );
 }

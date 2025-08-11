@@ -14,7 +14,7 @@ module.exports = {
         bluePrimaryLite: "#083d7880",
         inputBorder: "#999795",
         lightPrimary: "#00888980",
-        grey3d:"#3d3d3d",
+        grey3d:"#3d3d3d", // rgba(61, 61, 61, 1)
         greyF9: "#f9f9f9",
         greyF5: "#f5f5f5",
       },

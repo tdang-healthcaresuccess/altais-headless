@@ -24,7 +24,7 @@ export default function Breadcrumb({ items = [] }) {
                     {item.label}
                   </Link>
                 ) : (
-                  <span className="text-primary font-medium">{item.label}</span>
+                  <span className="text-primary font-medium text-xs">{item.label}</span>
                 )}
 
                 {!isLast && (

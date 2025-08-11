@@ -16,13 +16,13 @@ export default function SinglePageBanner({
         <div
           className={clsx(
             "md:absolute inset-0 bg-cover bg-right",
-            isMobile ? `${MobileBanner} min-h-[400px]` : DesktopBanner
+            isMobile ? `${MobileBanner} min-h-[160px]` : DesktopBanner
           )}
         ></div>
 
         {/* Content container over the image */}
-        <div className="container mx-auto relative z-10 h-full pt-6 md:pt-0">
-          <div className="md:p-0 md:w-[40%] h-full flex flex-col justify-center px-6 md:px-0">
+        <div className="container mx-auto relative z-10 h-full pt-6 md:pt-0 px-6 sm:px-0 md:px-5">
+          <div className="md:p-0 md:w-[40%] h-full flex flex-col justify-center">
             <h1 className="font-poppins text-[32px] md:text-[40px] leading-[45px] md:leading-[60px] text-bluePrimary">
               {heading}
             </h1>

@@ -1,8 +1,10 @@
+
+
 import Breadcrumb from "@/components/common/breadcrumb";
 import Layout from "@/components/Layout";
-import TemplateAContent from "@/components/template-content/template-a-content";
+import TemplateBContent from "@/components/template-content/template-b-content";
 
-export default function TemplateA() {
+export default function TemplateB() {
   return (
     <Layout>
       <div className="block">
@@ -20,9 +22,9 @@ export default function TemplateA() {
       />
       {/* Breadcrumb End */}
 
-      {/* Template A Start */}
-      <TemplateAContent />
-      {/* Template A End */}
+      {/* Template B Start */}
+      <TemplateBContent />
+      {/* Template B End */}
     </Layout>
   );
 }

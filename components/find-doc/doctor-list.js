@@ -39,7 +39,7 @@ export default function DocSearchList({ activeLayout }) {
             />
           </div>
           <div className="block">
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <h3 className="font-semibold text-bluePrimary text-lg">
                 John Doe
               </h3>
@@ -47,12 +47,12 @@ export default function DocSearchList({ activeLayout }) {
                 MD, PhD
               </h3>
             </div>
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <div className="block flex-1">
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -61,7 +61,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -73,7 +73,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -82,7 +82,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -138,7 +138,7 @@ export default function DocSearchList({ activeLayout }) {
             />
           </div>
           <div className="block">
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <h3 className="font-semibold text-bluePrimary text-lg">
                 John Doe
               </h3>
@@ -146,12 +146,12 @@ export default function DocSearchList({ activeLayout }) {
                 MD, PhD
               </h3>
             </div>
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <div className="block flex-1">
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -160,7 +160,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -172,7 +172,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -181,7 +181,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -237,7 +237,7 @@ export default function DocSearchList({ activeLayout }) {
             />
           </div>
           <div className="block">
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <h3 className="font-semibold text-bluePrimary text-lg">
                 John Doe
               </h3>
@@ -245,12 +245,12 @@ export default function DocSearchList({ activeLayout }) {
                 MD, PhD
               </h3>
             </div>
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <div className="block flex-1">
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -259,7 +259,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -271,7 +271,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -280,7 +280,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -336,7 +336,7 @@ export default function DocSearchList({ activeLayout }) {
             />
           </div>
           <div className="block">
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <h3 className="font-semibold text-bluePrimary text-lg">
                 John Doe
               </h3>
@@ -344,12 +344,12 @@ export default function DocSearchList({ activeLayout }) {
                 MD, PhD
               </h3>
             </div>
-            <div className={activeLayout == "grid" ? "block" : "flex gap-2"}>
+            <div className={activeLayout == "grid" ? "block" : "flex gap-4"}>
               <div className="block flex-1">
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -358,7 +358,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
@@ -370,7 +370,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-primary text-[10px] font-semibold pb-1"
+                      ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
                       : "text-primary text-base font-semibold pb-1"
                   }
                 >
@@ -379,7 +379,7 @@ export default function DocSearchList({ activeLayout }) {
                 <p
                   className={
                     activeLayout == "grid"
-                      ? "text-grey3d text-[10px] pb-2"
+                      ? "text-grey3d text-[10px] pb-2 leading-[20px]"
                       : "text-grey3d text-base pb-2"
                   }
                 >
