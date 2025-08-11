@@ -96,9 +96,9 @@ export default function DocSearchForm({ searchQuery, setSearchQuery, locationQue
                    
                   </span>
                   {activeLayout === "grid" ? (
-                    <LayoutGrid color="#C85103" size={26} />
+                    <LayoutGrid color="#C85103" size={28} fill="#C85103"  />
                   ) : (
-                    <AlignJustify color="#C85103" size={26} />
+                    <AlignJustify color="#C85103" size={28}  strokeWidth={3}  />
                   )}
                   
                 </button>
