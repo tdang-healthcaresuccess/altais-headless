@@ -6,6 +6,16 @@ import Header from "@/components/header";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { getNextStaticProps } from "@faustwp/core";
+// Import your components for each layout
+import Section1a from "../components/acf/Section1a";
+import Section2a from "../components/acf/Section2a";
+import Section3a from "../components/acf/Section3a";
+import Section4a from "../components/acf/Section4a";
+import Section5a from "../components/acf/Section5a";
+import TemplateC from "@/components/acf/TemplateC";
+
+
+
 
 
 const PAGE_QUERY = gql`
@@ -13,11 +23,62 @@ const PAGE_QUERY = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
-      contentTemplates{
-      fieldGroupName
+  contentTemplates {
       templateSelection
       templateC
+      templateA {
+        ... on ContentTemplatesTemplateASection1aLayout {
+          fieldGroupName
+          section1aContent
+          section1aImg {
+            node {
+              sourceUrl
+              uri
+            }
+          }
+        }
+        ... on ContentTemplatesTemplateASection2aLayout {
+          content2a
+          headline2a
+          sectionBackgroundColor
+          fieldGroupName
+        }
+        ... on ContentTemplatesTemplateASection3aLayout {
+          fieldGroupName
+          section3aCards {
+            cardContent
+            cardHeadline
+            cardOptions
+            fieldGroupName
+            cardImage {
+              node {
+                uri
+              }
+            }
+          }
+        }
+        fieldGroupName
+        ... on ContentTemplatesTemplateASection4aLayout {
+          ctaButtonText
+          ctaButtonTextCopy
+          enableCta
+          fieldGroupName
+          section4aAdditionalHeadline
+          section4aAdditionalHeadlineOption
+          section4aHeadline
+          section4aImage {
+            node {
+              uri
+            }
+          }
+        }
+        ... on ContentTemplatesTemplateASection5aLayout {
+          fieldGroupName
+          section5aContent
+        }
+      }
     }
+  
     }
   }
 `;
@@ -64,7 +125,8 @@ export default function SinglePage(props) {
   const { title: siteTitle, description: siteDescription } = siteData;
   const { title, content, contentTemplates } = data?.page || {};
 
-  const templateSelection = contentTemplates?.templateSelection;
+  const templateSelection =  contentTemplates?.templateSelection?.[0];
+  const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
 
   return (
@@ -77,16 +139,42 @@ export default function SinglePage(props) {
         siteTitle={siteTitle}
         siteDescription={siteDescription}
         menuItems={menuItems}
+        
       />
+      {console.log(templateAContent )}
       {/* Landing Page Banner Start */}
       {/* Landing Page Banner End */}
       <main className="container">
-        {templateSelection === "Template C" ? (
-          <TemplateC content={templateCContent} />
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+        {/* Conditional rendering based on templateSelection */}
+        {templateSelection === "Template 1A" && templateAContent && (
+          <div className="acf-flexible-content">
+            {/* Iterate through templateA layouts */}
+            {templateAContent.map((layout, index) => {
+              const fieldGroupName = layout.fieldGroupName;
+              // Render components based on fieldGroupName
+              switch (fieldGroupName) {
+                case "ContentTemplatesTemplateASection1aLayout":
+                  return <Section1a key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection2aLayout":
+                  return <Section2a key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection3aLayout":
+                  return <Section3a key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection4aLayout":
+                  return <Section4a key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection5aLayout":
+                  return <Section5a key={index} data={layout} />; 
+                default:
+                  return null;
+              }
+            })}
+          </div>
+        )}
+        {templateSelection === "Template 1C" && templateCContent && (
+          <TemplateC bodyContent={templateCContent} />
         )}
       </main>
+
+
 
       <Footer />
     </>
