@@ -133,7 +133,7 @@ export default function DocSearchForm({ searchQuery, setSearchQuery, locationQue
                       >
                         <Check
                           size={22}
-                          color={activeLayout === "list" ? "#083d78" : "transparent"}
+                          color={activeLayout === "list" ? "#999795" : "transparent"}
                           className="mr-3"
                         />
                         List

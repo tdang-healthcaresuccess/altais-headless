@@ -117,7 +117,7 @@ export default function DocSearchList({ doctors, activeLayout }) {
                 type="button"
                 className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1"
               >
-                {activeLayout === "grid" ? "Click to Call" : "Schedule Now"}
+                {activeLayout === "grid" ? "Click to Call" : "Click to Call"}
               </button>
             </div>
           </div>

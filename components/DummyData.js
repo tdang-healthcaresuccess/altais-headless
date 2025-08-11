@@ -5,7 +5,7 @@ export const dummyDoctors = [
       title: "Dr. Aamir Faruqui",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=AF"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -32,7 +32,7 @@ export const dummyDoctors = [
       title: "Dr. Mehrnoosh Almassi",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=MA"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -59,7 +59,7 @@ export const dummyDoctors = [
       title: "Dr. Robert P",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=RP"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -86,7 +86,7 @@ export const dummyDoctors = [
       title: "Dr. Michael Re",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=MR"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -113,7 +113,7 @@ export const dummyDoctors = [
       title: "Dr. Jane Smith",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=JS"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -140,7 +140,7 @@ export const dummyDoctors = [
       title: "Dr. Paul Jones",
       featuredImage: {
         node: {
-          sourceUrl: "https://placehold.co/64x64/E2E8F0/1A202C?text=PJ"
+          sourceUrl: "/media/doctor1.png"
         }
       },
       doctorData: {
@@ -167,7 +167,7 @@ export const dummyDoctors = [
       "title": "Dr. Sarah Miller",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=SM"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -194,7 +194,7 @@ export const dummyDoctors = [
       "title": "Dr. John Doe",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=JD"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -221,7 +221,7 @@ export const dummyDoctors = [
       "title": "Dr. Emily White",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=EW"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -248,7 +248,7 @@ export const dummyDoctors = [
       "title": "Dr. David Chen",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=DC"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -275,7 +275,7 @@ export const dummyDoctors = [
       "title": "Dr. Linda Green",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=LG"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -302,7 +302,7 @@ export const dummyDoctors = [
       "title": "Dr. Stephen King",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=SK"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -329,7 +329,7 @@ export const dummyDoctors = [
       "title": "Dr. Julia Roberts",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=JR"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -356,7 +356,7 @@ export const dummyDoctors = [
       "title": "Dr. Kevin Li",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=KL"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -383,7 +383,7 @@ export const dummyDoctors = [
       "title": "Dr. Nancy Drew",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=ND"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -410,7 +410,7 @@ export const dummyDoctors = [
       "title": "Dr. Peter Parker",
       "featuredImage": {
         "node": {
-          "sourceUrl": "https://placehold.co/64x64/E2E8F0/1A202C?text=PP"
+          "sourceUrl": "/media/doctor1.png"
         }
       },
       "doctorData": {
@@ -445,4 +445,166 @@ export const specialitiesList = [
   "Neurology",
   "Ophthalmology",
   "Family Medicine",
+  'Acute Care Nurse Practioner',
+    'Addiction Medicine',
+    'Adolescent Medicine',
+    'Adult Health Nurse Practitioner',
+    'Advanced Heart Failure and Transplant Cardiology',
+    'Allergy and Immunology',
+    'Anesthesiology Physician',
+    'Anesthesiology/Pain Medicine',
+    'Applied Behavioral Analyst',
+    'Audiology',
+    'Bariatric Medicine',
+    'Bariatric Surgery',
+    'Bloodbanking/Transfusion Medicine',
+    'Cardiac Electrophysiology',
+    'Cardiothoracic Vascular Surgery',
+    'Cardiovascular Disease',
+    'Certified Ocularist / Dispensing Optician',
+    'Certified Professional Midwife',
+    'Child and Adolescent Psychiatry',
+    'Chiropractor',
+    'Clinical Cardiac Electrophysiology',
+    'Clinical Child & Adolescent Psychologist',
+    'Clinical Informatics',
+    'Clinical Neurophysiology',
+    'Clinical Pathology',
+    'Clinical Social Worker',
+    'Colon & Rectal Surgery',
+    'Complex Pediatric Otolaryngology',
+    'Critical Care Medicine',
+    'Cytopathology',
+    'Dermatology',
+    'Dermatology Micrographic Surgery',
+    'Dermatopathology',
+    'Developmental-Behavioral Pediatrics',
+    'Diagnostic Radiology',
+    'Electrodiagnostic Medicine',
+    'Emergency Medicine',
+    'Endocrinology',
+    'Endocrinology, Diabetes and Metabolism',
+    'Epilepsy',
+    'Family Medicine',
+    'Foot and Ankle Surgery',
+    'Gastroenterology',
+    'General Dentistry',
+    'General Practice',
+    'General Surgery',
+    'Genetics, Clinical (MD)',
+    'Geriatric Medicine',
+    'Gynecological Oncology',
+    'Gynecology',
+    'Hand Surgery',
+    'Health Service Psychologist',
+    'Hearing Instrument Specialist',
+    'Hematology',
+    'Hematology & Oncology',
+    'Hepatology',
+    'Hospice and Palliative Medicine',
+    'Hospitalist',
+    'Infectious Disease',
+    'Inpatient Manager',
+    'Integrative Medicine',
+    'Internal Medicine',
+    'Marriage & Family Therapy',
+    'Maternal-Fetal Medicine',
+    'Medical Biochemical Genetics',
+    'Medical Oncology',
+    'Medical Physician Assistant',
+    'Neonatal-Perinatal Medicine',
+    'Nephrology',
+    'Neurological Surgery',
+    'Neurology',
+    'Neurology with Special Qualification in Child Neurology',
+    'Neuromuscular Medicine',
+    'Neuropsychology',
+    'Neuropsychology, Clinical',
+    'Neuroradiology',
+    'Nuclear Medicine',
+    'Nurse Anesthetist',
+    'Nutritionists/ Dietitians',
+    'Obstetrics',
+    'Obstetrics and Gynecology',
+    'Occupational Medicine',
+    'Occupational Therapy',
+    'Ophthalmology',
+    'Optometrist',
+    'Oral and Maxillofacialy Surgery',
+    'Orthopaedic Sports Medicine',
+    'Orthopaedic Surgery',
+    'Orthopaedic Trauma',
+    'Otolaryngology – Head and Neck Surgery',
+    'Otolaryngology/Facial Plastic Surgery',
+    'Pain Medicine',
+    'Pathology - Anatomic',
+    'Pathology - Anatomic/Pathology - Clinical',
+    'Pathology – Anatomic/Pathology - Clinical',
+    'Pathology-Medical Microbiology',
+    'Pediatric Allergy & Immunology',
+    'Pediatric Anesthesiology',
+    'Pediatric Cardiology',
+    'Pediatric Critical Care Medicine',
+    'Pediatric Dermatology',
+    'Pediatric Emergency Medicine',
+    'Pediatric Endocrinology',
+    'Pediatric Gastroenterology',
+    'Pediatric Hematology-Oncology',
+    'Pediatric Infectious Diseases',
+    'Pediatric Nephrology',
+    'Pediatric Neurosurgery',
+    'Pediatric Ophthalmology',
+    'Pediatric Orthopaedic Surgery',
+    'Pediatric Pulmonology',
+    'Pediatric Radiology',
+    'Pediatric Rehabilitation Medicine',
+    'Pediatric Rheumatology',
+    'Pediatric Sports Medicine',
+    'Pediatric Surgery',
+    'Pediatric Urology',
+    'Pediatrics',
+    'Pediatrics, Developmental Behavioral',
+    'Pharmacist',
+    'Pharmacology, Clinical',
+    'Physical Medicine and Rehabilitation',
+    'Physical Therapy',
+    'Plastic and Reconstructive Surgery',
+    'Plastic Surgery',
+    'Podiatry',
+    'Podiatry, General Practice',
+    'Primary Care Grp/Prac',
+    'Professional Counselor',
+    'Psychiatry',
+    'Psychiatry and Neurology, Behavioral Neurology & Neuropsychiatry',
+    'Psychology, Clinical',
+    'Psychology, Health',
+    'Psychosomatic Medicine',
+    'Public Health & General Preventive Medicine',
+    'Pulmonary Disease',
+    'Radiation Oncology',
+    'Radiology, Interventional and Diagnostic',
+    'Radiology, Therapeutic',
+    'Reference Labs',
+    'Registered Dietitian',
+    'Registered Nurse',
+    'Registered Nurse, Lactation Consultant',
+    'Reproductive Endocrinology',
+    'Retina Specialist',
+    'Rheumatology',
+    'Sleep Medicine',
+    'Speech Language Pathologist',
+    'Speech Pathologist',
+    'Sports Medicine',
+    'Surgery',
+    'Surgery of the Hand',
+    'Surgery, Orthopedic, Adult Reconstructive',
+    'Surgical Critical Care',
+    'Surgical Oncology',
+    'Thoracic Surgery/Cardiothoracic Vascular Surgery',
+    'Transplant Surgery',
+    'Urgent Care',
+    'Urology',
+    'Urology, Pediatric',
+    'Vascular and Interventional Radiology',
+    'Vascular Surgery'
 ];
