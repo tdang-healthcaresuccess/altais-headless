@@ -13,72 +13,70 @@ import Section3a from "../components/acf/Section3a";
 import Section4a from "../components/acf/Section4a";
 import Section5a from "../components/acf/Section5a";
 import TemplateC from "@/components/acf/TemplateC";
-
-
-
-
+import Breadcrumb from "@/components/common/breadcrumb";
+import InnerPageBanner from "@/components/common/inner-page-banner";
+import Layout from "@/components/Layout";
 
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
-  contentTemplates {
-      templateSelection
-      templateC
-      templateA {
-        ... on ContentTemplatesTemplateASection1aLayout {
-          fieldGroupName
-          section1aContent
-          section1aImg {
-            node {
-              sourceUrl
-              uri
+      contentTemplates {
+        templateSelection
+        templateC
+        templateA {
+          ... on ContentTemplatesTemplateASection1aLayout {
+            fieldGroupName
+            section1aContent
+            section1aImg {
+              node {
+                sourceUrl
+                uri
+              }
             }
           }
-        }
-        ... on ContentTemplatesTemplateASection2aLayout {
-          content2a
-          headline2a
-          sectionBackgroundColor
-          fieldGroupName
-        }
-        ... on ContentTemplatesTemplateASection3aLayout {
-          fieldGroupName
-          section3aCards {
-            cardContent
-            cardHeadline
-            cardOptions
+          ... on ContentTemplatesTemplateASection2aLayout {
+            content2a
+            headline2a
+            sectionBackgroundColor
             fieldGroupName
-            cardImage {
+          }
+          ... on ContentTemplatesTemplateASection3aLayout {
+            fieldGroupName
+            section3aCards {
+              cardContent
+              cardHeadline
+              cardOptions
+              fieldGroupName
+              cardImage {
+                node {
+                  uri
+                }
+              }
+            }
+          }
+          fieldGroupName
+          ... on ContentTemplatesTemplateASection4aLayout {
+            ctaButtonText
+            ctaButtonTextCopy
+            enableCta
+            fieldGroupName
+            section4aAdditionalHeadline
+            section4aAdditionalHeadlineOption
+            section4aHeadline
+            section4aImage {
               node {
                 uri
               }
             }
           }
-        }
-        fieldGroupName
-        ... on ContentTemplatesTemplateASection4aLayout {
-          ctaButtonText
-          ctaButtonTextCopy
-          enableCta
-          fieldGroupName
-          section4aAdditionalHeadline
-          section4aAdditionalHeadlineOption
-          section4aHeadline
-          section4aImage {
-            node {
-              uri
-            }
+          ... on ContentTemplatesTemplateASection5aLayout {
+            fieldGroupName
+            section5aContent
           }
         }
-        ... on ContentTemplatesTemplateASection5aLayout {
-          fieldGroupName
-          section5aContent
-        }
       }
-    }
-  
     }
   }
 `;
@@ -125,26 +123,34 @@ export default function SinglePage(props) {
   const { title: siteTitle, description: siteDescription } = siteData;
   const { title, content, contentTemplates } = data?.page || {};
 
-  const templateSelection =  contentTemplates?.templateSelection?.[0];
+  const templateSelection = contentTemplates?.templateSelection?.[0];
   const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
-
+  console.log(templateCContent);
+  
   return (
-    <>
+    <Layout>
       <Head>
         <title>{`${title} - ${siteTitle}`}</title>
       </Head>
 
-      <Header
-        siteTitle={siteTitle}
-        siteDescription={siteDescription}
-        menuItems={menuItems}
-        
+      <div className="block">
+        {/* Inner Page Banner start */}
+        <InnerPageBanner
+          DesktopBanner="bg-services-landing-banner"
+          MobileBanner="bg-services-landing-banner-mobile"
+          heading={title}
+        />
+      </div>
+
+      {/* Breadcrumb Start */}
+      <Breadcrumb
+        items={[{ label: "Home", link: "/" }, { label: "Template A" }]}
       />
-      {console.log(templateAContent )}
+      {/* Breadcrumb End */}
       {/* Landing Page Banner Start */}
       {/* Landing Page Banner End */}
-      <main className="container">
+      <main className="container mx-auto">
         {/* Conditional rendering based on templateSelection */}
         {templateSelection === "Template 1A" && templateAContent && (
           <div className="acf-flexible-content">
@@ -162,7 +168,7 @@ export default function SinglePage(props) {
                 case "ContentTemplatesTemplateASection4aLayout":
                   return <Section4a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection5aLayout":
-                  return <Section5a key={index} data={layout} />; 
+                  return <Section5a key={index} data={layout} />;
                 default:
                   return null;
               }
@@ -173,11 +179,7 @@ export default function SinglePage(props) {
           <TemplateC bodyContent={templateCContent} />
         )}
       </main>
-
-
-
-      <Footer />
-    </>
+    </Layout>
   );
 }
 
