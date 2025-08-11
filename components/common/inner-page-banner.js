@@ -27,9 +27,19 @@ export default function InnerPageBanner({
               {heading}
             </h1>
             {/* Vertical Separator */}
-          <div className="flex md:hidden w-full md:w-[1px] h-[1px] md:h-[113px] bg-[#C75327] my-7 md:my-0 max-0 md:mx-10"></div>
+            <div className="flex md:hidden w-full md:w-[1px] h-[1px] md:h-[113px] bg-[#C75327] my-7 md:my-0 max-0 md:mx-10"></div>
           </div>
         </div>
+        {/* StarBreak image container */}
+        <div
+          className={clsx(
+            "absolute top-0 right-0 z-50 w-[180px] md:w-[260px] bg-no-repeat bg-cover bg-right pointer-events-none",
+            isMobile ? "min-h-[400px]" : "h-full"
+          )}
+          style={{
+            backgroundImage: "url('/media/StarBreak_RegularCombo3.png')",
+          }}
+        ></div>
       </div>
     </section>
   );
