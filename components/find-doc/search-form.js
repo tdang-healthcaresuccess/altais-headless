@@ -93,17 +93,20 @@ export default function DocSearchForm({ searchQuery, setSearchQuery, locationQue
                   onClick={() => setShowLayoutGrid(!showLayoutGrid)}
                 >
                   <span className="flex-1 text-center font-normal">
-                    {activeLayout === "grid" ? "Grid" : "List"}
+                   
                   </span>
                   {activeLayout === "grid" ? (
-                    <LayoutGrid color="#083d7880" size={26} />
+                    <LayoutGrid color="#C85103" size={26} />
                   ) : (
-                    <AlignJustify color="#083d7880" size={26} />
+                    <AlignJustify color="#C85103" size={26} />
                   )}
-                  <ChevronDown size={22} color="#083d7880" className="ml-2" />
+                  
                 </button>
                 {showLayoutGrid && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-normal shadow-lg z-10 p-2">
+                  <div className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-normal">
+                    <h4 className="text-lg text-secondary font-medium px-2 py-1.5 border-b border-inputBorder">
+                      Layout
+                    </h4>
                     <ul className="block">
                       <li
                         className={`flex items-center text-[#083d7880] justify-between cursor-pointer p-2 gap-2 text-base font-normal rounded-lg ${
