@@ -8,14 +8,14 @@ import Image from "next/image";
 const ResponsiveImage = ({ src, alt }) => {
   if (!src) {
     return (
-      <div className="w-full h-64 lg:h-full bg-gray-200 animate-pulse rounded-lg"></div>
+      <div className="w-full h-64 bg-gray-200 animate-pulse rounded-normal"></div>
     );
   }
   return (
     <img
       src={src}
       alt={alt}
-      className="w-full h-auto object-cover rounded-lg shadow-lg"
+      className="w-full h-auto object-cover rounded-normal border border-primary"
     />
   );
 };
@@ -43,7 +43,7 @@ const Section1a = ({ data }) => {
   const imageUrl = data.section1aImg?.node?.sourceUrl;
   const sectionContent = data.section1aContent;
   return (
-    <section className="block py-12">
+    <section className="template-wrapper py-12 border-b border-lightPrimary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="block max-w-[838px] mx-auto">
           <div className="flex flex-col gap-6">
@@ -53,9 +53,8 @@ const Section1a = ({ data }) => {
             </div>
 
             {/* Right Column: Content */}
-            <div className="w-full">
-              <div
-                className="prose dark:prose-invert max-w-none text-base lg:text-lg"
+            <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
+              <p
                 // The content is assumed to be an HTML string from WordPress
                 dangerouslySetInnerHTML={{ __html: sectionContent }}
               />
