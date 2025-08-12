@@ -57,6 +57,13 @@ export const PAGE_QUERY = gql`
             fieldGroupName
             section5aContent
           }
+          ... on ContentTemplatesTemplateASection6aLayout {
+            fieldGroupName
+            section6aTestimonials {
+              reviewerName
+              reviewerDescription
+            }
+          }
         }
       }
     }
