@@ -5,55 +5,73 @@ import Image from "next/image";
 import Link from "next/link";
 import BrandLogo from "@/public/media/altais-logo.svg";
 import SearchIcon from "@/public/media/search-icon.svg";
-import { ChevronRight } from "lucide-react";
-import { AlignJustify } from "lucide-react";
-import { X } from "lucide-react";
-import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
-import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
+import { ChevronRight, AlignJustify, X } from "lucide-react";
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
+import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
+
+// Recursive component to render menu items and their children
+const MenuItem = ({ item, router }) => {
+  const isActive = router.pathname === item.uri;
+  const hasChildren = item.childItems?.nodes?.length > 0;
+
+  return (
+    <li className="relative group">
+      <Link
+        className={`block px-4 py-2 text-bluePrimary hover:text-secondary ${
+          isActive ? "text-secondary" : ""
+        }`}
+        href={item.uri}
+      >
+        {item.label}
+      </Link>
+      {hasChildren && (
+        <ul className="absolute left-full top-0 min-w-[180px] bg-white shadow-lg z-20 hidden group-hover:block">
+          {item.childItems.nodes.map(child => (
+            <MenuItem key={child.id} item={child} router={router} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+};
+
 export default function Header({ siteTitle, siteDescription }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const handleToggle = () => {
-    if (isOpenSearch) {
-      setIsOpenSearch(false);
-    }
-    setIsOpen(!isOpen);
-  };
-  const handleToggleSearch = () => {
-    if (isOpen) {
-      setIsOpen(false);
-    }
-    setIsOpenSearch(!isOpenSearch);
-  };
-  const router = useRouter();
   const menuRef = useRef(null);
+  const router = useRouter();
+
+  const handleToggle = () => {
+    setIsOpen(prev => !prev);
+    setIsOpenSearch(false);
+  };
+
+  const handleToggleSearch = () => {
+    setIsOpenSearch(prev => !prev);
+    setIsOpen(false);
+  };
+
   useEffect(() => {
-    function handleClickOutside(event) {
+    const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
       }
-    }
+    };
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
-  const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
-  const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
+  const siteDataQuery = useQuery(SITE_DATA_QUERY);
+  const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY);
 
-  const siteData = siteDataQuery?.data?.generalSettings || {};
-  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
-    nodes: [],
-  };
+  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || [];
 
   return (
     <>
@@ -63,7 +81,7 @@ export default function Header({ siteTitle, siteDescription }) {
           name="description"
           content={siteDescription ? siteDescription : ""}
         />
-        <link srel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
       <header className="block relative">
         <div className="container mx-auto bg-white">
@@ -81,51 +99,65 @@ export default function Header({ siteTitle, siteDescription }) {
               </Link>
             </div>
 
-            {/* Desktop Nav */}
+            {/* Desktop Nav and Buttons */}
             <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
-              {/* Menu Items */}
-
-              <nav className="hidden lg:flex items-end">
+              {/* Desktop Menu */}
+              <nav className="hidden lg:flex items-end gap-6">
                 <ul className="flex gap-6">
-                  {(Array.isArray(menuItems) ? menuItems : []).map(
-                    (item, idx) => {
-                      const isActive = router.pathname === item.uri; // active check
-
-                      return (
-                        <li key={item.id}>
-                          <Link
-                            className={`flex flex-col hover:text-secondary text-sm leading[18px] font-semibold ${
-                              isActive ? "text-secondary" : "text-bluePrimary"
-                            }`}
-                            href={item.uri}
-                          >
-                            {idx < 3 ? (
-                              <>
-                                <span className="font-normal">For</span>{" "}
-                                {item.label}
-                              </>
-                            ) : idx === 3 ? (
-                              <>
-                                <span className="font-normal">Our</span>{" "}
-                                {item.label}
-                              </>
-                            ) : (
-                              item.label
-                            )}
-                            <span>{item?.children?.length}</span>
-                            {item?.children?.length > 0 && (
-                              <button
-                                onClick={() => toggleMenu(item.id)}
-                                className="ml-2 text-gray-500 hover:text-secondary"
-                              >
-                                ▼
-                              </button>
-                            )}
-                          </Link>
-                        </li>
-                      );
-                    }
-                  )}
+                  {menuItems.map((item, idx) => {
+                    const isActive = router.pathname === item.uri;
+                    const hasChildren = item.childItems?.nodes?.length > 0;
+                    return (
+                      <li key={item.id} className="relative group flex align-bottom items-end">
+                        <Link
+                          className={`flex flex-col text-bluePrimary text-sm leading-[18px] font-semibold ${
+                            isActive ? "text-secondary" : "text-bluePrimary"
+                          }`}
+                          href={item.uri}
+                        >
+                          {idx < 3 ? (
+                            <>
+                              <span className="font-normal">For</span> {item.label}
+                            </>
+                          ) : idx === 3 ? (
+                            <>
+                              <span className="font-normal">Our</span> {item.label}
+                            </>
+                          ) : (
+                            item.label
+                          )}
+                        </Link>
+                        {hasChildren && (
+                          <ul className="absolute left-0 top-full min-w-[180px] bg-white shadow-lg z-10 hidden group-hover:block">
+                            {item.childItems.nodes.map(child1 => (
+                              <li key={child1.id} className="relative group">
+                                <Link
+                                  className="block px-4 py-2 text-bluePrimary hover:text-secondary"
+                                  href={child1.uri}
+                                >
+                                  {child1.label}
+                                </Link>
+                                {child1.childItems?.nodes?.length > 0 && (
+                                  <ul className="absolute left-full top-0 min-w-[180px] bg-white shadow-lg z-20 hidden group-hover:block">
+                                    {child1.childItems.nodes.map(child2 => (
+                                      <li key={child2.id}>
+                                        <Link
+                                          className="block px-4 py-2 text-bluePrimary hover:text-secondary"
+                                          href={child2.uri}
+                                        >
+                                          {child2.label}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
 
@@ -138,7 +170,7 @@ export default function Header({ siteTitle, siteDescription }) {
                 <ChevronRight className="w-[10px] h-[10px] md:w-[18px] md:h-[18px]" />
               </Link>
 
-              {/* Search Input */}
+              {/* Search Toggle */}
               <div className="flex items-center">
                 <button
                   onClick={handleToggleSearch}
@@ -171,7 +203,7 @@ export default function Header({ siteTitle, siteDescription }) {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu Content */}
           {isOpen && (
             <div className="lg:hidden absolute min-h-screen flex justify-end items-start top-[100%] h-full w-full bg-[#d9d9d9e6] z-50 right-0">
               <div
@@ -179,41 +211,36 @@ export default function Header({ siteTitle, siteDescription }) {
                 className="w-[210px] bg-[#f9f9f9] pt-[32px] pb-[27px]"
               >
                 <nav className="flex flex-col text-sm font-medium text-gray-700">
-                  {(Array.isArray(menuItems) ? menuItems : []).map(
-                    (item, idx) => {
-                      const isActive = router.asPath === item.uri;
-
-                      return (
-                        <div key={item.id}>
-                          <Link
-                            className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
-                              isActive ? "bg-[#d9d9d980]" : ""
-                            }`}
-                            href={item.uri}
-                          >
-                            {idx < 3 ? (
-                              <>
-                                <span className="font-normal">For</span>{" "}
-                                {item.label}
-                              </>
-                            ) : idx === 3 ? (
-                              <>
-                                <span className="font-normal">Our</span>{" "}
-                                {item.label}
-                              </>
-                            ) : (
-                              item.label
-                            )}
-                          </Link>
-                        </div>
-                      );
-                    }
-                  )}
+                  {menuItems.map((item, idx) => {
+                    const isActive = router.asPath === item.uri;
+                    return (
+                      <Link
+                        key={item.id}
+                        className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
+                          isActive ? "bg-[#d9d9d980]" : ""
+                        }`}
+                        href={item.uri}
+                      >
+                        {idx < 3 ? (
+                          <>
+                            <span className="font-normal">For</span> {item.label}
+                          </>
+                        ) : idx === 3 ? (
+                          <>
+                            <span className="font-normal">Our</span> {item.label}
+                          </>
+                        ) : (
+                          item.label
+                        )}
+                      </Link>
+                    );
+                  })}
                 </nav>
               </div>
             </div>
           )}
         </div>
+        {/* Search Bar Content */}
         {isOpenSearch && (
           <div className="absolute bg-[#f9f9f9] py-5 px-6 top-[100%] left-0 right-0 z-50 w-full box-shadow-custom3">
             <div className="flex gap-3 max-w-full md:max-w-[340px] mx-auto">
@@ -245,31 +272,7 @@ Header.fragments = {
         title
         description
       }
-      primaryMenuItems: menuItems(where: { location: PRIMARY }) {
-        nodes {
-          id
-          uri
-          path
-          label
-          parentId
-          cssClasses
-          menu {
-            node {
-              name
-            }
-          }
-        }
-      }
     }
   `,
 };
 
-const FIND_CARE_QUERY = gql`
-  query FindCareQuery {
-    globalthemeoptions {
-      headerSettings {
-        findCareUrl
-      }
-    }
-  }
-`;

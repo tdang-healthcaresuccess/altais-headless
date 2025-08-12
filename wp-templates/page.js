@@ -86,7 +86,7 @@ const PAGE_QUERY = gql`
             fieldGroupName
             section5aContent
           }
-          ... on ContentTemplatesTemplateASection6aLayout {
+          ... on ContentTemplatesTemplateASection6aTestimonialsLayout {
             fieldGroupName
             section6aTestimonials {
               reviewerName
