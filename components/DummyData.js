@@ -22,7 +22,8 @@ export const dummyDoctors = [
         phone: "9259342121",
         gender: "Male",
         education: "Stanford University",
-        acceptedInsurance: ["Anthem Blue Cross", "Cigna"]
+        acceptedInsurance: ["Anthem Blue Cross", "Cigna"],
+        languages: ["English", "Hindi"]
       }
     }
   },
@@ -49,7 +50,8 @@ export const dummyDoctors = [
         phone: "9256801999",
         gender: "Female",
         education: "Harvard Medical School",
-        acceptedInsurance: ["Aetna", "Blue Shield of California"]
+        acceptedInsurance: ["Aetna", "Blue Shield of California"],
+        languages: ["English", "Spanish"]
       }
     }
   },
@@ -76,7 +78,8 @@ export const dummyDoctors = [
         phone: null,
         gender: "Male",
         education: "Yale University",
-        acceptedInsurance: ["UnitedHealthcare"]
+        acceptedInsurance: ["UnitedHealthcare"],
+        languages: ["English"]
       }
     }
   },
@@ -103,7 +106,8 @@ export const dummyDoctors = [
         phone: "3105551234",
         gender: "Male",
         education: "Johns Hopkins University",
-        acceptedInsurance: ["Anthem Blue Cross", "UnitedHealthcare"]
+        acceptedInsurance: ["Anthem Blue Cross", "UnitedHealthcare"],
+        languages: ["English", "French"]
       }
     }
   },
@@ -130,7 +134,8 @@ export const dummyDoctors = [
         phone: "3105555678",
         gender: "Female",
         education: "Harvard Medical School",
-        acceptedInsurance: ["Aetna", "Cigna"]
+        acceptedInsurance: ["Aetna", "Cigna"],
+        languages: ["English", "Japanese"]
       }
     }
   },
@@ -157,7 +162,8 @@ export const dummyDoctors = [
         phone: "3105559012",
         gender: "Male",
         education: "Johns Hopkins University",
-        acceptedInsurance: ["Blue Shield of California"]
+        acceptedInsurance: ["Blue Shield of California"],
+        languages: ["English", "Spanish"]
       }
     }
   },
@@ -184,7 +190,8 @@ export const dummyDoctors = [
         "phone": "4155550101",
         "gender": "Female",
         "education": "Stanford University",
-        "acceptedInsurance": ["Cigna", "UnitedHealthcare"]
+        "acceptedInsurance": ["Cigna", "UnitedHealthcare"],
+        languages: ["English"]
       }
     }
   },
@@ -211,7 +218,8 @@ export const dummyDoctors = [
         "phone": "3105551212",
         "gender": "Male",
         "education": "Harvard Medical School",
-        "acceptedInsurance": ["Aetna", "Anthem Blue Cross"]
+        "acceptedInsurance": ["Aetna", "Anthem Blue Cross"],
+        languages: ["English"]
       }
     }
   },
@@ -238,7 +246,8 @@ export const dummyDoctors = [
         "phone": "4085552323",
         "gender": "Female",
         "education": "Johns Hopkins University",
-        "acceptedInsurance": ["UnitedHealthcare", "Cigna"]
+        "acceptedInsurance": ["UnitedHealthcare", "Cigna"],
+        languages: ["English", "French"]
       }
     }
   },
@@ -265,7 +274,8 @@ export const dummyDoctors = [
         "phone": "4155553434",
         "gender": "Male",
         "education": "Harvard Medical School",
-        "acceptedInsurance": ["Blue Shield of California"]
+        "acceptedInsurance": ["Blue Shield of California"],
+        languages: ["English"]
       }
     }
   },
@@ -292,7 +302,8 @@ export const dummyDoctors = [
         "phone": "3235554545",
         "gender": "Female",
         "education": "Yale University",
-        "acceptedInsurance": ["Aetna", "UnitedHealthcare", "Cigna"]
+        "acceptedInsurance": ["Aetna", "UnitedHealthcare", "Cigna"],
+        languages: ["English", "Spanish", "French"]
       }
     }
   },
@@ -319,7 +330,8 @@ export const dummyDoctors = [
         "phone": "6195555656",
         "gender": "Male",
         "education": "Stanford University",
-        "acceptedInsurance": ["Anthem Blue Cross", "Blue Shield of California"]
+        "acceptedInsurance": ["Anthem Blue Cross", "Blue Shield of California"],
+        languages: ["English"]
       }
     }
   },
@@ -346,7 +358,8 @@ export const dummyDoctors = [
         "phone": "3105556767",
         "gender": "Female",
         "education": "Harvard Medical School",
-        "acceptedInsurance": ["Aetna", "UnitedHealthcare"]
+        "acceptedInsurance": ["Aetna", "UnitedHealthcare"],
+        languages: ["English"]
       }
     }
   },
@@ -373,7 +386,8 @@ export const dummyDoctors = [
         "phone": "3105557878",
         "gender": "Male",
         "education": "Yale University",
-        "acceptedInsurance": ["Cigna"]
+        "acceptedInsurance": ["Cigna"],
+        languages: ["English"]
       }
     }
   },
@@ -400,7 +414,8 @@ export const dummyDoctors = [
         "phone": "4155558989",
         "gender": "Female",
         "education": "Stanford University",
-        "acceptedInsurance": ["Aetna", "Blue Shield of California"]
+        "acceptedInsurance": ["Aetna", "Blue Shield of California"],
+        languages: ["English", "Japanese", "Spanish"]
       }
     }
   },
@@ -427,7 +442,8 @@ export const dummyDoctors = [
         "phone": "3235559090",
         "gender": "Male",
         "education": "Harvard Medical School",
-        "acceptedInsurance": ["UnitedHealthcare"]
+        "acceptedInsurance": ["UnitedHealthcare"],
+        languages: ["English"]
       }
     }
   }
@@ -445,166 +461,4 @@ export const specialitiesList = [
   "Neurology",
   "Ophthalmology",
   "Family Medicine",
-  'Acute Care Nurse Practioner',
-    'Addiction Medicine',
-    'Adolescent Medicine',
-    'Adult Health Nurse Practitioner',
-    'Advanced Heart Failure and Transplant Cardiology',
-    'Allergy and Immunology',
-    'Anesthesiology Physician',
-    'Anesthesiology/Pain Medicine',
-    'Applied Behavioral Analyst',
-    'Audiology',
-    'Bariatric Medicine',
-    'Bariatric Surgery',
-    'Bloodbanking/Transfusion Medicine',
-    'Cardiac Electrophysiology',
-    'Cardiothoracic Vascular Surgery',
-    'Cardiovascular Disease',
-    'Certified Ocularist / Dispensing Optician',
-    'Certified Professional Midwife',
-    'Child and Adolescent Psychiatry',
-    'Chiropractor',
-    'Clinical Cardiac Electrophysiology',
-    'Clinical Child & Adolescent Psychologist',
-    'Clinical Informatics',
-    'Clinical Neurophysiology',
-    'Clinical Pathology',
-    'Clinical Social Worker',
-    'Colon & Rectal Surgery',
-    'Complex Pediatric Otolaryngology',
-    'Critical Care Medicine',
-    'Cytopathology',
-    'Dermatology',
-    'Dermatology Micrographic Surgery',
-    'Dermatopathology',
-    'Developmental-Behavioral Pediatrics',
-    'Diagnostic Radiology',
-    'Electrodiagnostic Medicine',
-    'Emergency Medicine',
-    'Endocrinology',
-    'Endocrinology, Diabetes and Metabolism',
-    'Epilepsy',
-    'Family Medicine',
-    'Foot and Ankle Surgery',
-    'Gastroenterology',
-    'General Dentistry',
-    'General Practice',
-    'General Surgery',
-    'Genetics, Clinical (MD)',
-    'Geriatric Medicine',
-    'Gynecological Oncology',
-    'Gynecology',
-    'Hand Surgery',
-    'Health Service Psychologist',
-    'Hearing Instrument Specialist',
-    'Hematology',
-    'Hematology & Oncology',
-    'Hepatology',
-    'Hospice and Palliative Medicine',
-    'Hospitalist',
-    'Infectious Disease',
-    'Inpatient Manager',
-    'Integrative Medicine',
-    'Internal Medicine',
-    'Marriage & Family Therapy',
-    'Maternal-Fetal Medicine',
-    'Medical Biochemical Genetics',
-    'Medical Oncology',
-    'Medical Physician Assistant',
-    'Neonatal-Perinatal Medicine',
-    'Nephrology',
-    'Neurological Surgery',
-    'Neurology',
-    'Neurology with Special Qualification in Child Neurology',
-    'Neuromuscular Medicine',
-    'Neuropsychology',
-    'Neuropsychology, Clinical',
-    'Neuroradiology',
-    'Nuclear Medicine',
-    'Nurse Anesthetist',
-    'Nutritionists/ Dietitians',
-    'Obstetrics',
-    'Obstetrics and Gynecology',
-    'Occupational Medicine',
-    'Occupational Therapy',
-    'Ophthalmology',
-    'Optometrist',
-    'Oral and Maxillofacialy Surgery',
-    'Orthopaedic Sports Medicine',
-    'Orthopaedic Surgery',
-    'Orthopaedic Trauma',
-    'Otolaryngology – Head and Neck Surgery',
-    'Otolaryngology/Facial Plastic Surgery',
-    'Pain Medicine',
-    'Pathology - Anatomic',
-    'Pathology - Anatomic/Pathology - Clinical',
-    'Pathology – Anatomic/Pathology - Clinical',
-    'Pathology-Medical Microbiology',
-    'Pediatric Allergy & Immunology',
-    'Pediatric Anesthesiology',
-    'Pediatric Cardiology',
-    'Pediatric Critical Care Medicine',
-    'Pediatric Dermatology',
-    'Pediatric Emergency Medicine',
-    'Pediatric Endocrinology',
-    'Pediatric Gastroenterology',
-    'Pediatric Hematology-Oncology',
-    'Pediatric Infectious Diseases',
-    'Pediatric Nephrology',
-    'Pediatric Neurosurgery',
-    'Pediatric Ophthalmology',
-    'Pediatric Orthopaedic Surgery',
-    'Pediatric Pulmonology',
-    'Pediatric Radiology',
-    'Pediatric Rehabilitation Medicine',
-    'Pediatric Rheumatology',
-    'Pediatric Sports Medicine',
-    'Pediatric Surgery',
-    'Pediatric Urology',
-    'Pediatrics',
-    'Pediatrics, Developmental Behavioral',
-    'Pharmacist',
-    'Pharmacology, Clinical',
-    'Physical Medicine and Rehabilitation',
-    'Physical Therapy',
-    'Plastic and Reconstructive Surgery',
-    'Plastic Surgery',
-    'Podiatry',
-    'Podiatry, General Practice',
-    'Primary Care Grp/Prac',
-    'Professional Counselor',
-    'Psychiatry',
-    'Psychiatry and Neurology, Behavioral Neurology & Neuropsychiatry',
-    'Psychology, Clinical',
-    'Psychology, Health',
-    'Psychosomatic Medicine',
-    'Public Health & General Preventive Medicine',
-    'Pulmonary Disease',
-    'Radiation Oncology',
-    'Radiology, Interventional and Diagnostic',
-    'Radiology, Therapeutic',
-    'Reference Labs',
-    'Registered Dietitian',
-    'Registered Nurse',
-    'Registered Nurse, Lactation Consultant',
-    'Reproductive Endocrinology',
-    'Retina Specialist',
-    'Rheumatology',
-    'Sleep Medicine',
-    'Speech Language Pathologist',
-    'Speech Pathologist',
-    'Sports Medicine',
-    'Surgery',
-    'Surgery of the Hand',
-    'Surgery, Orthopedic, Adult Reconstructive',
-    'Surgical Critical Care',
-    'Surgical Oncology',
-    'Thoracic Surgery/Cardiothoracic Vascular Surgery',
-    'Transplant Surgery',
-    'Urgent Care',
-    'Urology',
-    'Urology, Pediatric',
-    'Vascular and Interventional Radiology',
-    'Vascular Surgery'
 ];

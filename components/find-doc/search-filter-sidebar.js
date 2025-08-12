@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Minus, ChevronDown } from 'lucide-react';
 import { specialitiesList } from '../DummyData';
 
-export default function DocSearchFilterSidebar({ specialityFilter, setSpecialityFilter, genderFilter, setGenderFilter, educationFilter, setEducationFilter, insuranceFilter, setInsuranceFilter, clearAllFilters }) {
+export default function DocSearchFilterSidebar({ specialityFilter, setSpecialityFilter, genderFilter, setGenderFilter, educationFilter, setEducationFilter, insuranceFilter, setInsuranceFilter, languageFilter, setLanguageFilter, clearAllFilters }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [speciality, setSpeciality] = useState(specialityFilter);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
@@ -32,9 +32,35 @@ export default function DocSearchFilterSidebar({ specialityFilter, setSpeciality
     setSpecialitySuggestions([]);
   };
 
+  // Handler for Gender checkboxes
+  const handleGenderChange = (event) => {
+    const { value, checked } = event.target;
+    setGenderFilter((prev) =>
+      checked ? [...prev, value] : prev.filter((item) => item !== value)
+    );
+  };
+
+  // Handler for Education checkboxes
+  const handleEducationChange = (event) => {
+    const { value, checked } = event.target;
+    setEducationFilter((prev) =>
+      checked ? [...prev, value] : prev.filter((item) => item !== value)
+    );
+  };
+  
+  // Handler for Language checkboxes
+  const handleLanguageChange = (event) => {
+    const { value, checked } = event.target;
+    setLanguageFilter((prev) =>
+      checked ? [...prev, value] : prev.filter((item) => item !== value)
+    );
+  };
+
   useEffect(() => {
     setSpeciality(specialityFilter);
   }, [specialityFilter]);
+
+  const allLanguages = ["English", "Spanish", "French", "Japanese", "Hindi"];
 
   const accordionItems = [
     {
@@ -70,25 +96,25 @@ export default function DocSearchFilterSidebar({ specialityFilter, setSpeciality
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-primary">
             <input
-              type="radio"
+              type="checkbox"
               name="gender"
               value="Male"
-              checked={genderFilter === "Male"}
-              onChange={(e) => setGenderFilter(e.target.value)}
+              checked={genderFilter.includes("Male")}
+              onChange={handleGenderChange}
             />
             Male
           </label>
           <label className="flex items-center gap-2 text-primary">
             <input
-              type="radio"
+              type="checkbox"
               name="gender"
               value="Female"
-              checked={genderFilter === "Female"}
-              onChange={(e) => setGenderFilter(e.target.value)}
+              checked={genderFilter.includes("Female")}
+              onChange={handleGenderChange}
             />
             Female
           </label>
-          <button onClick={() => setGenderFilter("")} className="text-left text-blue-500 underline text-sm mt-2">Clear</button>
+          <button onClick={() => setGenderFilter([])} className="text-left text-blue-500 underline text-sm mt-2">Clear</button>
         </div>
       ),
     },
@@ -98,25 +124,25 @@ export default function DocSearchFilterSidebar({ specialityFilter, setSpeciality
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-primary">
             <input
-              type="radio"
+              type="checkbox"
               name="education"
               value="Harvard Medical School"
-              checked={educationFilter === "Harvard Medical School"}
-              onChange={(e) => setEducationFilter(e.target.value)}
+              checked={educationFilter.includes("Harvard Medical School")}
+              onChange={handleEducationChange}
             />
             Harvard Medical School
           </label>
           <label className="flex items-center gap-2 text-primary">
             <input
-              type="radio"
+              type="checkbox"
               name="education"
               value="Johns Hopkins University"
-              checked={educationFilter === "Johns Hopkins University"}
-              onChange={(e) => setEducationFilter(e.target.value)}
+              checked={educationFilter.includes("Johns Hopkins University")}
+              onChange={handleEducationChange}
             />
             Johns Hopkins University
           </label>
-          <button onClick={() => setEducationFilter("")} className="text-left text-blue-500 underline text-sm mt-2">Clear</button>
+          <button onClick={() => setEducationFilter([])} className="text-left text-blue-500 underline text-sm mt-2">Clear</button>
         </div>
       ),
     },
@@ -191,16 +217,20 @@ export default function DocSearchFilterSidebar({ specialityFilter, setSpeciality
     {
       title: "Languages",
       content: (
-        <div className="relative">
-          <select id="specialty" className="appearance-none filter-select">
-            <option value="English">English</option>
-            <option value="frence">French</option>
-            <option value="japneese">Japanese</option>
-            <option value="hindi">Hindi</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
-            <ChevronDown />
-          </div>
+        <div className="flex flex-col gap-2">
+          {allLanguages.map((lang) => (
+            <label key={lang} className="flex items-center gap-2 text-primary">
+              <input
+                type="checkbox"
+                name="language"
+                value={lang}
+                checked={languageFilter.includes(lang)}
+                onChange={handleLanguageChange}
+              />
+              {lang}
+            </label>
+          ))}
+          <button onClick={() => setLanguageFilter([])} className="text-left text-blue-500 underline text-sm mt-2">Clear</button>
         </div>
       ),
     },

@@ -6,6 +6,9 @@ import Header from "@/components/header";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useFaustQuery } from "@faustwp/core";
+import { Layout } from "lucide-react";
+import Breadcrumb from "@/components/common/breadcrumb";
+import InnerPageBanner from "@/components/common/inner-page-banner";
 
 const POST_QUERY = gql`
   query GetPost($databaseId: ID!, $asPreview: Boolean = false) {
@@ -40,7 +43,7 @@ export default function Component(props) {
   const { title, content, date, author } = contentQuery?.post || {};
 
   return (
-    <>
+   <>
       <Head>
         <title>{`${title} - ${siteTitle}`}</title>
       </Head>
@@ -50,10 +53,24 @@ export default function Component(props) {
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
-
-      <main className="container">
-        <EntryHeader title={title} date={date} author={author?.node?.name} />
+            <div className="block">
+              {/* Inner Page Banner start */}
+              <InnerPageBanner
+                useDefaultImage={true}
+                DesktopBanner="bg-services-landing-banner"
+                MobileBanner="bg-services-landing-banner-mobile"
+                heading={title}
+              />
+            </div>
+        {/* Breadcrumb Start */}
+        <Breadcrumb
+          items={[{ label: "Home", link: "/" }, { label: title }]}
+        />
+        {/* Breadcrumb End */}
+      <main className="container mx-auto">
+         <div className="acf-flexible-content">
         <div dangerouslySetInnerHTML={{ __html: content }} />
+        </div>
       </main>
 
       <Footer />

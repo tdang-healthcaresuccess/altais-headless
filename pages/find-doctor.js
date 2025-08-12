@@ -9,9 +9,10 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [specialityFilter, setSpecialityFilter] = useState('');
-  const [genderFilter, setGenderFilter] = useState('');
-  const [educationFilter, setEducationFilter] = useState('');
+  const [genderFilter, setGenderFilter] = useState([]); // Changed to an array
+  const [educationFilter, setEducationFilter] = useState([]); // Changed to an array
   const [insuranceFilter, setInsuranceFilter] = useState([]);
+  const [languageFilter, setLanguageFilter] = useState([]); // New state for languages
   const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
   const [activeLayout, setActiveLayout] = useState('list'); // 'list' or 'grid'
 
@@ -20,9 +21,10 @@ export default function App() {
     setSearchQuery('');
     setLocationQuery('');
     setSpecialityFilter('');
-    setGenderFilter('');
-    setEducationFilter('');
+    setGenderFilter([]); // Reset to empty array
+    setEducationFilter([]); // Reset to empty array
     setInsuranceFilter([]);
+    setLanguageFilter([]); // Reset to empty array
   };
 
   useEffect(() => {
@@ -56,26 +58,21 @@ export default function App() {
 
       // Other filter logic
       const matchesSpeciality = lowerCaseSpecialityFilter === '' || doctorData.speciality.toLowerCase().includes(lowerCaseSpecialityFilter);
-      const matchesGender = genderFilter === '' || doctorData.gender === genderFilter;
-      const matchesEducation = educationFilter === '' || doctorData.education === educationFilter;
+      const matchesGender = genderFilter.length === 0 || genderFilter.includes(doctorData.gender);
+      const matchesEducation = educationFilter.length === 0 || educationFilter.includes(doctorData.education);
       const matchesInsurance = insuranceFilter.length === 0 || insuranceFilter.every(ins => doctorData.acceptedInsurance?.includes(ins));
+      const matchesLanguage = languageFilter.length === 0 || languageFilter.some(lang => doctorData.languages?.includes(lang));
 
       // Return true if all criteria are met
-      return matchesSearch && matchesLocation && matchesSpeciality && matchesGender && matchesEducation && matchesInsurance;
+      return matchesSearch && matchesLocation && matchesSpeciality && matchesGender && matchesEducation && matchesInsurance && matchesLanguage;
     });
 
     setFilteredDoctors(newFilteredDoctors);
-  }, [searchQuery, locationQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter]);
+  }, [searchQuery, locationQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter, languageFilter]);
 
   return (
-    <Layout>
-    <div className="block">
-       {/* Inner Page Banner start */}
-              <InnerPageBanner
-                DesktopBanner="bg-findDoc-landing-banner"
-                MobileBanner="bg-findDoc-landing-banner-mobile"
-                heading="Find a Doctor"
-              />
+    <div className="bg-white p-6 md:p-10 min-h-screen font-sans">
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-bluePrimary mb-8">Find a Doctor</h1>
       <DocSearchForm
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -98,6 +95,8 @@ export default function App() {
                   setEducationFilter={setEducationFilter}
                   insuranceFilter={insuranceFilter}
                   setInsuranceFilter={setInsuranceFilter}
+                  languageFilter={languageFilter}
+                  setLanguageFilter={setLanguageFilter}
                   clearAllFilters={clearAllFilters}
                 />
               </div>
@@ -114,7 +113,5 @@ export default function App() {
         </div>
       </div>
     </div>
-    </Layout>
   );
 }
-
