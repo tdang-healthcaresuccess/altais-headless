@@ -1,5 +1,4 @@
 import Image from "next/image";
-import he from "he";
 import DummyImage from "@/public/media/placeholder-frame160.png"
 
 // Sub-component for the cards inside Section3a
@@ -23,7 +22,7 @@ const Card = ({ cardData }) => {
         {cardContent && (
           <div
             className="block"
-            dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
+            dangerouslySetInnerHTML={{ __html: decode(cardContent) }}
           />
         )}
       </div>
