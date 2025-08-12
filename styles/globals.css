@@ -226,7 +226,12 @@ button {
 .bg-arc2{
   background-image: url("./../public/media/banner2-mobile.jpg");
 }
-
+.bg-contact-landing-banner{
+  background-image: url("./../public/media/contact-us-banner.png");
+}
+.bg-resources-landing-banner{
+  background-image: url("./../public/media/resources-us-banner.png");
+}
 
 /* Custom Shadows */
 .box-shadow-custom2{
@@ -256,6 +261,16 @@ button {
 .pag-action{
   @apply w-auto px-5 py-2 font-normal text-secondary border-secondary flex-center gap-1;
 }
+.about-slider-algo .swiper-pagination{
+    display: flex;
+    justify-content: center;
+}
+.about-slider-algo .swiper-wrapper{
+  @apply pb-6;
+}
+.swiper-pagination-bullet-active{
+  @apply bg-primary;
+}
 
 
 /* Typograpgy */
@@ -281,5 +296,9 @@ button {
   @apply flex flex-wrap list-disc list-inside;
 }
 .template-wrapper.list2 ul li{
-  @apply w-full md:w-1/2 list-disc;
+  @apply w-full lg:w-1/2 list-disc;
+}
+
+@media screen and (max-width:981px) {
+.template-wrapper.list2 ul{ @apply flex-col md:flex-row;}
 }

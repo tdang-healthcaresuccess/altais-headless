@@ -1,5 +1,6 @@
 import Image from "next/image";
 import he from "he";
+import DummyImage from "@/public/media/placeholder-frame160.png"
 
 // Sub-component for the cards inside Section3a
 const Card = ({ cardData }) => {
@@ -8,18 +9,15 @@ const Card = ({ cardData }) => {
   const { cardHeadline, cardContent, cardImage } = cardData;
   const imageUrl = cardImage?.node?.uri;
 
-
   return (
     <div className="rounded-normal h-full flex flex-col">
-      {imageUrl && (
         <div className="flex-shrink-0 mb-4">
           <Image
-            src={imageUrl}
+            src={imageUrl ? imageUrl : DummyImage}
             alt={cardHeadline}
             className="w-full h-[170px] object-cover rounded-normal border border-primary"
           />
         </div>
-      )}
       <div className="flex-grow">
         {cardHeadline && <h3>{cardHeadline}</h3>}
         {cardContent && (

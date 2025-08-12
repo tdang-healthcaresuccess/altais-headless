@@ -36,7 +36,7 @@ const Section2a = ({ data }) => {
     <section
       className={`bg-[${sectionBackgroundColor}] template-wrapper pt-[50px] md:pt-[60px] pb-[73px] md:pb-[54px] px-4 md:px-0`}
     >
-      <div className="container mx-auto !p-0">
+      <div className="container mx-auto">
         <div className="block md:flex justify-start items-start w-full gap-10">
           {/* Left Column */}
           {headline2a && (

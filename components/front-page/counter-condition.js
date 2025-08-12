@@ -103,7 +103,7 @@ export default function CounterCondition() {
                     slidesPerView={1}
                     pagination={{ clickable: true }}
                     loop={true} 
-                     autoHeight={true}
+                    autoHeight={true}
                   >
                     <SwiperSlide>
                       <div className="block md:flex justify-center items-start swiper-parent">

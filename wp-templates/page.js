@@ -1,11 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import Head from "next/head";
-import EntryHeader from "../components/EntryHeader";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
-import { getNextStaticProps } from "@faustwp/core";
 // Import your components for each layout
 import Section1a from "../components/acf/Section1a";
 import Section2a from "../components/acf/Section2a";
@@ -16,6 +12,7 @@ import TemplateC from "@/components/acf/TemplateC";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";
+import Section6a from "@/components/acf/Section6a";
 
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
@@ -75,6 +72,13 @@ const PAGE_QUERY = gql`
             fieldGroupName
             section5aContent
           }
+          ... on ContentTemplatesTemplateASection6aLayout {
+            fieldGroupName
+            section6aTestimonials {
+              reviewerName
+              reviewerDescription
+            }
+          }
         }
       }
     }
@@ -126,7 +130,7 @@ export default function SinglePage(props) {
   const templateSelection = contentTemplates?.templateSelection?.[0];
   const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
-  
+
   return (
     <Layout>
       <Head>
@@ -168,6 +172,8 @@ export default function SinglePage(props) {
                   return <Section4a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection5aLayout":
                   return <Section5a key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection6aLayout":
+                  return <Section6a key={index} data={layout} />;
                 default:
                   return null;
               }

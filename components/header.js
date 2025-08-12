@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BrandLogo from "@/public/media/altais-logo.svg";
 import SearchIcon from "@/public/media/search-icon.svg";
-import { ChevronRight, Search } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { AlignJustify } from "lucide-react";
 import { X } from "lucide-react";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
@@ -54,6 +54,7 @@ export default function Header({ siteTitle, siteDescription }) {
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
     nodes: [],
   };
+  console.log(menuItems);
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function Header({ siteTitle, siteDescription }) {
           <div className="w-full flex items-center justify-between pt-3 md:pt-4 pb-4 md:pb-7 px-4 md:px-0">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/"> 
+              <Link href="/">
                 <Image
                   src={BrandLogo}
                   alt="Altais"
@@ -85,31 +86,49 @@ export default function Header({ siteTitle, siteDescription }) {
             <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
               {/* Menu Items */}
 
-              <nav className="hidden lg:flex items-end gap-6">
-                {(Array.isArray(menuItems) ? menuItems : []).map(
-                  (item, idx) => (
-                    <div key={item.id}>
-                      <Link
-                        className="flex flex-col text-bluePrimary text-sm leading[18px] font-semibold"
-                        href={item.uri}
-                      >
-                        {idx < 3 ? (
-                          <>
-                            <span className="font-normal">For</span>{" "}
-                            {item.label}
-                          </>
-                        ) : idx === 3 ? (
-                          <>
-                            <span className="font-normal">Our</span>{" "}
-                            {item.label}
-                          </>
-                        ) : (
-                          item.label
-                        )}
-                      </Link>
-                    </div>
-                  )
-                )}
+              <nav className="hidden lg:flex items-end">
+                <ul className="flex gap-6">
+                  {(Array.isArray(menuItems) ? menuItems : []).map(
+                    (item, idx) => {
+                      const isActive = router.pathname === item.uri; // active check
+                      console.log(router.pathname, item.uri, item);
+
+                      return (
+                        <li key={item.id}>
+                          <Link
+                            className={`flex flex-col hover:text-secondary text-sm leading[18px] font-semibold ${
+                              isActive ? "text-secondary" : "text-bluePrimary"
+                            }`}
+                            href={item.uri}
+                          >
+                            {idx < 3 ? (
+                              <>
+                                <span className="font-normal">For</span>{" "}
+                                {item.label}
+                              </>
+                            ) : idx === 3 ? (
+                              <>
+                                <span className="font-normal">Our</span>{" "}
+                                {item.label}
+                              </>
+                            ) : (
+                              item.label
+                            )}
+                            <span>{item?.children?.length}</span>
+                            {item?.children?.length > 0 && (
+                              <button
+                                onClick={() => toggleMenu(item.id)}
+                                className="ml-2 text-gray-500 hover:text-secondary"
+                              >
+                                ▼
+                              </button>
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
               </nav>
 
               {/* Find Care Button */}
@@ -170,9 +189,7 @@ export default function Header({ siteTitle, siteDescription }) {
                         <div key={item.id}>
                           <Link
                             className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
-                              isActive
-                                ? "bg-[#d9d9d980]"
-                                : ""
+                              isActive ? "bg-[#d9d9d980]" : ""
                             }`}
                             href={item.uri}
                           >
