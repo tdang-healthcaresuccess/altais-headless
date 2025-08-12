@@ -71,8 +71,15 @@ export default function App() {
   }, [searchQuery, locationQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter, languageFilter]);
 
   return (
+    <Layout>
     <div className="bg-white p-6 md:p-10 min-h-screen font-sans">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-bluePrimary mb-8">Find a Doctor</h1>
+     
+      {/* Inner Page Banner start */}
+              <InnerPageBanner
+                DesktopBanner="bg-findDoc-landing-banner"
+                MobileBanner="bg-findDoc-landing-banner-mobile"
+                heading="Find a Doctor"
+              />
       <DocSearchForm
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -113,5 +120,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
