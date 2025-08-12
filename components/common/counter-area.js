@@ -1,0 +1,29 @@
+import CountBar from "./count-bar";
+
+
+export default function CounterArea() {
+  const data = [
+    { value: 9, label: "HMO Plans" },
+    { value: 17, label: "PPO Plans" },
+    { value: 9, label: "Medicare Plans" },
+    { value: 2, label: "Medi-Cal Plans" },
+    { value: 30, label: "Hospitals + Centers of Excellence", suffix: "+" }
+  ];
+
+  return (
+    <ul className="flex flex-wrap gap-10 justify-center items-start w-full pb-10">
+      {data.map((item, idx) => (
+        <li
+          key={idx}
+          className={`countlist ${idx === 4 ? "px-5 md:px-0" : ""}`}
+        >
+          <div className="flex items-center justify-center">
+            <CountBar end={item.value} />
+            {item.suffix && <span className="countlist-h3">{item.suffix}</span>}
+          </div>
+          <p className="countlist-p">{item.label}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}

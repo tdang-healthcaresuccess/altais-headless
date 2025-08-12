@@ -3,41 +3,32 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import CounterArea from "../common/counter-area";
 
-export default function CounterProvider() {
+/**
+ * Section6a component.
+ * Renders a simple, single-column content section.
+ *
+ * @param {object} props - The component props.
+ * @param {object} props.data - The data object from the ACF Flexible Content layout.
+ * @param {string} props.data.section_6a_testimonials - The HTML content for the section.
+ */
+const Section6a = ({ data }) => {
+  if (!data) return null;
+
+  const { section_6a_testimonials } = data;
+
   return (
-    <section className="block pt-[50px] px-6 md:px-0 box-shadow-custom2">
+    <section className="py-6 md:py-12 ">
       <div className="container mx-auto">
-        <div className="block w-full border-b border-[#00888980]">
-          <CounterArea />
-
-          <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
-          <div className="block pb-6 about-slider-algo">
-            <Swiper
+        <div className="block px-6 md:px-0">
+          <Swiper
               modules={[Navigation, Pagination]}
               navigation={true}
               spaceBetween={30}
               slidesPerView={1}
               pagination={{ clickable: true }}
               loop={true}
-              breakpoints={{
-                0: {
-                  slidesPerView: 1,
-                },
-                640: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1024: {
-                  slidesPerView: 5,
-                },
-                1280: {
-                  slidesPerView: 7, // ✅ Show 7 slides on large screens
-                },
-              }}
+              
             >
               <SwiperSlide>
                 <div className="block">
@@ -82,9 +73,10 @@ export default function CounterProvider() {
                 </div>
               </SwiperSlide>
             </Swiper>
-          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default Section6a;
