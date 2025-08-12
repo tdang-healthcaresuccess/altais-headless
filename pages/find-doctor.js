@@ -4,6 +4,7 @@ import DocSearchFilterSidebar from 'components/find-doc/search-filter-sidebar';
 import DocSearchList from 'components/find-doc/doctor-list';
 import { dummyDoctors, specialitiesList } from 'components/DummyData';
 import InnerPageBanner from "@/components/common/inner-page-banner";
+import Layout from '@/components/Layout';
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
@@ -67,6 +68,7 @@ export default function App() {
   }, [searchQuery, locationQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter]);
 
   return (
+    <Layout>
     <div className="block">
        {/* Inner Page Banner start */}
               <InnerPageBanner
@@ -112,6 +114,7 @@ export default function App() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
 

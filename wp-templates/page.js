@@ -56,11 +56,13 @@ const PAGE_QUERY = gql`
           }
           ... on ContentTemplatesTemplateASection3aLayout {
             fieldGroupName
+            columnSelection
             section3aCards {
               cardContent
               cardHeadline
               cardOptions
               fieldGroupName
+              
               cardImage {
                 node {
                   uri
@@ -164,7 +166,7 @@ export default function SinglePage(props) {
      
       {/* Breadcrumb Start */}
       <Breadcrumb
-        items={[{ label: "Home", link: "/" }, { label: "Template A" }]}
+        items={[{ label: "Home", link: "/" }, { label: title }]}
       />
       {/* Breadcrumb End */}
       {/* Landing Page Banner Start */}
@@ -177,13 +179,15 @@ export default function SinglePage(props) {
             {templateAContent.map((layout, index) => {
               const fieldGroupName = layout.fieldGroupName;
               // Render components based on fieldGroupName
+         
+
               switch (fieldGroupName) {
                 case "ContentTemplatesTemplateASection1aLayout":
                   return <Section1a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection2aLayout":
                   return <Section2a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection3aLayout":
-                  return <Section3a key={index} data={layout} />;
+                  return <Section3a key={index} data={layout} columnSelection={layout.columnSelection[0]} />;
                 case "ContentTemplatesTemplateASection4aLayout":
                   return <Section4a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection5aLayout":

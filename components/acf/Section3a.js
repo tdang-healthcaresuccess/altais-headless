@@ -41,14 +41,16 @@ const Card = ({ cardData }) => {
  * @param {object} props.data - The data object from the ACF Flexible Content layout.
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
-const Section3a = ({ data }) => {
+const Section3a = ({ data, columnSelection }) => {
     
   if (!data || !data.section3aCards) return null;
-
+  // Use columnSelection to set grid columns
+  const columns =
+  columnSelection === 3 ? "grid-cols-3" : "grid-cols-2";
   return (
-    <section className="py-16 md:py-24 bg-gray-100 dark:bg-gray-950">
+    <section className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+         <div className={`grid gap-8 ${columns}`}>
           {data.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />
           ))}
