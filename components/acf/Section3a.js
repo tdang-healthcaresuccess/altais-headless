@@ -7,7 +7,7 @@ const Card = ({ cardData }) => {
 
   const { cardHeadline, cardContent, cardImage } = cardData;
   const imageUrl = cardImage?.node?.uri;
-  console.log(cardImage);
+
 
   return (
     <div className="rounded-normal h-full flex flex-col">
@@ -42,9 +42,9 @@ const Card = ({ cardData }) => {
  */
 const Section3a = ({ data }) => {
   if (!data || !data?.section3aCards) return null;
-
+  console.log(data);
   return (
-    <section className="template-wrapper py-6 md:py-12 ">
+    <section className="template-wrapper list2 py-6 md:py-12 ">
       <div className="container mx-auto">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
           {data?.section3aCards.map((card, index) => (

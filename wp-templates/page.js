@@ -126,7 +126,6 @@ export default function SinglePage(props) {
   const templateSelection = contentTemplates?.templateSelection?.[0];
   const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
-  console.log(templateCContent);
   
   return (
     <Layout>
@@ -150,7 +149,7 @@ export default function SinglePage(props) {
       {/* Breadcrumb End */}
       {/* Landing Page Banner Start */}
       {/* Landing Page Banner End */}
-      <main className="container mx-auto">
+      <main className="block">
         {/* Conditional rendering based on templateSelection */}
         {templateSelection === "Template 1A" && templateAContent && (
           <div className="acf-flexible-content">

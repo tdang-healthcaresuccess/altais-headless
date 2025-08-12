@@ -33,9 +33,11 @@ const Section2a = ({ data }) => {
     //     </div>
     //   </div>
     // </section>
-    <section className="template-wrapper pt-[50px] md:pt-[60px] pb-[73px] md:pb-[54px] px-4 md:px-0">
+    <section
+      className={`bg-[${sectionBackgroundColor}] template-wrapper pt-[50px] md:pt-[60px] pb-[73px] md:pb-[54px] px-4 md:px-0`}
+    >
       <div className="container mx-auto !p-0">
-        <div className="block md:flex justify-start items-start w-full">
+        <div className="block md:flex justify-start items-start w-full gap-10">
           {/* Left Column */}
           {headline2a && (
             <div className="flex justify-center md:justify-start max-w-full md:max-w-[340px] min-w-full md:min-w-[340px]">
@@ -48,10 +50,10 @@ const Section2a = ({ data }) => {
           {content2a && (
             <>
               {/* Vertical Separator */}
-              <div className="w-full md:w-[1px] h-[1px] md:h-[192px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div>
+              {/* <div className="w-full md:w-[1px] h-[1px] md:h-[192px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div> */}
 
               {/* Right Column */}
-              <div className="block">
+              <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary">
                 <p className="font-normal text-center md:text-left">
                   {content2a}
                 </p>
