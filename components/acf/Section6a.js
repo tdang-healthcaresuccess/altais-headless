@@ -16,8 +16,6 @@ const Section6a = ({ data }) => {
   if (!data) return null;
 
   const { section_6a_testimonials } = data;
-  console.log(section_6a_testimonials);
-  
 
   return (
     <section className="py-6 md:py-12 ">

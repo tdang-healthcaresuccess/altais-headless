@@ -54,7 +54,6 @@ export default function Header({ siteTitle, siteDescription }) {
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
     nodes: [],
   };
-  console.log(menuItems);
 
   return (
     <>
@@ -91,7 +90,6 @@ export default function Header({ siteTitle, siteDescription }) {
                   {(Array.isArray(menuItems) ? menuItems : []).map(
                     (item, idx) => {
                       const isActive = router.pathname === item.uri; // active check
-                      console.log(router.pathname, item.uri, item);
 
                       return (
                         <li key={item.id}>

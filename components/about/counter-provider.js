@@ -3,34 +3,14 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import CounterArea from "../common/counter-area";
 
 export default function CounterProvider() {
   return (
     <section className="block pt-[50px] px-6 md:px-0 box-shadow-custom2">
       <div className="container mx-auto">
         <div className="block w-full border-b border-[#00888980]">
-          <ul className="flex flex-wrap gap-10 justify-center items-start w-full pb-10">
-            <li className="countlist">
-              <h3 className="countlist-h3">09</h3>
-              <p className="countlist-p">HMO Plans</p>
-            </li>
-            <li className="countlist">
-              <h3 className="countlist-h3">17</h3>
-              <p className="countlist-p">PPO Plans</p>
-            </li>
-            <li className="countlist">
-              <h3 className="countlist-h3">09</h3>
-              <p className="countlist-p">Medicare Plans</p>
-            </li>
-            <li className="countlist">
-              <h3 className="countlist-h3">02</h3>
-              <p className="countlist-p">Medi-Cal Plans</p>
-            </li>
-            <li className="countlist px-5 md:px-0">
-              <h3 className="countlist-h3">30+</h3>
-              <p className="countlist-p">Hospitals + Centers of Excellence</p>
-            </li>
-          </ul>
+          <CounterArea />
 
           <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
           <div className="block pb-6 about-slider-algo">

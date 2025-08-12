@@ -40,7 +40,7 @@ const Card = ({ cardData }) => {
  */
 const Section3a = ({ data }) => {
   if (!data || !data?.section3aCards) return null;
-  console.log(data);
+
   return (
     <section className="template-wrapper list2 py-6 md:py-12 ">
       <div className="container mx-auto">
