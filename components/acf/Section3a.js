@@ -29,10 +29,11 @@ const Card = ({ cardData }) => {
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
+  const isIcon = !!imageIcon && displayImage === imageIcon;
   return (
     <div className="rounded-normal h-full flex flex-col">
       {displayImage && (
-        <div className="flex-shrink-0 mb-4">
+        <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
           <ResponsiveImage src={displayImage} />
         </div>
       )}

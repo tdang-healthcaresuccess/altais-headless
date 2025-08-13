@@ -201,7 +201,7 @@ export default function SinglePage(props) {
                   return <Section4a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection5aLayout":
                   return <Section5a key={index} data={layout} />;
-                case "ContentTemplatesTemplateASection6aLayout":
+                case "ContentTemplatesTemplateASection6aTestimonialsLayout":
                   return <Section6a key={index} data={layout} />;
                 default:
                   return null;
