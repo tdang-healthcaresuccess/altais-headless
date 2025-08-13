@@ -8,13 +8,13 @@ import SinglePageBanner from "@/components/common/single-page-banner";
 import Layout from "@/components/Layout";
 import ProvidersDetailsContent from "@/components/providers/providers-details-content";
 const PAGE_QUERY = gql`
-  query GetDoctors {
-     doctor {
-    nodes {
+  query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
+    doctors(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
+      content
+
     }
   }
-}
 `;
 
 export default function ProviderDetails(props) {

@@ -66,8 +66,10 @@ export default function SearchDoctor() {
                 <div className="relative block">
                   <select type="text" placeholder="Distance" className="appearance-none bg-white input-style w-full md:max-w-[134px] md:min-w-[134px] cursor-pointer">
                     <option>Distance</option>
-                    <option>2KM</option>
-                    <option>5KM</option>
+                    <option>5mi</option>
+                    <option>10mi</option>
+                    <option>15mi</option>
+                    <option>20mi</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
                     <ChevronDown className="w-5 h-5" />

@@ -1,8 +1,85 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import SingleDocMedia from "@/public/media/doctor-single.png";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { dummyDoctors } from "../DummyData2"; // Assuming dummyDoctors is exported from DummyData.js
 
 export default function ProvidersDetailsContent() {
+  // Helper to format phone number as XXX-XXX-XXXX
+  const formatPhone = (phone) => {
+    if (!phone) return '';
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length === 10) {
+      return `${digits.slice(0,3)}-${digits.slice(3,6)}-${digits.slice(6)}`;
+    }
+    return phone;
+  };
+  const router = useRouter();
+  const [provider, setProvider] = useState(null);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const { asPath } = router;
+      const segments = asPath.split('/').filter(Boolean);
+      const profileUrlSegment = segments[segments.length - 1];
+
+      const foundProvider = dummyDoctors.find(
+        (doc) => doc.node.doctorData.profileurl === `/${profileUrlSegment}`
+      );
+      setProvider(foundProvider ? foundProvider.node.doctorData : null);
+    }
+  }, [router.isReady, router.asPath]);
+
+  if (!provider) {
+    return (
+      <div className="block md:pt-[50px] pb-[100px]">
+        <div className="container mx-auto">
+  
+          <p className="text-center text-xl text-bluePrimary">Provider not found.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Helper function to render a list of items
+  const renderList = (items) => {
+    if (!items || items.length === 0) return null;
+    return (
+      <ul className="flex flex-wrap gap-2.5">
+        {items.map((item, index) => (
+          <li key={index}>
+            <Link href={`/find-doctor?speciality=${encodeURIComponent(item)}`} className="btn-outline-ternery btn-core">
+              {item}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  // Helper function to render the affiliations list
+  const renderAffiliations = (affiliations) => {
+    if (!affiliations || affiliations.length === 0) return null;
+    return (
+      <ul className="list-disc list-inside space-y-1">
+        {affiliations.map((item, index) => (
+          <li key={index} className="text-lg leading-[32px] font-normal text-grey3d">
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const getSpecialties = () => {
+    const specialties = [];
+    if (provider.spec1 && provider.spec1 !== "nan") specialties.push(provider.spec1);
+    if (provider.spec2 && provider.spec2 !== "nan") specialties.push(provider.spec2);
+    if (provider.spec3 && provider.spec3 !== "nan") specialties.push(provider.spec3);
+    return specialties;
+  };
+  
   return (
     <div className="block md:pt-[50px] pb-[100px]">
       <div className="container mx-auto">
@@ -10,102 +87,68 @@ export default function ProvidersDetailsContent() {
           <div className="block w-full md:w-[315px]">
             <div className="block pb-6 md:pb-12 border-b border-lightPrimary">
               <Image
-                src={SingleDocMedia}
-                alt="Doctor"
+                src={provider.featuredImage?.node?.sourceUrl || "/media/doctor1.png"}
+                alt={provider.doctorsName || "Doctor"}
+                width={315}
+                height={315}
                 className="w-full border border-lightPrimary rounded-normal"
               />
               <h2 className="block md:hidden text-bluePrimary pt-5 text-[26px] leading-[36px]">
-                Brittany Camille, FNP-C
+                {provider.doctorsName}, {provider.speciality}
               </h2>
             </div>
             <div className="block border-b border-lightPrimary py-6">
               <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
                 Specialties
               </h4>
-              <ul className="flex flex-wrap gap-2.5">
-                <li>
-                  <Link
-                    href="/find-doctor"
-                    className="btn-outline-ternery btn-core"
-                  >
-                    Internal Medicine
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/find-doctor"
-                    className="btn-outline-ternery btn-core"
-                  >
-                    Behavioral Medicine
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/find-doctor"
-                    className="btn-outline-ternery btn-core"
-                  >
-                    Psychiatry
-                  </Link>
-                </li>
-              </ul>
+              {renderList(getSpecialties())}
+            </div>
+            <div className="block border-b border-lightPrimary py-6">
+              <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
+                Accepted Insurance
+              </h4>
+              {renderList(provider.acceptedInsurance.filter(ins => ins !== 'nan'))}
             </div>
             <Link
-              href="/#"
-              type="button"
+              href={`tel:${provider.phone}`}
               className="btn-md btn-outline-secondary flex-center rounded-normal mt-8 !w-full"
             >
-              Call at 000.000.0000
+              Call at {formatPhone(provider.phone)}
             </Link>
           </div>
           <div className="block w-full md:w-[calc(100%-315px)]">
             <h2 className="hidden md:block text-bluePrimary text-[26px] leading-[36px] pb-6">
-              Brittany Camille, FNP-C
+              {provider.doctorsName}, {provider.speciality}
             </h2>
-            <div className="block"></div>
             <div className="block">
-              <p className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                Brittany Camille brings over a decade of diverse nursing
-                experience to Altais Medical Group Riverside. Her background in
-                primary care and medical-surgical units has given her a
-                comprehensive understanding of patient care needs. Brittany
-                chose to become a Family Nurse Practitioner for the opportunity
-                to provide full-spectrum care and build lasting relationships
-                with patients of all ages.
-              </p>
-              <p className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                Throughout her career, Brittany has developed expertise in adult
-                and geriatric care. Her approach focuses on patient education,
-                preventive care, and collaborative treatment planning. This
-                patient-centered philosophy allows her to connect effectively
-                with individuals from all walks of life.
-              </p>
-              <p className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                In her practice, Brittany offers a range of services, including
-                physical exams, wellness checks, diagnosis and treatment of
-                common health conditions, and patient education. She is
-                committed to staying current with medical advancements, ensuring
-                her patients receive up-to-date and effective treatments.
-              </p>
+              {/* Profile Description can be added here if available in data */}
+            </div>
+            <div className="block">
               <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary">
-                Education
+                Education & Training
               </h3>
-              <p className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                Doctor of Nursing Practice: University of Massachusetts Global
+              <p className="text-lg leading-[32px] font-normal text-grey3d">
+                **Medical School:** {provider.medicalSchool}
               </p>
-              <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary">
-                Languages Spoken
+              {provider.internship && (
+                <p className="text-lg leading-[32px] font-normal text-grey3d">
+                  **Internship:** {provider.internship}
+                </p>
+              )}
+              {provider.residency && (
+                <p className="text-lg leading-[32px] font-normal text-grey3d">
+                  **Residency:** {provider.residency}
+                </p>
+              )}
+              {provider.fellowship && (
+                <p className="text-lg leading-[32px] font-normal text-grey3d">
+                  Fellowship :{provider.fellowship}
+                </p>
+              )}
+              <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary mt-6">
+                Hospital Affiliations
               </h3>
-              <p className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                English
-              </p>
-              <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary">
-                Clinical Interests
-              </h3>
-              <ul>
-                <li className="text-lg leading-[32px] font-normal text-grey3d pb-4">
-                  Doctor of Nursing Practice: University of Massachusetts Global
-                </li>
-              </ul>
+              {renderAffiliations(provider.hospitalAffiliations)}
             </div>
           </div>
         </div>
