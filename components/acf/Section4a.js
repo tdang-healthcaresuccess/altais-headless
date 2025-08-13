@@ -9,6 +9,7 @@
  * @param {string} props.data.section4aAdditionalHeadline - A secondary headline.
  * @param {string} props.data.ctaButtonText - The text for the CTA button.
  * @param {object} props.data.section4aImage - The image object for the CTA section.
+ * @param {object} props.data.section4aDescription - Description
  */
 const Section4a = ({ data }) => {
   if (!data || !data.enableCta) return null; // Assuming `enableCta` is a boolean
@@ -18,6 +19,7 @@ const Section4a = ({ data }) => {
     section4aAdditionalHeadline,
     ctaButtonText,
     section4aImage,
+    section4aDescription
   } = data;
   const imageUrl = section4aImage?.node?.uri;
 
@@ -45,6 +47,7 @@ const Section4a = ({ data }) => {
                 {section4aHeadline}
               </h2>
             )}
+            <p>{section4aDescription}</p>
             {ctaButtonText && (
               <button className="bg-white text-blue-600 dark:bg-gray-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
                 {ctaButtonText}
