@@ -32,10 +32,10 @@ export default function OurServices({ hideViewAll = true }) {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>
@@ -58,10 +58,10 @@ export default function OurServices({ hideViewAll = true }) {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 See Mental Health Services
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>
@@ -84,10 +84,10 @@ export default function OurServices({ hideViewAll = true }) {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn About Pediatric Care
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>
@@ -110,10 +110,10 @@ export default function OurServices({ hideViewAll = true }) {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Explore Senior Services
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>

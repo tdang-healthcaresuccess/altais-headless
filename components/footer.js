@@ -1,4 +1,5 @@
 import BrandLogo from "@/public/media/altais-logo-white.svg";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,13 +11,15 @@ export default function Footer() {
           <div className="block pt-10 pb-12">
             <div className="block md:flex justify-between gap-4">
               <div className="flex md:block w-full md:w-auto md:border-none border-b border-primary pb-8 md:pb-0 mb-8 md:mb-0 ">
-                <Image
-                  src={BrandLogo}
-                  alt="Altais"
-                  width={180}
-                  height={55}
-                  priority
-                />
+                <Link href="/">
+                  <Image
+                    src={BrandLogo}
+                    alt="Altais"
+                    width={180}
+                    height={55}
+                    priority
+                  />
+                </Link>
                 <div className="flex md:hidden w-full justify-end gap-4 pt-7">
                   <Link
                     href="/"
@@ -39,25 +42,25 @@ export default function Footer() {
                 <div className="block pt-5">
                   <div className="flex flex-col gap-5">
                     <Link
-                      href="#"
+                      href="/patients"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Patients
                     </Link>
                     <Link
-                      href="#"
+                      href="/providers"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Providers
                     </Link>
                     <Link
-                      href="#"
+                      href="/partners"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Partners
                     </Link>
                     <Link
-                      href="#"
+                      href="/clinics"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">Our</span> Clinics
@@ -68,7 +71,7 @@ export default function Footer() {
                   <ul className="flex flex-col gap-5">
                     <li>
                       <Link
-                        href="#/"
+                        href="/about"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         About
@@ -76,7 +79,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="#/"
+                        href="/resources"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Resources
@@ -84,7 +87,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="#/"
+                        href="/contact"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Contact Us
@@ -98,7 +101,7 @@ export default function Footer() {
                       <ul className="flex flex-col gap-5">
                         <li>
                           <Link
-                            href="#/"
+                            href="/blog"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             Blog
@@ -106,7 +109,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="#/"
+                            href="/news"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             News
@@ -114,7 +117,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="#/"
+                            href="/careers"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             Careers
@@ -126,7 +129,7 @@ export default function Footer() {
                       <ul className="flex flex-col gap-3">
                         <li>
                           <Link
-                            href="/"
+                            href="/website-privacy"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -135,7 +138,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/patient-privacy"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -144,7 +147,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/cookies"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -153,7 +156,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/terms-of-use"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -162,7 +165,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/patient-bill"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -171,7 +174,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/non-discrimination-notice"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -180,7 +183,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/"
+                            href="/consent-prefrences"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -193,20 +196,27 @@ export default function Footer() {
                 </div>
                 <div className="hidden md:flex gap-4 pt-7 order-4">
                   <Link
-                    href="/"
+                    href="https://www.facebook.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    <Facebook size={16} />
+                  </Link>
                   <Link
-                    href="/"
+                    href="https://www.instagram.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    <Instagram size={16} />
+                  </Link>
                   <Link
-                    href="/"
+                    href="https://linkedin.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    {" "}
+                    <Linkedin size={16} />
+                  </Link>
                 </div>
               </div>
             </div>

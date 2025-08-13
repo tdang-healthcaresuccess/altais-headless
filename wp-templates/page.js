@@ -80,6 +80,7 @@ const PAGE_QUERY = gql`
             fieldGroupName
             section4aAdditionalHeadline
             section4aAdditionalHeadlineOption
+            section4aDescription
             section4aHeadline
             section4aImage {
               node {

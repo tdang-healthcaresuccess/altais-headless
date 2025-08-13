@@ -17,7 +17,7 @@ export default function HeroJourney({ heading, heading2, description }) {
               )}
             </h3>
             {/* Vertical Separator */}
-            <div className="hidden md:flex w-full md:w-[1px] h-[1px] md:h-[113px] bg-[#C75327] my-6 md:my-0 max-0 md:mx-10"></div>
+            <div className="hidden md:flex w-full md:w-[1px] h-[1px] md:h-[113px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div>
           </div>
 
           {/* Right Column */}

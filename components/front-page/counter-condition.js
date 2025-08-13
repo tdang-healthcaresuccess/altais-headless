@@ -18,7 +18,7 @@ export default function CounterCondition() {
         <div className="block w-full">
           <CounterArea />
 
-          <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
+          <div className="w-full h-[1px] bg-lightPrimary mb-[85px]"></div>
 
           <div className="flex flex-col md:flex-row border border-primary rounded-normal mb-10 md:mb-[45px]">
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px] order-2 md:order-1">
@@ -28,10 +28,10 @@ export default function CounterCondition() {
               </h3>
               <Link
                 href="/#"
-                className="pt-4 flex font-medium justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
+                className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 To Conditions Page
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
             <div className="block w-full order-1 md:order-2">
@@ -58,11 +58,11 @@ export default function CounterCondition() {
                 <br /> or Clinic Near You
               </h3>
               <Link
-                href="/#"
-                className="pt-4 flex font-medium justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
+                href="/find-doctor"
+                className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 Find a Location Near You
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function CounterCondition() {
           <div className="flex flex-col lg:flex-row border border-primary rounded-normal p-0 md:p-7 lg:p-7 items-start">
             <div className="flex flex-col lg:flex-row gap-5 lg:gap-7 w-full">
               <div className="block w-full lg:max-w-[170px] min-w-[165px] order-2 lg:order-1 px-7 md:px-0">
-                <h3 className="text-bluePrimary text-[26px] border-b md:border-none border-[#00888980] pb-7 md:pb-0 leading-[36px] font-light">
+                <h3 className="text-bluePrimary text-[26px] border-b md:border-none border-lightPrimary pb-7 md:pb-0 leading-[36px] font-light">
                   <b className="font-medium"> News, Education + Insights</b>
                   <br /> from Altais
                 </h3>
@@ -153,20 +153,20 @@ export default function CounterCondition() {
             <div className="block w-full lg:w-[30%] order-3 lg:order-3 pb-12 lg:pb-0">
               <ul className="pl-7 md:pl-0 lg:pl-7">
                 <li>
-                  <Link href="/#" className="list-items1">
-                    <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                  <Link href="/blog" className="list-items1 btn-link-secondary">
+                    <ChevronRight className="w-[20px] h-[20px]" />
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#" className="list-items1">
-                    <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                  <Link href="/news" className="list-items1 btn-link-secondary">
+                    <ChevronRight className="w-[20px] h-[20px]" />
                     Newsroom
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#" className="list-items1">
-                    <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                  <Link href="/patient-education" className="list-items1 btn-link-secondary">
+                    <ChevronRight className="w-[20px] h-[20px]" />
                     Patient Education
                   </Link>
                 </li>

@@ -100,7 +100,7 @@ export default function DocSearchFilterSidebar({
     {
       title: 'Gender',
       content: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 filter-result-box">
           {genderList.map((gender, index) => (
             <label key={index} className="flex items-center gap-2 text-primary">
               <input
@@ -122,7 +122,7 @@ export default function DocSearchFilterSidebar({
     {
       title: 'Education',
       content: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 filter-result-box">
           {educationList.map((edu, index) => (
             <label key={index} className="flex items-center gap-2 text-primary">
               <input
@@ -144,7 +144,7 @@ export default function DocSearchFilterSidebar({
     {
       title: 'Accepted Insurance',
       content: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 filter-result-box">
           {insuranceList.map((ins, index) => (
             <label key={index} className="flex items-center gap-2 text-primary">
               <input
@@ -169,7 +169,7 @@ export default function DocSearchFilterSidebar({
     <div className="block relative">
       <button
         onClick={clearAllFilters}
-        className="btn-md btn-outline-secondary w-full mb-4 flex-center font-semibold rounded-normal"
+        className="btn-md btn-outline-secondary !w-full mb-6 flex-center font-semibold rounded-normal"
       >
         Clear All Filters
       </button>

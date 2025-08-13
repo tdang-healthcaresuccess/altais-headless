@@ -17,9 +17,9 @@ const Section6a = ({ data }) => {
 
   const testimonials = data.section6aTestimonials || [];
   return (
-    <section className="py-6 md:py-12 ">
+    <section className="pb-6 md:pb-12 ">
       <div className="container mx-auto">
-        <div className="block px-6 md:px-0">
+        <div className="block testimonials-block px-6 md:px-0">
           {console.log(testimonials)}
           <Swiper
             modules={[Navigation, Pagination]}
@@ -31,9 +31,9 @@ const Section6a = ({ data }) => {
           >
             {testimonials.map((testimonial, idx) => (
               <SwiperSlide key={idx}>
-                <div className="block">
-                  <p className="text-lg mb-2">{testimonial.reviewerDescription}</p>
-                  <p className="font-semibold text-primary">{testimonial.reviewerName}</p>
+                <div className="flex flex-col items-center justify-center max-w-[725px] mx-auto">
+                  <h3 className="text-xl leading-[32px] text-center text-primary pb-12 font-normal">{testimonial.reviewerDescription}</h3>
+                  <p className="text-secondary font-semibold text-center text-[15px] leading-[25px]">{testimonial.reviewerName}</p>
                 </div>
               </SwiperSlide>
             ))}

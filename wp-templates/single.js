@@ -43,7 +43,7 @@ export default function Component(props) {
   const { title, content, date, author } = contentQuery?.post || {};
 
   return (
-   <>
+    <>
       <Head>
         <title>{`${title} - ${siteTitle}`}</title>
       </Head>
@@ -53,23 +53,23 @@ export default function Component(props) {
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
-            <div className="block">
-              {/* Inner Page Banner start */}
-              <InnerPageBanner
-                useDefaultImage={true}
-                DesktopBanner="bg-services-landing-banner"
-                MobileBanner="bg-services-landing-banner-mobile"
-                heading={title}
-              />
-            </div>
-        {/* Breadcrumb Start */}
-        <Breadcrumb
-          items={[{ label: "Home", link: "/" }, { label: title }]}
+      <div className="block">
+        {/* Inner Page Banner start */}
+        <InnerPageBanner
+          useDefaultImage={true}
+          DesktopBanner="bg-services-landing-banner"
+          MobileBanner="bg-services-landing-banner-mobile"
+          heading={title}
         />
-        {/* Breadcrumb End */}
-      <main className="container mx-auto">
-         <div className="acf-flexible-content">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </div>
+      {/* Breadcrumb Start */}
+      <Breadcrumb items={[{ label: "Home", link: "/" }, { label: title }]} />
+      {/* Breadcrumb End */}
+      <main className="template-wrapper py-12 border-b border-lightPrimary">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="block max-w-[838px] mx-auto">
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
         </div>
       </main>
 

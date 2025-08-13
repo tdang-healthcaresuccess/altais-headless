@@ -9,10 +9,10 @@ export default function CounterProvider() {
   return (
     <section className="block pt-[50px] px-6 md:px-0 box-shadow-custom2">
       <div className="container mx-auto">
-        <div className="block w-full border-b border-[#00888980]">
+        <div className="block w-full border-b border-lightPrimary">
           <CounterArea />
 
-          <div className="w-full h-[1px] bg-[#00888980] mb-[85px]"></div>
+          <div className="w-full h-[1px] bg-lightPrimary mb-[85px]"></div>
           <div className="block pb-6 about-slider-algo">
             <Swiper
               modules={[Navigation, Pagination]}

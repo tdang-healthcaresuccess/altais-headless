@@ -34,10 +34,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>
@@ -60,10 +60,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                  Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>
@@ -86,10 +86,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                  Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>
@@ -111,10 +111,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>
@@ -136,10 +136,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>
@@ -161,10 +161,10 @@ export default function OurServices() {
               </p>
               <Link
                 href="/#"
-                className="pt-4 flex justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 text-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn More
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px] text-secondary" />
               </Link>
             </div>
           </div>

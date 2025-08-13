@@ -28,7 +28,7 @@ export default function VisionMission() {
               </p>
             </div>
             {/* Vertical Separator */}
-            <div className="w-full h-[1px] bg-[#00888980] my-12"></div>
+            <div className="w-full h-[1px] bg-lightPrimary my-12"></div>
             <div className="block">
               <h4 className="text-[22px] leading-[32px] text-bluePrimary mb-2">
                 Our Vision
@@ -41,7 +41,7 @@ export default function VisionMission() {
             </div>
           </div>
         </div>
-        <div className="hidden md:block w-full h-[1px] bg-[#00888980]"></div>
+        <div className="hidden md:block w-full h-[1px] bg-lightPrimary"></div>
       </div>
     </section>
   );

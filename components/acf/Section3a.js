@@ -65,8 +65,7 @@ const Section3a = ({ data }) => {
   const gridColumns = columnSelection === 3 ? "grid-cols-3" : "grid-cols-2";
 
   return (
-    <section className="py-16 md:py-24 bg-gray-100 dark:bg-gray-950">
-     
+    <section className="template-wrapper list2 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`grid gap-8 sm:grid-cols-2 lg:${gridColumns}`}>
           {data.section3aCards.map((card, index) => (

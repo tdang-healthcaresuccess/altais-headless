@@ -4,7 +4,7 @@ import LeadershipTeamMedia from "@/public/media/leadership-team.png"
 import LeadershipTeamMobileMedia from "@/public/media/leadership-team-mobile.png"
 import { ChevronRight } from "lucide-react"; 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link"; 
 import { useMediaQuery } from "react-responsive";
 
 export default function MeetOurTeam() {
@@ -22,16 +22,16 @@ export default function MeetOurTeam() {
               />
             </div>
             <div className="flex flex-col justify-between w-full md:w-[30%] p-7 max-w-full md:max-w-[298px]">
-              <h3 className="text-bluePrimary text-[26px] sm:text-[18px] md:text-[24px] lg:-[26px] leading-[36px] font-light mb-12">
+              <h3 className="text-bluePrimary text-[26px] sm:text-base md:text-[24px] lg:text-[26px] !leading-[36px] font-light mb-12">
                 <b className="font-medium">Meet Our Leadership Team</b>
                 <br /> Discover the decision-makers behind Altais
               </h3>
               <Link
-                href="/#"
-                className="pt-4 flex font-medium justify-end md:justify-start gap-1 text-[#C75327] border-t border-[#00888980] text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
+                href="/our-team"
+                className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-base sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 Meet Our Team
-                <ChevronRight className="w-[20px] h-[20px] text-[#C75327]" />
+                <ChevronRight className="w-[20px] h-[20px]" />
               </Link>
             </div>
           </div>
