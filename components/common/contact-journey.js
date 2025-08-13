@@ -10,7 +10,7 @@ export default function ContactJourney({heading, subheading,description}) {
         <div className="block md:flex justify-center items-start">
           {/* Left Column */}
           <div className="flex justify-center md:justify-end">
-            <h3 className="flex flex-col font-light text-center md:text-left max-w-[250px] text-bluePrimary">
+            <h3 className="flex flex-col text-[22px] leading-[32px] font-light text-center md:text-left max-w-[250px] text-bluePrimary">
               <b className="font-medium">{heading}</b> {subheading}
             </h3>
           </div>
