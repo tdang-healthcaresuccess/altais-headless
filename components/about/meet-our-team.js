@@ -4,7 +4,7 @@ import LeadershipTeamMedia from "@/public/media/leadership-team.png"
 import LeadershipTeamMobileMedia from "@/public/media/leadership-team-mobile.png"
 import { ChevronRight } from "lucide-react"; 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link"; 
 import { useMediaQuery } from "react-responsive";
 
 export default function MeetOurTeam() {

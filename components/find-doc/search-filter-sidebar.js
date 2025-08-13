@@ -169,7 +169,7 @@ export default function DocSearchFilterSidebar({
     <div className="block relative">
       <button
         onClick={clearAllFilters}
-        className="btn-md btn-outline-secondary w-full mb-4 flex-center font-semibold rounded-normal"
+        className="btn-md btn-outline-secondary !w-full mb-6 flex-center font-semibold rounded-normal"
       >
         Clear All Filters
       </button>
