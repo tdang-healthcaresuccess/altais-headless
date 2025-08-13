@@ -5,14 +5,14 @@ import DocSearchList from 'components/find-doc/doctor-list';
 import { dummyDoctors, specialitiesList } from 'components/DummyData';
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from '@/components/Layout';
-export default function App() {
+export default function FindDoctor() {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
+  const [practiceNameQuery, setPracticeNameQuery] = useState(''); // Added practiceNameQuery
   const [specialityFilter, setSpecialityFilter] = useState('');
-  const [genderFilter, setGenderFilter] = useState([]); // Changed to an array
-  const [educationFilter, setEducationFilter] = useState([]); // Changed to an array
+  const [genderFilter, setGenderFilter] = useState([]);
+  const [educationFilter, setEducationFilter] = useState([]);
   const [insuranceFilter, setInsuranceFilter] = useState([]);
-  const [languageFilter, setLanguageFilter] = useState([]); // New state for languages
   const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
   const [activeLayout, setActiveLayout] = useState('list'); // 'list' or 'grid'
 
@@ -20,61 +20,91 @@ export default function App() {
   const clearAllFilters = () => {
     setSearchQuery('');
     setLocationQuery('');
+    setPracticeNameQuery('');
     setSpecialityFilter('');
-    setGenderFilter([]); // Reset to empty array
-    setEducationFilter([]); // Reset to empty array
+    setGenderFilter([]);
+    setEducationFilter([]);
     setInsuranceFilter([]);
-    setLanguageFilter([]); // Reset to empty array
   };
 
+  // Effect to read search parameters from the URL on initial load
   useEffect(() => {
-    const lowerCaseSearchQuery = searchQuery.toLowerCase();
-    const lowerCaseLocationQuery = locationQuery.toLowerCase();
-    const lowerCaseSpecialityFilter = specialityFilter.toLowerCase();
+    const params = new URLSearchParams(window.location.search);
+    const doctorNameParam = params.get('doctorName');
+    const zipCodeParam = params.get('zipCode');
+    const practiceNameParam = params.get('practiceName');
+    const specialtyParam = params.get('specialty');
 
-    // Split search queries into words for fuzzy-like matching
-    const searchWords = lowerCaseSearchQuery.split(' ').filter(Boolean);
-    const locationWords = lowerCaseLocationQuery.split(' ').filter(Boolean);
+    // Update state only if a parameter exists in the URL
+    if (doctorNameParam) setSearchQuery(doctorNameParam);
+    if (zipCodeParam) setLocationQuery(zipCodeParam);
+    if (practiceNameParam) setPracticeNameQuery(practiceNameParam);
+    if (specialtyParam) setSpecialityFilter(specialtyParam);
+  }, []);
 
-    const newFilteredDoctors = dummyDoctors.filter((doc) => {
-      const doctorData = doc.node.doctorData;
+  useEffect(() => {
+    const filterDoctors = () => {
+      let filtered = dummyDoctors;
 
-      // Fuzzy search logic for doctor/hospital/specialty
-      const matchesSearch = searchWords.every(word =>
-        doctorData.doctorsName.toLowerCase().includes(word) ||
-        (doctorData.practiceName && doctorData.practiceName.toLowerCase().includes(word)) ||
-        (doctorData.speciality && doctorData.speciality.toLowerCase().includes(word)) ||
-        (doctorData.spec1 && doctorData.spec1.toLowerCase().includes(word)) ||
-        (doctorData.spec2 && doctorData.spec2.toLowerCase().includes(word)) ||
-        (doctorData.spec3 && doctorData.spec3.toLowerCase().includes(word))
-      );
+      // Filter by search query (doctor name)
+      if (searchQuery) {
+        filtered = filtered.filter(doc =>
+          doc.node.doctorData.doctorsName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      
+      // Filter by practice name query
+      if (practiceNameQuery) {
+        filtered = filtered.filter(doc =>
+          doc.node.doctorData.practiceName.toLowerCase().includes(practiceNameQuery.toLowerCase())
+        );
+      }
 
-      // Fuzzy search logic for location
-      const matchesLocation = locationWords.every(word =>
-        (doctorData.addressCity && doctorData.addressCity.toLowerCase().includes(word)) ||
-        (doctorData.state && doctorData.state.toLowerCase().includes(word)) ||
-        (doctorData.zipcode && doctorData.zipcode.includes(word))
-      );
+      // Filter by location query (zip code)
+      if (locationQuery) {
+        filtered = filtered.filter(doc =>
+          doc.node.doctorData.zipcode && doc.node.doctorData.zipcode.startsWith(locationQuery)
+        );
+      }
+      
+      // Filter by specialty
+      if (specialityFilter) {
+        filtered = filtered.filter(doc =>
+          doc.node.doctorData.speciality.toLowerCase().includes(specialityFilter.toLowerCase())
+        );
+      }
 
-      // Other filter logic
-      const matchesSpeciality = lowerCaseSpecialityFilter === '' || doctorData.speciality.toLowerCase().includes(lowerCaseSpecialityFilter);
-      const matchesGender = genderFilter.length === 0 || genderFilter.includes(doctorData.gender);
-      const matchesEducation = educationFilter.length === 0 || educationFilter.includes(doctorData.education);
-      const matchesInsurance = insuranceFilter.length === 0 || insuranceFilter.every(ins => doctorData.acceptedInsurance?.includes(ins));
-      const matchesLanguage = languageFilter.length === 0 || languageFilter.some(lang => doctorData.languages?.includes(lang));
+      // Filter by gender
+      if (genderFilter.length > 0) {
+        filtered = filtered.filter(doc =>
+          genderFilter.includes(doc.node.doctorData.sex)
+        );
+      }
+      
+      // Filter by education
+      if (educationFilter.length > 0) {
+        filtered = filtered.filter(doc =>
+          educationFilter.includes(doc.node.doctorData.medicalSchool)
+        );
+      }
 
-      // Return true if all criteria are met
-      return matchesSearch && matchesLocation && matchesSpeciality && matchesGender && matchesEducation && matchesInsurance && matchesLanguage;
-    });
+      // Filter by insurance
+      if (insuranceFilter.length > 0) {
+        filtered = filtered.filter(doc =>
+          doc.node.doctorData.acceptedInsurance.some(insurance => insuranceFilter.includes(insurance))
+        );
+      }
+      
+      setFilteredDoctors(filtered);
+    };
 
-    setFilteredDoctors(newFilteredDoctors);
-  }, [searchQuery, locationQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter, languageFilter]);
+    filterDoctors();
+  }, [searchQuery, locationQuery, practiceNameQuery, specialityFilter, genderFilter, educationFilter, insuranceFilter]);
 
   return (
     <Layout>
-    <div className="bg-white p-6 md:p-10 min-h-screen font-sans">
-     
-      {/* Inner Page Banner start */}
+    <div className="block">
+       {/* Inner Page Banner start */}
               <InnerPageBanner
                 DesktopBanner="bg-findDoc-landing-banner"
                 MobileBanner="bg-findDoc-landing-banner-mobile"
@@ -102,8 +132,6 @@ export default function App() {
                   setEducationFilter={setEducationFilter}
                   insuranceFilter={insuranceFilter}
                   setInsuranceFilter={setInsuranceFilter}
-                  languageFilter={languageFilter}
-                  setLanguageFilter={setLanguageFilter}
                   clearAllFilters={clearAllFilters}
                 />
               </div>

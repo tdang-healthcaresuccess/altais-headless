@@ -59,12 +59,17 @@ const PAGE_QUERY = gql`
               cardHeadline
               cardOptions
               fieldGroupName
-              
               cardImage {
                 node {
+                  sourceUrl
                   uri
                 }
               }
+                cardIcon {
+              node {
+                sourceUrl
+              }
+            }
             }
           }
           fieldGroupName
@@ -191,7 +196,7 @@ export default function SinglePage(props) {
                 case "ContentTemplatesTemplateASection2aLayout":
                   return <Section2a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection3aLayout":
-                  return <Section3a key={index} data={layout} columnSelection={layout.columnSelection[0]} />;
+                  return <Section3a key={index} data={layout} columnSelection={layout.columnSelection[0]} imageSource={layout.cardImage?.node?.sourceUrl} cardIcon={layout.cardIcon?.node?.sourceUrl} />;
                 case "ContentTemplatesTemplateASection4aLayout":
                   return <Section4a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection5aLayout":

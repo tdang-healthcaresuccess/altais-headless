@@ -1,23 +1,41 @@
 import Image from "next/image";
 import DummyImage from "@/public/media/placeholder-frame160.png"
 import he from "he";
+// This is a placeholder for a responsive image component.
+// In a real application, you'd want to use a component that handles
+// image optimization (like Next.js's Image component) or adds
+// proper fallbacks.
+const ResponsiveImage = ({ src, alt }) => {
+  if (!src) {
+    return (
+      <div className="w-full h-64 bg-gray-200 animate-pulse rounded-normal"></div>
+    );
+  }
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="w-full h-auto object-cover rounded-normal border border-primary"
+    />
+  );
+};
 
 // Sub-component for the cards inside Section3a
+
 const Card = ({ cardData }) => {
   if (!cardData) return null;
 
-  const { cardHeadline, cardContent, cardImage } = cardData;
-  const imageUrl = cardImage?.node?.uri;
-
+  const { cardContent, cardHeadline } = cardData;
+  const imageUrl = cardData.cardImage?.node?.sourceUrl;
+  const imageIcon = cardData.cardIcon?.node?.sourceUrl;
+  const displayImage = imageUrl || imageIcon;
   return (
     <div className="rounded-normal h-full flex flex-col">
+      {displayImage && (
         <div className="flex-shrink-0 mb-4">
-          <Image
-            src={imageUrl ? imageUrl : DummyImage}
-            alt={cardHeadline}
-            className="w-full h-[170px] object-cover rounded-normal border border-primary"
-          />
+          <ResponsiveImage src={displayImage} />
         </div>
+      )}
       <div className="flex-grow">
         {cardHeadline && <h3>{cardHeadline}</h3>}
         {cardContent && (
@@ -38,16 +56,19 @@ const Card = ({ cardData }) => {
  * @param {object} props.data - The data object from the ACF Flexible Content layout.
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
-const Section3a = ({ data, columnSelection }) => {
-  if (!data || !data?.section3aCards) return null;
+const Section3a = ({ data }) => {
+    
+   if (!data || !data.section3aCards) return null;
   // Use columnSelection to set grid columns
-  const columns =
-  columnSelection === 3 ? "grid-cols-3" : "grid-cols-2";
+  const columnSelection = data.section3aCards[0]?.columnSelection || 2;
+  const gridColumns = columnSelection === 3 ? "grid-cols-3" : "grid-cols-2";
+
   return (
-    <section className="template-wrapper list2 py-6 md:py-12 ">
-      <div className="container mx-auto">
-        <div className="grid gap-8 ${columns}">
-          {data?.section3aCards.map((card, index) => (
+    <section className="py-16 md:py-24 bg-gray-100 dark:bg-gray-950">
+     
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`grid gap-8 sm:grid-cols-2 lg:${gridColumns}`}>
+          {data.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />
           ))}
         </div>
