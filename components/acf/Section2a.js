@@ -54,9 +54,7 @@ const Section2a = ({ data }) => {
 
               {/* Right Column */}
               <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary">
-                <p className="font-normal text-center md:text-left">
-                  <div dangerouslySetInnerHTML={{ __html: content2a }} />
-                </p>
+                 <div dangerouslySetInnerHTML={{ __html: content2a }} />
               </div>
             </>
           )}

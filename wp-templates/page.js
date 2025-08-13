@@ -84,6 +84,7 @@ const PAGE_QUERY = gql`
             section4aHeadline
             section4aImage {
               node {
+                 sourceUrl
                 uri
               }
             }
@@ -188,6 +189,7 @@ export default function SinglePage(props) {
             {/* Iterate through templateA layouts */}
             {templateAContent.map((layout, index) => {
               const fieldGroupName = layout.fieldGroupName;
+            
               // Render components based on fieldGroupName
          
 
