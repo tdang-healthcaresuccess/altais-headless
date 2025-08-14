@@ -33,15 +33,14 @@ const ResponsiveImage = ({ src, alt }) => {
  * @param {string} props.data.section1aImg.node.sourceUrl - The URL of the image.
  */
 const Section1a = ({ data }) => {
-  // Ensure data exists before trying to access its properties
   if (!data) {
     return null;
   }
 
-  // Extract the image URI and content from the data prop
-  // The GraphQL query in the parent component must be updated to fetch `section1aContent`.
   const imageUrl = data.section1aImg?.node?.sourceUrl;
   const sectionContent = data.section1aContent;
+  const section1aLineBreak = data.section1aLineBreak;
+
   return (
     <section className="template-wrapper py-12 border-b border-lightPrimary">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,10 +54,14 @@ const Section1a = ({ data }) => {
             {/* Right Column: Content */}
             <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
               <p
-                // The content is assumed to be an HTML string from WordPress
                 dangerouslySetInnerHTML={{ __html: sectionContent }}
               />
             </div>
+            {section1aLineBreak && (
+              <div className="container mx-auto line-break">
+                <div className="block"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>
