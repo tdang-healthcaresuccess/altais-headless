@@ -12,9 +12,9 @@ const Section5a = ({ data }) => {
   const { section5aContent } = data;
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-6 md:py-12">
       <div className="template-wrapper container mx-auto">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-full md:max-w-[743px] mx-auto">
           {section5aContent && (
             <div
               className="prose dark:prose-invert text-base lg:text-lg"

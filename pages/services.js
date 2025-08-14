@@ -2,7 +2,7 @@ import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useQuery } from "@apollo/client";
 import { getNextStaticProps } from "@faustwp/core";
-import SearchServices from "@/components/services-page/search-services";
+import SearchServices from "@/components/common/search-services";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import ContactJourney from "@/components/common/contact-journey";

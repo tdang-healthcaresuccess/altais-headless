@@ -396,7 +396,7 @@ button {
 }
 
 .template-wrapper a {
-  @apply text-lg leading-[32px] text-bluePrimary hover:text-secondary;
+  @apply text-lg leading-[32px] text-secondary hover:text-bluePrimary;
 }
 
 @media screen and (max-width: 981px) {
