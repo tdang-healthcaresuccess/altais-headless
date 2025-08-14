@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ContactJourney({heading, subheading,description}) {
   return (
-    <section className="block pt-[50px] bg-[#d9d9d926] md:pt-14 pb-[73px] md:pb-15 px-4 md:px-0 box-shadow-custom2">
+    <section className="block pt-12 bg-[#d9d9d926] md:pt-14 pb-[73px] md:pb-15 box-shadow-custom2">
       <div className="container mx-auto">
         <div className="block md:flex justify-center items-start">
           {/* Left Column */}

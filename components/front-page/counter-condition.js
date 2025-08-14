@@ -13,7 +13,7 @@ import CounterArea from "../common/counter-area";
 
 export default function CounterCondition() {
   return (
-    <section className="block py-[60px] px-6 md:px-0">
+    <section className="block py-[60px]">
       <div className="container mx-auto">
         <div className="block w-full">
           <CounterArea />

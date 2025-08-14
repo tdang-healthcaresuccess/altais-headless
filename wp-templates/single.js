@@ -66,7 +66,7 @@ export default function Component(props) {
       <Breadcrumb items={[{ label: "Home", link: "/" }, { label: title }]} />
       {/* Breadcrumb End */}
       <main className="template-wrapper py-12 border-b border-lightPrimary">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="block max-w-[838px] mx-auto">
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>

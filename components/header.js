@@ -42,7 +42,7 @@ const MenuItem = ({ item, router }) => {
 export default function Header({ siteTitle, siteDescription }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const menuRef = useRef(null);
   const router = useRouter();
 
@@ -61,7 +61,7 @@ export default function Header({ siteTitle, siteDescription }) {
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       setIsOpenSearch(false);
-      setSearchQuery('');
+      setSearchQuery("");
     }
   };
 
@@ -94,9 +94,9 @@ export default function Header({ siteTitle, siteDescription }) {
         />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
-      <header className="block py-6 lg:py-0 relative">
+      <header className="block py-4 lg:py-0 relative">
         <div className="container mx-auto bg-white">
-          <div className="w-full flex items-center justify-between px-4 md:px-0">
+          <div className="w-full flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/">
@@ -216,68 +216,78 @@ export default function Header({ siteTitle, siteDescription }) {
               )}
             </button>
           </div>
-
-          {/* Mobile Menu Content */}
-          {isOpen && (
-            <div className="lg:hidden absolute min-h-screen flex justify-end items-start top-[100%] h-full w-full bg-[#d9d9d9e6] z-50 right-0">
-              <div
-                ref={menuRef}
-                className="w-[210px] bg-[#f9f9f9] pt-[32px] pb-[27px] relative z-50"
-              >
-                <nav className="flex flex-col text-sm font-medium text-gray-700">
-                  {menuItems.map((item, idx) => {
-                    const isActive = router.asPath === item.uri;
-                    return (
-                      <Link
-                        key={item.id}
-                        className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
-                          isActive ? "bg-[#d9d9d980]" : ""
-                        }`}
-                        href={item.uri}
-                      >
-                        {idx < 3 ? (
-                          <>
-                            <span className="font-normal">For</span>{" "}
-                            {item.label}
-                          </>
-                        ) : idx === 3 ? (
-                          <>
-                            <span className="font-normal">Our</span>{" "}
-                            {item.label}
-                          </>
-                        ) : (
-                          item.label
-                        )}
-                      </Link>
-                    );
-                  })}
-                </nav>
-              </div>
-            </div>
-          )}
         </div>
         {/* Search Bar Content */}
-        {isOpenSearch && (
-          <div className="absolute bg-[#f9f9f9] py-5 px-6 top-[100%] left-0 right-0 z-50 w-full box-shadow-custom3">
-            <form onSubmit={handleSearch} className="flex gap-3 max-w-full md:max-w-[340px] mx-auto">
-              <div className="input-style flex gap-2 items-center w-full py-3 px-[14px]">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Keyword, Insurance, Spec..."
-                  className="ml-2 outline-none text-lg leading-[24px] bg-transparent w-full min-w-full md:min-w-[318px]"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-custom-gradient min-w-12 w-12 h-12 rounded-normal flex-center"
-              >
-                <Image src={SearchWhiteIcon} alt="search" />
-              </button>
-            </form>
+
+        {/* Mobile Menu Content */}
+
+        <div
+          className={`lg:hidden fixed top-[64px] inset-0 z-50 bg-[#d9d9d9e6] transition-opacity duration-500 ease-in-out
+              ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+          {/* Sliding Menu Panel */}
+          <div
+            ref={menuRef}
+            className={`absolute top-0 right-0 w-[210px] bg-greyF9 pt-8 pb-7 rounded-bl-normal transition-transform duration-500 ease-in-out
+                ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          >
+            <nav className="flex flex-col text-sm font-medium text-gray-700">
+              {menuItems.map((item, idx) => {
+                const isActive = router.asPath === item.uri;
+                return (
+                  <Link
+                    key={item.id}
+                    className={`flex flex-col text-bluePrimary text-sm px-9 py-2.5 leading-[18px] font-semibold ${
+                      isActive ? "bg-[#d9d9d980]" : ""
+                    }`}
+                    href={item.uri}
+                  >
+                    {idx < 3 ? (
+                      <>
+                        <span className="font-normal">For</span> {item.label}
+                      </>
+                    ) : idx === 3 ? (
+                      <>
+                        <span className="font-normal">Our</span> {item.label}
+                      </>
+                    ) : (
+                      item.label
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
-        )}
+        </div>
+
+        <div
+          className={`absolute bg-greyF9 top-[100%] left-0 right-0 z-50 w-full box-shadow-custom3 overflow-hidden transition-all duration-500 ease-in-out ${
+            isOpenSearch
+              ? "max-h-[90px] py-5 px-6 opacity-100"
+              : "max-h-0 py-0 px-6 opacity-0"
+          }`}
+        >
+          <form
+            onSubmit={handleSearch}
+            className="flex gap-3 max-w-full md:max-w-[340px] mx-auto"
+          >
+            <div className="input-style flex gap-2 items-center w-full py-3 px-[14px]">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Keyword, Insurance, Spec..."
+                className="pl-2 outline-none text-lg leading-[36px] bg-transparent w-full min-w-full md:min-w-[318px]"
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-custom-gradient min-w-12 w-12 h-12 rounded-normal flex-center"
+            >
+              <Image src={SearchWhiteIcon} alt="search" />
+            </button>
+          </form>
+        </div>
       </header>
     </>
   );

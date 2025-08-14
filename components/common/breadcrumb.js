@@ -8,9 +8,9 @@ export default function Breadcrumb({ items = [] }) {
   // [{ label: "Home", link: "/" }, { label: "Find Doctor", link: "/find-doctor" }, { label: "Brittany Camille, FNP-C" }]
   
   return (
-    <section className="hidden md:block py-2 box-shadow-custom5">
+    <section className="hidden md:block py-2 box-shadow-custom3">
       <div className="container mx-auto">
-        <ul className="flex flex-wrap items-center gap-1 text-sm text-gray-600 min-h-[50px]">
+        <ul className="flex flex-wrap items-center gap-1 text-sm text-gray-600 min-h-[28px]">
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
 

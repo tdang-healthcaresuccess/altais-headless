@@ -34,21 +34,21 @@ const Section2a = ({ data }) => {
     //   </div>
     // </section>
     <section
-      className={`bg-[${sectionBackgroundColor}] template-wrapper pt-[50px] md:pt-[60px] pb-[73px] md:pb-[54px] px-4 md:px-0`}
+      className={`bg-[${sectionBackgroundColor}] template-wrapper pt-[50px] md:pt-[60px] pb-[73px] md:pb-[54px]`}
     >
       <div className="container mx-auto">
         <div className="block md:flex justify-start items-start w-full gap-10">
           {/* Left Column */}
           {headline2a && (
             <div className="flex justify-center md:justify-start max-w-full md:max-w-[340px] min-w-full md:min-w-[340px]">
-              <h2 className="flex flex-col text-center md:text-left w-full">
+              <h2 className="flex flex-col text-left w-full">
                 {headline2a}
               </h2>
             </div>
           )}
 
             {content2a ? (
-              <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary">
+              <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary section-content">
                 <div dangerouslySetInnerHTML={{ __html: content2a }} />
               </div>
             ) : (

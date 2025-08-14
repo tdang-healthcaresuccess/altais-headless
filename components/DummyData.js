@@ -6077,6 +6077,20 @@ export const specialitiesList = [
 ];
 // Dynamically generate unique lists of filter options from the dummy data.
 
+
+export const clinicArray = [
+  {
+      id: "1",
+      title: "Altais Medical Group Bay West",
+      shortDescription: "Altais Medical Group Bay West is committed to providing the highest quality care for patients.…"
+  },
+  {
+      id: "2",
+      title: "Altais Medical Group Berkeley",
+      shortDescription: "The physicians at Altais Medical Group Berkeley focus on internal medicine, care that focuses on preventing, diagnosing and treating illnesses in adults…"
+  }
+]
+
 export const genderList = Array.from(new Set(dummyDoctors.map(doc => doc.node.doctorData.sex).filter(Boolean)));
 export const educationList = Array.from(new Set(dummyDoctors.map(doc => doc.node.doctorData.medicalSchool).filter(Boolean)));
 export const insuranceList = Array.from(new Set(
