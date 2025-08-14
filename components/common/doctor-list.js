@@ -106,6 +106,7 @@ export default function DocSearchList({ doctors, activeLayout, onSelectDoctor })
                       }
                     >
                       {doc.node.doctorData.practiceName} <br />
+                       {doc.node.doctorData.address}
                       {doc.node.doctorData.addressStreet} <br />
                       {doc.node.doctorData.addressCity}, {doc.node.doctorData.state} {doc.node.doctorData.zipcode}
                     </p>
@@ -115,7 +116,7 @@ export default function DocSearchList({ doctors, activeLayout, onSelectDoctor })
             </div>
             <div className="flex w-full gap-3 border-t border-lightPrimary pt-3 items-center">
             <a
-              href={`/physicians/${doc.node.doctorData.profileurl}`}
+              href={`/physicians${doc.node.doctorData.profileurl}`}
               className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
             >
               View Profile
