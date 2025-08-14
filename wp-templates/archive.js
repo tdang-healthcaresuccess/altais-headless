@@ -119,7 +119,7 @@ export default function ArchivePage(props) {
         menuItems={menuItems}
       />
 
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto">
         <EntryHeader title={`Archive for ${archiveType}: ${name}`} />
 
         <div className="space-y-12">

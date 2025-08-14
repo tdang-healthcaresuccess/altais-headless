@@ -26,7 +26,7 @@ export default function SearchDoctor() {
   // The 'Advanced Search' link can now point directly to the find-doctor page
   // The 'Search' button is now a button that triggers the navigation logic
   return (
-    <section className="block pt-[50px] md:pt-14 pb-[65px] md:pb-15 px-6 md:px-0 shadow-custom2">
+    <section className="block pt-12 md:pt-14 pb-[65px] md:pb-15 shadow-custom2">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-10">
           <div className="block w-full md:w-[40%] max-w-[470px]">

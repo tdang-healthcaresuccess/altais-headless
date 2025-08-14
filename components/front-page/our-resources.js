@@ -9,7 +9,7 @@ import PartnersMedia from "@/public/media/partners-home.png"
 
 export default function OurResources() {
   return (
-    <section className="block pt-[50px] md:pt-14 pb-[73px] md:pb-[75px] px-6 md:px-0">
+    <section className="block pt-12 md:pt-14 pb-[73px] md:pb-[75px]">
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-7">
           <div className="flex flex-1 mb-4 md:mb-12 gap-6">

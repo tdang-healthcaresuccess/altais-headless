@@ -15,7 +15,7 @@ const ResponsiveImage = ({ src, alt }) => {
     <img
       src={src}
       alt={alt}
-      className="w-full h-auto object-cover rounded-normal border border-primary"
+      className="w-full object-cover rounded-normal border border-primary h-auto md:h-[170px]"
     />
   );
 };
@@ -58,17 +58,17 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-    {console.log(data)}
+
    if (!data || !data.section3aCards) return null;
   // Use columnSelection to set grid columns
-  const columnSelection = data.section3aCards[0]?.columnSelection || 2;
-  const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
-
+  // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
+  // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
+  console.log(data?.columnSelection[0]);
+  
   return (
     <section className="template-wrapper list2 py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`grid gap-8 sm:grid-cols-2 md:${gridColumns} lg:${gridColumns}`}>
-          {console.log(gridColumns)}
+      <div className="container mx-auto">
+        <div className={`grid gap-8 sm:grid-cols-2 md:grid-col-${data?.columnSelection[0]} lg:grid-col-${data?.columnSelection[0]}`}>
           {data.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />
           ))}

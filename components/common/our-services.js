@@ -10,7 +10,7 @@ import ServicesMedia4 from "@/public/media/services-4.png";
 
 export default function OurServices({ hideViewAll = true }) {
   return (
-    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 shadow-custom">
+    <section className="block pt-12 md:pt-[75px] pb-[73px] md:pb-[95px] shadow-custom">
       <div className="block container mx-auto">
         <div className="flex flex-wrap gap-10 items-stretch">
           <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">

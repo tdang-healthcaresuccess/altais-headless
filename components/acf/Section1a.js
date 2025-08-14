@@ -43,21 +43,23 @@ const Section1a = ({ data }) => {
   const imageUrl = data.section1aImg?.node?.sourceUrl;
   const sectionContent = data.section1aContent;
   return (
-    <section className="template-wrapper py-12 border-b border-lightPrimary">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="block max-w-[838px] mx-auto">
-          <div className="flex flex-col gap-6">
-            {/* Left Column: Image */}
-            <div className="w-full flex justify-center">
-              <ResponsiveImage src={imageUrl} alt="Section 1A Image" />
-            </div>
+    <section className="template-wrapper">
+      <div className="container mx-auto">
+        <div className="py-12 border-b border-lightPrimary">
+          <div className="block max-w-[838px] mx-auto">
+            <div className="flex flex-col gap-6">
+              {/* Left Column: Image */}
+              <div className="w-full flex justify-center">
+                <ResponsiveImage src={imageUrl} alt="Section 1A Image" />
+              </div>
 
-            {/* Right Column: Content */}
-            <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
-              <p
-                // The content is assumed to be an HTML string from WordPress
-                dangerouslySetInnerHTML={{ __html: sectionContent }}
-              />
+              {/* Right Column: Content */}
+              <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
+                <p
+                  // The content is assumed to be an HTML string from WordPress
+                  dangerouslySetInnerHTML={{ __html: sectionContent }}
+                />
+              </div>
             </div>
           </div>
         </div>

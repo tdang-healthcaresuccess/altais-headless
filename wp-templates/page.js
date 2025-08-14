@@ -178,10 +178,9 @@ export default function SinglePage(props) {
       {/* Breadcrumb Start */}
       <Breadcrumb
         items={[{ label: "Home", link: "/" }, { label: title }]}
-      />
+      /> 
       {/* Breadcrumb End */}
-      {/* Landing Page Banner Start */}
-      {/* Landing Page Banner End */}
+
       <main className="block">
         {/* Conditional rendering based on templateSelection */}
         {templateSelection === "Template 1A" && templateAContent && (

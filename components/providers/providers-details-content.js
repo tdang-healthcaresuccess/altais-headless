@@ -35,7 +35,6 @@ export default function ProvidersDetailsContent() {
     return (
       <div className="block md:pt-[50px] pb-[100px]">
         <div className="container mx-auto">
-  
           <p className="text-center text-xl text-bluePrimary">Provider not found.</p>
         </div>
       </div>

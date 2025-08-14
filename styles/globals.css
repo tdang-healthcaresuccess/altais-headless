@@ -322,6 +322,7 @@ button {
   top: auto;
   height: 27px;
   z-index: 999;
+  color: #008889;
 }
 .swiper-button-prev {
   left: 0px;
@@ -332,7 +333,7 @@ button {
 .testimonials-block .swiper-pagination {
   @apply py-[20px] border-t border-b border-lightPrimary;
 }
-.testimonials-block .swiper-wrapper::before {
+.testimonials-block .swiper::before {
   content: "";
   position: absolute;
   top: 0;
@@ -340,23 +341,29 @@ button {
   background-image: url("./../public/icons/quote-left.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: 50px;
   width: 70px;
   height: 70px;
   z-index: 2;
 }
-.testimonials-block .swiper-wrapper::after {
+.testimonials-block .swiper::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: 70px;
   right: 0;
   background-image: url("./../public/icons/quote-right.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: 50px;
   width: 70px;
   height: 70px;
   z-index: 2;
+}
+.testimonials-block .swiper-wrapper{
+  height: 210px
+}
+.section-content p:last-child{
+  padding-bottom: 0px;
 }
 
 /* Typograpgy */
@@ -375,15 +382,19 @@ button {
 .template-wrapper p {
   @apply text-lg leading-[32px] text-grey00BF pb-6;
 }
+.template-wrapper ul{
+  @apply pl-5 pb-6;
+}
 .template-wrapper ul li {
-  @apply text-grey3d text-lg leading-[32px];
+  @apply text-grey3d text-lg leading-[32px] list-disc;
 }
 .template-wrapper.list2 ul {
-  @apply flex flex-wrap list-disc list-inside;
+  @apply flex flex-wrap list-inside;
 }
 .template-wrapper.list2 ul li {
-  @apply w-full lg:w-1/2 list-disc;
+  @apply w-full lg:w-1/2 list-outside;
 }
+
 .template-wrapper a {
   @apply text-lg leading-[32px] text-bluePrimary hover:text-secondary;
 }

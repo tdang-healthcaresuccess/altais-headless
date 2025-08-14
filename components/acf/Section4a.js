@@ -28,7 +28,7 @@ const Section4a = ({ data }) => {
     return (
       <section className="py-16 md:py-24">
         {console.log(data)}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {imageUrl && (
               <div className="w-full lg:w-1/3 flex-shrink-0 mb-8 lg:mb-0">
