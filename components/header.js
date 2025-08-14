@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 
-// Recursive component to render menu items and their children
 const MenuItem = ({ item, router }) => {
   const isActive = router.pathname === item.uri;
   const hasChildren = item.childItems?.nodes?.length > 0;
@@ -83,7 +82,6 @@ export default function Header({ siteTitle, siteDescription }) {
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY);
 
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || [];
-  console.log(menuItems);
 
   return (
     <>
@@ -98,7 +96,6 @@ export default function Header({ siteTitle, siteDescription }) {
       <header className="block py-4 lg:py-0 relative">
         <div className="container mx-auto bg-white">
           <div className="w-full flex items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center">
               <Link href="/">
                 <Image
@@ -110,10 +107,7 @@ export default function Header({ siteTitle, siteDescription }) {
                 />
               </Link>
             </div>
-
-            {/* Desktop Nav and Buttons */}
             <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
-              {/* Desktop Menu */}
               <nav className="hidden lg:flex items-end gap-6">
                 <ul className="flex gap-6">
                   {menuItems.map((item, idx) => {
@@ -122,7 +116,7 @@ export default function Header({ siteTitle, siteDescription }) {
                     return (
                       <li
                         key={item.id}
-                        className="relative group flex align-bottom items-end"
+                        className="relative group/parent flex align-bottom items-end"
                       >
                         <Link
                           className={`flex flex-col py-8 text-bluePrimary text-sm leading-[18px] font-semibold ${
@@ -140,11 +134,11 @@ export default function Header({ siteTitle, siteDescription }) {
                           )}
                         </Link>
                         {hasChildren && (
-                          <ul className="absolute left-0 top-full min-w-[230px] bg-greyF9 rounded-bl-normal box-shadow-custom3 z-50 py-6 hidden group-hover:block">
+                          <ul className="absolute left-0 top-full min-w-[230px] bg-greyF9 rounded-bl-normal box-shadow-custom3 z-50 py-6 hidden group-hover/parent:block">
                             {item.childItems.nodes.map((child1) => (
-                              <li key={child1.id} className="group relative">
+                              <li key={child1.id} className="relative group/child">
                                 <Link
-                                  className="group py-2 px-6 flex items-center gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary primary-menu"
+                                  className="py-2 px-6 flex items-center gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary primary-menu"
                                   href={child1.uri}
                                 >
                                   {child1.label}
@@ -156,9 +150,8 @@ export default function Header({ siteTitle, siteDescription }) {
                                   )}
                                 </Link>
 
-                                {/* Sub-sub menu */}
                                 {child1.childItems?.nodes?.length > 0 && (
-                                  <ul className="absolute left-full top-0 min-w-[230px] bg-greyF9 rounded-b-normal box-shadow-custom3 z-50 py-6 hidden group-hover:block">
+                                  <ul className="absolute left-full top-0 min-w-[230px] bg-greyF9 rounded-b-normal box-shadow-custom3 z-50 py-6 hidden group-hover/child:block">
                                     {child1.childItems.nodes.map((child2) => (
                                       <li key={child2.id}>
                                         <Link
@@ -181,7 +174,6 @@ export default function Header({ siteTitle, siteDescription }) {
                 </ul>
               </nav>
 
-              {/* Find Care Button */}
               <Link
                 href="/find-doctor"
                 className="btn-gradient btn-action flex-center gap-1"
@@ -189,8 +181,6 @@ export default function Header({ siteTitle, siteDescription }) {
                 Find Care{" "}
                 <ChevronRight className="w-[10px] h-[10px] md:w-[18px] md:h-[18px]" />
               </Link>
-
-              {/* Search Toggle */}
               <div className="flex items-center">
                 <button
                   onClick={handleToggleSearch}
@@ -210,7 +200,6 @@ export default function Header({ siteTitle, siteDescription }) {
               </div>
             </div>
 
-            {/* Mobile Menu Toggle */}
             <button
               className="lg:hidden text-gray-700 ml-5"
               onClick={handleToggle}
@@ -223,15 +212,11 @@ export default function Header({ siteTitle, siteDescription }) {
             </button>
           </div>
         </div>
-        {/* Search Bar Content */}
-
-        {/* Mobile Menu Content */}
 
         <div
           className={`lg:hidden fixed top-[64px] inset-0 z-50 bg-[#d9d9d9e6] transition-opacity duration-500 ease-in-out
               ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         >
-          {/* Sliding Menu Panel */}
           <div
             ref={menuRef}
             className={`absolute top-0 right-0 w-[210px] bg-greyF9 pt-8 pb-7 rounded-bl-normal transition-transform duration-500 ease-in-out
