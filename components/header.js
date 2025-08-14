@@ -83,6 +83,7 @@ export default function Header({ siteTitle, siteDescription }) {
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY);
 
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || [];
+  console.log(menuItems);
 
   return (
     <>
@@ -141,16 +142,21 @@ export default function Header({ siteTitle, siteDescription }) {
                         {hasChildren && (
                           <ul className="absolute left-0 top-full min-w-[230px] bg-greyF9 rounded-bl-normal box-shadow-custom3 z-50 py-6 hidden group-hover:block">
                             {item.childItems.nodes.map((child1) => (
-                              <li key={child1.id} className="group">
+                              <li key={child1.id} className="group relative">
                                 <Link
-                                  className="group py-2 px-6 flex items-center gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary"
+                                  className="group py-2 px-6 flex items-center gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary primary-menu"
                                   href={child1.uri}
                                 >
                                   {child1.label}
                                   {child1.childItems?.nodes?.length > 0 && (
-                                    <ChevronRight className="w-[20px] h-[20px] text-bluePrimary group-hover:text-secondary md:w-[18px] md:h-[18px]" />
+                                    <ChevronRight
+                                      color="#083D78"
+                                      className="w-[20px] h-[20px] text-bluePrimary md:w-[18px] md:h-[18px]"
+                                    />
                                   )}
                                 </Link>
+
+                                {/* Sub-sub menu */}
                                 {child1.childItems?.nodes?.length > 0 && (
                                   <ul className="absolute left-full top-0 min-w-[230px] bg-greyF9 rounded-b-normal box-shadow-custom3 z-50 py-6 hidden group-hover:block">
                                     {child1.childItems.nodes.map((child2) => (

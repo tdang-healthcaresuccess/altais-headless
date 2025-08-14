@@ -13,7 +13,7 @@ export default function LocationInfo() {
                 Salinas, CA 93901
                 <br />
                 <Link href="/#"><u>Get Directions</u></Link> <br />
-                Phone: <Link href="tel:831-652-8150">831-652-8150</Link>
+                Phone: <Link href="tel:831-652-8150"><u>831-652-8150</u></Link>
               </p>
             </div>
             <div className="block">

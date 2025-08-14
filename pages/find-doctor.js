@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DocSearchForm from "components/find-doc/search-form";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
-import DocSearchList from "components/find-doc/doctor-list";
+import DocSearchList from "@/components/common/doctor-list";
 import { dummyDoctors, specialitiesList } from "components/DummyData";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";

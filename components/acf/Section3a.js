@@ -15,6 +15,8 @@ const ResponsiveImage = ({ src, alt }) => {
     <img
       src={src}
       alt={alt}
+      width="100%"
+      height="100%"
       className="w-full object-cover rounded-normal border border-primary h-auto md:h-[170px]"
     />
   );
@@ -31,30 +33,34 @@ const Card = ({ cardData }) => {
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
   return (
-    <>
-      <div className="rounded-normal h-full flex flex-col">
-        {displayImage && (
-          <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
-            <ResponsiveImage src={displayImage} />
-          </div>
-        )}
-        <div className="flex-grow">
-          {cardHeadline && <h3>{cardHeadline}</h3>}
-          {cardContent && (
-            <div
-              className="block"
-              dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
-            />
-          )}
+    <div className="rounded-normal h-full flex flex-col">
+      {imageUrl && (
+        <div className="flex-shrink-0 mb-4">
+          <ResponsiveImage src={imageUrl} alt={cardHeadline} />
         </div>
+      )}
+      <div className="flex-grow">
+        {
+          imageIcon ?
+          <>
+          <h3 className="flex items-center gap-4"><img src={imageIcon} alt={cardHeadline} width={40} height={40} />{cardHeadline}</h3>
+          </>
+          :
+          <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
+        }
+        {cardContent && (
+          <div
+            className="block"
+            dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
+          />
+        )}
+      </div>
         {lineBreak && (
         <div className="container mx-auto">
           <div className="block line-break"></div>
         </div>
       )}
-      </div>
-      
-    </>
+    </div>
   );
 }; /**
  * Section3a component.
