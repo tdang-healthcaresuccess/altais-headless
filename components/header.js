@@ -42,6 +42,7 @@ const MenuItem = ({ item, router }) => {
 export default function Header({ siteTitle, siteDescription }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const menuRef = useRef(null);
   const router = useRouter();
 
@@ -53,6 +54,15 @@ export default function Header({ siteTitle, siteDescription }) {
   const handleToggleSearch = () => {
     setIsOpenSearch((prev) => !prev);
     setIsOpen(false);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setIsOpenSearch(false);
+      setSearchQuery('');
+    }
   };
 
   useEffect(() => {
@@ -254,21 +264,23 @@ export default function Header({ siteTitle, siteDescription }) {
         {/* Search Bar Content */}
         {isOpenSearch && (
           <div className="absolute bg-[#f9f9f9] py-5 px-6 top-[100%] left-0 right-0 z-50 w-full box-shadow-custom3">
-            <div className="flex gap-3 max-w-full md:max-w-[340px] mx-auto">
+            <form onSubmit={handleSearch} className="flex gap-3 max-w-full md:max-w-[340px] mx-auto">
               <div className="input-style flex gap-2 items-center w-full py-3 px-[14px]">
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Keyword, Insurance, Spec..."
                   className="ml-2 outline-none text-lg leading-[24px] bg-transparent w-full min-w-full md:min-w-[318px]"
                 />
               </div>
               <button
-                type="button"
+                type="submit"
                 className="bg-custom-gradient min-w-12 w-12 h-12 rounded-normal flex-center"
               >
                 <Image src={SearchWhiteIcon} alt="search" />
               </button>
-            </div>
+            </form>
           </div>
         )}
       </header>
