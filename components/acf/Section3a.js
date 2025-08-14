@@ -74,6 +74,7 @@ const Card = ({ cardData }) => {
 const Section3a = ({ data }) => {
     {console.log(data)}
    if (!data || !data.section3aCards) return null;
+   const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
