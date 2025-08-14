@@ -1,5 +1,5 @@
 import Image from "next/image";
-import DocSearchList from "./doctor-list";
+import DocSearchList from "../common/doctor-list";
 import DocSearchFilterSidebar from "./search-filter-sidebar";
 import FilterSorting from "@/public/icons/filter-sorting.svg"
 
