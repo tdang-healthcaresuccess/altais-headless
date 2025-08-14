@@ -6,12 +6,12 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="block">
-      <div className="block bg-[#111638] px-6 md:px-0">
+      <div className="block bg-[#111638]">
         <div className="container mx-auto">
           <div className="block pt-10 pb-12">
             <div className="block md:flex justify-between gap-4">
-              <div className="flex md:block w-full md:w-auto md:border-none border-b border-primary pb-8 md:pb-0 mb-8 md:mb-0 ">
-                <Link href="/">
+              <div className="flex items-center md:block w-full md:w-auto md:border-none border-b border-primary pb-8 md:pb-0 mb-8 md:mb-0 ">
+                <Link href="/" className="flex-center">
                   <Image
                     src={BrandLogo}
                     alt="Altais"
@@ -20,22 +20,29 @@ export default function Footer() {
                     priority
                   />
                 </Link>
-                <div className="flex md:hidden w-full justify-end gap-4 pt-7">
+                <div className="flex md:hidden w-full justify-end gap-4">
                   <Link
-                    href="/"
+                    href="https://www.facebook.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    <Facebook size={16} />
+                  </Link>
                   <Link
-                    href="/"
+                    href="https://www.instagram.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    <Instagram size={16} />
+                  </Link>
                   <Link
-                    href="/"
+                    href="https://linkedin.com/"
                     type="button"
                     className="btn btn-social"
-                  ></Link>
+                  >
+                    {" "}
+                    <Linkedin size={16} />
+                  </Link>
                 </div>
               </div>
               <div className="grid grid-flow-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full md:w-[80%]">

@@ -53,17 +53,23 @@ body {
   font-family: "poppins", sans-serif;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0px 24px;
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     max-width: 768px;
-    padding: 0px 15px;
+    /* padding: 0px 15px; */
   }
 }
 
 @media (min-width: 1024px) {
   .container {
     max-width: 1024px;
-    padding: 0px 20px;
+    /* padding: 0px 20px; */
   }
 }
 
@@ -73,6 +79,9 @@ body {
   }
 }
 
+.paragraph-content {
+  @apply text-grey00BF text-[18px] leading-[32px];
+}
 button {
   @apply cursor-pointer;
 }
@@ -229,6 +238,9 @@ button {
 .bg-single-landing-banner-mobile {
   background-image: url("./../public/media/single-page-banner.png");
 }
+.bg-arc-design {
+  background-image: url("./../public/media/arc-design.png");
+}
 .bg-arc2 {
   background-image: url("./../public/media/banner2-mobile.jpg");
 }
@@ -236,7 +248,13 @@ button {
   background-image: url("./../public/media/contact-us-banner.png");
 }
 .bg-resources-landing-banner {
-  background-image: url("./../public/media/resources-us-banner.png");
+  background-image: url("./../public/media/resources-banner.png");
+}
+.bg-clinics-landing-banner {
+  background-image: url("./../public/media/clinics-banner.png");
+}
+.bg-clinics-landing-banner-mobile {
+  background-image: url("./../public/media/clinics-banner.png");
 }
 
 /* Custom Shadows */
@@ -294,25 +312,27 @@ button {
 .filter-result-box {
   @apply max-h-[280px] overflow-auto;
 }
-.swiper-button-prev:after, .swiper-button-next:after {
-    font-size: 16px;
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 16px;
 }
-.swiper-button-prev, .swiper-button-next{
+.swiper-button-prev,
+.swiper-button-next {
   bottom: 15px;
   top: auto;
   height: 27px;
   z-index: 999;
 }
-.swiper-button-prev{
-  left: 0px
+.swiper-button-prev {
+  left: 0px;
 }
-.swiper-button-next{
+.swiper-button-next {
   right: 0px;
 }
-.testimonials-block .swiper-pagination{
-@apply py-[20px] border-t border-b border-lightPrimary;
+.testimonials-block .swiper-pagination {
+  @apply py-[20px] border-t border-b border-lightPrimary;
 }
-.testimonials-block .swiper-wrapper::before{
+.testimonials-block .swiper-wrapper::before {
   content: "";
   position: absolute;
   top: 0;
@@ -325,7 +345,7 @@ button {
   height: 70px;
   z-index: 2;
 }
-.testimonials-block .swiper-wrapper::after{
+.testimonials-block .swiper-wrapper::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -350,10 +370,10 @@ button {
   @apply text-[22px] leading-[32px] text-bluePrimary pb-4;
 }
 .template-wrapper p {
-  @apply pb-6 text-[#000000BF] text-lg leading-[32px];
+  @apply pb-6 text-grey00BF text-lg !leading-[32px];
 }
 .template-wrapper p {
-  @apply text-lg leading-[32px] text-[#000000BF] pb-6;
+  @apply text-lg leading-[32px] text-grey00BF pb-6;
 }
 .template-wrapper ul li {
   @apply text-grey3d text-lg leading-[32px];
@@ -364,9 +384,22 @@ button {
 .template-wrapper.list2 ul li {
   @apply w-full lg:w-1/2 list-disc;
 }
+.template-wrapper a {
+  @apply text-lg leading-[32px] text-bluePrimary hover:text-secondary;
+}
 
 @media screen and (max-width: 981px) {
   .template-wrapper.list2 ul {
     @apply flex-col md:flex-row;
   }
+}
+
+
+
+/* Content Area */
+.content-typography h2{
+@apply text-[26px] leading-[36px] text-primary pb-4 font-medium;
+}
+.content-typography p{
+  @apply pb-6 text-grey3d text-lg !leading-[32px];
 }

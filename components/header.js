@@ -84,9 +84,9 @@ export default function Header({ siteTitle, siteDescription }) {
         />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
-      <header className="block py-6 lg:py-0 relative">
+      <header className="block py-4 lg:py-0 relative">
         <div className="container mx-auto bg-white">
-          <div className="w-full flex items-center justify-between px-4 md:px-0">
+          <div className="w-full flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/">

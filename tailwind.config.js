@@ -17,6 +17,7 @@ module.exports = {
         grey3d:"#3d3d3d", // rgba(61, 61, 61, 1)
         greyF9: "#f9f9f9",
         greyF5: "#f5f5f5",
+        grey00BF: "#000000BF", // rgba(0, 0, 0, 0.75)
       },
       borderRadius: {
         normal: "5px", // custom radius
