@@ -400,9 +400,9 @@ button {
 .primary-menu:hover svg{
   stroke: #c75327;
 }
-.primary-menu:hover+ ul{
+/* .primary-menu:hover+ ul{
   display: block;
-}
+} */
 
 @media screen and (max-width: 981px) {
   .template-wrapper.list2 ul {

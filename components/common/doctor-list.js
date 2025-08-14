@@ -119,6 +119,7 @@ export default function DocSearchList({
                       }
                     >
                       {doc.node.doctorData.practiceName} <br />
+                       {doc.node.doctorData.address}
                       {doc.node.doctorData.addressStreet} <br />
                       {doc.node.doctorData.addressCity},{" "}
                       {doc.node.doctorData.state} {doc.node.doctorData.zipcode}
@@ -128,19 +129,19 @@ export default function DocSearchList({
               </div>
             </div>
             <div className="flex w-full gap-3 border-t border-lightPrimary pt-3 items-center">
-              <a
-                href={`/physicians/${doc.node.doctorData.profileurl}`}
-                className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
-              >
-                View Profile
-              </a>
-              <a
-                href={`tel:${doc.node.doctorData.phone}`}
-                className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1 flex items-center justify-center text-center"
-              >
-                Click to Call
-              </a>
-            </div>
+            <a
+              href={`/physicians${doc.node.doctorData.profileurl}`}
+              className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
+            >
+              View Profile
+            </a>
+            <a
+              href={`tel:${doc.node.doctorData.phone}`}
+              className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1 flex items-center justify-center text-center"
+            >
+              Click to Call
+            </a>
+          </div>
           </div>
         ))
       ) : (

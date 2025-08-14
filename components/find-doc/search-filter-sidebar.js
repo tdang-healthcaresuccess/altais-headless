@@ -145,7 +145,7 @@ export default function DocSearchFilterSidebar({
       title: 'Accepted Insurance',
       content: (
         <div className="flex flex-col gap-2 filter-result-box">
-          {insuranceList.map((ins, index) => (
+         {(Array.isArray(insuranceList) ? insuranceList : []).map((ins, index) => (
             <label key={index} className="flex items-center gap-2 text-primary">
               <input
                 type="checkbox"

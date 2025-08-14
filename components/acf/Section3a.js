@@ -33,7 +33,6 @@ const Card = ({ cardData }) => {
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
   return (
-<<<<<<< HEAD
     <div className="rounded-normal h-full flex flex-col">
       {imageUrl && (
         <div className="flex-shrink-0 mb-4">
@@ -55,32 +54,13 @@ const Card = ({ cardData }) => {
             dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
           />
         )}
-=======
-    <>
-      <div className="rounded-normal h-full flex flex-col">
-        {displayImage && (
-          <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
-            <ResponsiveImage src={displayImage} />
-          </div>
-        )}
-        <div className="flex-grow">
-          {cardHeadline && <h3>{cardHeadline}</h3>}
-          {cardContent && (
-            <div
-              className="block"
-              dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
-            />
-          )}
-        </div>
+      </div>
         {lineBreak && (
         <div className="container mx-auto">
           <div className="block line-break"></div>
         </div>
       )}
->>>>>>> d1ec261fc0216fec79d78258b1383edf3cf12587
-      </div>
-      
-    </>
+    </div>
   );
 }; /**
  * Section3a component.
@@ -94,6 +74,7 @@ const Card = ({ cardData }) => {
 const Section3a = ({ data }) => {
     {console.log(data)}
    if (!data || !data.section3aCards) return null;
+   const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
@@ -109,7 +90,7 @@ const Section3a = ({ data }) => {
         </div>
         {section3aLineBreak && (
           <div className="container mx-auto">
-            <div className="block line-break"></div>
+            <div className="block line-break py-12 border-b border-lightPrimary"></div>
           </div>
         )}
       </div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import SingleDocMedia from "@/public/media/doctor-single.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { dummyDoctors } from "../DummyData2"; // Assuming dummyDoctors is exported from DummyData.js
+import { dummyDoctors } from "../DummyData"; // Assuming dummyDoctors is exported from DummyData.js
 
 export default function ProvidersDetailsContent() {
   // Helper to format phone number as XXX-XXX-XXXX
@@ -127,16 +127,16 @@ export default function ProvidersDetailsContent() {
                 Education & Training
               </h3>
               <p className="text-lg leading-[32px] font-normal text-grey3d">
-                **Medical School:** {provider.medicalSchool}
+                Medical School: {provider.medicalSchool}
               </p>
               {provider.internship && (
                 <p className="text-lg leading-[32px] font-normal text-grey3d">
-                  **Internship:** {provider.internship}
+                  Internship: {provider.internship}
                 </p>
               )}
               {provider.residency && (
                 <p className="text-lg leading-[32px] font-normal text-grey3d">
-                  **Residency:** {provider.residency}
+                  Residency: {provider.residency}
                 </p>
               )}
               {provider.fellowship && (

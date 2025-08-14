@@ -56,13 +56,14 @@ const Section2a = ({ data }) => {
                 <div dangerouslySetInnerHTML={{ __html: content2a }} />
               </div>
             )}
-            {section2aLineBreak && (
-              <div className="container mx-auto">
-                <div className="block line-break"></div>
-              </div>
-            )}
+           
         </div>
       </div>
+       {section2aLineBreak && (
+              <div className="container mx-auto">
+                <div className="block line-break py-12 border-b border-lightPrimary"></div>
+              </div>
+            )}
     </section>
   );
 };
