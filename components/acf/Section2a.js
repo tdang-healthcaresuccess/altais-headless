@@ -47,17 +47,15 @@ const Section2a = ({ data }) => {
             </div>
           )}
 
-          {content2a && (
-            <>
-              {/* Vertical Separator */}
-              {/* <div className="w-full md:w-[1px] h-[1px] md:h-[192px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div> */}
-
-              {/* Right Column */}
+            {content2a ? (
               <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary">
-                 <div dangerouslySetInnerHTML={{ __html: content2a }} />
+                <div dangerouslySetInnerHTML={{ __html: content2a }} />
               </div>
-            </>
-          )}
+            ) : (
+              <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l">
+                <div dangerouslySetInnerHTML={{ __html: content2a }} />
+              </div>
+            )}
         </div>
       </div>
     </section>

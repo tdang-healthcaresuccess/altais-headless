@@ -95,7 +95,7 @@ export default function Blog() {
           MobileBanner="bg-resources-landing-banner-mobile"
           heading="Blog"
         />
-      </div>
+      
  
      
       {/* Breadcrumb Start */}
@@ -134,6 +134,7 @@ export default function Blog() {
           </button>
         </div>
       </div>
+    </div>
     </div>
     </Layout>   
   );

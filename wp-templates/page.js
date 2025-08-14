@@ -75,7 +75,7 @@ const PAGE_QUERY = gql`
           fieldGroupName
           ... on ContentTemplatesTemplateASection4aLayout {
             ctaButtonText
-            ctaButtonTextCopy
+            ctaButtonUrl
             enableCta
             fieldGroupName
             section4aAdditionalHeadline
