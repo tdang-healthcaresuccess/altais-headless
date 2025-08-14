@@ -52,13 +52,6 @@ const Section1a = ({ data }) => {
                 <ResponsiveImage src={imageUrl} alt="Section 1A Image" />
               </div>
 
-<<<<<<< HEAD
-            {/* Right Column: Content */}
-            <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
-              <p
-                dangerouslySetInnerHTML={{ __html: sectionContent }}
-              />
-=======
               {/* Right Column: Content */}
               <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
                 <p
@@ -66,7 +59,6 @@ const Section1a = ({ data }) => {
                   dangerouslySetInnerHTML={{ __html: sectionContent }}
                 />
               </div>
->>>>>>> frontend-design
             </div>
             {section1aLineBreak && (
               <div className="container mx-auto line-break">
