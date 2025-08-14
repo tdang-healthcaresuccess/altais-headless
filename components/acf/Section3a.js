@@ -90,7 +90,7 @@ const Section3a = ({ data }) => {
         </div>
         {section3aLineBreak && (
           <div className="container mx-auto">
-            <div className="block line-break"></div>
+            <div className="block line-break py-12 border-b border-lightPrimary"></div>
           </div>
         )}
       </div>
