@@ -16,6 +16,7 @@ const Section6a = ({ data }) => {
   if (!data) return null;
 
   const testimonials = data.section6aTestimonials || [];
+  const { section6aLineBreak } = data;
   return (
     <section className="pb-6 md:pb-12 ">
       <div className="container mx-auto">
@@ -40,6 +41,11 @@ const Section6a = ({ data }) => {
             ))}
           </Swiper>
         </div>
+        {section6aLineBreak && (
+          <div className="container mx-auto">
+            <div className="block line-break"></div>
+          </div>
+        )}
       </div>
     </section>
   );

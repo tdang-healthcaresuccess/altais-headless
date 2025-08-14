@@ -27,12 +27,13 @@ const ResponsiveImage = ({ src, alt }) => {
 const Card = ({ cardData }) => {
   if (!cardData) return null;
 
-  const { cardContent, cardHeadline } = cardData;
+  const { cardContent, cardHeadline, lineBreak } = cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
   return (
+<<<<<<< HEAD
     <div className="rounded-normal h-full flex flex-col">
       {imageUrl && (
         <div className="flex-shrink-0 mb-4">
@@ -54,8 +55,32 @@ const Card = ({ cardData }) => {
             dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
           />
         )}
+=======
+    <>
+      <div className="rounded-normal h-full flex flex-col">
+        {displayImage && (
+          <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
+            <ResponsiveImage src={displayImage} />
+          </div>
+        )}
+        <div className="flex-grow">
+          {cardHeadline && <h3>{cardHeadline}</h3>}
+          {cardContent && (
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
+            />
+          )}
+        </div>
+        {lineBreak && (
+        <div className="container mx-auto">
+          <div className="block line-break"></div>
+        </div>
+      )}
+>>>>>>> d1ec261fc0216fec79d78258b1383edf3cf12587
       </div>
-    </div>
+      
+    </>
   );
 }; /**
  * Section3a component.
@@ -67,7 +92,7 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-
+    {console.log(data)}
    if (!data || !data.section3aCards) return null;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
@@ -82,6 +107,11 @@ const Section3a = ({ data }) => {
             <Card key={index} cardData={card} />
           ))}
         </div>
+        {section3aLineBreak && (
+          <div className="container mx-auto">
+            <div className="block line-break"></div>
+          </div>
+        )}
       </div>
     </section>
   );

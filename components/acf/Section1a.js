@@ -33,15 +33,14 @@ const ResponsiveImage = ({ src, alt }) => {
  * @param {string} props.data.section1aImg.node.sourceUrl - The URL of the image.
  */
 const Section1a = ({ data }) => {
-  // Ensure data exists before trying to access its properties
   if (!data) {
     return null;
   }
 
-  // Extract the image URI and content from the data prop
-  // The GraphQL query in the parent component must be updated to fetch `section1aContent`.
   const imageUrl = data.section1aImg?.node?.sourceUrl;
   const sectionContent = data.section1aContent;
+  const section1aLineBreak = data.section1aLineBreak;
+
   return (
     <section className="template-wrapper">
       <div className="container mx-auto">
@@ -61,6 +60,12 @@ const Section1a = ({ data }) => {
                 />
               </div>
             </div>
+            {section1aLineBreak && (
+              <div className="container mx-auto line-break">
+               
+                <div className="block"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>

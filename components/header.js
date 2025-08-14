@@ -135,11 +135,6 @@ export default function Header({ siteTitle, siteDescription }) {
                               <span className="font-normal">For</span>{" "}
                               {item.label}
                             </>
-                          ) : idx === 3 ? (
-                            <>
-                              <span className="font-normal">Our</span>{" "}
-                              {item.label}
-                            </>
                           ) : (
                             item.label
                           )}

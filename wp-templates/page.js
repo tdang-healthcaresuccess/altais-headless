@@ -38,6 +38,7 @@ const PAGE_QUERY = gql`
           ... on ContentTemplatesTemplateASection1aLayout {
             fieldGroupName
             section1aContent
+            section1aLineBreak
             section1aImg {
               node {
                 sourceUrl
@@ -48,17 +49,20 @@ const PAGE_QUERY = gql`
           ... on ContentTemplatesTemplateASection2aLayout {
             content2a
             headline2a
+            section2aLineBreak
             sectionBackgroundColor
             fieldGroupName
           }
           ... on ContentTemplatesTemplateASection3aLayout {
             fieldGroupName
+            section3aLineBreak
             columnSelection
             section3aCards {
               cardContent
               cardHeadline
               cardOptions
               fieldGroupName
+              lineBreak
               cardImage {
                 node {
                   sourceUrl
@@ -78,6 +82,7 @@ const PAGE_QUERY = gql`
             ctaButtonUrl
             enableCta
             fieldGroupName
+            section4aLineBreak
             section4aAdditionalHeadline
             section4aAdditionalHeadlineOption
             section4aDescription
@@ -91,10 +96,12 @@ const PAGE_QUERY = gql`
           }
           ... on ContentTemplatesTemplateASection5aLayout {
             fieldGroupName
+            section5aLineBreak
             section5aContent
           }
           ... on ContentTemplatesTemplateASection6aTestimonialsLayout {
             fieldGroupName
+            section6aLineBreak
             section6aTestimonials {
               reviewerName
               reviewerDescription

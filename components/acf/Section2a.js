@@ -14,7 +14,7 @@ import React from "react";
 const Section2a = ({ data }) => {
   if (!data) return null;
 
-  const { headline2a, content2a, sectionBackgroundColor } = data;
+  const { headline2a, content2a, sectionBackgroundColor, section2aLineBreak } = data;
 
   return (
     // <section style={{ backgroundColor: sectionBackgroundColor }} className="py-16 md:py-24 text-center">
@@ -54,6 +54,11 @@ const Section2a = ({ data }) => {
             ) : (
               <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l">
                 <div dangerouslySetInnerHTML={{ __html: content2a }} />
+              </div>
+            )}
+            {section2aLineBreak && (
+              <div className="container mx-auto">
+                <div className="block line-break"></div>
               </div>
             )}
         </div>
