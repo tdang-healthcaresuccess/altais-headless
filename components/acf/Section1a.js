@@ -59,6 +59,7 @@ const Section1a = ({ data }) => {
             </div>
             {section1aLineBreak && (
               <div className="container mx-auto line-break">
+               
                 <div className="block"></div>
               </div>
             )}

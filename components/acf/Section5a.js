@@ -9,7 +9,7 @@
 const Section5a = ({ data }) => {
   if (!data) return null;
 
-  const { section5aContent } = data;
+  const { section5aContent, section5aLineBreak } = data;
 
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -22,6 +22,11 @@ const Section5a = ({ data }) => {
             />
           )}
         </div>
+        {section5aLineBreak && (
+          <div className="container mx-auto">
+            <div className="block"></div>
+          </div>
+        )}
       </div>
     </section>
   );

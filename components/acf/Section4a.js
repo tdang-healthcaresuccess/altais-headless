@@ -21,7 +21,8 @@ const Section4a = ({ data }) => {
       ctaButtonUrl,
       enableCta,
       section4aImage,
-      section4aDescription
+      section4aDescription,
+      section4aLineBreak
     } = data;
     const imageUrl = section4aImage?.node?.sourceUrl;
 
@@ -37,11 +38,9 @@ const Section4a = ({ data }) => {
                   alt="CTA Image"
                   className="w-full rounded-xl shadow-lg object-cover"
                 />
-            
               </div>
             )}
             <div className="w-full lg:w-2/3 text-center lg:text-left">
-           
               {section4aAdditionalHeadline && (
                 <p className="text-xl font-semibold mb-2 opacity-80">
                   {section4aAdditionalHeadline}
@@ -49,7 +48,6 @@ const Section4a = ({ data }) => {
               )}
               {section4aHeadline && (
                 <h2 className="text-4xl lg:text-5xl font-extrabold mb-6">
-                 
                 </h2>
               )}
               <p>{section4aDescription}</p>
@@ -63,6 +61,11 @@ const Section4a = ({ data }) => {
               )}
             </div>
           </div>
+          {section4aLineBreak && (
+            <div className="container mx-auto">
+              <div className="block"></div>
+            </div>
+          )}
         </div>
       </section>
     );

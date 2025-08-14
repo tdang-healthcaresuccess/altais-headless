@@ -25,28 +25,36 @@ const ResponsiveImage = ({ src, alt }) => {
 const Card = ({ cardData }) => {
   if (!cardData) return null;
 
-  const { cardContent, cardHeadline } = cardData;
+  const { cardContent, cardHeadline, lineBreak } = cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
   return (
-    <div className="rounded-normal h-full flex flex-col">
-      {displayImage && (
-        <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
-          <ResponsiveImage src={displayImage} />
+    <>
+      <div className="rounded-normal h-full flex flex-col">
+        {displayImage && (
+          <div className={`flex-shrink-0 mb-4${isIcon ? ' icon-class' : ''}`}>
+            <ResponsiveImage src={displayImage} />
+          </div>
+        )}
+        <div className="flex-grow">
+          {cardHeadline && <h3>{cardHeadline}</h3>}
+          {cardContent && (
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
+            />
+          )}
+        </div>
+        {lineBreak && (
+        <div className="container mx-auto">
+          <div className="block line-break"></div>
         </div>
       )}
-      <div className="flex-grow">
-        {cardHeadline && <h3>{cardHeadline}</h3>}
-        {cardContent && (
-          <div
-            className="block"
-            dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
-          />
-        )}
       </div>
-    </div>
+      
+    </>
   );
 }; /**
  * Section3a component.
@@ -58,8 +66,8 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-    {console.log(data)}
-   if (!data || !data.section3aCards) return null;
+  if (!data || !data.section3aCards) return null;
+  const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
@@ -68,11 +76,15 @@ const Section3a = ({ data }) => {
     <section className="template-wrapper list2 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`grid gap-8 sm:grid-cols-2 md:${gridColumns} lg:${gridColumns}`}>
-          {console.log(gridColumns)}
           {data.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />
           ))}
         </div>
+        {section3aLineBreak && (
+          <div className="container mx-auto">
+            <div className="block line-break"></div>
+          </div>
+        )}
       </div>
     </section>
   );
