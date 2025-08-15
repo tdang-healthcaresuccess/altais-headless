@@ -66,11 +66,18 @@ export default function FindDoctor() {
 
       // Filter by location query (zip code)
       if (locationQuery) {
-        filtered = filtered.filter(
-          (doc) =>
-            doc.node.doctorData.zipcode &&
-            doc.node.doctorData.zipcode.startsWith(locationQuery)
-        );
+        // Normalize whitespace and split query into words
+        const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
+        const queryWords = query.split(' ');
+        filtered = filtered.filter((doc) => {
+          const data = doc.node.doctorData;
+          const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
+            .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
+          // Match if any field contains all query words
+          return fields.some(field =>
+            queryWords.every(word => field.includes(word))
+          );
+        });
       }
 
       // Filter by specialty
@@ -98,11 +105,15 @@ export default function FindDoctor() {
 
       // Filter by insurance
       if (insuranceFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.acceptedInsurance.some((insurance) =>
-            insuranceFilter.includes(insurance)
-          )
-        );
+        filtered = filtered.filter((doc) => {
+          const ins = doc.node.doctorData.acceptedInsurance;
+          if (Array.isArray(ins)) {
+            return ins.some((i) => insuranceFilter.includes(i));
+          } else if (typeof ins === "string") {
+            return insuranceFilter.includes(ins);
+          }
+          return false;
+        });
       }
 
       setFilteredDoctors(filtered);

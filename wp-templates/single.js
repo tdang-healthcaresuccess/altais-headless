@@ -21,6 +21,12 @@ const POST_QUERY = gql`
           name
         }
       }
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
     }
   }
 `;
@@ -40,7 +46,7 @@ export default function Component(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, date, author } = contentQuery?.post || {};
+  const { title, content, date, author, featuredImage } = contentQuery?.post || {};
 
   return (
     <>
@@ -68,6 +74,16 @@ export default function Component(props) {
       <main className="template-wrapper py-12 border-b border-lightPrimary">
         <div className="container mx-auto">
           <div className="block max-w-[838px] mx-auto">
+            {/* Featured Image above content, styled like Section1a.js */}
+            {featuredImage?.node?.sourceUrl && (
+              <div className="w-full flex justify-center mb-6">
+                <img
+                  src={featuredImage.node.sourceUrl}
+                  alt={featuredImage.node.altText || title}
+                  className="w-full h-auto object-cover rounded-normal border border-primary"
+                />
+              </div>
+            )}
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>
         </div>

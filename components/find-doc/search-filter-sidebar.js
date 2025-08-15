@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Minus, ChevronDown } from 'lucide-react';
 import { specialitiesList, genderList, educationList, insuranceList }from '../DummyData';
+// Ensure insuranceList is always an array and fallback to [] if not
+const availableInsuranceList = Array.isArray(insuranceList) ? insuranceList : [];
 export default function DocSearchFilterSidebar({
   specialityFilter, setSpecialityFilter,
   genderFilter, setGenderFilter,
@@ -101,18 +103,23 @@ export default function DocSearchFilterSidebar({
       title: 'Gender',
       content: (
         <div className="flex flex-col gap-2 filter-result-box">
-          {genderList.map((gender, index) => (
-            <label key={index} className="flex items-center gap-2 text-primary">
-              <input
-                type="checkbox"
-                name="gender"
-                value={gender}
-                checked={genderFilter.includes(gender)}
-                onChange={handleGenderChange}
-              />
-              {gender}
-            </label>
-          ))}
+          {genderList.map((gender, index) => {
+            let displayGender = gender;
+            if (gender === 'M') displayGender = 'Male';
+            else if (gender === 'F') displayGender = 'Female';
+            return (
+              <label key={index} className="flex items-center gap-2 text-primary">
+                <input
+                  type="checkbox"
+                  name="gender"
+                  value={gender}
+                  checked={genderFilter.includes(gender)}
+                  onChange={handleGenderChange}
+                />
+                {displayGender}
+              </label>
+            );
+          })}
           <button onClick={() => setGenderFilter([])} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>
@@ -145,7 +152,7 @@ export default function DocSearchFilterSidebar({
       title: 'Accepted Insurance',
       content: (
         <div className="flex flex-col gap-2 filter-result-box">
-         {(Array.isArray(insuranceList) ? insuranceList : []).map((ins, index) => (
+          {availableInsuranceList.map((ins, index) => (
             <label key={index} className="flex items-center gap-2 text-primary">
               <input
                 type="checkbox"
@@ -157,6 +164,7 @@ export default function DocSearchFilterSidebar({
               {ins}
             </label>
           ))}
+          {console.log(availableInsuranceList)}
           <button onClick={() => setInsuranceFilter([])} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>

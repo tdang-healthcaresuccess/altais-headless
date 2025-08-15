@@ -5644,14 +5644,16 @@ export const clinicArray = [
 
 export const genderList = Array.from(new Set(dummyDoctors.map(doc => doc.node.doctorData.sex).filter(Boolean)));
 export const educationList = Array.from(new Set(dummyDoctors.map(doc => doc.node.doctorData.medicalSchool).filter(Boolean)));
-const insuranceList = Array.from(new Set(
-  dummyDoctors.flatMap(doc => {
-    const ins = doc.node.doctorData.acceptedInsurance;
-    if (Array.isArray(ins)) {
-      return ins.filter(i => i && i !== "nan");
-    } else if (typeof ins === "string" && ins && ins !== "nan") {
-      return [ins];
-    }
-    return [];
-  })
+export const insuranceList = Array.from(new Set(
+    (dummyDoctors || []).flatMap(doc => {
+        const doctorData = doc?.node?.doctorData;
+        if (!doctorData) return [];
+        const ins = doctorData.acceptedInsurance;
+        if (Array.isArray(ins)) {
+            return ins.filter(i => i && i !== "nan");
+        } else if (typeof ins === "string" && ins && ins !== "nan") {
+            return [ins];
+        }
+        return [];
+    })
 ));
