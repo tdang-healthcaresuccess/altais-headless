@@ -1,6 +1,7 @@
 import Image from "next/image";
 import DummyImage from "@/public/media/placeholder-frame160.png";
 import he from "he";
+import { useMemo, useState } from "react";
 // This is a placeholder for a responsive image component.
 // In a real application, you'd want to use a component that handles
 // image optimization (like Next.js's Image component) or adds
@@ -24,15 +25,34 @@ const ResponsiveImage = ({ src, alt }) => {
 
 // Sub-component for the cards inside Section3a
 
-const Card = ({ cardData }) => {
+const Card = ({ cardData }) => { 
   if (!cardData) return null;
   console.log(cardData);
-  
   const { cardContent, cardHeadline, lineBreak } = cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Decode HTML once
+  const decodedContent = useMemo(
+    () => he.decode(cardContent || ""),
+    [cardContent]
+  );
+
+  // Get first 350 words
+  const truncatedContent = useMemo(() => {
+    if (!decodedContent) return "";
+    const words = decodedContent.split(/\s+/);
+    return words.slice(0, 350).join(" ") + (words.length > 350 ? "..." : "");
+  }, [decodedContent]);
+
+  // Decide what to show
+  const contentToShow =
+    cardContentCollapse && !isExpanded ? truncatedContent : decodedContent;
+
   return (
     <div className="rounded-normal h-full flex flex-col">
       {imageUrl && (
@@ -51,12 +71,24 @@ const Card = ({ cardData }) => {
         ) : (
           <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
         )}
+        {cardContent.length}
         {cardContent && (
           <div
             className="block"
-            dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
+            dangerouslySetInnerHTML={{ __html: contentToShow }}
           />
         )}
+        {cardContentCollapse && (
+        <div className="block line-break pt-3 border-t border-lightPrimary">
+          <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          className="btn-link-secondary"
+        >
+          {isExpanded ? "Collapse" : "Expand"}
+        </button>
+          </div>
+      )}
       </div>
       {lineBreak && (
         <div className="container mx-auto">
