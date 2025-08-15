@@ -86,10 +86,7 @@ const PAGE_QUERY = gql`
             section4aLineBreak
             section4aAdditionalHeadline
             section4aDescription
-<<<<<<< HEAD
-=======
             section4aAdditionalHeadlineOption
->>>>>>> a9067ddd0c2b9a089005a85bdf87edcacb27df4c
             section4aaddDescription
             section4aHeadline
             section4aImage {
