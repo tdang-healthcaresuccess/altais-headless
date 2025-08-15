@@ -11,5 +11,5 @@ export default {
   single,
   archive,
   "single-physicians": physicians,
-  "single-specialty": specialty
+  "single-specialty": specialty,
 };

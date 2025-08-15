@@ -4,6 +4,7 @@ import SingleDocMedia from "@/public/media/doctor-single.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { dummyDoctors } from "../DummyData"; // Assuming dummyDoctors is exported from DummyData.js
+import { gql, useQuery } from "@apollo/client";
 
 export default function ProvidersDetailsContent() {
   // Helper to format phone number as XXX-XXX-XXXX
@@ -17,6 +18,20 @@ export default function ProvidersDetailsContent() {
   };
   const router = useRouter();
   const [provider, setProvider] = useState(null);
+
+  // Apollo Client GraphQL query for specialties
+  const SPECIALTIES_QUERY = gql`
+    query GetSpecialties {
+      specialities (first: 700){
+        nodes {
+          title
+          uri
+        }
+      }
+    }
+  `;
+  const { data: specialtiesData, loading: specialtiesLoading, error: specialtiesError } = useQuery(SPECIALTIES_QUERY);
+  const specialtyPosts = specialtiesData?.specialities?.nodes || [];
 
   useEffect(() => {
     if (router.isReady) {
@@ -41,18 +56,32 @@ export default function ProvidersDetailsContent() {
     );
   }
 
-  // Helper function to render a list of items
   const renderList = (items) => {
     if (!items || items.length === 0) return null;
     return (
       <ul className="flex flex-wrap gap-2.5">
-        {items.map((item, index) => (
-          <li key={index}>
-            <div className="btn-outline-ternery btn-core">
-              {item}
-            </div>
-          </li>
-        ))}
+        {items.map((item, index) => {
+          // Find matching specialty post by title
+          const match = specialtyPosts.find(sp => sp.title.toLowerCase() === item.toLowerCase());
+          let linkUri = null;
+          if (match) {
+            linkUri = match.uri;
+          } else {
+            // Fallback: generate /specialty/{name-with-dashes-and-no-special-chars}
+            const slug = item
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric with dash
+              .replace(/^-+|-+$/g, ''); // trim leading/trailing dashes
+            linkUri = `/specialty/${slug}`;
+          }
+          return (
+            <li key={index}>
+              <Link href={linkUri} className="btn-outline-ternery btn-core">
+                {item}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     );
   };

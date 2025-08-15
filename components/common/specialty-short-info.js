@@ -1,7 +1,7 @@
 import Image from "next/image";
 import SpecialtyBanner from "@/public/media/specialty-banner.png";
 
-export default function SpecialityShortInfo() {
+export default function SpecialityShortInfo({ name }) {
   return (
     <section className="block pt-8 md:pt-[36px] pb-6 border-b border-bluePrimaryLite">
       <div className="block md:flex justify-between items-start gap-12">
@@ -18,15 +18,15 @@ export default function SpecialityShortInfo() {
         <div className="block w-full">
           <div className="block">
             <h4 className="text-[22px] leading-[32px] text-bluePrimary mb-2">
-              Specialty Name etc etc
+              {name}
             </h4>
-            <p className="text-[18px] leading-[32px] text-grey3d">
+            {/* <p className="text-[18px] leading-[32px] text-grey3d">
               Lorem ipsum dolor sit amet consectetur. Faucibus imperdiet sed
               vitae sed diam mauris. Consequat purus augue amet tellus id ornare
               cursus molestie massa. Amet integer sit dignissim massa ut
               senectus tortor odio quisque. Nullam venenatis scelerisque montes
               vitae tristique ut.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
