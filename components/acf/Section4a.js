@@ -18,7 +18,7 @@ const Section4a = ({ data }) => {
   const {
     section4aHeadline,
     section4aAdditionalHeadline,
-    section4aAdditionalDescription,
+    section4aaddDescription,
     ctaButtonText,
     ctaButtonUrl,
     enableCta,
@@ -29,11 +29,11 @@ const Section4a = ({ data }) => {
   const imageUrl = section4aImage?.node?.sourceUrl;
 
   return (
-    <section className="template-wrapper py-6 md:py-12">
+    <section className={`template-wrapper ${section4aLineBreak ? "pb-0 pt-6 md:pt-12" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-[74px]">
           {imageUrl && (
-            <div className="w-full lg:w-1/3 flex-shrink-0 mb-8 lg:mb-0">
+            <div className="w-full md:w-[425px] flex-shrink-0 mb-8 lg:mb-0">
               <img
                 src={imageUrl}
                 alt="CTA Image"
@@ -44,23 +44,21 @@ const Section4a = ({ data }) => {
           <div className="w-full lg:w-2/3 text-center lg:text-left">
             {/* Primary Headline Start */}
             <div className="block">
-              {section4aHeadline && (
-                <p className="text-xl font-semibold mb-2 opacity-80">
-                  {section4aHeadline}
-                </p>
-              )}
+              {section4aHeadline && <h2>{section4aHeadline}</h2>}
               <p>{section4aDescription}</p>
             </div>
             {/* Primary Headline End */}
-
+            {section4aAdditionalHeadline && (
+              <div className="container mx-auto">
+                <div className="block"></div>
+              </div>
+            )}
             {/* Additonal Headline End */}
             <div className="block">
               {section4aAdditionalHeadline && (
-                <p className="text-xl font-semibold mb-2 opacity-80">
-                  {section4aAdditionalHeadline}
-                </p>
+                <h2>{section4aAdditionalHeadline}</h2>
               )}
-              <p>{section4aAdditionalDescription}</p>
+              <p>{section4aaddDescription}</p>
             </div>
             {/* Additonal Headline End */}
 
@@ -77,9 +75,7 @@ const Section4a = ({ data }) => {
           </div>
         </div>
         {section4aLineBreak && (
-          <div className="container mx-auto">
-            <div className="block"></div>
-          </div>
+            <div className="block border-b border-lightPrimary pt-12"></div>
         )}
       </div>
     </section>

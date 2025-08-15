@@ -1,6 +1,6 @@
-import Image from "next/image";
-import DummyImage from "@/public/media/placeholder-frame160.png";
 import he from "he";
+import { Minus, Plus } from "lucide-react";
+import { useMemo, useState } from "react";
 // This is a placeholder for a responsive image component.
 // In a real application, you'd want to use a component that handles
 // image optimization (like Next.js's Image component) or adds
@@ -27,11 +27,28 @@ const ResponsiveImage = ({ src, alt }) => {
 const Card = ({ cardData }) => {
   if (!cardData) return null;
 
-  const { cardContent, cardHeadline, lineBreak, cardContentCollapse } = cardData;
+  const { cardContent, cardHeadline, lineBreak, cardContentCollapse } =
+    cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
   const isIcon = !!imageIcon && displayImage === imageIcon;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Decode HTML once
+  const decodedContent = useMemo(
+    () => he.decode(cardContent || ""),
+    [cardContent]
+  );
+
+  // Get first 350 words
+  const truncatedContent = useMemo(() => {
+    if (!decodedContent) return "";
+    const words = decodedContent.split(/\s+/);
+    return words.slice(0, 350).join(" ") + (words.length > 350 ? "..." : "");
+  }, [decodedContent]);
+
   return (
     <div className="rounded-normal h-full flex flex-col">
       {imageUrl && (
@@ -50,11 +67,40 @@ const Card = ({ cardData }) => {
         ) : (
           <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
         )}
-        {cardContent && (
-          <div
-            className="block"
-            dangerouslySetInnerHTML={{ __html: he.decode(cardContent) }}
-          />
+        {/* Only show content if expanded, otherwise just headline and button */}
+        {cardContentCollapse ? (
+          <>
+            {isExpanded && cardContent && (
+              <div
+                className="block"
+                dangerouslySetInnerHTML={{ __html: decodedContent }}
+              />
+            )}
+            <div className="block line-break pt-3 border-t border-lightPrimary">
+              <button
+                type="button"
+                onClick={() => setIsExpanded((prev) => !prev)}
+                className="btn-link-secondary"
+              >
+                {isExpanded ? (
+                  <span className="flex gap-1 collapse">
+                    Collapse <Minus size={18} />
+                  </span>
+                ) : (
+                  <span className="flex gap-1 expand">
+                    Expand <Plus size={18} />
+                  </span>
+                )}
+              </button>
+            </div>
+          </>
+        ) : (
+          cardContent && (
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{ __html: decodedContent }}
+            />
+          )
         )}
       </div>
       {lineBreak && (
@@ -74,16 +120,12 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-  {
-    console.log(data);
-  }
   if (!data || !data.section3aCards) return null;
   const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
-  console.log(data?.columnSelection[0]);
-
+  
   return (
     <section className="template-wrapper list2 py-6 md:py-12">
       <div className="container mx-auto">
@@ -96,8 +138,11 @@ const Section3a = ({ data }) => {
           }}
           className="grid gap-8 grid-cols-1 md:grid-cols-2"
         >
-          {data.section3aCards.map((card, index) => (
-            <Card key={index} cardData={card} cardContentCollapse={card.cardContentCollapse} />
+          {data?.section3aCards.map((card, index) => (
+            <Card
+              key={index}
+              cardData={card}
+            />
           ))}
         </div>
 

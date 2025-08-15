@@ -1,5 +1,3 @@
-import React from "react";
-import Image from "next/image";
 
 // This is a placeholder for a responsive image component.
 // In a real application, you'd want to use a component that handles
