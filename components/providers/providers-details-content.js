@@ -48,9 +48,9 @@ export default function ProvidersDetailsContent() {
       <ul className="flex flex-wrap gap-2.5">
         {items.map((item, index) => (
           <li key={index}>
-            <Link href={`/find-doctor?speciality=${encodeURIComponent(item)}`} className="btn-outline-ternery btn-core">
+            <div className="btn-outline-ternery btn-core">
               {item}
-            </Link>
+            </div>
           </li>
         ))}
       </ul>

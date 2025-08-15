@@ -86,6 +86,7 @@ const PAGE_QUERY = gql`
             section4aAdditionalHeadline
             section4aAdditionalHeadlineOption
             section4aDescription
+            section4aaddDescription
             section4aHeadline
             section4aImage {
               node {
