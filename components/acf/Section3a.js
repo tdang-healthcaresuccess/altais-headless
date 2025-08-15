@@ -49,10 +49,6 @@ const Card = ({ cardData }) => {
     return words.slice(0, 350).join(" ") + (words.length > 350 ? "..." : "");
   }, [decodedContent]);
 
-  // Decide what to show
-  const contentToShow =
-  cardContentCollapse && !isExpanded ? truncatedContent : decodedContent;
-
   return (
     <div className="rounded-normal h-full flex flex-col">
       {imageUrl && (
@@ -71,30 +67,40 @@ const Card = ({ cardData }) => {
         ) : (
           <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
         )}
-        {cardContent && (
-          <div
-            className="block"
-            dangerouslySetInnerHTML={{ __html: contentToShow }}
-          />
-        )}
-        {cardContentCollapse && (
-          <div className="block line-break pt-3 border-t border-lightPrimary">
-            <button
-              type="button"
-              onClick={() => setIsExpanded((prev) => !prev)}
-              className="btn-link-secondary"
-            >
-              {isExpanded ? (
-                <span className="flex gap-1">
-                  Collapse <Minus size={18} />
-                </span>
-              ) : (
-                <span className="flex gap-1">
-                  Expand <Plus size={18} />
-                </span>
-              )}
-            </button>
-          </div>
+        {/* Only show content if expanded, otherwise just headline and button */}
+        {cardContentCollapse ? (
+          <>
+            {isExpanded && cardContent && (
+              <div
+                className="block"
+                dangerouslySetInnerHTML={{ __html: decodedContent }}
+              />
+            )}
+            <div className="block line-break pt-3 border-t border-lightPrimary">
+              <button
+                type="button"
+                onClick={() => setIsExpanded((prev) => !prev)}
+                className="btn-link-secondary"
+              >
+                {isExpanded ? (
+                  <span className="flex gap-1 collapse">
+                    Collapse <Minus size={18} />
+                  </span>
+                ) : (
+                  <span className="flex gap-1 expand">
+                    Expand <Plus size={18} />
+                  </span>
+                )}
+              </button>
+            </div>
+          </>
+        ) : (
+          cardContent && (
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{ __html: decodedContent }}
+            />
+          )
         )}
       </div>
       {lineBreak && (
@@ -136,7 +142,6 @@ const Section3a = ({ data }) => {
             <Card
               key={index}
               cardData={card}
-              cardContentCollapse={card.cardContentCollapse}
             />
           ))}
         </div>
