@@ -49,25 +49,25 @@ export default function Footer() {
                 <div className="block pt-5">
                   <div className="flex flex-col gap-5">
                     <Link
-                      href="/patients"
+                      href="/for-patients"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Patients
                     </Link>
                     <Link
-                      href="/providers"
+                      href="/for-providers"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Providers
                     </Link>
                     <Link
-                      href="/partners"
+                      href="/for-partners"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Partners
                     </Link>
                     <Link
-                      href="/clinics"
+                      href="/for-providers/amg-locations/"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">Our</span> Clinics
