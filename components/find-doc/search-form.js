@@ -85,7 +85,7 @@ export default function DocSearchForm({ searchQuery, setSearchQuery, locationQue
                 
               </div>
             </div>
-            <div className="block">
+            <div className="block grid-options">
               <div className="relative" ref={LayoutRef}>
                 <button
                   type="button"

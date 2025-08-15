@@ -4,6 +4,7 @@ import SpecialtyBanner from "@/public/media/specialty-banner.png";
 export default function SpecialityShortInfo({ name }) {
   return (
     <section className="block pt-8 md:pt-[36px] pb-6 border-b border-bluePrimaryLite">
+        <div className="container mx-auto">
       <div className="block md:flex justify-between items-start gap-12">
         {/* Left Column */}
         <div className="flex justify-center md:justify-end min-w-full md:min-w-[360px] mb-10 md:mb-0">
@@ -29,6 +30,7 @@ export default function SpecialityShortInfo({ name }) {
             </p> */}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

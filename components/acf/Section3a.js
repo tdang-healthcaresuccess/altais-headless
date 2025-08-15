@@ -103,11 +103,7 @@ const Card = ({ cardData }) => {
           )
         )}
       </div>
-      {lineBreak && (
-        <div className="container mx-auto">
-          <div className="block line-break"></div>
-        </div>
-      )}
+     
     </div>
   );
 }; /**
@@ -146,11 +142,7 @@ const Section3a = ({ data }) => {
           ))}
         </div>
 
-        {section3aLineBreak && (
-          <div className="container mx-auto">
-            <div className="block line-break border-b border-lightPrimary"></div>
-          </div>
-        )}
+        
       </div>
     </section>
   );

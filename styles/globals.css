@@ -389,7 +389,7 @@ button {
   @apply text-grey3d text-lg leading-[32px] list-disc;
 }
 .template-wrapper.list2 ul {
-  @apply flex flex-wrap list-inside;
+  /* @apply flex flex-wrap list-inside; */
 }
 .template-wrapper.list2 ul li {
   @apply w-full lg:w-1/2 list-outside;
@@ -406,7 +406,7 @@ button {
 
 @media screen and (max-width: 981px) {
   .template-wrapper.list2 ul {
-    @apply flex-col md:flex-row;
+    /* @apply flex-col md:flex-row; */
   }
 }
 
