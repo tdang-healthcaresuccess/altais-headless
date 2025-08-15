@@ -51,8 +51,7 @@ const Card = ({ cardData }) => {
 
   // Decide what to show
   const contentToShow =
-    cardContentCollapse && !isExpanded ? truncatedContent : decodedContent;
-  console.log(truncatedContent);
+  cardContentCollapse && !isExpanded ? truncatedContent : decodedContent;
 
   return (
     <div className="rounded-normal h-full flex flex-col">

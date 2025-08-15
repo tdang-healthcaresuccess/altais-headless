@@ -29,7 +29,7 @@ const Section4a = ({ data }) => {
   const imageUrl = section4aImage?.node?.sourceUrl;
 
   return (
-    <section className="template-wrapper py-6 md:py-12">
+    <section className={`template-wrapper ${section4aLineBreak ? "pb-0 pt-6 md:pt-12" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-[74px]">
           {imageUrl && (
@@ -75,9 +75,7 @@ const Section4a = ({ data }) => {
           </div>
         </div>
         {section4aLineBreak && (
-          <div className="container mx-auto">
-            <div className="block"></div>
-          </div>
+            <div className="block border-b border-lightPrimary pt-12"></div>
         )}
       </div>
     </section>
