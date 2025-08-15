@@ -57,7 +57,7 @@ export default function ProviderDetails(props) {
         <Breadcrumb
           items={[
             { label: "Home", link: "/" },
-            { label: "Find Doctor", link: "/find-doctor" },
+            { label: "Find Care", link: "/find-care" },
             { label: title },
           ]}
         />

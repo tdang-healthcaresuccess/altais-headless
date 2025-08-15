@@ -36,9 +36,17 @@ export default function HowCanWeHelp() {
 
             {/* Dropdown for Services */}
             <div className="relative mb-[55px]">
-              <select className="block w-full appearance-none bg-white border border-[#999795] rounded-normal py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary">
+              <select
+                className="block w-full appearance-none bg-white border border-[#999795] rounded-normal py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary"
+                onChange={e => {
+                  const val = e.target.value;
+                  if (val && val !== "Services") {
+                    const anchor = `#${val.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()}`;
+                    window.location.hash = anchor;
+                  }
+                }}
+              >
                 <option>Services</option>
-                {/* You can add more options here */}
                 <option>Primary Care</option>
                 <option>Mental Health</option>
                 <option>Pediatrics</option>
@@ -49,7 +57,7 @@ export default function HowCanWeHelp() {
             </div>
 
             {/* Search Input Box with bottom border */}
-            <div className="relative">
+            {/* <div className="relative">
               <input
                 type="text"
                 placeholder="Search"
@@ -58,7 +66,7 @@ export default function HowCanWeHelp() {
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-primary">
                 <Search className="w-5 h-5" />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ export default function OurServices({ hideViewAll = true }) {
               />
             </div>
             <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3">
+              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="primary-care">
                 Primary Care
               </h3>
               <p className="text-lg leading-[32px] text-grey3d mb-7">
@@ -31,7 +31,7 @@ export default function OurServices({ hideViewAll = true }) {
                 everyday needs.
               </p>
               <Link
-                href="/#"
+                href="/primary-care/"
                 className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn More
@@ -49,7 +49,7 @@ export default function OurServices({ hideViewAll = true }) {
               />
             </div>
             <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3">
+              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="mental-health">
                 Mental Health
               </h3>
               <p className="text-lg leading-[32px] text-grey3d mb-7">
@@ -57,7 +57,7 @@ export default function OurServices({ hideViewAll = true }) {
                 trusted care providers.
               </p>
               <Link
-                href="/#"
+                href="/services/mental-health/"
                 className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 See Mental Health Services
@@ -75,7 +75,7 @@ export default function OurServices({ hideViewAll = true }) {
               />
             </div>
             <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3">
+              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="pediatrics" >
                 Pediatrics
               </h3>
               <p className="text-lg leading-[32px] text-grey3d mb-7">
@@ -83,7 +83,7 @@ export default function OurServices({ hideViewAll = true }) {
                 trusted care providers.
               </p>
               <Link
-                href="/#"
+                href="/services/pediatric-care/"
                 className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Learn About Pediatric Care
@@ -101,7 +101,7 @@ export default function OurServices({ hideViewAll = true }) {
               />
             </div>
             <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3">
+              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="senior-health">
                 Senior Health Care
               </h3>
               <p className="text-lg leading-[32px] text-grey3d mb-7">
@@ -109,7 +109,7 @@ export default function OurServices({ hideViewAll = true }) {
                 step, from Medicare Advantage plans to Annual Wellness exams.
               </p>
               <Link
-                href="/#"
+                href="/services/senior-health/"
                 className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
               >
                 Explore Senior Services

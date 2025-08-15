@@ -51,7 +51,7 @@ export default function FrontPage(props) {
         {/* Our Services End */}
 
         {/* Lets Redefine Start */}
-        <ContactJourney heading="Care That Covers" subheading="the Whole You" description={ContactSummaryDescription} />
+  <ContactJourney heading="Care That Covers" subheading="the Whole You" description={ContactSummaryDescription} linkUrl={"/find-care"} />
         {/* Lets Redefine End */}
       </Layout>
     </>

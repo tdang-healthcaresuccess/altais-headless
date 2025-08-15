@@ -19,7 +19,7 @@ export default function ProviderDetails() {
         <Breadcrumb
           items={[
             { label: "Home", link: "/" },
-            { label: "Find Doctor", link: "/find-doctor" },
+            { label: "Find Care", link: "/find-care" },
             { label: "Brittany Camille, FNP-C" }, 
           ]}
         />

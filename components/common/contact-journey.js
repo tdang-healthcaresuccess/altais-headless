@@ -3,7 +3,7 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export default function ContactJourney({heading, subheading,description}) {
+export default function ContactJourney({heading, subheading,description, linkUrl }) {
   return (
     <section className="block pt-12 bg-[#d9d9d926] md:pt-14 pb-[73px] md:pb-15 box-shadow-custom2">
       <div className="container mx-auto">
@@ -23,7 +23,7 @@ export default function ContactJourney({heading, subheading,description}) {
             <p className="text-grey3d text-lg leading-[32px] font-normal text-center md:text-left">
               {description}
             </p>
-            <Link href="/#" className="btn-gradient btn-sm flex-center w-full md:w-[180px] gap-1 mt-8">
+            <Link href={linkUrl || ""} className="btn-gradient btn-sm flex-center w-full md:w-[180px] gap-1 mt-8">
               Find Care{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
             </Link>

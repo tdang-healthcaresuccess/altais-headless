@@ -175,7 +175,7 @@ export default function Header({ siteTitle, siteDescription }) {
               </nav>
 
               <Link
-                href="/find-doctor"
+                href="/find-care"
                 className="btn-gradient btn-action flex-center gap-1"
               >
                 Find Care{" "}

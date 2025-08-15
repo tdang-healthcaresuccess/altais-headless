@@ -27,7 +27,7 @@ export default function CounterCondition() {
                 <br /> Patient Resources & Health Information
               </h3>
               <Link
-                href="/#"
+                href="/conditions/"
                 className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 To Conditions Page
@@ -58,7 +58,7 @@ export default function CounterCondition() {
                 <br /> or Clinic Near You
               </h3>
               <Link
-                href="/find-doctor"
+                href="/find-care"
                 className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-[18px] sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 Find a Location Near You

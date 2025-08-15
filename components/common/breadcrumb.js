@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Breadcrumb({ items = [] }) {
   // `items` will be an array of objects like:
-  // [{ label: "Home", link: "/" }, { label: "Find Doctor", link: "/find-doctor" }, { label: "Brittany Camille, FNP-C" }]
+  // [{ label: "Home", link: "/" }, { label: "Find Care", link: "/find-care" }, { label: "Brittany Camille, FNP-C" }]
   
   return (
     <section className="hidden md:block py-2 box-shadow-custom3">

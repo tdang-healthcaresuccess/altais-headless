@@ -20,10 +20,10 @@ export default function SearchDoctor() {
     if (specialty) params.append('specialty', specialty);
 
     // Navigate to the search page with the new parameters
-    window.location.href = `/find-doctor?${params.toString()}`;
+  window.location.href = `/find-care?${params.toString()}`;
   };
 
-  // The 'Advanced Search' link can now point directly to the find-doctor page
+  // The 'Advanced Search' link can now point directly to the find-care page
   // The 'Search' button is now a button that triggers the navigation logic
   return (
     <section className="block pt-12 md:pt-14 pb-[65px] md:pb-15 shadow-custom2">
@@ -108,7 +108,7 @@ export default function SearchDoctor() {
             </div>
             <div className="flex justify-between items-center mt-6">
               <a
-                href="/find-doctor"
+                href="/find-care"
                 className="flex-center btn-link-primary"
               >
                 Advanced Search

@@ -60,7 +60,7 @@ const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
         {/* Counter Condition End */}
 
         {/* Lets Redefine Start */}
-        <ContactJourney heading="Let’s Redefine" subheading="What Care Feels Like" description={ContactSummaryDescription} />
+  <ContactJourney heading="Let’s Redefine" subheading="What Care Feels Like" description={ContactSummaryDescription} linkUrl={"/find-care"} />
         {/* Lets Redefine End */}
       </main>
 
