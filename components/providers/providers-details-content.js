@@ -102,12 +102,12 @@ export default function ProvidersDetailsContent() {
               </h4>
               {renderList(getSpecialties())}
             </div>
-            <div className="block border-b border-lightPrimary py-6">
+            {/* <div className="block border-b border-lightPrimary py-6">
               <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
                 Accepted Insurance
               </h4>
               {renderList(provider.acceptedInsurance.filter(ins => ins !== 'nan'))}
-            </div>
+            </div> */}
             <Link
               href={`tel:${provider.phone}`}
               className="btn-md btn-outline-secondary flex-center rounded-normal mt-8 !w-full"
