@@ -15,61 +15,75 @@
 const Section4a = ({ data }) => {
   if (!data) return null;
 
-    const {
-      section4aHeadline,
-      section4aAdditionalHeadline,
-      ctaButtonText,
-      ctaButtonUrl,
-      enableCta,
-      section4aImage,
-      section4aDescription,
-      section4aLineBreak
-    } = data;
-    const imageUrl = section4aImage?.node?.sourceUrl;
+  const {
+    section4aHeadline,
+    section4aAdditionalHeadline,
+    section4aAdditionalDescription,
+    ctaButtonText,
+    ctaButtonUrl,
+    enableCta,
+    section4aImage,
+    section4aDescription,
+    section4aLineBreak,
+  } = data;
+  const imageUrl = section4aImage?.node?.sourceUrl;
 
-    return (
-      <section className="py-16 md:py-24">
-        {console.log(data)}
-        <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            {imageUrl && (
-              <div className="w-full lg:w-1/3 flex-shrink-0 mb-8 lg:mb-0">
-                <img
-                  src={imageUrl}
-                  alt="CTA Image"
-                  className="w-full rounded-xl shadow-lg object-cover"
-                />
-              </div>
-            )}
-            <div className="w-full lg:w-2/3 text-center lg:text-left">
+  return (
+    <section className="template-wrapper py-6 md:py-12">
+      <div className="container mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          {imageUrl && (
+            <div className="w-full lg:w-1/3 flex-shrink-0 mb-8 lg:mb-0">
+              <img
+                src={imageUrl}
+                alt="CTA Image"
+                className="w-full rounded-normal border border-lightPrimary object-cover"
+              />
+            </div>
+          )}
+          <div className="w-full lg:w-2/3 text-center lg:text-left">
+            {/* Primary Headline Start */}
+            <div className="block">
+              {section4aHeadline && (
+                <p className="text-xl font-semibold mb-2 opacity-80">
+                  {section4aHeadline}
+                </p>
+              )}
+              <p>{section4aDescription}</p>
+            </div>
+            {/* Primary Headline End */}
+
+            {/* Additonal Headline End */}
+            <div className="block">
               {section4aAdditionalHeadline && (
                 <p className="text-xl font-semibold mb-2 opacity-80">
                   {section4aAdditionalHeadline}
                 </p>
               )}
-              {section4aHeadline && (
-                <h2 className="text-4xl lg:text-5xl font-extrabold mb-6">
-                </h2>
-              )}
-              <p>{section4aDescription}</p>
-              {enableCta && ctaButtonText && ctaButtonUrl && (
-                <a
-                  href={ctaButtonUrl}
-                  className="font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 inline-block"
-                >
-                  {ctaButtonText}
-                </a>
-              )}
+              <p>{section4aAdditionalDescription}</p>
             </div>
-          </div>
-          {section4aLineBreak && (
-            <div className="container mx-auto">
-              <div className="block"></div>
-            </div>
-          )}
-        </div>
-      </section>
-    );
-  };
+            {/* Additonal Headline End */}
 
-  export default Section4a;
+            {/* Action Button Start */}
+            {enableCta && ctaButtonText && ctaButtonUrl && (
+              <a
+                href={ctaButtonUrl}
+                className="btn-md btn-gradient flex-center w-full min-w-[530px] max-w-[530px]"
+              >
+                {ctaButtonText}
+              </a>
+            )}
+            {/* Action Button End */}
+          </div>
+        </div>
+        {section4aLineBreak && (
+          <div className="container mx-auto">
+            <div className="block"></div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default Section4a;

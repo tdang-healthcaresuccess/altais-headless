@@ -86,7 +86,7 @@ button {
   @apply cursor-pointer;
 }
 .btn-gradient {
-  @apply bg-[linear-gradient(to_right,_#083D78_30%,_#008889_100%)] hover:bg-secondary hover:bg-none font-semibold  text-white py-2 px-4 rounded;
+  @apply bg-[linear-gradient(to_right,_#083D78_30%,_#008889_100%)] hover:bg-secondary hover:bg-none font-semibold !text-white py-2 px-4 rounded;
 }
 .btn-sm {
   @apply text-[18px] md:text-xs font-semibold md:text-[15px] leading-[24px] h-[50px] md:h-[35px] w-full sm:w-auto md:w-auto py-1 px-2 md:px-8;

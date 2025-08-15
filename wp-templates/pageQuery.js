@@ -45,9 +45,10 @@ export const PAGE_QUERY = gql`
             enableCta
             fieldGroupName
             section4aAdditionalHeadline
-            section4aAdditionalHeadlineOption
             section4aDescription
-            section4aHeadline,
+            section4aAdditionalHeadlineOption
+            section4aHeadline
+            section4aAdditionalDescription
             section4aImage {
               node {
                 uri
