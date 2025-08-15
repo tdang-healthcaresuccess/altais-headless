@@ -12,8 +12,8 @@ const Section5a = ({ data }) => {
   const { section5aContent, section5aLineBreak } = data;
 
   return (
-    <section className="py-6 md:py-12">
-      <div className="template-wrapper container mx-auto">
+    <section className="template-wrapper py-6 md:py-12">
+      <div className="container mx-auto">
         <div className="max-w-full md:max-w-[743px] mx-auto">
           {section5aContent && (
             <div
@@ -24,7 +24,7 @@ const Section5a = ({ data }) => {
         </div>
         {section5aLineBreak && (
           <div className="container mx-auto">
-            <div className="block"></div>
+            <div className="block line-break border-b border-lightPrimary"></div>
           </div>
         )}
       </div>

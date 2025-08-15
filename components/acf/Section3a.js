@@ -1,5 +1,5 @@
 import Image from "next/image";
-import DummyImage from "@/public/media/placeholder-frame160.png"
+import DummyImage from "@/public/media/placeholder-frame160.png";
 import he from "he";
 // This is a placeholder for a responsive image component.
 // In a real application, you'd want to use a component that handles
@@ -40,14 +40,16 @@ const Card = ({ cardData }) => {
         </div>
       )}
       <div className="flex-grow">
-        {
-          imageIcon ?
+        {imageIcon ? (
           <>
-          <h3 className="flex items-center gap-4"><img src={imageIcon} alt={cardHeadline} width={40} height={40} />{cardHeadline}</h3>
+            <h3 className="flex items-center gap-4">
+              <img src={imageIcon} alt={cardHeadline} width={40} height={40} />
+              {cardHeadline}
+            </h3>
           </>
-          :
+        ) : (
           <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
-        }
+        )}
         {cardContent && (
           <div
             className="block"
@@ -55,7 +57,7 @@ const Card = ({ cardData }) => {
           />
         )}
       </div>
-        {lineBreak && (
+      {lineBreak && (
         <div className="container mx-auto">
           <div className="block line-break"></div>
         </div>
@@ -72,25 +74,36 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-    {console.log(data)}
-   if (!data || !data.section3aCards) return null;
-   const { section3aLineBreak } = data;
+  {
+    console.log(data);
+  }
+  if (!data || !data.section3aCards) return null;
+  const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
   console.log(data?.columnSelection[0]);
-  
+
   return (
-    <section className="template-wrapper list2 py-16 md:py-24">
+    <section className="template-wrapper list2 py-6 md:py-12">
       <div className="container mx-auto">
-        <div className={`grid gap-8 sm:grid-cols-2 md:grid-col-${data?.columnSelection[0]} lg:grid-col-${data?.columnSelection[0]}`}>
+        <div
+          style={{
+            // Only apply dynamic value on large screens
+            ["@media (min-width: 1024px)"]: {
+              gridTemplateColumns: `repeat(${data?.columnSelection[0]}, minmax(0, 1fr))`,
+            },
+          }}
+          className="grid gap-8 grid-cols-1 md:grid-cols-2"
+        >
           {data.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />
           ))}
         </div>
+
         {section3aLineBreak && (
           <div className="container mx-auto">
-            <div className="block line-break py-12 border-b border-lightPrimary"></div>
+            <div className="block line-break border-b border-lightPrimary"></div>
           </div>
         )}
       </div>
