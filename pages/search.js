@@ -25,19 +25,13 @@ const GridLayout = ({ results, type }) => {
       {results.map((result) => (
         <div key={result.id} className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
           <div className="block border border-gray-200 rounded-lg mb-6 overflow-hidden">
-            {/* Display an image for posts, or a placeholder for pages */}
-            {type === 'post' && result.featuredImage?.node?.sourceUrl ? (
-              <img
-                src={result.featuredImage.node.sourceUrl}
-                alt={result.featuredImage.node.altText || result.title}
-                className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
-                onError={(e) => { e.target.src = 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'; }}
-              />
-            ) : (
-              <div className="bg-gray-100 min-h-[170px] w-full flex items-center justify-center rounded-lg text-gray-500">
-                <p>Page Result</p>
-              </div>
-            )}
+            {/* Always display an image, fallback to No Image if missing */}
+            <img
+              src={result.featuredImage?.node?.sourceUrl || 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'}
+              alt={result.featuredImage?.node?.altText || result.title}
+              className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
+              onError={(e) => { e.target.src = 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'; }}
+            />
           </div>
           <div className="block flex-grow">
             <h3 className="text-2xl font-bold leading-8 text-blue-900 mb-3">
@@ -65,18 +59,18 @@ const GridLayout = ({ results, type }) => {
 
 // GraphQL query for pages, including pagination fields
 const GET_PAGES_QUERY = gql`
-  query GetPages($search: String, $first: Int, $after: String, $last: Int, $before: String) {
-    pages(where: { search: $search }, first: $first, after: $after, last: $last, before: $before) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        hasPreviousPage
-        startCursor
-      }
+  query GetPages($search: String) {
+    pages(where: { search: $search }) {
       nodes {
         id
         title
         uri
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
       }
     }
   }
@@ -84,14 +78,8 @@ const GET_PAGES_QUERY = gql`
 
 // GraphQL query for posts, including pagination fields
 const GET_POSTS_QUERY = gql`
-  query GetPosts($search: String, $first: Int, $after: String, $last: Int, $before: String) {
-    posts(where: { search: $search }, first: $first, after: $after, last: $last, before: $before) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        hasPreviousPage
-        startCursor
-      }
+  query GetPosts($search: String) {
+    posts(where: { search: $search }) {
       nodes {
         id
         title
@@ -113,26 +101,19 @@ export default function SearchPage() {
   const { q } = router.query;
   const searchQuery = q || '';
 
-  const RESULTS_PER_PAGE = 4;
+  const RESULTS_PER_PAGE = 8;
+  // Single pagination for combined results
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const [pagePagination, setPagePagination] = useState({
-    first: RESULTS_PER_PAGE,
-    after: null,
-  });
-  const [postPagination, setPostPagination] = useState({
-    first: RESULTS_PER_PAGE,
-    after: null,
-  });
-
-  // Fetch pages
+  // Fetch all pages
   const { data: pagesData, loading: pagesLoading, error: pagesError } = useQuery(GET_PAGES_QUERY, {
-    variables: { search: searchQuery, ...pagePagination },
+    variables: { search: searchQuery },
     skip: !searchQuery,
   });
 
-  // Fetch posts
+  // Fetch all posts
   const { data: postsData, loading: postsLoading, error: postsError } = useQuery(GET_POSTS_QUERY, {
-    variables: { search: searchQuery, ...postPagination },
+    variables: { search: searchQuery },
     skip: !searchQuery,
   });
 
@@ -199,89 +180,70 @@ export default function SearchPage() {
     );
   }
 
-  const hasResults = pages.length > 0 || posts.length > 0;
+  // Combine all results: pages first, then blogs
+  const allResults = [...pages.map(p => ({ ...p, __type: 'page' })), ...posts.map(p => ({ ...p, __type: 'post' }))];
+  const hasResults = allResults.length > 0;
+  // Single pagination for combined results
+  const totalPages = Math.ceil(allResults.length / RESULTS_PER_PAGE);
+  const paginatedResults = allResults.slice((currentPage - 1) * RESULTS_PER_PAGE, currentPage * RESULTS_PER_PAGE);
 
   return (
     <Layout>
-       <Head>
-        
-      </Head>
-
-
-        {/* Inner Page Banner start */}
-        <InnerPageBanner
-          DesktopBanner="bg-resources-landing-banner"
-          MobileBanner="bg-resources-landing-banner-mobile"
-          heading={`Searching for "${searchQuery}"`}
-        />
-
- 
-     
-      {/* Breadcrumb Start */}
-      <Breadcrumb
-        items={[{ label: "Home", link: "/" }, { label: "Search" }]}
+      <Head></Head>
+      {/* Inner Page Banner start */}
+      <InnerPageBanner
+        DesktopBanner="bg-resources-landing-banner"
+        MobileBanner="bg-resources-landing-banner-mobile"
+        heading={`Searching for "${searchQuery}"`}
       />
+      {/* Breadcrumb Start */}
+      <Breadcrumb items={[{ label: "Home", link: "/" }, { label: "Search" }]} />
       {/* Breadcrumb End */}
-         <main className="block">
-            <div className="acf-flexible-content">
-     
-
-      {!hasResults && (
-        <p className="text-center text-gray-600">No results found.</p>
-      )}
-
-      {/* Display pages first */}
-      {pages.length > 0 && (
-        <div className='container mx-auto'>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Services & Helpful Articles</h2>
-          <GridLayout results={pages} type="page" />
-          <div className="flex justify-center items-center mt-6 gap-4">
-            <button
-              onClick={handlePreviousPagePages}
-              disabled={!pageInfoPages?.hasPreviousPage}
-              className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              <ChevronLeft className="w-5 h-5 mr-2" />
-              Previous
-            </button>
-            <button
-              onClick={handleNextPagePages}
-              disabled={!pageInfoPages?.hasNextPage}
-              className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              Next
-              <ChevronRight className="w-5 h-5 ml-2" />
-            </button>
-          </div>
+      <main className="block">
+        <div className="acf-flexible-content">
+          {!hasResults && (
+            <p className="text-center text-gray-600">No results found.</p>
+          )}
+          {hasResults && (
+            <div className='container mx-auto'>
+              <GridLayout
+                results={paginatedResults}
+                type={null}
+                renderImage={(result) => (
+                  <img
+                    src={result.featuredImage?.node?.sourceUrl || 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'}
+                    alt={result.featuredImage?.node?.altText || result.title}
+                    className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
+                  />
+                )}
+              />
+              {/* Single Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center mt-6 gap-4">
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+                  >
+                    <ChevronLeft className="w-5 h-5 mr-2" />
+                    Previous
+                  </button>
+                  <span className="mx-4 text-bluePrimary font-semibold">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+                  >
+                    Next
+                    <ChevronRight className="w-5 h-5 ml-2" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Display posts second */}
-      {posts.length > 0 && (
-        <div className='container mx-auto'>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Blog</h2>
-          <GridLayout results={posts} type="post" />
-          <div className="flex justify-center items-center mt-6 gap-4">
-            <button
-              onClick={handlePreviousPagePosts}
-              disabled={!pageInfoPosts?.hasPreviousPage}
-              className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              <ChevronLeft className="w-5 h-5 mr-2" />
-              Previous
-            </button>
-            <button
-              onClick={handleNextPagePosts}
-              disabled={!pageInfoPosts?.hasNextPage}
-              className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
-            >
-              Next
-              <ChevronRight className="w-5 h-5 ml-2" />
-            </button>
-          </div>
-        </div>
-      )}
-      </div>
       </main>
     </Layout>
   );
