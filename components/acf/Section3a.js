@@ -26,7 +26,8 @@ const ResponsiveImage = ({ src, alt }) => {
 
 const Card = ({ cardData }) => {
   if (!cardData) return null;
-
+  console.log(cardData);
+  
   const { cardContent, cardHeadline, lineBreak } = cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
@@ -74,15 +75,11 @@ const Card = ({ cardData }) => {
  * @param {Array<object>} props.data.section3aCards - An array of card data objects.
  */
 const Section3a = ({ data }) => {
-  {
-    console.log(data);
-  }
   if (!data || !data.section3aCards) return null;
   const { section3aLineBreak } = data;
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
-  console.log(data?.columnSelection[0]);
 
   return (
     <section className="template-wrapper list2 py-6 md:py-12">

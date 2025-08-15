@@ -19,9 +19,9 @@ export default function OurResources() {
             <div className="block w-full md:w-auto">
               <h3 className="text-[22px] leading-[36px] text-bluePrimary mb-3">Patients</h3>
               <ul>
-                <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" /> Patient Resources</Link></li>
+                <li><Link href="/patient-resources/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" /> Patient Resources</Link></li>
                 <div className="w-full h-[1px] bg-lightPrimary my-3"></div>
-                <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" /> Accepted Insurance</Link></li>
+                <li><Link href="/insurance-accepted/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" /> Accepted Insurance</Link></li>
               </ul>
             </div>
           </div>
@@ -49,7 +49,7 @@ export default function OurResources() {
               <ul>
                 <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Locations</Link></li>
                 <div className="w-full h-[1px] bg-lightPrimary my-3"></div>
-                <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Services & Solutions</Link></li>
+                <li><Link href="/services-and-solutions/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Services & Solutions</Link></li>
               </ul>
             </div>
           </div>

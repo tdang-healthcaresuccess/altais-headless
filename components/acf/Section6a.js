@@ -21,7 +21,6 @@ const Section6a = ({ data }) => {
     <section className="pb-6 md:pb-12 ">
       <div className="container mx-auto">
         <div className="block testimonials-block">
-          {console.log(testimonials)}
           <Swiper
             modules={[Navigation, Pagination]}
             navigation={true}

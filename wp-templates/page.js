@@ -85,9 +85,8 @@ const PAGE_QUERY = gql`
             section4aLineBreak
             section4aAdditionalHeadline
             section4aDescription
-            section4aAdditionalHeadlineOption
+            section4aaddDescription
             section4aHeadline
-            section4aAdditionalDescription
             section4aImage {
               node {
                  sourceUrl
