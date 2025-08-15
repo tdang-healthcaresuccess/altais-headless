@@ -27,7 +27,7 @@ const ResponsiveImage = ({ src, alt }) => {
 const Card = ({ cardData }) => {
   if (!cardData) return null;
 
-  const { cardContent, cardHeadline, lineBreak } = cardData;
+  const { cardContent, cardHeadline, lineBreak, cardContentCollapse } = cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
@@ -97,7 +97,7 @@ const Section3a = ({ data }) => {
           className="grid gap-8 grid-cols-1 md:grid-cols-2"
         >
           {data.section3aCards.map((card, index) => (
-            <Card key={index} cardData={card} />
+            <Card key={index} cardData={card} cardContentCollapse={card.cardContentCollapse} />
           ))}
         </div>
 

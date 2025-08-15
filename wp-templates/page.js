@@ -61,6 +61,7 @@ const PAGE_QUERY = gql`
               cardContent
               cardHeadline
               cardOptions
+              cardContentCollapse
               fieldGroupName
               lineBreak
               cardImage {
@@ -88,7 +89,6 @@ const PAGE_QUERY = gql`
             section4aAdditionalHeadlineOption
             section4aaddDescription
             section4aHeadline
-            section4aAdditionalDescription
             section4aImage {
               node {
                  sourceUrl
