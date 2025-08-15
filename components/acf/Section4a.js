@@ -1,17 +1,17 @@
-/**
- * Section4a component.
- * Renders a call-to-action (CTA) section with an image, headlines, and a button.
- * Note: A real button would likely have a `href` or `onClick` handler.
- *
- * @param {object} props - The component props.
- * @param {object} props.data - The data object from the ACF Flexible Content layout.
- * @param {string} props.data.section4aHeadline - The main CTA headline.
- * @param {string} props.data.section4aAdditionalHeadline - A secondary headline.
- * @param {string} props.data.ctaButtonText - The text for the CTA button.
- * @param {object} props.data.section4aImage - The image object for the CTA section.
- * @param {object} props.data.section4aDescription - Description
- * @param {object} props.data.section4aaddDescription - Additional Description
- */
+  /**
+   * Section4a component.
+   * Renders a call-to-action (CTA) section with an image, headlines, and a button.
+   * Note: A real button would likely have a `href` or `onClick` handler.
+   *
+   * @param {object} props - The component props.
+   * @param {object} props.data - The data object from the ACF Flexible Content layout.
+   * @param {string} props.data.section4aHeadline - The main CTA headline.
+   * @param {string} props.data.section4aAdditionalHeadline - A secondary headline.
+   * @param {string} props.data.ctaButtonText - The text for the CTA button.
+   * @param {object} props.data.section4aImage - The image object for the CTA section.
+   * @param {object} props.data.section4aDescription - Description
+   * @param {object} props.data.section4aaddDescription - Additional Description 
+   */
 const Section4a = ({ data }) => {
   if (!data) return null;
 

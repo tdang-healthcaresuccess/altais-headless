@@ -1,5 +1,3 @@
-import Image from "next/image";
-import DummyImage from "@/public/media/placeholder-frame160.png";
 import he from "he";
 import { useMemo, useState } from "react";
 // This is a placeholder for a responsive image component.
@@ -25,10 +23,11 @@ const ResponsiveImage = ({ src, alt }) => {
 
 // Sub-component for the cards inside Section3a
 
-const Card = ({ cardData }) => { 
+const Card = ({ cardData }) => {
   if (!cardData) return null;
-  console.log(cardData);
-  const { cardContent, cardHeadline, lineBreak } = cardData;
+
+  const { cardContent, cardHeadline, lineBreak, cardContentCollapse } =
+    cardData;
   const imageUrl = cardData.cardImage?.node?.sourceUrl;
   const imageIcon = cardData.cardIcon?.node?.sourceUrl;
   const displayImage = imageUrl || imageIcon;
@@ -79,16 +78,16 @@ const Card = ({ cardData }) => {
           />
         )}
         {cardContentCollapse && (
-        <div className="block line-break pt-3 border-t border-lightPrimary">
-          <button
-          type="button"
-          onClick={() => setIsExpanded((prev) => !prev)}
-          className="btn-link-secondary"
-        >
-          {isExpanded ? "Collapse" : "Expand"}
-        </button>
+          <div className="block line-break pt-3 border-t border-lightPrimary">
+            <button
+              type="button"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              className="btn-link-secondary"
+            >
+              {isExpanded ? "Collapse" : "Expand"}
+            </button>
           </div>
-      )}
+        )}
       </div>
       {lineBreak && (
         <div className="container mx-auto">
@@ -126,7 +125,11 @@ const Section3a = ({ data }) => {
           className="grid gap-8 grid-cols-1 md:grid-cols-2"
         >
           {data.section3aCards.map((card, index) => (
-            <Card key={index} cardData={card} />
+            <Card
+              key={index}
+              cardData={card}
+              cardContentCollapse={card.cardContentCollapse}
+            />
           ))}
         </div>
 
