@@ -131,13 +131,11 @@ const Section3a = ({ data }) => {
     <section className="template-wrapper list2 py-6 md:py-12">
       <div className="container mx-auto">
         <div
-          style={{
-            // Only apply dynamic value on large screens
-            ["@media (min-width: 1024px)"]: {
-              gridTemplateColumns: `repeat(${data?.columnSelection[0]}, minmax(0, 1fr))`,
-            },
-          }}
-          className="grid gap-8 grid-cols-1 md:grid-cols-2"
+          className={`
+    grid gap-8
+    grid-cols-1 md:grid-cols-2
+    lg:[grid-template-columns:repeat(${data?.columnSelection[0] || 3},minmax(0,1fr))]
+  `}
         >
           {data?.section3aCards.map((card, index) => (
             <Card key={index} cardData={card} />

@@ -40,7 +40,7 @@ const Section1a = ({ data }) => {
   const section1aLineBreak = data.section1aLineBreak;
 
   return (
-    <section className={`template-wrapper ${section1aLineBreak ? "pt-12": "py-12"}`}>
+    <section className={`template-wrapper ${section1aLineBreak ? "py-12": "py-12"}`}>
       <div className="container mx-auto">
         <div className="block max-w-[838px] mx-auto">
           <div className="flex flex-col gap-6">
@@ -60,7 +60,7 @@ const Section1a = ({ data }) => {
         </div>
       </div>
       {section1aLineBreak && (
-        <div className="container mx-auto">
+        <div className="hidden md:block container mx-auto">
           <div className="block line-break border-b border-lightPrimary"></div>
         </div>
       )}

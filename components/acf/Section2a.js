@@ -20,15 +20,15 @@ const Section2a = ({ data }) => {
   return (
     <section
       style={{ backgroundColor: sectionBackgroundColor }}
-      className="template-wrapper pb-[73px] md:pb-[54px]pt-[50px] md:pt-[60px]"
+      className={`template-wrapper pb-[73px] md:pb-[54px] ${section2aLineBreak ? "pt-0" : "pt-12 md:pt-[60px]"}`}
     >
       {section2aLineBreak && (
-        <div className="container mx-auto">
-          <div className="block line-break border-b border-lightPrimary"></div>
+        <div className="hidden md:block container mx-auto">
+          <div className="block border-b border-lightPrimary"></div>
         </div>
       )}
       <div className="container mx-auto">
-        <div className="block md:flex justify-start items-start w-full gap-10">
+        <div className={`block md:flex justify-start items-start w-full gap-10 ${section2aLineBreak && "pt-12"}`}>
           {/* Left Column */}
           {headline2a && (
             <div className="flex justify-center md:justify-start max-w-full md:max-w-[340px] min-w-full md:min-w-[340px]">

@@ -41,7 +41,7 @@ const Section6a = ({ data }) => {
           </Swiper>
         </div>
         {section6aLineBreak && (
-          <div className="container mx-auto">
+          <div className="hidden md:block container mx-auto">
             <div className="block line-break"></div>
           </div>
         )}

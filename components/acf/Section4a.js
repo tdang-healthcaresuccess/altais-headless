@@ -31,9 +31,9 @@ const Section4a = ({ data }) => {
   return (
     <section className={`template-wrapper ${section4aLineBreak ? "pb-0 pt-6 md:pt-12" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-[74px]">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-[74px]">
           {imageUrl && (
-            <div className="w-full md:w-[425px] flex-shrink-0 mb-8 lg:mb-0">
+            <div className="w-full md:w-[425px] flex-shrink-0">
               <img
                 src={imageUrl}
                 alt="CTA Image"
@@ -41,7 +41,7 @@ const Section4a = ({ data }) => {
               />
             </div>
           )}
-          <div className="w-full lg:w-2/3 text-center lg:text-left">
+          <div className="w-full lg:w-2/3 text-left">
             {/* Primary Headline Start */}
             <div className="block">
               {section4aHeadline && <h2>{section4aHeadline}</h2>}
@@ -75,7 +75,7 @@ const Section4a = ({ data }) => {
           </div>
         </div>
         {section4aLineBreak && (
-            <div className="block border-b border-lightPrimary pt-12"></div>
+            <div className="hidden md:block border-b border-lightPrimary pt-12"></div>
         )}
       </div>
     </section>
