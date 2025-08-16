@@ -66,7 +66,7 @@ const Section4a = ({ data }) => {
             {enableCta && ctaButtonText && ctaButtonUrl && (
               <a
                 href={ctaButtonUrl}
-                className="btn-md btn-gradient flex-center w-full min-w-[530px] max-w-[530px]"
+                className="btn-md btn-gradient flex-center w-full min-w-full md:min-w-[530px] max-w-[530px]"
               >
                 {ctaButtonText}
               </a>

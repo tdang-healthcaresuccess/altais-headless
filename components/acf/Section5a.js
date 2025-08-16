@@ -12,12 +12,12 @@ const Section5a = ({ data }) => {
   const { section5aContent, section5aLineBreak } = data;
 
   return (
-    <section className={`template-wrapper ${section5aLineBreak ? "pb-0 pt-6 md:pt-12" : "py-6 md:py-12"}`}>
+    <section className={`template-wrapper ${section5aLineBreak ? "py-0 md:pt-0" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
         <div className={`max-w-full md:max-w-[743px] mx-auto ${section5aLineBreak && "py-6 md:py-12"}`}>
           {section5aContent && (
             <div
-              className="prose dark:prose-invert text-base lg:text-lg"
+              className="prose dark:prose-invert text-base lg:text-lg content-dynamic"
               dangerouslySetInnerHTML={{ __html: section5aContent }}
             />
           )}

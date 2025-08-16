@@ -403,6 +403,12 @@ button {
 /* .primary-menu:hover+ ul{
   display: block;
 } */
+.content-dynamic p:first-child{
+  padding-bottom: auto;
+}
+.content-dynamic p:last-child{
+  padding-bottom: 0px;
+}
 
 @media screen and (max-width: 981px) {
   .template-wrapper.list2 ul {
