@@ -9,10 +9,8 @@ const BlogPostCard = ({ post }) => {
   const truncateText = (text, limit) => {
     if (!text) return '';
 
-    // Create a temporary element to strip HTML tags
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = text;
-    const plainText = tempDiv.textContent || tempDiv.innerText || '';
+  // Strip HTML tags using regex (SSR-safe)
+  const plainText = text.replace(/<[^>]+>/g, '');
 
     if (plainText.length <= limit) {
       return plainText;
