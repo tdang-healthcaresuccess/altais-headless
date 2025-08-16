@@ -31,7 +31,7 @@ const Section4a = ({ data }) => {
   return (
     <section className={`template-wrapper ${section4aLineBreak ? "pb-0 pt-6 md:pt-12" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-[74px]">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-[74px]">
           {imageUrl && (
             <div className="w-full md:w-[425px] flex-shrink-0 mb-8 lg:mb-0">
               <img
