@@ -386,13 +386,7 @@ button {
   @apply pl-5 pb-6;
 }
 .template-wrapper ul li {
-  @apply text-grey3d text-lg leading-[32px] list-disc;
-}
-.template-wrapper.list2 ul {
-  /* @apply flex flex-wrap list-inside; */
-}
-.template-wrapper.list2 ul li {
-  @apply w-full lg:w-1/2 list-outside;
+  @apply text-grey3d text-lg leading-[32px] w-full list-disc list-outside;
 }
 .template-wrapper a {
   @apply text-lg leading-[32px] text-secondary hover:text-bluePrimary;
