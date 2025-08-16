@@ -42,12 +42,15 @@ const Card = ({ cardData }) => {
     [cardContent]
   );
 
-  // Get first 350 words
   const truncatedContent = useMemo(() => {
     if (!decodedContent) return "";
     const words = decodedContent.split(/\s+/);
-    return words.slice(0, 350).join(" ") + (words.length > 350 ? "..." : "");
+    return words.length > 350
+      ? words.slice(0, 350).join(" ") + "..."
+      : decodedContent;
   }, [decodedContent]);
+
+  console.log(truncatedContent);
 
   return (
     <div className="rounded-normal h-full flex flex-col">
@@ -70,12 +73,15 @@ const Card = ({ cardData }) => {
         {/* Only show content if expanded, otherwise just headline and button */}
         {cardContentCollapse ? (
           <>
-            {isExpanded && cardContent && (
-              <div
-                className="block"
-                dangerouslySetInnerHTML={{ __html: decodedContent }}
-              />
-            )}
+            {/* Content */}
+            <div
+              className="block"
+              dangerouslySetInnerHTML={{
+                __html: isExpanded ? decodedContent : truncatedContent,
+              }}
+            />
+
+            {/* Expand / Collapse Button */}
             <div className="block line-break pt-3 border-t border-lightPrimary">
               <button
                 type="button"
@@ -83,11 +89,11 @@ const Card = ({ cardData }) => {
                 className="btn-link-secondary"
               >
                 {isExpanded ? (
-                  <span className="flex gap-1 collapse">
+                  <span className="flex gap-1">
                     Collapse <Minus size={18} />
                   </span>
                 ) : (
-                  <span className="flex gap-1 expand">
+                  <span className="flex gap-1">
                     Expand <Plus size={18} />
                   </span>
                 )}
@@ -103,7 +109,6 @@ const Card = ({ cardData }) => {
           )
         )}
       </div>
-     
     </div>
   );
 }; /**
@@ -121,7 +126,7 @@ const Section3a = ({ data }) => {
   // Use columnSelection to set grid columns
   // const columnSelection = data.section3aCards[0]?.columnSelection || 2;
   // const gridColumns = columnSelection === 3 || "3 Column" ? "grid-cols-3" : "grid-cols-2";
-  
+
   return (
     <section className="template-wrapper list2 py-6 md:py-12">
       <div className="container mx-auto">
@@ -135,14 +140,9 @@ const Section3a = ({ data }) => {
           className="grid gap-8 grid-cols-1 md:grid-cols-2"
         >
           {data?.section3aCards.map((card, index) => (
-            <Card
-              key={index}
-              cardData={card}
-            />
+            <Card key={index} cardData={card} />
           ))}
         </div>
-
-        
       </div>
     </section>
   );
