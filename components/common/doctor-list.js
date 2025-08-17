@@ -50,7 +50,7 @@ export default function DocSearchList({
                 className={
                   activeLayout === "grid"
                     ? "block border border-lightPrimary rounded-normal w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]"
-                    : "block border border-lightPrimary rounded-normal min-w-[200px] md:min-w-[200px] h-[200px] w-[200px]"
+                    : "block border border-lightPrimary rounded-normal min-w-[118px] md:min-w-[200px] h-[124px] w-[200px]"
                 }
               >
                 <img
@@ -59,7 +59,7 @@ export default function DocSearchList({
                   className={
                     activeLayout === "grid"
                       ? "rounded-normal w-full h-full object-cover"
-                      : "rounded-normal !w-[200px] !h-[200px] object-cover"
+                      : "rounded-normal w-[118px] md:w-[200px] h-[124px] md:h-[200px] object-cover"
                   }
                 />
               </div>
@@ -75,7 +75,7 @@ export default function DocSearchList({
                   </h3>
                 </div>
                 <div
-                  className={activeLayout === "grid" ? "block" : "flex gap-4"}
+                  className={activeLayout === "grid" ? "block" : "block md:flex gap-4"}
                 >
                   <div className="block flex-1">
                     <p

@@ -394,6 +394,12 @@ button {
 .primary-menu:hover svg{
   stroke: #c75327;
 }
+.btn-filter{
+    @apply hover:text-white hover:bg-primary;
+}
+.btn-filter:hover svg path{
+    stroke: #fff;
+}
 /* .primary-menu:hover+ ul{
   display: block;
 } */

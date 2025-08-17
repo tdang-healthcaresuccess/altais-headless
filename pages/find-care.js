@@ -5,6 +5,7 @@ import DocSearchForm from "components/find-doc/search-form";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
 import DocSearchList from "@/components/common/doctor-list";
 import { dummyDoctors, specialitiesList } from "../components/DummyData";
+import { FilterMobile } from "@/public/icons/filter-mobile";
 
 export async function getServerSideProps(context) {
   const DOCTORS_PER_PAGE = 10;
@@ -120,7 +121,7 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
-        <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px] px-6 md:px-0">
+        <div className="block gap-[70px] pb-[155px] pt-6 md:pt-10">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
               <div className="block w-full md:w-[calc(30%-16px)] lg:w-[calc(25%-35px)]">
@@ -140,8 +141,9 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                 <div className="block md:hidden">
                   <button
                     type="button"
-                    className="btn-md flex-center btn-normal gap-3 w-full"
+                    className="btn-md flex-center btn-normal btn-filter gap-3 w-full"
                   >
+                    <FilterMobile />
                     Apply Filter and Sort
                   </button>
                 </div>
@@ -156,7 +158,7 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                   <div className="flex justify-end w-full mt-4">
                     <ul className="flex gap-3">
                       <li
-                        className={`pagination-li pag-action ${page === 1 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                        className={`pagination-li pag-action ${page === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
                       >
                         <a
                           href={page > 1 ? `/find-care?page=${page - 1}` : "#"}
@@ -190,7 +192,7 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                         ));
                       })()}
                       <li
-                        className={`pagination-li pag-action ${page === totalPages ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                        className={`pagination-li pag-action ${page === totalPages ? "hidden" : "cursor-pointer"}`}
                       >
                         <a
                           href={page < totalPages ? `/find-care?page=${page + 1}` : "#"}
