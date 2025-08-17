@@ -1,149 +1,122 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Layout from "@/components/Layout";
+import InnerPageBanner from "@/components/common/inner-page-banner";
 import DocSearchForm from "components/find-doc/search-form";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
 import DocSearchList from "@/components/common/doctor-list";
-import { dummyDoctors, specialitiesList } from "components/DummyData";
-import InnerPageBanner from "@/components/common/inner-page-banner";
-import Layout from "@/components/Layout";
-export default function FindDoctor() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
-  const [practiceNameQuery, setPracticeNameQuery] = useState(""); // Added practiceNameQuery
-  const [specialityFilter, setSpecialityFilter] = useState("");
-  const [genderFilter, setGenderFilter] = useState([]);
-  const [educationFilter, setEducationFilter] = useState([]);
-  const [insuranceFilter, setInsuranceFilter] = useState([]);
-  const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
-  const [activeLayout, setActiveLayout] = useState("list"); // 'list' or 'grid'
+import { dummyDoctors, specialitiesList } from "../components/DummyData";
 
-  // Function to reset all filters
-  const clearAllFilters = () => {
-    setSearchQuery("");
-    setLocationQuery("");
-    setPracticeNameQuery("");
-    setSpecialityFilter("");
-    setGenderFilter([]);
-    setEducationFilter([]);
-    setInsuranceFilter([]);
+export async function getServerSideProps(context) {
+  const DOCTORS_PER_PAGE = 10;
+  const page = parseInt(context.query.page) || 1;
+
+  // Read filters from query
+  const searchQuery = context.query.doctorName || "";
+  const locationQuery = context.query.zipCode || "";
+  const practiceNameQuery = context.query.practiceName || "";
+  const specialityFilter = context.query.specialty || "";
+  const genderFilter = context.query.gender ? [].concat(context.query.gender) : [];
+  const educationFilter = context.query.education ? [].concat(context.query.education) : [];
+  const insuranceFilter = context.query.insurance ? [].concat(context.query.insurance) : [];
+
+  // Filtering logic (SSR)
+  let filtered = dummyDoctors;
+  if (searchQuery) {
+    filtered = filtered.filter((doc) =>
+      doc.node.doctorData.doctorsName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+    );
+  }
+  if (practiceNameQuery) {
+    filtered = filtered.filter((doc) =>
+      doc.node.doctorData.practiceName
+        .toLowerCase()
+        .includes(practiceNameQuery.toLowerCase())
+    );
+  }
+  if (locationQuery) {
+    const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
+    const queryWords = query.split(' ');
+    filtered = filtered.filter((doc) => {
+      const data = doc.node.doctorData;
+      const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
+        .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
+      return fields.some(field =>
+        queryWords.every(word => field.includes(word))
+      );
+    });
+  }
+  if (specialityFilter) {
+    filtered = filtered.filter((doc) =>
+      doc.node.doctorData.speciality
+        .toLowerCase()
+        .includes(specialityFilter.toLowerCase())
+    );
+  }
+  if (genderFilter.length > 0) {
+    filtered = filtered.filter((doc) =>
+      genderFilter.includes(doc.node.doctorData.sex)
+    );
+  }
+  if (educationFilter.length > 0) {
+    filtered = filtered.filter((doc) =>
+      educationFilter.includes(doc.node.doctorData.medicalSchool)
+    );
+  }
+  if (insuranceFilter.length > 0) {
+    filtered = filtered.filter((doc) => {
+      const ins = doc.node.doctorData.acceptedInsurance;
+      if (Array.isArray(ins)) {
+        return ins.some((i) => insuranceFilter.includes(i));
+      } else if (typeof ins === "string") {
+        return insuranceFilter.includes(ins);
+      }
+      return false;
+    });
+  }
+
+  // Pagination
+  const total = filtered.length;
+  const start = (page - 1) * DOCTORS_PER_PAGE;
+  const end = start + DOCTORS_PER_PAGE;
+  const paginatedDoctors = filtered.slice(start, end);
+
+  return {
+    props: {
+      doctors: paginatedDoctors,
+      page,
+      total,
+      totalPages: Math.ceil(total / DOCTORS_PER_PAGE),
+      filters: {
+        searchQuery,
+        locationQuery,
+        practiceNameQuery,
+        specialityFilter,
+        genderFilter,
+        educationFilter,
+        insuranceFilter,
+      },
+    },
   };
+}
 
-  // Effect to read search parameters from the URL on initial load
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const doctorNameParam = params.get("doctorName");
-    const zipCodeParam = params.get("zipCode");
-    const practiceNameParam = params.get("practiceName");
-    const specialtyParam = params.get("specialty");
-
-    // Update state only if a parameter exists in the URL
-    if (doctorNameParam) setSearchQuery(doctorNameParam);
-    if (zipCodeParam) setLocationQuery(zipCodeParam);
-    if (practiceNameParam) setPracticeNameQuery(practiceNameParam);
-    if (specialtyParam) setSpecialityFilter(specialtyParam);
-  }, []);
-
-  useEffect(() => {
-    const filterDoctors = () => {
-      let filtered = dummyDoctors;
-
-      // Filter by search query (doctor name)
-      if (searchQuery) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.doctorsName
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-        );
-      }
-
-      // Filter by practice name query
-      if (practiceNameQuery) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.practiceName
-            .toLowerCase()
-            .includes(practiceNameQuery.toLowerCase())
-        );
-      }
-
-      // Filter by location query (zip code)
-      if (locationQuery) {
-        // Normalize whitespace and split query into words
-        const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
-        const queryWords = query.split(' ');
-        filtered = filtered.filter((doc) => {
-          const data = doc.node.doctorData;
-          const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
-            .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
-          // Match if any field contains all query words
-          return fields.some(field =>
-            queryWords.every(word => field.includes(word))
-          );
-        });
-      }
-
-      // Filter by specialty
-      if (specialityFilter) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.speciality
-            .toLowerCase()
-            .includes(specialityFilter.toLowerCase())
-        );
-      }
-
-      // Filter by gender
-      if (genderFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
-          genderFilter.includes(doc.node.doctorData.sex)
-        );
-      }
-
-      // Filter by education
-      if (educationFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
-          educationFilter.includes(doc.node.doctorData.medicalSchool)
-        );
-      }
-
-      // Filter by insurance
-      if (insuranceFilter.length > 0) {
-        filtered = filtered.filter((doc) => {
-          const ins = doc.node.doctorData.acceptedInsurance;
-          if (Array.isArray(ins)) {
-            return ins.some((i) => insuranceFilter.includes(i));
-          } else if (typeof ins === "string") {
-            return insuranceFilter.includes(ins);
-          }
-          return false;
-        });
-      }
-
-      setFilteredDoctors(filtered);
-    };
-
-    filterDoctors();
-  }, [
-    searchQuery,
-    locationQuery,
-    practiceNameQuery,
-    specialityFilter,
-    genderFilter,
-    educationFilter,
-    insuranceFilter,
-  ]);
+export default function FindCare({ doctors, page, total, totalPages, filters }) {
+  const [activeLayout, setActiveLayout] = React.useState("list");
 
   return (
     <Layout>
       <div className="block">
-        {/* Inner Page Banner start */}
         <InnerPageBanner
           DesktopBanner="bg-findDoc-landing-banner"
           MobileBanner="bg-findDoc-landing-banner-mobile"
           heading="Find a Doctor"
         />
         <DocSearchForm
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          locationQuery={locationQuery}
-          setLocationQuery={setLocationQuery}
+          searchQuery={filters.searchQuery}
+          setSearchQuery={() => {}}
+          locationQuery={filters.locationQuery}
+          setLocationQuery={() => {}}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
@@ -153,15 +126,15 @@ export default function FindDoctor() {
               <div className="block w-full md:w-[calc(30%-16px)] lg:w-[calc(25%-35px)]">
                 <div className="hidden md:block">
                   <DocSearchFilterSidebar
-                    specialityFilter={specialityFilter}
-                    setSpecialityFilter={setSpecialityFilter}
-                    genderFilter={genderFilter}
-                    setGenderFilter={setGenderFilter}
-                    educationFilter={educationFilter}
-                    setEducationFilter={setEducationFilter}
-                    insuranceFilter={insuranceFilter}
-                    setInsuranceFilter={setInsuranceFilter}
-                    clearAllFilters={clearAllFilters}
+                    specialityFilter={filters.specialityFilter}
+                    setSpecialityFilter={() => {}}
+                    genderFilter={filters.genderFilter}
+                    setGenderFilter={() => {}}
+                    educationFilter={filters.educationFilter}
+                    setEducationFilter={() => {}}
+                    insuranceFilter={filters.insuranceFilter}
+                    setInsuranceFilter={() => {}}
+                    clearAllFilters={() => {}}
                   />
                 </div>
                 <div className="block md:hidden">
@@ -175,9 +148,64 @@ export default function FindDoctor() {
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
                 <DocSearchList
-                  doctors={filteredDoctors}
+                  doctors={doctors}
                   activeLayout={activeLayout}
                 />
+                {/* Pagination Controls (styled and placed like doctor-list.js) */}
+                {total > 10 && (
+                  <div className="flex justify-end w-full mt-4">
+                    <ul className="flex gap-3">
+                      <li
+                        className={`pagination-li pag-action ${page === 1 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                      >
+                        <a
+                          href={page > 1 ? `/find-care?page=${page - 1}` : "#"}
+                          aria-disabled={page === 1}
+                          className="flex items-center"
+                        >
+                          <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> Previous Page
+                        </a>
+                      </li>
+                      {(() => {
+                        let startPage = Math.max(1, page - 2);
+                        let endPage = Math.min(totalPages, startPage + 3);
+                        if (endPage - startPage < 3) {
+                          startPage = Math.max(1, endPage - 3);
+                        }
+                        return Array.from(
+                          { length: endPage - startPage + 1 },
+                          (_, i) => startPage + i
+                        ).map((p) => (
+                          <li
+                            key={p}
+                            className={`pagination-li ${page === p ? "active" : ""} cursor-pointer`}
+                          >
+                            <a
+                              href={`/find-care?page=${p}`}
+                              className={page === p ? "font-bold text-secondary" : ""}
+                            >
+                              {p}
+                            </a>
+                          </li>
+                        ));
+                      })()}
+                      <li
+                        className={`pagination-li pag-action ${page === totalPages ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                      >
+                        <a
+                          href={page < totalPages ? `/find-care?page=${page + 1}` : "#"}
+                          aria-disabled={page === totalPages}
+                          className="flex items-center"
+                        >
+                          Next Page <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+                <div className="text-center mt-4 text-gray-500">
+                  Showing {doctors.length} of {total} results
+                </div>
               </div>
             </div>
           </div>

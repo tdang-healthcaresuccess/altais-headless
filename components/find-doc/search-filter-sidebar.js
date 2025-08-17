@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Plus, Minus, ChevronDown } from 'lucide-react';
 import { specialitiesList, genderList, educationList, insuranceList }from '../DummyData';
 // Ensure insuranceList is always an array and fallback to [] if not
 const availableInsuranceList = Array.isArray(insuranceList) ? insuranceList : [];
 export default function DocSearchFilterSidebar({
-  specialityFilter, setSpecialityFilter,
-  genderFilter, setGenderFilter,
-  educationFilter, setEducationFilter,
-  insuranceFilter, setInsuranceFilter,
+  specialityFilter,
+  genderFilter,
+  educationFilter,
+  insuranceFilter,
   clearAllFilters
 }) {
+  const router = useRouter();
   const [openIndex, setOpenIndex] = useState(0);
   const [speciality, setSpeciality] = useState(specialityFilter);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
@@ -18,11 +20,15 @@ export default function DocSearchFilterSidebar({
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // Helper to update query params and reload page
+  const updateQuery = (newParams) => {
+    const query = { ...router.query, ...newParams, page: 1 };
+    router.push({ pathname: router.pathname, query });
+  };
+
   const handleSpecialityChange = (event) => {
     const value = event.target.value;
     setSpeciality(value);
-    setSpecialityFilter(value);
-
     if (value) {
       const filteredSuggestions = specialitiesList.filter((s) =>
         s.toLowerCase().includes(value.toLowerCase())
@@ -35,30 +41,42 @@ export default function DocSearchFilterSidebar({
 
   const handleSelectSpeciality = (selectedSpeciality) => {
     setSpeciality(selectedSpeciality);
-    setSpecialityFilter(selectedSpeciality);
     setSpecialitySuggestions([]);
+    updateQuery({ specialty: selectedSpeciality });
   };
 
   const handleGenderChange = (event) => {
     const { value, checked } = event.target;
-    setGenderFilter((prev) =>
-      checked ? [...prev, value] : prev.filter((item) => item !== value)
-    );
+    let newGender = checked
+      ? [...genderFilter, value]
+      : genderFilter.filter((item) => item !== value);
+    updateQuery({ gender: newGender });
   };
 
   const handleEducationChange = (event) => {
     const { value, checked } = event.target;
-    setEducationFilter((prev) =>
-      checked ? [...prev, value] : prev.filter((item) => item !== value)
-    );
+    let newEdu = checked
+      ? [...educationFilter, value]
+      : educationFilter.filter((item) => item !== value);
+    updateQuery({ education: newEdu });
   };
 
   const handleInsuranceChange = (event) => {
     const { value, checked } = event.target;
-    setInsuranceFilter((prev) =>
-      checked ? [...prev, value] : prev.filter((item) => item !== value)
-    );
+    let newIns = checked
+      ? [...insuranceFilter, value]
+      : insuranceFilter.filter((item) => item !== value);
+    updateQuery({ insurance: newIns });
   };
+
+  // Clear handlers
+  const handleClearSpeciality = () => {
+    setSpeciality('');
+    updateQuery({ specialty: '' });
+  };
+  const handleClearGender = () => updateQuery({ gender: [] });
+  const handleClearEducation = () => updateQuery({ education: [] });
+  const handleClearInsurance = () => updateQuery({ insurance: [] });
 
   const accordionItems = [
     {
@@ -92,7 +110,7 @@ export default function DocSearchFilterSidebar({
             </span>
           </div>
           {speciality && (
-            <button onClick={() => { setSpeciality(''); setSpecialityFilter(''); }} className="text-left text-blue-500 underline text-sm mt-2">
+            <button onClick={handleClearSpeciality} className="text-left text-blue-500 underline text-sm mt-2">
               Clear
             </button>
           )}
@@ -120,7 +138,7 @@ export default function DocSearchFilterSidebar({
               </label>
             );
           })}
-          <button onClick={() => setGenderFilter([])} className="text-left text-blue-500 underline text-sm mt-2">
+          <button onClick={handleClearGender} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>
         </div>
@@ -142,7 +160,7 @@ export default function DocSearchFilterSidebar({
               {edu}
             </label>
           ))}
-          <button onClick={() => setEducationFilter([])} className="text-left text-blue-500 underline text-sm mt-2">
+          <button onClick={handleClearEducation} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>
         </div>
@@ -165,7 +183,7 @@ export default function DocSearchFilterSidebar({
             </label>
           ))}
           {console.log(availableInsuranceList)}
-          <button onClick={() => setInsuranceFilter([])} className="text-left text-blue-500 underline text-sm mt-2">
+          <button onClick={handleClearInsurance} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>
         </div>
@@ -176,7 +194,7 @@ export default function DocSearchFilterSidebar({
   return (
     <div className="block relative">
       <button
-        onClick={clearAllFilters}
+        onClick={() => router.push({ pathname: router.pathname })}
         className="btn-md btn-outline-secondary !w-full mb-6 flex-center font-semibold rounded-normal"
       >
         Clear All Filters

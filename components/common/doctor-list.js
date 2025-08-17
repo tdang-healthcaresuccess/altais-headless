@@ -150,53 +150,6 @@ export default function DocSearchList({
         </div>
       )}
 
-      {/* Pagination */}
-      {validDoctors.length > doctorsPerPage && (
-        <div className="flex justify-end w-full mt-4">
-          <ul className="flex gap-3">
-            <li
-              className={`pagination-li pag-action ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-              onClick={() =>
-                handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
-              }
-            >
-              <ChevronLeft className="w-[20px] h-[20px] text-secondary" />{" "}
-              Previous Page
-            </li>
-            {(() => {
-              // Calculate start and end page for pagination window
-              let startPage = Math.max(1, currentPage - 2);
-              let endPage = Math.min(totalPages, startPage + 3);
-              if (endPage - startPage < 3) {
-                startPage = Math.max(1, endPage - 3);
-              }
-              return Array.from(
-                { length: endPage - startPage + 1 },
-                (_, i) => startPage + i
-              ).map((page) => (
-                <li
-                  key={page}
-                  className={`pagination-li ${currentPage === page ? "active" : ""} cursor-pointer`}
-                  onClick={() => handlePageChange(page)}
-                >
-                  {page}
-                </li>
-              ));
-            })()}
-            <li
-              className={`pagination-li pag-action ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-              onClick={() =>
-                handlePageChange(
-                  currentPage < totalPages ? currentPage + 1 : totalPages
-                )
-              }
-            >
-              Next Page{" "}
-              <ChevronRight className="w-[20px] h-[20px] text-secondary" />
-            </li>
-          </ul>
-        </div>
-      )}
     </div>
   );
 }
