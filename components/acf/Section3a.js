@@ -42,12 +42,11 @@ const Card = ({ cardData }) => {
     [cardContent]
   );
 
+  // Show only the first <p> when collapsed
   const truncatedContent = useMemo(() => {
     if (!decodedContent) return "";
-    const words = decodedContent.split(/\s+/);
-    return words.length > 350
-      ? words.slice(0, 350).join(" ") + "..."
-      : decodedContent;
+    const match = decodedContent.match(/<p[^>]*>.*?<\/p>/i);
+    return match ? match[0] : decodedContent;
   }, [decodedContent]);
 
   console.log(truncatedContent);
@@ -70,18 +69,15 @@ const Card = ({ cardData }) => {
         ) : (
           <> {cardHeadline && <h3>{cardHeadline}</h3>}</>
         )}
-        {/* Only show content if expanded, otherwise just headline and button */}
+        {/* Only show truncated content if collapsed, full content if expanded */}
         {cardContentCollapse ? (
           <>
-            {/* Content */}
             <div
               className="block"
               dangerouslySetInnerHTML={{
                 __html: isExpanded ? decodedContent : truncatedContent,
               }}
             />
-
-            {/* Expand / Collapse Button */}
             <div className="block line-break pt-3 border-t border-lightPrimary">
               <button
                 type="button"
