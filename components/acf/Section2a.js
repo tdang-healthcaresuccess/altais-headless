@@ -28,10 +28,14 @@ const Section2a = ({ data }) => {
         </div>
       )}
       <div className="container mx-auto">
-        <div className={`block md:flex justify-start items-start w-full gap-10 ${section2aLineBreak && "pt-12"}`}>
+        <div
+          className={`block md:flex justify-start items-start w-full gap-10 ${section2aLineBreak && "pt-12"}`}
+        >
           {/* Left Column */}
           {headline2a && (
-            <div className="flex justify-center md:justify-start max-w-full md:max-w-[340px] min-w-full md:min-w-[340px]">
+            <div
+              className={`flex justify-center md:justify-start max-w-full min-w-full md:min-w-[340px] ${!content2a ? "md:max-w-full" : "md:max-w-[340px]"}`}
+            >
               <h2 className="flex flex-col text-left w-full">{headline2a}</h2>
             </div>
           )}
@@ -41,9 +45,7 @@ const Section2a = ({ data }) => {
               <div dangerouslySetInnerHTML={{ __html: content2a }} />
             </div>
           ) : (
-            <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l">
-              <div dangerouslySetInnerHTML={{ __html: content2a }} />
-            </div>
+            ""
           )}
         </div>
       </div>
