@@ -130,7 +130,7 @@ export default function DocSearchList({
             </div>
             <div className="flex w-full gap-3 border-t border-lightPrimary pt-3 items-center">
             <a
-              href={`/physicians${doc.node.doctorData.profileurl}`}
+              href={`/physicians${doc.node.doctorData.profileurl}/`}
               className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
             >
               View Profile
