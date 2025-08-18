@@ -37,7 +37,7 @@ export default function LayoutOptions({ activeLayout, setActiveLayout }) {
           )}
         </button>
         {showLayoutGrid && (
-          <div className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-normal">
+          <div className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-8 absolute z-50 bg-white rounded-normal">
             <h4 className="text-lg text-secondary font-medium px-2 py-1.5 border-b border-inputBorder">
               Layout
             </h4>
