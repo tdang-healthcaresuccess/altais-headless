@@ -49,8 +49,8 @@ export default function DocSearchList({
               <div
                 className={
                   activeLayout === "grid"
-                    ? "block border border-lightPrimary rounded-normal w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]"
-                    : "block border border-lightPrimary rounded-normal min-w-[118px] md:min-w-[200px] h-[124px] w-[200px]"
+                    ? "w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]"
+                    : "min-w-[118px] md:min-w-[200px] h-[124px] md:h-[200px]"
                 }
               >
                 <img
@@ -58,8 +58,8 @@ export default function DocSearchList({
                   alt={doc.node.title}
                   className={
                     activeLayout === "grid"
-                      ? "rounded-normal w-full h-full object-cover"
-                      : "rounded-normal w-[118px] md:w-[200px] h-[124px] md:h-[200px] object-cover"
+                      ? "border border-lightPrimary rounded-normal w-full h-full object-cover"
+                      : "border border-lightPrimary rounded-normal w-full h-full object-cover"
                   }
                 />
               </div>
@@ -81,7 +81,7 @@ export default function DocSearchList({
                     <p
                       className={
                         activeLayout === "grid"
-                          ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
+                          ? "text-primary text-xs font-semibold pb-1"
                           : "text-primary text-base font-semibold pb-1"
                       }
                     >
@@ -90,7 +90,7 @@ export default function DocSearchList({
                     <p
                       className={
                         activeLayout === "grid"
-                          ? "text-grey3d text-[10px] pb-2 leading-[20px]"
+                          ? "text-grey3d text-xs pb-2"
                           : "text-grey3d text-base pb-2"
                       }
                     >
@@ -105,7 +105,7 @@ export default function DocSearchList({
                     <p
                       className={
                         activeLayout === "grid"
-                          ? "text-primary text-[10px] font-semibold pb-1 leading-[20px]"
+                          ? "text-primary text-xs font-semibold pb-1"
                           : "text-primary text-base font-semibold pb-1"
                       }
                     >
@@ -114,7 +114,7 @@ export default function DocSearchList({
                     <p
                       className={
                         activeLayout === "grid"
-                          ? "text-grey3d text-[10px] pb-2 leading-[20px]"
+                          ? "text-grey3d text-xs pb-2"
                           : "text-grey3d text-base pb-2"
                       }
                     >
