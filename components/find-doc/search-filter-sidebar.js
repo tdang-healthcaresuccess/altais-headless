@@ -193,12 +193,7 @@ export default function DocSearchFilterSidebar({
 
   return (
     <div className="block relative">
-      <button
-        onClick={() => router.push({ pathname: router.pathname })}
-        className="btn-md btn-outline-secondary !w-full mb-6 flex-center font-semibold rounded-normal"
-      >
-        Clear All Filters
-      </button>
+  {/* Clear All Filters button moved to find-care.js */}
       {accordionItems.map((item, index) => (
         <div key={index} className="pb-3">
           <button
