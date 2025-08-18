@@ -38,7 +38,7 @@ const MenuItem = ({ item, router }) => {
   );
 };
 
-export default function Header({ siteTitle, siteDescription }) {
+export default function Header({ siteTitle, siteDescription, metaD }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,14 +83,20 @@ export default function Header({ siteTitle, siteDescription }) {
 
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || [];
 
+  // Determine meta title and description
+  const metaTitle = metaD && metaD.titleTag ? metaD.titleTag : siteTitle;
+  const metaDescription =
+    metaD && metaD.metaDescription
+      ? metaD.metaDescription
+      : siteDescription
+      ? siteDescription
+      : "";
+
   return (
     <>
       <Head>
-        <title>{siteTitle}</title>
-        <meta
-          name="description"
-          content={siteDescription ? siteDescription : ""}
-        />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
       </Head>
       <header className="block py-4 lg:py-0 relative">
