@@ -151,7 +151,7 @@ export default function CounterCondition() {
               </div>
             </div>
             <div className="block w-full lg:w-[30%] order-3 lg:order-3 pb-12 lg:pb-0">
-              <ul className="pl-7 md:pl-0 lg:pl-7">
+              <ul className="pl-7 md:pl-0 lg:pl-7 pt-4 md:pt-0">
                 <li>
                   <Link href="/blog" className="list-items1 btn-link-secondary">
                     <ChevronRight className="w-[20px] h-[20px]" />

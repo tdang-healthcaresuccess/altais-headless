@@ -17,9 +17,15 @@ export async function getServerSideProps(context) {
   const locationQuery = context.query.zipCode || "";
   const practiceNameQuery = context.query.practiceName || "";
   const specialityFilter = context.query.specialty || "";
-  const genderFilter = context.query.gender ? [].concat(context.query.gender) : [];
-  const educationFilter = context.query.education ? [].concat(context.query.education) : [];
-  const insuranceFilter = context.query.insurance ? [].concat(context.query.insurance) : [];
+  const genderFilter = context.query.gender
+    ? [].concat(context.query.gender)
+    : [];
+  const educationFilter = context.query.education
+    ? [].concat(context.query.education)
+    : [];
+  const insuranceFilter = context.query.insurance
+    ? [].concat(context.query.insurance)
+    : [];
 
   // Filtering logic (SSR)
   let filtered = dummyDoctors;
@@ -38,14 +44,19 @@ export async function getServerSideProps(context) {
     );
   }
   if (locationQuery) {
-    const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
-    const queryWords = query.split(' ');
+    const query = locationQuery.toLowerCase().replace(/\s+/g, " ").trim();
+    const queryWords = query.split(" ");
     filtered = filtered.filter((doc) => {
       const data = doc.node.doctorData;
-      const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
-        .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
-      return fields.some(field =>
-        queryWords.every(word => field.includes(word))
+      const fields = [
+        data.address,
+        data.city,
+        data.addressCity,
+        data.state,
+        data.zipcode,
+      ].map((f) => (f ? f.toLowerCase().replace(/\s+/g, " ").trim() : ""));
+      return fields.some((field) =>
+        queryWords.every((word) => field.includes(word))
       );
     });
   }
@@ -105,7 +116,13 @@ export async function getServerSideProps(context) {
 
 import { useRouter } from "next/router";
 
-export default function FindCare({ doctors, page, total, totalPages, filters }) {
+export default function FindCare({
+  doctors,
+  page,
+  total,
+  totalPages,
+  filters,
+}) {
   const [activeLayout, setActiveLayout] = React.useState("list");
   const router = useRouter();
 
@@ -134,27 +151,36 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
         <DocSearchForm
           searchQuery={filters.searchQuery}
           locationQuery={filters.locationQuery}
-          setSearchQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
-          setLocationQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
+          setSearchQuery={(searchValue, locationValue) =>
+            handleSearch(searchValue, locationValue)
+          }
+          setLocationQuery={(searchValue, locationValue) =>
+            handleSearch(searchValue, locationValue)
+          }
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
         {/* Results Count, Clear All Filters Link, and LayoutOptions */}
-        <div className="block container mx-auto mt-4 mb-4">
-          <div className="flex items-center justify-between">
-            <span className="text-gray-500 text-base">
-              Showing {doctors.length} of {total} results
-            </span>
-            <span
-              onClick={() => router.push({ pathname: router.pathname })}
-              className="text-bluePrimary text-sm underline cursor-pointer ml-4"
-              role="button"
-              tabIndex={0}
-            >
-              Clear All Filters
-            </span>
+        <div className="container mx-auto">
+          <div className="flex justify-between gap-10 pt-9 pb-6 border-b border-lightPrimary">
+            <div className="flex flex-col gap-2">
+              <span className="text-bluePrimary text-sm">
+                Showing {doctors.length} of {total} results
+              </span>
+              <span
+                onClick={() => router.push({ pathname: router.pathname })}
+                className="text-bluePrimary font-medium text-sm cursor-pointer"
+                role="button"
+                tabIndex={0}
+              >
+                Clear All Filters
+              </span>
+            </div>
+            <LayoutOptions
+              activeLayout={activeLayout}
+              setActiveLayout={setActiveLayout}
+            />
           </div>
-          <LayoutOptions activeLayout={activeLayout} setActiveLayout={setActiveLayout} />
         </div>
         <div className="block gap-[70px] pb-[155px] pt-6 md:pt-10">
           <div className="container mx-auto">
@@ -183,10 +209,7 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                 </div>
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
-                <DocSearchList
-                  doctors={doctors}
-                  activeLayout={activeLayout}
-                />
+                <DocSearchList doctors={doctors} activeLayout={activeLayout} />
                 {/* Pagination Controls (styled and placed like doctor-list.js) */}
                 {total > 10 && (
                   <div className="flex justify-end w-full mt-4">
@@ -199,7 +222,20 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                           aria-disabled={page === 1}
                           className="flex items-center"
                         >
-                          <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> Previous Page
+                          <svg
+                            className="w-[20px] h-[20px] text-secondary"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M15 19l-7-7 7-7"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>{" "}
+                          Previous Page
                         </a>
                       </li>
                       {(() => {
@@ -218,7 +254,9 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                           >
                             <a
                               href={`/find-care?page=${p}`}
-                              className={page === p ? "font-bold text-secondary" : ""}
+                              className={
+                                page === p ? "font-bold text-secondary" : ""
+                              }
                             >
                               {p}
                             </a>
@@ -229,11 +267,28 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                         className={`pagination-li pag-action ${page === totalPages ? "hidden" : "cursor-pointer"}`}
                       >
                         <a
-                          href={page < totalPages ? `/find-care?page=${page + 1}` : "#"}
+                          href={
+                            page < totalPages
+                              ? `/find-care?page=${page + 1}`
+                              : "#"
+                          }
                           aria-disabled={page === totalPages}
                           className="flex items-center"
                         >
-                          Next Page <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          Next Page{" "}
+                          <svg
+                            className="w-[20px] h-[20px] text-secondary"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M9 5l7 7-7 7"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
                         </a>
                       </li>
                     </ul>
