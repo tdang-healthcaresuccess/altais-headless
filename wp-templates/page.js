@@ -52,6 +52,7 @@ const PAGE_QUERY = gql`
             section2aLineBreak
             sectionBackgroundColor
             fieldGroupName
+            wrapUpList
           }
           ... on ContentTemplatesTemplateASection3aLayout {
             fieldGroupName

@@ -14,7 +14,7 @@ import React from "react";
 const Section2a = ({ data }) => {
   if (!data) return null;
 
-  const { headline2a, content2a, sectionBackgroundColor, section2aLineBreak } =
+  const { headline2a, content2a, sectionBackgroundColor, section2aLineBreak, wrapUpList } =
     data;
 
   return (
