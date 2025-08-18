@@ -61,7 +61,7 @@ export default function Footer() {
                       <span className="font-normal">For</span> Providers
                     </Link>
                     <Link
-                      href="/for-partners"
+                      href="/for-partners/"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Partners
@@ -78,7 +78,7 @@ export default function Footer() {
                   <ul className="flex flex-col gap-5">
                     <li>
                       <Link
-                        href="/about"
+                        href="/about/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         About
@@ -86,7 +86,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/resources"
+                        href="/resources/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Resources
@@ -94,7 +94,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/contact"
+                        href="/terms-of-use/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Contact Us

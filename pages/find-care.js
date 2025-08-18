@@ -189,13 +189,9 @@ export default function FindCare({
                 <div className="hidden md:block">
                   <DocSearchFilterSidebar
                     specialityFilter={filters.specialityFilter}
-                    setSpecialityFilter={() => {}}
                     genderFilter={filters.genderFilter}
-                    setGenderFilter={() => {}}
                     educationFilter={filters.educationFilter}
-                    setEducationFilter={() => {}}
                     insuranceFilter={filters.insuranceFilter}
-                    setInsuranceFilter={() => {}}
                   />
                 </div>
                 <div className="block md:hidden">
