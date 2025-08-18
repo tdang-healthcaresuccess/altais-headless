@@ -420,3 +420,16 @@ button {
 .content-typography p {
   @apply pb-6 text-grey3d text-lg !leading-[32px];
 }
+.wrap-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: none;
+}
+@media (max-width: 1024px) {
+  .wrap-list ul{
+    flex-direction: column;
+  }
+}
+.wrap-list ul li {
+  width: 50%;
+}
