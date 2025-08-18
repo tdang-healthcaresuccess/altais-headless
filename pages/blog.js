@@ -14,9 +14,8 @@ const GET_POSTS_QUERY = gql`
     posts(first: $first, after: $after) {
       pageInfo {
         hasNextPage
-        endCursor
         hasPreviousPage
-        startCursor
+        endCursor
       }
       nodes {
         id
@@ -37,7 +36,27 @@ const GET_POSTS_QUERY = gql`
 export async function getServerSideProps(context) {
   const POSTS_PER_PAGE = 4;
   const page = parseInt(context.query.page) || 1;
-  const after = context.query.after || null;
+  let after = null;
+
+  // If not first page, fetch cursors up to the requested page
+  if (page > 1) {
+    const apolloClient = initializeApollo();
+    const { data: allData } = await apolloClient.query({
+      query: gql`
+        query GetCursors($first: Int!) {
+          posts(first: $first) {
+            pageInfo {
+              endCursor
+            }
+          }
+        }
+      `,
+      variables: {
+        first: POSTS_PER_PAGE * (page - 1),
+      },
+    });
+    after = allData.posts.pageInfo.endCursor;
+  }
 
   const apolloClient = initializeApollo();
   const { data } = await apolloClient.query({
@@ -53,12 +72,11 @@ export async function getServerSideProps(context) {
       posts: data.posts.nodes,
       pageInfo: data.posts.pageInfo,
       page,
-      after: data.posts.pageInfo.endCursor || null,
     },
   };
 }
 
-export default function Blog({ posts, pageInfo, page, after }) {
+export default function Blog({ posts, pageInfo, page }) {
   return (
     <Layout>
       <Head>
@@ -86,7 +104,7 @@ export default function Blog({ posts, pageInfo, page, after }) {
               )}
               {pageInfo?.hasNextPage && (
                 <a
-                  href={`/blog?page=${page + 1}&after=${pageInfo.endCursor}`}
+                  href={`/blog?page=${page + 1}`}
                   className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-full shadow-sm bg-white hover:bg-gray-100 transition-colors flex items-center"
                 >
                   Next
