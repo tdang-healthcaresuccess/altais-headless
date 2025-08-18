@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import DocSearchForm from "components/find-doc/search-form";
+import LayoutOptions from "@/components/common/LayoutOptions";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
 import DocSearchList from "@/components/common/doctor-list";
 import { dummyDoctors, specialitiesList } from "../components/DummyData";
@@ -102,8 +103,25 @@ export async function getServerSideProps(context) {
   };
 }
 
+import { useRouter } from "next/router";
+
 export default function FindCare({ doctors, page, total, totalPages, filters }) {
   const [activeLayout, setActiveLayout] = React.useState("list");
+  const router = useRouter();
+
+  // SSR-compatible handlers for input fields
+  // Unified search trigger: always include both fields in query
+  const handleSearch = (searchValue, locationValue) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        doctorName: searchValue || "",
+        zipCode: locationValue || "",
+        page: 1,
+      },
+    });
+  };
 
   return (
     <Layout>
@@ -115,12 +133,29 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
         />
         <DocSearchForm
           searchQuery={filters.searchQuery}
-          setSearchQuery={() => {}}
           locationQuery={filters.locationQuery}
-          setLocationQuery={() => {}}
+          setSearchQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
+          setLocationQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
+        {/* Results Count, Clear All Filters Link, and LayoutOptions */}
+        <div className="block container mx-auto mt-4 mb-4">
+          <div className="flex items-center justify-between">
+            <span className="text-gray-500 text-base">
+              Showing {doctors.length} of {total} results
+            </span>
+            <span
+              onClick={() => router.push({ pathname: router.pathname })}
+              className="text-bluePrimary text-sm underline cursor-pointer ml-4"
+              role="button"
+              tabIndex={0}
+            >
+              Clear All Filters
+            </span>
+          </div>
+          <LayoutOptions activeLayout={activeLayout} setActiveLayout={setActiveLayout} />
+        </div>
         <div className="block gap-[70px] pb-[155px] pt-6 md:pt-10">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
@@ -135,7 +170,6 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                     setEducationFilter={() => {}}
                     insuranceFilter={filters.insuranceFilter}
                     setInsuranceFilter={() => {}}
-                    clearAllFilters={() => {}}
                   />
                 </div>
                 <div className="block md:hidden">
@@ -205,9 +239,7 @@ export default function FindCare({ doctors, page, total, totalPages, filters }) 
                     </ul>
                   </div>
                 )}
-                <div className="text-center mt-4 text-gray-500">
-                  Showing {doctors.length} of {total} results
-                </div>
+                {/* Results count moved above Clear All Filters */}
               </div>
             </div>
           </div>

@@ -26,6 +26,17 @@ export default function DocSearchForm({
 }) {
   const [showLayoutGrid, setShowLayoutGrid] = useState(false);
   const LayoutRef = useRef(null);
+  // Local state for input fields
+  const [localSearch, setLocalSearch] = useState(searchQuery || "");
+  const [localLocation, setLocalLocation] = useState(locationQuery || "");
+
+  // Keep local state in sync with props after SSR search
+  useEffect(() => {
+    setLocalSearch(searchQuery || "");
+  }, [searchQuery]);
+  useEffect(() => {
+    setLocalLocation(locationQuery || "");
+  }, [locationQuery]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -75,8 +86,13 @@ export default function DocSearchForm({
                 type="text"
                 placeholder="City, State or Zip Code"
                 className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
-                value={locationQuery}
-                onChange={(e) => setLocationQuery(e.target.value)}
+                value={localLocation}
+                onChange={(e) => setLocalLocation(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(localSearch, localLocation);
+                  }
+                }}
               />
             </div>
           </div>
@@ -91,74 +107,30 @@ export default function DocSearchForm({
                 type="text"
                 placeholder="Doctor, hospital, conditions, or specialty..."
                 className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(localSearch, localLocation);
+                  }
+                }}
               />
             </div>
           </div>
-          <div className="hidden md:block grid-options">
-            <div className="relative" ref={LayoutRef}>
-              <button
-                type="button"
-                className="hidden md:flex btn-md flex-center btn-normal-icon gap-3 w-full sm:w-auto"
-                onClick={() => setShowLayoutGrid(!showLayoutGrid)}
-              >
-                <span className="flex-1 text-center font-normal"></span>
-                {activeLayout === "grid" ? (
-                  <LayoutGrid color="#C85103" size={28} fill="#C85103" />
-                ) : (
-                  <AlignJustify color="#C85103" size={28} strokeWidth={3} />
-                )}
-              </button>
-              {showLayoutGrid && (
-                <div className="block w-[122px] box-shadow-dark top-[100%] mt-3 right-0 absolute z-50 bg-white rounded-normal">
-                  <h4 className="text-lg text-secondary font-medium px-2 py-1.5 border-b border-inputBorder">
-                    Layout
-                  </h4>
-                  <ul className="block">
-                    <li
-                      className={`flex items-center text-[#083d7880] justify-between cursor-pointer p-2 gap-2 text-base font-normal rounded-lg ${
-                        activeLayout === "grid" ? "bg-greyF5" : ""
-                      }`}
-                      onClick={() => {
-                        setActiveLayout("grid");
-                        setShowLayoutGrid(false);
-                      }}
-                    >
-                      <Check
-                        size={22}
-                        color={
-                          activeLayout === "grid" ? "#083d78" : "transparent"
-                        }
-                        className="mr-3"
-                      />
-                      Grid
-                      <LayoutGrid color="#083d7880" size={26} />
-                    </li>
-                    <li
-                      className={`flex items-center text-[#083d7880] justify-between cursor-pointer p-2 gap-2 text-base font-normal rounded-lg ${
-                        activeLayout === "list" ? "bg-greyF5" : ""
-                      }`}
-                      onClick={() => {
-                        setActiveLayout("list");
-                        setShowLayoutGrid(false);
-                      }}
-                    >
-                      <Check
-                        size={22}
-                        color={
-                          activeLayout === "list" ? "#999795" : "transparent"
-                        }
-                        className="mr-3"
-                      />
-                      List
-                      <AlignJustify color="#083d7880" size={26} />
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
+          {/* Search Button */}
+          <div className="flex items-center">
+            <button
+              type="button"
+              className="btn-md flex-center btn-normal-icon gap-3 w-full sm:w-auto bg-bluePrimary text-white px-4 py-2 rounded"
+              onClick={() => {
+                setSearchQuery(localSearch, localLocation);
+              }}
+            >
+              <Search className="w-5 h-5 mr-2" />
+              Search
+            </button>
           </div>
+          {/* ...grid-options layout moved to LayoutOptions component... */}
         </div>
       </div>
     </section>
