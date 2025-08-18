@@ -6,7 +6,7 @@ import Link from "next/link";
 import BrandLogo from "@/public/media/altais-logo.svg";
 import SearchIcon from "@/public/icons/search-icon-dark.svg";
 import SearchWhiteIcon from "@/public/icons/search-icon-white.svg";
-import { ChevronRight, AlignJustify, X } from "lucide-react";
+import { ChevronRight, AlignJustify, X, ChevronDown } from "lucide-react";
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -136,7 +136,10 @@ export default function Header({ siteTitle, siteDescription }) {
                         {hasChildren && (
                           <ul className="absolute left-0 top-full min-w-[230px] bg-greyF9 rounded-bl-normal box-shadow-custom3 z-50 py-6 hidden group-hover/parent:block">
                             {item.childItems.nodes.map((child1) => (
-                              <li key={child1.id} className="relative group/child">
+                              <li
+                                key={child1.id}
+                                className="relative group/child"
+                              >
                                 <Link
                                   className="py-2 px-6 flex items-center gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary primary-menu"
                                   href={child1.uri}
@@ -219,11 +222,11 @@ export default function Header({ siteTitle, siteDescription }) {
         >
           <div
             ref={menuRef}
-            className={`absolute top-0 right-0 w-[210px] bg-greyF9 pt-8 pb-7 rounded-bl-normal transition-transform duration-500 ease-in-out
+            className={`absolute top-0 right-0 w-[280px] bg-greyF9 pt-8 pb-7 rounded-bl-normal transition-transform duration-500 ease-in-out
                 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
           >
             <nav className="flex flex-col text-sm font-medium text-gray-700">
-              {menuItems.map((item, idx) => {
+              {/* {menuItems.map((item, idx) => {
                 const isActive = router.asPath === item.uri;
                 return (
                   <Link
@@ -245,6 +248,84 @@ export default function Header({ siteTitle, siteDescription }) {
                       item.label
                     )}
                   </Link>
+                );
+              })} */}
+
+              {menuItems.map((item, idx) => {
+                const isActive = router.pathname === item.uri;
+                const hasChildren = item.childItems?.nodes?.length > 0;
+                return (
+                  <li
+                    key={item.id}
+                    className="relative group/parent md:flex list-none align-bottom items-end"
+                  >
+                    <Link
+                      className={`flex justify-between w-full items-center text-sm px-9 py-2.5 leading-[18px] font-semibold  ${
+                        isActive ? "text-secondary" : "text-bluePrimary"
+                      }`}
+                      href={item.uri}
+                    >
+                      {idx < 3 ? (
+                        <>
+                          <div className="flex flex-col">
+                            <span className="font-normal">For</span>{" "}
+                            {item.label}
+                          </div>
+                          {item.childItems?.nodes?.length > 0 && (
+                            <ChevronDown
+                              color="#083D78"
+                              className="w-[20px] h-[20px] text-bluePrimary md:w-[18px] md:h-[18px]"
+                            />
+                          )}
+                        </> 
+                      ) : (
+                        <div className="flex justify-between items-center w-full">
+                          {item.label}
+                          {item.childItems?.nodes?.length > 0 && (
+                            <ChevronDown
+                              color="#083D78"
+                              className="w-[20px] h-[20px] text-bluePrimary md:w-[18px] md:h-[18px]"
+                            />
+                          )}
+                        </div>
+                      )}
+                    </Link>
+                    {hasChildren && (
+                      <ul className="relative md:absolute left-0 top-full min-w-[230px] bg-greyF9 rounded-bl-normal shadow-none md:box-shadow-custom3 z-50 py-6 hidden group-hover/parent:block">
+                        {item.childItems.nodes.map((child1) => (
+                          <li key={child1.id} className="relative group/child">
+                            <Link
+                              className="py-2 px-9 flex items-center justify-between md:justify-start gap-1 text-sm leading-[18px] text-bluePrimary hover:text-secondary primary-menu"
+                              href={child1.uri}
+                            >
+                              {child1.label}
+                              {child1.childItems?.nodes?.length > 0 && (
+                                <ChevronRight
+                                  color="#083D78"
+                                  className="w-[20px] h-[20px] rotate-90 text-bluePrimary md:w-[18px] md:h-[18px]"
+                                />
+                              )}
+                            </Link>
+
+                            {child1.childItems?.nodes?.length > 0 && (
+                              <ul className="relative md:absolute left-0 md:left-full top-0 min-w-[230px] bg-greyF9 rounded-b-normal shadow-none md:box-shadow-custom3 z-50 py-6 hidden group-hover/child:block">
+                                {child1.childItems.nodes.map((child2) => (
+                                  <li key={child2.id}>
+                                    <Link
+                                      className="block px-9 py-2 text-sm leading-[18px] text-bluePrimary hover:text-secondary"
+                                      href={child2.uri}
+                                    >
+                                      {child2.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
                 );
               })}
             </nav>
