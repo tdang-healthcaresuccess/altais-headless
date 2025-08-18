@@ -96,7 +96,7 @@ export default function DocSearchForm({
               />
             </div>
           </div>
-          <div className="block flex-1 w-full relative">
+          <div className="flex flex-col md:flex-row flex-1 w-full relative gap-6">
             <div className="relative">
               <Image
                 src={SearchIcon}
@@ -116,20 +116,19 @@ export default function DocSearchForm({
                 }}
               />
             </div>
-          </div>
-          {/* Search Button */}
-          <div className="flex items-center">
             <button
               type="button"
-              className="btn-md flex-center btn-normal-icon gap-3 w-full sm:w-auto bg-bluePrimary text-white px-4 py-2 rounded"
+              className="btn-md flex-center font-semibold btn-outline-secondary gap-1 w-full sm:w-auto px-4 py-2 rounded"
               onClick={() => {
                 setSearchQuery(localSearch, localLocation);
               }}
             >
-              <Search className="w-5 h-5 mr-2" />
+              
               Search
+              <ChevronRight />
             </button>
           </div>
+          {/* Search Button */}
           {/* ...grid-options layout moved to LayoutOptions component... */}
         </div>
       </div>

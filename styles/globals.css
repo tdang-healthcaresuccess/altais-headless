@@ -424,6 +424,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   max-height: none;
+  gap: 20px;
 }
 @media (max-width: 1024px) {
   .wrap-list ul{
@@ -431,5 +432,5 @@ button {
   }
 }
 .wrap-list ul li {
-  width: 50%;
+  width: calc(50% - 20px);
 }
