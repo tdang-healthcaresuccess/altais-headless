@@ -127,9 +127,9 @@ const Section3a = ({ data }) => {
     <section className="template-wrapper list2 py-6 md:py-12">
       <div className="container mx-auto">
         <div
-          className="grid gap-8 grid-cols-1 md:grid-cols-2"
+          className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:dynamic-grid"
           style={{
-            gridTemplateColumns: `repeat(${data?.columnSelection[0] || 3}, minmax(0, 1fr))`,
+            "--grid-cols": data?.columnSelection[0] || 3,
           }}
         >
           {data?.section3aCards.map((card, index) => (

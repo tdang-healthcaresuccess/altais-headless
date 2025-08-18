@@ -359,10 +359,10 @@ button {
   height: 70px;
   z-index: 2;
 }
-.testimonials-block .swiper-wrapper{
-  height: 210px
+.testimonials-block .swiper-wrapper {
+  height: 210px;
 }
-.section-content p:last-child{
+.section-content p:last-child {
   padding-bottom: 0px;
 }
 
@@ -382,7 +382,7 @@ button {
 .template-wrapper p {
   @apply text-lg leading-[32px] text-grey00BF pb-6;
 }
-.template-wrapper ul{
+.template-wrapper ul {
   @apply pl-5 pb-6;
 }
 .template-wrapper ul li {
@@ -391,37 +391,35 @@ button {
 .template-wrapper a {
   @apply text-lg leading-[32px] text-secondary hover:text-bluePrimary;
 }
-.primary-menu:hover svg{
+.primary-menu:hover svg {
   stroke: #c75327;
 }
-.btn-filter{
-    @apply hover:text-white hover:bg-primary;
+.btn-filter {
+  @apply hover:text-white hover:bg-primary;
 }
-.btn-filter:hover svg path{
-    stroke: #fff;
+.btn-filter:hover svg path {
+  stroke: #fff;
 }
 /* .primary-menu:hover+ ul{
   display: block;
 } */
-.content-dynamic p:first-child{
+.content-dynamic p:first-child {
   padding-bottom: auto;
 }
-.content-dynamic p:last-child{
+.content-dynamic p:last-child {
   padding-bottom: 0px;
 }
 
-@media screen and (max-width: 981px) {
-  .template-wrapper.list2 ul {
-    /* @apply flex-col md:flex-row; */
+@media (min-width: 1024px) {
+  .lg\:dynamic-grid {
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr)) !important;
   }
 }
 
-
-
 /* Content Area */
-.content-typography h2{
-@apply text-[26px] leading-[36px] text-primary pb-4 font-medium;
+.content-typography h2 {
+  @apply text-[26px] leading-[36px] text-primary pb-4 font-medium;
 }
-.content-typography p{
+.content-typography p {
   @apply pb-6 text-grey3d text-lg !leading-[32px];
 }
