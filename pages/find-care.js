@@ -124,6 +124,8 @@ export default function FindCare({
   filters,
 }) {
   const [activeLayout, setActiveLayout] = React.useState("list");
+  const [filteredDoctors, setFilteredDoctors] = React.useState(doctors);
+  const [filteredTotal, setFilteredTotal] = React.useState(total);
   const router = useRouter();
 
   // SSR-compatible handlers for input fields
@@ -138,6 +140,42 @@ export default function FindCare({
         page: 1,
       },
     });
+  };
+
+  // Handler for filter sidebar changes
+  const handleFilterChange = (newFilters) => {
+    // Filtering logic (client-side, matches SSR logic)
+    let filtered = doctors;
+    if (newFilters.specialityFilter) {
+      filtered = filtered.filter((doc) =>
+        doc.node.doctorData.speciality
+          .toLowerCase()
+          .includes(newFilters.specialityFilter.toLowerCase())
+      );
+    }
+    if (newFilters.genderFilter.length > 0) {
+      filtered = filtered.filter((doc) =>
+        newFilters.genderFilter.includes(doc.node.doctorData.sex)
+      );
+    }
+    if (newFilters.educationFilter.length > 0) {
+      filtered = filtered.filter((doc) =>
+        newFilters.educationFilter.includes(doc.node.doctorData.medicalSchool)
+      );
+    }
+    if (newFilters.insuranceFilter.length > 0) {
+      filtered = filtered.filter((doc) => {
+        const ins = doc.node.doctorData.acceptedInsurance;
+        if (Array.isArray(ins)) {
+          return ins.some((i) => newFilters.insuranceFilter.includes(i));
+        } else if (typeof ins === "string") {
+          return newFilters.insuranceFilter.includes(ins);
+        }
+        return false;
+      });
+    }
+    setFilteredDoctors(filtered);
+    setFilteredTotal(filtered.length);
   };
 
   return (
@@ -168,7 +206,7 @@ export default function FindCare({
           <div className="flex justify-between gap-10 pt-9 pb-6 border-b border-lightPrimary">
             <div className="flex flex-col gap-2">
               <span className="text-bluePrimary text-sm">
-                Showing {doctors.length} of {total} results
+                Showing {filteredDoctors.length} of {filteredTotal} results
               </span>
               <span
                 onClick={() => router.push({ pathname: router.pathname })}
@@ -195,6 +233,7 @@ export default function FindCare({
                     genderFilter={filters.genderFilter}
                     educationFilter={filters.educationFilter}
                     insuranceFilter={filters.insuranceFilter}
+                    onFilterChange={handleFilterChange}
                   />
                 </div>
                 <div className="block md:hidden">
@@ -209,6 +248,7 @@ export default function FindCare({
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
                 <DocSearchList doctors={doctors} activeLayout={activeLayout} />
+                <DocSearchList doctors={filteredDoctors} activeLayout={activeLayout} />
                 {/* Pagination Controls (styled and placed like doctor-list.js) */}
                 {total > 10 && (
                   <div className="flex justify-end w-full mt-4">

@@ -61,6 +61,7 @@ export default function specialty(props) {
   const [educationFilter, setEducationFilter] = useState([]);
   const [insuranceFilter, setInsuranceFilter] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
+  const [initialTotal, setInitialTotal] = useState(0);
   const [activeLayout, setActiveLayout] = useState("list");
   const router = useRouter();
   const page = parseInt(router.query.page) || 1;
@@ -87,15 +88,27 @@ export default function specialty(props) {
   useEffect(() => {
     const filterDoctors = () => {
       let filtered = dummyDoctors;
+      // Always apply specialty filter first for initialTotal
+      let specialtyFiltered = filtered;
+      if (specialityFilter) {
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
+          doc.node.doctorData.speciality
+            .toLowerCase()
+            .includes(specialityFilter.toLowerCase())
+        );
+      }
+      // Set initialTotal to specialtyFiltered before other filters
+      setInitialTotal(specialtyFiltered.length);
+      // Now apply all filters for live results
       if (searchQuery) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           doc.node.doctorData.doctorsName
             .toLowerCase()
             .includes(searchQuery.toLowerCase())
         );
       }
       if (practiceNameQuery) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           doc.node.doctorData.practiceName
             .toLowerCase()
             .includes(practiceNameQuery.toLowerCase())
@@ -104,7 +117,7 @@ export default function specialty(props) {
       if (locationQuery) {
         const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
         const queryWords = query.split(' ');
-        filtered = filtered.filter((doc) => {
+        specialtyFiltered = specialtyFiltered.filter((doc) => {
           const data = doc.node.doctorData;
           const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
             .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
@@ -113,25 +126,18 @@ export default function specialty(props) {
           );
         });
       }
-      if (specialityFilter) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.speciality
-            .toLowerCase()
-            .includes(specialityFilter.toLowerCase())
-        );
-      }
       if (genderFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           genderFilter.includes(doc.node.doctorData.sex)
         );
       }
       if (educationFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           educationFilter.includes(doc.node.doctorData.medicalSchool)
         );
       }
       if (insuranceFilter.length > 0) {
-        filtered = filtered.filter((doc) => {
+        specialtyFiltered = specialtyFiltered.filter((doc) => {
           const ins = doc.node.doctorData.acceptedInsurance;
           if (Array.isArray(ins)) {
             return ins.some((i) => insuranceFilter.includes(i));
@@ -141,7 +147,7 @@ export default function specialty(props) {
           return false;
         });
       }
-      setFilteredDoctors(filtered);
+      setFilteredDoctors(specialtyFiltered);
     };
     filterDoctors();
   }, [
@@ -214,7 +220,7 @@ export default function specialty(props) {
         <div className="block container mx-auto mt-4 mb-4">
           <div className="flex items-center justify-between">
             <span className="text-gray-500 text-base">
-              Showing {filteredDoctors.length} of {dummyDoctors.length} results
+              Showing {filteredDoctors.length} of {initialTotal} results
             </span>
             <span
               onClick={clearAllFilters}

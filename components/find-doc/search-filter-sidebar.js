@@ -18,6 +18,10 @@ export default function DocSearchFilterSidebar({
   const router = useRouter();
   const [openIndex, setOpenIndex] = useState(0);
   const [speciality, setSpecialityLocal] = useState(specialityFilter);
+  // Sync local input with prop when prop changes
+  React.useEffect(() => {
+    setSpecialityLocal(specialityFilter);
+  }, [specialityFilter]);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
 
   const handleToggle = (index) => {
@@ -107,7 +111,7 @@ export default function DocSearchFilterSidebar({
               type="text"
               name="speciality"
               placeholder="Search by specialty"
-              value={specialityFilter}
+              value={speciality}
               onChange={handleSpecialityChange}
               className="w-full text-base leading-5 text-bluePrimary font-normal border border-lightPrimary rounded-normal outline-none focus:outline-none p-2.5 pr-10"
             />

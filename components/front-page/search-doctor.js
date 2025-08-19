@@ -63,7 +63,7 @@ export default function SearchDoctor() {
                     onChange={(e) => setZipCode(e.target.value)}
                   />
                 </div>
-                <div className="relative block">
+                {/* <div className="relative block">
                   <select type="text" placeholder="Distance" className="appearance-none bg-white input-style w-full md:max-w-[134px] md:min-w-[134px] cursor-pointer">
                     <option>Distance</option>
                     <option>5mi</option>
@@ -74,7 +74,7 @@ export default function SearchDoctor() {
                   <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
                     <ChevronDown className="w-5 h-5" />
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="flex gap-5 justify-between">
                 <div className="block flex-1">
