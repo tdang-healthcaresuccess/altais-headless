@@ -55,7 +55,7 @@ export default function Component(props) {
       </Head>
 
       <Header
-        siteTitle={siteTitle}
+        siteTitle={title}
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
