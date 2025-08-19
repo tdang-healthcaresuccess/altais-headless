@@ -107,9 +107,9 @@ export default function Header({ siteTitle, siteDescription }) {
                 />
               </Link>
             </div>
-            <div className="flex items-center gap-2 md:gap-10 w-full justify-end">
-              <nav className="hidden lg:flex items-end gap-6">
-                <ul className="flex gap-6">
+            <div className="flex items-center gap-2.5 w-full justify-end">
+              <nav className="hidden lg:flex items-end gap-6 pr-0 md:pr-5">
+                <ul className="flex gap-10">
                   {menuItems.map((item, idx) => {
                     const isActive = router.pathname === item.uri;
                     const hasChildren = item.childItems?.nodes?.length > 0;
