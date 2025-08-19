@@ -184,7 +184,14 @@ export default function specialty(props) {
   };
 
   return (
-    <Layout>
+    <Layout
+      metaD={{
+        titleTag: title ? `${title} | Altais` : "Altais: Shaping the Future of Healthcare",
+        metaDescription: title
+          ? `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
+          : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today."
+      }}
+    >
       <div className="block">
         <SinglePageBanner
           DesktopBanner="bg-single-landing-banner"
