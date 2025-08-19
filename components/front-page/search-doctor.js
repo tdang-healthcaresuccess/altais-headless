@@ -39,7 +39,7 @@ export default function SearchDoctor() {
             </p>
           </div>
           {/* Vertical Separator */}
-          <div className="hidden sm:block w-full md:w-[1px] h-[1px] md:h-[155px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div>
+          <div className="hidden sm:block w-full md:w-[1px] h-[1px] md:h-[258px] bg-secondary my-6 md:my-0 max-0 md:mx-10"></div>
 
           <div className="block flex-1">
             <h2 className="text-[26px] leading-[36px] text-bluePrimary pb-7">Search Doctors</h2>
