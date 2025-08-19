@@ -172,7 +172,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/patient-bill/"
+                            href="/patient-bill-of-rights/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -190,7 +190,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/consent-prefrences/"
+                            href="/consent-preferences/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
