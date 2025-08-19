@@ -170,7 +170,7 @@ export default function SinglePage(props) {
   const mobileImageUrl = heroMobile ;
   return (
     <Layout
-      siteTitle={siteTitle}
+      siteTitle={title}
       siteDescription={siteDescription}
       metaD={metaD}
     >
