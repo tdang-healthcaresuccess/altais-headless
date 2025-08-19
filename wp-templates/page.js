@@ -18,6 +18,14 @@ const PAGE_QUERY = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+              parent {
+                node {
+                  ... on Page {
+                    title
+                    uri
+                  }
+                }
+              }
       metaD {
         metaDescription
         titleTag
@@ -115,6 +123,7 @@ const PAGE_QUERY = gql`
           }
         }
       }
+
     }
   }
 `;
@@ -160,6 +169,7 @@ export default function SinglePage(props) {
   };
   const { title: siteTitle, description: siteDescription } = siteData;
   const { title, content, metaD, contentTemplates, heroBanner } = data?.page || {};
+  const parentPage = data?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
   const templateSelection = contentTemplates?.templateSelection?.[0];
@@ -189,8 +199,12 @@ export default function SinglePage(props) {
      
       {/* Breadcrumb Start */}
       <Breadcrumb
-        items={[{ label: "Home", link: "/" }, { label: title }]}
-      /> 
+        items={[
+          { label: "Home", link: "/" },
+          parentPage ? { label: parentPage.title, link: parentPage.uri } : null,
+          { label: title }
+        ].filter(Boolean)}
+      />
       {/* Breadcrumb End */}
 
       <main className="block">
