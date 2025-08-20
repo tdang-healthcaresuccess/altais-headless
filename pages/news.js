@@ -89,8 +89,8 @@ export default function News({ posts, pageInfo, page }) {
       </Head>
       <div className="block">
         <InnerPageBanner
-          DesktopBanner="bg-resources-landing-banner"
-          MobileBanner="bg-resources-landing-banner-mobile"
+          DesktopBanner="bg-landing-common-banner"
+          MobileBanner="bg-landing-common-banner-mobile"
           heading="News"
         />
         <Breadcrumb

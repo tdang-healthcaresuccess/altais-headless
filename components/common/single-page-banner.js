@@ -23,7 +23,7 @@ export default function SinglePageBanner({
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full pt-6 md:pt-0">
           <div className="md:p-0 md:w-[40%] h-full flex flex-col justify-center">
-            <h1 className="font-poppins text-[32px] md:text-[40px] leading-[45px] md:leading-[60px] text-bluePrimary">
+            <h1 className="font-poppins text-[32px] md:text-[40px] leading-[45px] md:leading-[60px] text-bluePrimary pt-6 md:pt-0">
               {heading}
             </h1>
           </div>

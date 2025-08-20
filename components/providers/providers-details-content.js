@@ -111,7 +111,7 @@ export default function ProvidersDetailsContent() {
   return (
     <div className="block md:pt-[50px] pb-[100px]">
       <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row gap-[50px] md:gap-[80px] lg:gap-[120px] px-6 md:px-0">
+        <div className="flex flex-col md:flex-row gap-[50px] md:gap-[80px] lg:gap-[120px]">
           <div className="block w-full md:w-[315px]">
             <div className="block pb-6 md:pb-12 border-b border-lightPrimary">
               <Image

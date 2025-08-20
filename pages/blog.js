@@ -82,10 +82,10 @@ export default function Blog({ posts, pageInfo, page }) {
       <Head>
         <title>Blog</title>
       </Head>
-      <div className="block">
+      <div className="block"> 
         <InnerPageBanner
-          DesktopBanner="bg-resources-landing-banner"
-          MobileBanner="bg-resources-landing-banner-mobile"
+          DesktopBanner="bg-landing-common-banner"
+          MobileBanner="bg-landing-common-banner-mobile"
           heading="Blog"
         />
         <Breadcrumb items={[{ label: "Home", link: "/" }, { label: "Blog" }]} />
