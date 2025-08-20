@@ -189,7 +189,7 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      <Head></Head>
+      <Head><title>Search</title></Head>
       {/* Inner Page Banner start */}
       <InnerPageBanner
         DesktopBanner="bg-resources-landing-banner"
@@ -199,6 +199,8 @@ export default function SearchPage() {
       {/* Breadcrumb Start */}
       <Breadcrumb items={[{ label: "Home", link: "/" }, { label: "Search" }]} />
       {/* Breadcrumb End */}
+         <div className="p-8 min-h-screen font-sans">
+          <div className="container mx-auto">
       <main className="block">
         <div className="acf-flexible-content">
           {!hasResults && (
@@ -245,6 +247,8 @@ export default function SearchPage() {
           )}
         </div>
       </main>
+      </div>
+      </div>  
     </Layout>
   );
 }

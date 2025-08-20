@@ -230,8 +230,9 @@ export default function Footer() {
           </div>
           <div className="block pt-4 pb-7 md:pb-8 border-t border-[#84D0D2]">
             <p className="flex justify-start md:justify-end text-white text-xs">
-              © 2025 Copyright Altais Inc.
+              © 2025 Copyright Altais Inc. All rights reserved. <span>&nbsp;| &nbsp;</span><Link href="/sitemap" className="text-[#FAA61A] hover:underline"> Sitemap</Link>
             </p>
+           
           </div>
         </div>
       </div>
