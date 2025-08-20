@@ -49,19 +49,19 @@ export default function Footer() {
                 <div className="block pt-5">
                   <div className="flex flex-col gap-5">
                     <Link
-                      href="/for-patients"
+                      href="/for-patients/"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Patients
                     </Link>
                     <Link
-                      href="/for-providers"
+                      href="/for-providers/"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Providers
                     </Link>
                     <Link
-                      href="/for-partners"
+                      href="/for-partners/"
                       className="flex flex-col text-white text-sm leading[18px] font-semibold"
                     >
                       <span className="font-normal">For</span> Partners
@@ -78,7 +78,7 @@ export default function Footer() {
                   <ul className="flex flex-col gap-5">
                     <li>
                       <Link
-                        href="/about"
+                        href="/about/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         About
@@ -86,7 +86,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/resources"
+                        href="/resources/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Resources
@@ -94,7 +94,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/contact"
+                        href="/terms-of-use/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Contact Us
@@ -108,7 +108,7 @@ export default function Footer() {
                       <ul className="flex flex-col gap-5">
                         <li>
                           <Link
-                            href="/blog"
+                            href="/blog/"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             Blog
@@ -116,7 +116,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/news"
+                            href="/news/"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             News
@@ -124,7 +124,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/careers"
+                            href="/careers/"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             Careers
@@ -154,7 +154,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/cookies"
+                            href="/cookies/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -163,7 +163,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/terms-of-use"
+                            href="/terms-of-use/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -172,7 +172,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/patient-bill"
+                            href="/patient-bill-of-rights/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -181,7 +181,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/non-discrimination-notice"
+                            href="/non-discrimination-notice/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
@@ -190,7 +190,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/consent-prefrences"
+                            href="/consent-preferences/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}

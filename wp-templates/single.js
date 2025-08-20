@@ -27,6 +27,12 @@ const POST_QUERY = gql`
           altText
         }
       }
+      categories {
+        nodes {
+          name
+          slug
+        }
+      }
     }
   }
 `;
@@ -46,7 +52,7 @@ export default function Component(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, date, author, featuredImage } = contentQuery?.post || {};
+  const { title, content, date, author, featuredImage, categories } = contentQuery?.post || {};
 
   return (
     <>
@@ -55,7 +61,7 @@ export default function Component(props) {
       </Head>
 
       <Header
-        siteTitle={siteTitle}
+        siteTitle={title}
         siteDescription={siteDescription}
         menuItems={menuItems}
       />
@@ -69,7 +75,20 @@ export default function Component(props) {
         />
       </div>
       {/* Breadcrumb Start */}
-      <Breadcrumb items={[{ label: "Home", link: "/" }, { label: title }]} />
+      {/* Determine hierarchy: News or Blog */}
+      {(() => {
+        let parentLabel = "Blog";
+        let parentLink = "/blog";
+        if (categories?.nodes?.some(cat => cat.slug === "news")) {
+          parentLabel = "News";
+          parentLink = "/news";
+        }
+        return (
+          <Breadcrumb
+            items={[{ label: "Home", link: "/" }, { label: parentLabel, link: parentLink }, { label: title }]}
+          />
+        );
+      })()}
       {/* Breadcrumb End */}
       <main className="template-wrapper py-12 border-b border-lightPrimary">
         <div className="container mx-auto">

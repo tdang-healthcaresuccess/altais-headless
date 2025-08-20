@@ -6,14 +6,22 @@ import { specialitiesList, genderList, educationList, insuranceList }from '../Du
 const availableInsuranceList = Array.isArray(insuranceList) ? insuranceList : [];
 export default function DocSearchFilterSidebar({
   specialityFilter,
+  setSpecialityFilter,
   genderFilter,
+  setGenderFilter,
   educationFilter,
+  setEducationFilter,
   insuranceFilter,
+  setInsuranceFilter,
   clearAllFilters
 }) {
   const router = useRouter();
   const [openIndex, setOpenIndex] = useState(0);
-  const [speciality, setSpeciality] = useState(specialityFilter);
+  const [speciality, setSpecialityLocal] = useState(specialityFilter);
+  // Sync local input with prop when prop changes
+  React.useEffect(() => {
+    setSpecialityLocal(specialityFilter);
+  }, [specialityFilter]);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
 
   const handleToggle = (index) => {
@@ -28,7 +36,8 @@ export default function DocSearchFilterSidebar({
 
   const handleSpecialityChange = (event) => {
     const value = event.target.value;
-    setSpeciality(value);
+    setSpecialityLocal(value);
+    if (setSpecialityFilter) setSpecialityFilter(value);
     if (value) {
       const filteredSuggestions = specialitiesList.filter((s) =>
         s.toLowerCase().includes(value.toLowerCase())
@@ -40,9 +49,10 @@ export default function DocSearchFilterSidebar({
   };
 
   const handleSelectSpeciality = (selectedSpeciality) => {
-    setSpeciality(selectedSpeciality);
+    setSpecialityLocal(selectedSpeciality);
+    if (setSpecialityFilter) setSpecialityFilter(selectedSpeciality);
     setSpecialitySuggestions([]);
-    updateQuery({ specialty: selectedSpeciality });
+    if (!setSpecialityFilter) updateQuery({ specialty: selectedSpeciality });
   };
 
   const handleGenderChange = (event) => {
@@ -50,7 +60,8 @@ export default function DocSearchFilterSidebar({
     let newGender = checked
       ? [...genderFilter, value]
       : genderFilter.filter((item) => item !== value);
-    updateQuery({ gender: newGender });
+    if (setGenderFilter) setGenderFilter(newGender);
+    if (!setGenderFilter) updateQuery({ gender: newGender });
   };
 
   const handleEducationChange = (event) => {
@@ -58,7 +69,8 @@ export default function DocSearchFilterSidebar({
     let newEdu = checked
       ? [...educationFilter, value]
       : educationFilter.filter((item) => item !== value);
-    updateQuery({ education: newEdu });
+    if (setEducationFilter) setEducationFilter(newEdu);
+    if (!setEducationFilter) updateQuery({ education: newEdu });
   };
 
   const handleInsuranceChange = (event) => {
@@ -66,17 +78,28 @@ export default function DocSearchFilterSidebar({
     let newIns = checked
       ? [...insuranceFilter, value]
       : insuranceFilter.filter((item) => item !== value);
-    updateQuery({ insurance: newIns });
+    if (setInsuranceFilter) setInsuranceFilter(newIns);
+    if (!setInsuranceFilter) updateQuery({ insurance: newIns });
   };
 
   // Clear handlers
   const handleClearSpeciality = () => {
-    setSpeciality('');
-    updateQuery({ specialty: '' });
+    setSpecialityLocal('');
+    if (setSpecialityFilter) setSpecialityFilter('');
+    if (!setSpecialityFilter) updateQuery({ specialty: '' });
   };
-  const handleClearGender = () => updateQuery({ gender: [] });
-  const handleClearEducation = () => updateQuery({ education: [] });
-  const handleClearInsurance = () => updateQuery({ insurance: [] });
+  const handleClearGender = () => {
+    if (setGenderFilter) setGenderFilter([]);
+    if (!setGenderFilter) updateQuery({ gender: [] });
+  };
+  const handleClearEducation = () => {
+    if (setEducationFilter) setEducationFilter([]);
+    if (!setEducationFilter) updateQuery({ education: [] });
+  };
+  const handleClearInsurance = () => {
+    if (setInsuranceFilter) setInsuranceFilter([]);
+    if (!setInsuranceFilter) updateQuery({ insurance: [] });
+  };
 
   const accordionItems = [
     {
@@ -109,7 +132,7 @@ export default function DocSearchFilterSidebar({
           
             </span>
           </div>
-          {speciality && (
+          {specialityFilter && (
             <button onClick={handleClearSpeciality} className="text-left text-blue-500 underline text-sm mt-2">
               Clear
             </button>
@@ -182,7 +205,6 @@ export default function DocSearchFilterSidebar({
               {ins}
             </label>
           ))}
-          {console.log(availableInsuranceList)}
           <button onClick={handleClearInsurance} className="text-left text-blue-500 underline text-sm mt-2">
             Clear
           </button>

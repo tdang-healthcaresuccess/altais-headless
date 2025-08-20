@@ -33,7 +33,7 @@ export default function OurResources() {
             <div className="block w-full md:w-auto"> 
               <h3 className="text-[22px] leading-[36px] text-bluePrimary mb-3">Providers</h3>
               <ul>
-                <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Provider Resources</Link></li>
+                <li><Link href="/for-providers/service-solutions/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Provider Resources</Link></li>
                 <div className="w-full h-[1px] bg-lightPrimary my-3"></div>
                 <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Join Our Care Network</Link></li>
               </ul>
@@ -47,9 +47,9 @@ export default function OurResources() {
             <div className="block w-full md:w-auto">
               <h3 className="text-[22px] leading-[36px] text-bluePrimary mb-3">Partners</h3>
               <ul>
-                <li><Link href="/#" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Locations</Link></li>
+                <li><Link href="/for-providers/amg-locations/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Locations</Link></li>
                 <div className="w-full h-[1px] bg-lightPrimary my-3"></div>
-                <li><Link href="/services-and-solutions/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Services & Solutions</Link></li>
+                <li><Link href="/for-partners/services-and-solutions/" className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"><ChevronRight className="w-[20px] h-[20px]" />  Services & Solutions</Link></li>
               </ul>
             </div>
           </div>

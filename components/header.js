@@ -38,7 +38,7 @@ const MenuItem = ({ item, router }) => {
   );
 };
 
-export default function Header({ siteTitle, siteDescription }) {
+export default function Header({ siteTitle, siteDescription, metaD }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,15 +83,31 @@ export default function Header({ siteTitle, siteDescription }) {
 
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || [];
 
+  // Determine meta title and description
+  const metaTitle =
+    (metaD && metaD.titleTag)
+      ? metaD.titleTag
+      : siteTitle
+        ? siteTitle
+        : "Altais: Shaping the Future of Healthcare";
+  const metaDescription =
+    (metaD && metaD.metaDescription)
+      ? metaD.metaDescription
+      : siteDescription
+        ? siteDescription
+        : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.";
+
   return (
     <>
       <Head>
-        <title>{siteTitle}</title>
-        <meta
-          name="description"
-          content={siteDescription ? siteDescription : ""}
-        />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="title" content={metaTitle} /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
+        {/* Canonical URL */}
+        <link rel="canonical" href={`https://altais.com${router.asPath.split('?')[0]}`} />
       </Head>
       <header className="block py-4 lg:py-0 relative">
         <div className="container mx-auto bg-white">

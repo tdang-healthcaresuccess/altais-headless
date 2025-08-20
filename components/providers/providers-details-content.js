@@ -125,6 +125,24 @@ export default function ProvidersDetailsContent() {
                 {provider.doctorsName}, {provider.speciality}
               </h2>
             </div>
+             <div className="block border-b border-lightPrimary py-6">
+              <h4 className="text-base text-primary pb-2.5 font-semibold">
+                Location
+              </h4>
+              <div className="text-base text-grey3d leading-relaxed">
+                {provider.practiceName && (
+                  <div className="font-medium mb-1">{provider.practiceName}</div>
+                )}
+                {provider.address && (
+                  <div>{provider.address}</div>
+                )}
+                <div>
+                  {provider.addressCity && <span>{provider.addressCity}</span>}
+                  {provider.state && <span>, {provider.state}</span>}
+                  {provider.zipcode && <span> {provider.zipcode}</span>}
+                </div>
+              </div>
+            </div>
             <div className="block border-b border-lightPrimary py-6">
               <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
                 Specialties

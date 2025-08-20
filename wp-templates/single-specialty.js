@@ -1,4 +1,3 @@
-
 import { gql, useQuery } from "@apollo/client";
 import Head from "next/head";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
@@ -11,6 +10,7 @@ import DocSearchForm from "@/components/find-doc/search-form";
 import DocSearchFilterSidebar from "@/components/find-doc/search-filter-sidebar";
 import DocSearchList from "@/components/common/doctor-list";
 import { dummyDoctors } from "@/components/DummyData";
+import { useRouter } from "next/router";
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
     specialty(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
@@ -61,30 +61,54 @@ export default function specialty(props) {
   const [educationFilter, setEducationFilter] = useState([]);
   const [insuranceFilter, setInsuranceFilter] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
+  const [initialTotal, setInitialTotal] = useState(0);
   const [activeLayout, setActiveLayout] = useState("list");
+  const router = useRouter();
+  const page = parseInt(router.query.page) || 1;
+  const DOCTORS_PER_PAGE = 10;
+  const totalPages = Math.ceil(filteredDoctors.length / DOCTORS_PER_PAGE);
+  const paginatedDoctors = filteredDoctors.slice((page - 1) * DOCTORS_PER_PAGE, page * DOCTORS_PER_PAGE);
 
   const clearAllFilters = () => {
     setSearchQuery("");
     setLocationQuery("");
     setPracticeNameQuery("");
-    setSpecialityFilter(title || "");
     setGenderFilter([]);
     setEducationFilter([]);
     setInsuranceFilter([]);
+    setSpecialityFilter(title || "");
+    // Reset URL to only specialty
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.search = "";
+      window.location.replace(url.pathname);
+    }
   };
 
   useEffect(() => {
     const filterDoctors = () => {
       let filtered = dummyDoctors;
+      // Always apply specialty filter first for initialTotal
+      let specialtyFiltered = filtered;
+      if (specialityFilter) {
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
+          doc.node.doctorData.speciality
+            .toLowerCase()
+            .includes(specialityFilter.toLowerCase())
+        );
+      }
+      // Set initialTotal to specialtyFiltered before other filters
+      setInitialTotal(specialtyFiltered.length);
+      // Now apply all filters for live results
       if (searchQuery) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           doc.node.doctorData.doctorsName
             .toLowerCase()
             .includes(searchQuery.toLowerCase())
         );
       }
       if (practiceNameQuery) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           doc.node.doctorData.practiceName
             .toLowerCase()
             .includes(practiceNameQuery.toLowerCase())
@@ -93,7 +117,7 @@ export default function specialty(props) {
       if (locationQuery) {
         const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
         const queryWords = query.split(' ');
-        filtered = filtered.filter((doc) => {
+        specialtyFiltered = specialtyFiltered.filter((doc) => {
           const data = doc.node.doctorData;
           const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
             .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
@@ -102,25 +126,18 @@ export default function specialty(props) {
           );
         });
       }
-      if (specialityFilter) {
-        filtered = filtered.filter((doc) =>
-          doc.node.doctorData.speciality
-            .toLowerCase()
-            .includes(specialityFilter.toLowerCase())
-        );
-      }
       if (genderFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           genderFilter.includes(doc.node.doctorData.sex)
         );
       }
       if (educationFilter.length > 0) {
-        filtered = filtered.filter((doc) =>
+        specialtyFiltered = specialtyFiltered.filter((doc) =>
           educationFilter.includes(doc.node.doctorData.medicalSchool)
         );
       }
       if (insuranceFilter.length > 0) {
-        filtered = filtered.filter((doc) => {
+        specialtyFiltered = specialtyFiltered.filter((doc) => {
           const ins = doc.node.doctorData.acceptedInsurance;
           if (Array.isArray(ins)) {
             return ins.some((i) => insuranceFilter.includes(i));
@@ -130,7 +147,7 @@ export default function specialty(props) {
           return false;
         });
       }
-      setFilteredDoctors(filtered);
+      setFilteredDoctors(specialtyFiltered);
     };
     filterDoctors();
   }, [
@@ -144,8 +161,43 @@ export default function specialty(props) {
     title
   ]);
 
+  // Helper to get correct path for specialty page
+  const getSpecialtyPath = () => {
+    return router.asPath.split('?')[0];
+  };
+
+  // Helper to filter out unwanted query params
+  const getCleanQuery = (query) => {
+    const { wordpressNode, ...rest } = query;
+    // Remove all instances of wordpressNode (array or string)
+    if (Array.isArray(wordpressNode)) {
+      return rest;
+    }
+    return rest;
+  };
+
+  // SSR-compatible search handler
+  const handleSearch = (searchValue, locationValue) => {
+    router.push({
+      pathname: getSpecialtyPath(),
+      query: {
+        ...getCleanQuery(router.query),
+        doctorName: searchValue || "",
+        zipCode: locationValue || "",
+        page: 1,
+      },
+    });
+  };
+
   return (
-    <Layout>
+    <Layout
+      metaD={{
+        titleTag: title ? `${title} | Altais` : "Altais: Shaping the Future of Healthcare",
+        metaDescription: title
+          ? `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
+          : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today."
+      }}
+    >
       <div className="block">
         <SinglePageBanner
           DesktopBanner="bg-single-landing-banner"
@@ -158,12 +210,30 @@ export default function specialty(props) {
         <SpecialityShortInfo name={title} />
         <DocSearchForm
           searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           locationQuery={locationQuery}
-          setLocationQuery={setLocationQuery}
+          setSearchQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
+          setLocationQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
+        {/* Results Count, Clear All Filters Link, and LayoutOptions */}
+        <div className="block container mx-auto mt-4 mb-4">
+          <div className="flex items-center justify-between">
+            <span className="text-gray-500 text-base">
+              Showing {filteredDoctors.length} of {initialTotal} results
+            </span>
+            <span
+              onClick={clearAllFilters}
+              className="text-bluePrimary text-sm underline cursor-pointer ml-4"
+              role="button"
+              tabIndex={0}
+            >
+              Clear All Filters
+            </span>
+          </div>
+          {/* If you have LayoutOptions component, use it here: */}
+          {/* <LayoutOptions activeLayout={activeLayout} setActiveLayout={setActiveLayout} /> */}
+        </div>
         <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px] px-6 md:px-0">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
@@ -192,9 +262,59 @@ export default function specialty(props) {
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
                 <DocSearchList
-                  doctors={filteredDoctors}
+                  doctors={paginatedDoctors}
                   activeLayout={activeLayout}
                 />
+                {/* SSR Pagination Controls */}
+                {filteredDoctors.length > DOCTORS_PER_PAGE && (
+                  <div className="flex justify-end w-full mt-4">
+                    <ul className="flex gap-3">
+                      <li
+                        className={`pagination-li pag-action ${page === 1 ? '!hidden md:!flex' : 'cursor-pointer'}`}
+                      >
+                        <a
+                          href={page > 1 ? `${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: page - 1 }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}` : '#'}
+                          aria-disabled={page === 1}
+                          className="flex items-center"
+                        >
+                          <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> Previous Page
+                        </a>
+                      </li>
+                      {/* Show only 4 page numbers at a time */}
+                      {(() => {
+                        let startPage = Math.max(1, page - 2);
+                        let endPage = Math.min(totalPages, startPage + 3);
+                        if (endPage - startPage < 3) {
+                          startPage = Math.max(1, endPage - 3);
+                        }
+                        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((p) => (
+                          <li
+                            key={p}
+                            className={`pagination-li ${page === p ? 'active' : ''} cursor-pointer`}
+                          >
+                            <a
+                              href={`${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: p }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}`}
+                              className={page === p ? 'font-bold text-secondary' : ''}
+                            >
+                              {p}
+                            </a>
+                          </li>
+                        ));
+                      })()}
+                      <li
+                        className={`pagination-li pag-action ${page === totalPages ? 'hidden' : 'cursor-pointer'}`}
+                      >
+                        <a
+                          href={page < totalPages ? `${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: page + 1 }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}` : '#'}
+                          aria-disabled={page === totalPages}
+                          className="flex items-center"
+                        >
+                          Next Page <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           </div>

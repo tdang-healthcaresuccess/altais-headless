@@ -21,17 +21,21 @@ const BlogPostCard = ({ post }) => {
   return (
     <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
       <div className="block border border-gray-200 rounded-lg mb-6 overflow-hidden">
-        <img
-          src={post.featuredImage?.node?.sourceUrl || 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'}
-          alt={post.featuredImage?.node?.altText || post.title}
-          className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
-          onError={(e) => { e.target.src = 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'; }}
-        />
+        <a href={post.uri}>
+          <img
+            src={post.featuredImage?.node?.sourceUrl || 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'}
+            alt={post.featuredImage?.node?.altText || post.title}
+            className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
+            onError={(e) => { e.target.src = 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'; }}
+          />
+        </a>
       </div>
       <div className="block flex-grow">
-        <h3 className="text-2xl font-bold leading-8 text-blue-900 mb-3">
-          {post.title}
-        </h3>
+        <a href={post.uri}>
+          <h3 className="text-2xl font-bold leading-8 text-blue-900 mb-3 hover:underline">
+            {post.title}
+          </h3>
+        </a>
         <p className="text-lg leading-8 text-gray-600 mb-7">
           {truncateText(post.excerpt, 150)}
         </p>
