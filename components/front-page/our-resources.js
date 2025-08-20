@@ -70,7 +70,7 @@ export default function OurResources() {
               you need it.
             </p>
             <Link
-              href="/#"
+              href="/find-care/"
               className="btn-outline-secondary btn-md font-semibold flex-center !w-[165px] !px-2 rounded-normal gap-1 mt-8"
             >
               Find Care{" "}
@@ -84,7 +84,7 @@ export default function OurResources() {
               that Deliver
             </h3>
             <p className="mb-6 normal-content">
-              We’re shaping the future of care where smarter systems, technology and teamwork to make care better, more affordable, and more accessible.
+              We're shaping the future of care where smarter systems, technology and teamwork to make care better, more affordable, and more accessible.
             </p>
             <Link
               href="/services"
@@ -104,7 +104,7 @@ export default function OurResources() {
               We align our innovation with what matters most, healthier lives, earlier interventions and care that feels personal.
             </p>
             <Link
-              href="/#"
+              href="/for-providers/service-solutions/"
               className="btn-outline-secondary btn-md font-semibold flex-center !w-[165px] !px-2 rounded-normal gap-1 mt-8"
             >
               Learn More{" "}
