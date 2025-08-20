@@ -32,7 +32,7 @@ export default function FrontPage(props) {
 
   return (
     <>
-      <Header siteTitle={siteTitle} />
+      <Header siteTitle={siteTitle} siteDescription={"Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today. "} />
 
       <main className="block">
         {/* Landing Page Banner Start */}
