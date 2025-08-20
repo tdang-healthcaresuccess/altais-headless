@@ -256,6 +256,12 @@ button {
 .bg-clinics-landing-banner-mobile {
   background-image: url("./../public/media/clinics-banner.png");
 }
+.bg-landing-common-banner{
+  background-image: url("./../public/media/banner-3.png");
+}
+.bg-landing-common-banner-mobile{
+  background-image: url("./../public/media/banner-3.png");
+}
 
 /* Custom Shadows */
 .box-shadow-custom2 {
@@ -289,7 +295,7 @@ button {
   justify-content: center;
 }
 .about-slider-algo .swiper-wrapper {
-  @apply pb-6;
+  @apply pb-[90px];
 }
 .swiper-pagination-bullet-active {
   @apply bg-primary;
@@ -307,7 +313,7 @@ button {
   justify-content: center;
 }
 .normal-content {
-  @apply text-base leading-[24px] text-grey3d;
+  @apply text-base !leading-[32px] text-grey3d;
 }
 .filter-result-box {
   @apply max-h-[280px] overflow-auto;
@@ -330,7 +336,7 @@ button {
 .swiper-button-next {
   right: 0px;
 }
-.testimonials-block .swiper-pagination {
+.slider-dot-area .swiper-pagination {
   @apply py-[20px] border-t border-b border-lightPrimary;
 }
 .testimonials-block .swiper::before {
@@ -374,7 +380,7 @@ button {
   @apply text-[26px] leading-[36px] text-primary pb-4;
 }
 .template-wrapper h3 {
-  @apply text-[22px] leading-[32px] text-bluePrimary pb-4;
+  @apply text-[22px] leading-[32px] text-bluePrimary pb-3;
 }
 .template-wrapper p {
   @apply pb-6 text-grey00BF text-lg !leading-[32px] break-words;
@@ -433,4 +439,7 @@ button {
 }
 .wrap-list ul li {
   width: calc(50% - 20px);
+}
+.featured-blog-slider .swiper-pagination{
+  top: 80%;
 }

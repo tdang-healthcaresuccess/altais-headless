@@ -78,14 +78,14 @@ export default function CounterCondition() {
                 </h3>
               </div>
               <div className="block w-full order-1 md:order-2">
-                <div className="bg-half-star-slider w-full md:w-[608px] inset-0 bg-contain bg-no-repeat bg-right h-[350px] md:h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-normal p-7 pr-[100px]">
+                <div className="bg-half-star-slider featured-blog-slider w-full md:w-[608px] inset-0 bg-contain bg-no-repeat bg-right h-[350px] md:h-[148px] bg-[#111638] rounded-bl-[0px] md:rounded-bl-[5px] rounded-br-[0px] md:rounded-br-[5px] rounded-normal p-7 pr-[100px]">
                   {/* Blog Slider: dynamically show 3 latest blog posts */}
                   <BlogSlider />
                 </div>
               </div>
             </div>
             <div className="block w-full lg:w-[30%] order-3 lg:order-3 pb-12 lg:pb-0">
-              <ul className="pl-7 md:pl-0 lg:pl-7 pt-4 md:pt-0">
+              <ul className="pl-7 md:pl-0 lg:pl-7 pt-4 lg:pt-0">
                 <li>
                   <Link href="/blog" className="list-items1 btn-link-secondary">
                     <ChevronRight className="w-[20px] h-[20px]" />

@@ -10,7 +10,7 @@ import ServicesMedia4 from "@/public/media/services-4.png";
 
 export default function OurServices({ hideViewAll = true }) {
   return (
-    <section className="block pt-12 md:pt-[75px] pb-[73px] md:pb-[95px] shadow-custom">
+    <section className="block pt-12 md:pt-[75px] pb-[73px] md:pb-[95px] box-shadow-custom3">
       <div className="block container mx-auto">
         <div className="flex flex-wrap gap-10 items-stretch">
           <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
@@ -21,8 +21,12 @@ export default function OurServices({ hideViewAll = true }) {
                 className="object-cover min-h-[170px] w-full max-h-[170px] rounded-normal"
               />
             </div>
+            <div className="flex flex-col justify-between flex-1">
             <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="primary-care">
+              <h3
+                className="text-[22px] leading-[32px] text-bluePrimary mb-3"
+                id="primary-care"
+              >
                 Primary Care
               </h3>
               <p className="text-lg leading-[32px] text-grey3d mb-7">
@@ -30,9 +34,10 @@ export default function OurServices({ hideViewAll = true }) {
                 and trust — focused on prevention, long-term health, and
                 everyday needs.
               </p>
+              </div>
               <Link
                 href="/primary-care/"
-                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-base"
               >
                 Learn More
                 <ChevronRight className="w-[20px] h-[20px]" />
@@ -48,20 +53,25 @@ export default function OurServices({ hideViewAll = true }) {
                 className="object-cover min-h-[170px] w-full max-h-[170px] rounded-normal"
               />
             </div>
-            <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="mental-health">
-                Mental Health
-              </h3>
-              <p className="text-lg leading-[32px] text-grey3d mb-7">
-                Compassionate, whole-person support for emotional wellness by
-                trusted care providers.
-              </p>
+            <div className="flex flex-col justify-between flex-1">
+              <div className="block">
+                <h3
+                  className="text-[22px] leading-[32px] text-bluePrimary mb-3"
+                  id="mental-health"
+                >
+                  Mental Health
+                </h3>
+                <p className="text-lg leading-[32px] text-grey3d mb-7">
+                  Compassionate, whole-person support for emotional wellness by
+                  trusted care providers.
+                </p>
+              </div>
               <Link
                 href="/services/mental-health/"
-                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-base"
               >
                 See Mental Health Services
-                <ChevronRight className="w-[20px] h-[20px]" />
+                <ChevronRight className="w-[20px] h-[20px] relative top-[2px]" />
               </Link>
             </div>
           </div>
@@ -74,17 +84,22 @@ export default function OurServices({ hideViewAll = true }) {
                 className="object-cover min-h-[170px] w-full max-h-[170px] rounded-normal"
               />
             </div>
-            <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="pediatrics" >
-                Pediatrics
-              </h3>
-              <p className="text-lg leading-[32px] text-grey3d mb-7">
-                Compassionate, whole-person support for emotional wellness by
-                trusted care providers.
-              </p>
+            <div className="flex flex-col justify-between flex-1">
+              <div className="block">
+                <h3
+                  className="text-[22px] leading-[32px] text-bluePrimary mb-3"
+                  id="pediatrics"
+                >
+                  Pediatrics
+                </h3>
+                <p className="text-lg leading-[32px] text-grey3d mb-7">
+                  Compassionate, whole-person support for emotional wellness by
+                  trusted care providers.
+                </p>
+              </div>
               <Link
                 href="/services/pediatric-care/"
-                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-base"
               >
                 Learn About Pediatric Care
                 <ChevronRight className="w-[20px] h-[20px]" />
@@ -100,17 +115,23 @@ export default function OurServices({ hideViewAll = true }) {
                 className="object-cover min-h-[170px] w-full max-h-[170px] rounded-normal"
               />
             </div>
-            <div className="block">
-              <h3 className="text-[22px] leading-[32px] text-bluePrimary mb-3" id="senior-health">
-                Senior Health Care
-              </h3>
-              <p className="text-lg leading-[32px] text-grey3d mb-7">
-                Stay well and active with care programs to support you at every
-                step, from Medicare Advantage plans to Annual Wellness exams.
-              </p>
+            <div className="flex flex-col justify-between flex-1">
+              <div className="block">
+                <h3
+                  className="text-[22px] leading-[32px] text-bluePrimary mb-3"
+                  id="senior-health"
+                >
+                  Senior Health Care
+                </h3>
+                <p className="text-lg leading-[32px] text-grey3d mb-7">
+                  Stay well and active with care programs to support you at
+                  every step, from Medicare Advantage plans to Annual Wellness
+                  exams.
+                </p>
+              </div>
               <Link
                 href="/services/senior-health/"
-                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-[17px] leading-[24px]"
+                className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-base"
               >
                 Explore Senior Services
                 <ChevronRight className="w-[20px] h-[20px]" />

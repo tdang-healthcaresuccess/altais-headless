@@ -47,7 +47,7 @@ export default function BlogSlider() {
             {/* Vertical Separator */}
             <div className="hidden md:block w-full md:w-[1px] h-[1px] md:h-[88px] bg-[#84d0d2] my-6 md:my-0 max-0 md:mx-10"></div>
             {/* Right Column */}
-            <div className="block max-w-full md:max-w-[540px] pb-10 mb:pb-2">
+            <div className="block max-w-full md:max-w-[540px] pb-5 mb:pb-2">
               <Link href={`/blog/${post.slug}`}>
                 <p className="text-white text-2xl md:text-xl leading-[36px] font-normal text-left pb-10 md:pb-0 hover:underline line-clamp-3">
                   {post.title}

@@ -9,11 +9,11 @@ export default function CounterProvider() {
   return (
     <section className="block pt-[50px] px-6 md:px-0 box-shadow-custom2">
       <div className="container mx-auto">
-        <div className="block w-full border-b border-lightPrimary">
+        <div className="block w-full">
           <CounterArea />
 
           <div className="w-full h-[1px] bg-lightPrimary mb-[85px]"></div>
-          <div className="block pb-6 about-slider-algo">
+          <div className="block slider-dot-area about-slider-algo">
             <Swiper
               modules={[Navigation, Pagination]}
               navigation={true}
@@ -21,6 +21,7 @@ export default function CounterProvider() {
               slidesPerView={1}
               pagination={{ clickable: true }}
               loop={true}
+              autoHeight={true}
               breakpoints={{
                 0: {
                   slidesPerView: 1,
@@ -54,7 +55,9 @@ export default function CounterProvider() {
               <SwiperSlide>
                 <div className="block">
                   <h4 className="countlist-h4">$2.8m</h4>
-                  <p className="countlist-p1">2022–2023 ACO Performance Incentive Payments</p>
+                  <p className="countlist-p1">
+                    2022–2023 ACO Performance Incentive Payments
+                  </p>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
@@ -72,13 +75,17 @@ export default function CounterProvider() {
               <SwiperSlide>
                 <div className="block">
                   <h4 className="countlist-h4">83%</h4>
-                  <p className="countlist-p1">Altais Employed Provider Engagement</p>
+                  <p className="countlist-p1">
+                    Altais Employed Provider Engagement
+                  </p>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="block">
                   <h4 className="countlist-h4">+</h4>
-                  <p className="countlist-p1">2021 Healthcare ACO Summit Award</p>
+                  <p className="countlist-p1">
+                    2021 Healthcare ACO Summit Award
+                  </p>
                 </div>
               </SwiperSlide>
             </Swiper>

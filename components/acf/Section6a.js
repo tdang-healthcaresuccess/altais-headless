@@ -19,8 +19,8 @@ const Section6a = ({ data }) => {
   const { section6aLineBreak } = data;
   return (
     <section className="pb-6 md:pb-12 ">
-      <div className="container mx-auto">
-        <div className="block testimonials-block">
+      <div className="container mx-auto"> 
+        <div className="block testimonials-block slider-dot-area">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation={true}
