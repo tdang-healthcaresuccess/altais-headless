@@ -94,7 +94,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/terms-of-use/"
+                        href="/contact-us/"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Contact Us
