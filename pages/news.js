@@ -16,6 +16,7 @@ const GET_POSTS_QUERY = gql`
         hasNextPage
         hasPreviousPage
         endCursor
+        
       }
       nodes {
         id
@@ -47,6 +48,7 @@ export async function getServerSideProps(context) {
           posts(first: $first, where: {categoryName: "News"}) {
             pageInfo {
               endCursor
+              totalCount
             }
           }
         }
@@ -78,10 +80,12 @@ export async function getServerSideProps(context) {
 }
 
 export default function News({ posts, pageInfo, page }) {
-  let totalPages = page;
-  if (pageInfo?.hasNextPage) {
-    totalPages = Math.max(page + 1, 10);
-  }
+  const POSTS_PER_PAGE = 20;
+  const totalCount = pageInfo?.totalCount || 0;
+  const totalPages = Math.max(1, Math.ceil(totalCount / POSTS_PER_PAGE));
+  const NUMERIC_RANGE = 5;
+  let startPage = Math.max(1, page - NUMERIC_RANGE);
+  let endPage = Math.min(totalPages, page + NUMERIC_RANGE);
   return (
     <Layout>
       <Head>
@@ -112,10 +116,11 @@ export default function News({ posts, pageInfo, page }) {
               )}
               {/* Numeric Pagination */}
               {(() => {
-                let startPage = Math.max(1, page - 4);
-                let endPage = Math.min(totalPages, startPage + 9);
-                if (endPage - startPage < 9) {
-                  startPage = Math.max(1, endPage - 9);
+                const NUMERIC_RANGE = 5;
+                let startPage = Math.max(1, page - NUMERIC_RANGE);
+                let endPage = page + NUMERIC_RANGE;
+                if (!pageInfo?.hasNextPage) {
+                  endPage = page;
                 }
                 return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((p) => (
                   <a
