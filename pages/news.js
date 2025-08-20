@@ -16,7 +16,7 @@ const GET_POSTS_QUERY = gql`
         hasNextPage
         hasPreviousPage
         endCursor
-        
+    totalCount
       }
       nodes {
         id
@@ -101,6 +101,7 @@ export default function News({ posts, pageInfo, page }) {
           items={[{ label: "Home", link: "/" }, { label: "News" }]}
         />
         <div className="p-8 bg-gray-50 min-h-screen font-sans">
+          {console.log("totalCount:", pageInfo?.totalCount, "totalPages:", Math.ceil(pageInfo?.totalCount / 20))}
           <div className="container mx-auto">
             <GridLayout posts={posts} />
             {/* Pagination Controls */}
@@ -118,10 +119,7 @@ export default function News({ posts, pageInfo, page }) {
               {(() => {
                 const NUMERIC_RANGE = 5;
                 let startPage = Math.max(1, page - NUMERIC_RANGE);
-                let endPage = page + NUMERIC_RANGE;
-                if (!pageInfo?.hasNextPage) {
-                  endPage = page;
-                }
+                let endPage = Math.min(totalPages, page + NUMERIC_RANGE);
                 return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((p) => (
                   <a
                     key={p}
