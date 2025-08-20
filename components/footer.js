@@ -1,5 +1,5 @@
 import BrandLogo from "@/public/media/altais-logo-white.svg";
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -203,21 +203,21 @@ export default function Footer() {
                 </div>
                 <div className="hidden md:flex gap-4 pt-7 order-4">
                   <Link
-                    href="https://www.facebook.com/"
+                    href="https://www.facebook.com/profile.php?id=100054693853136"
                     type="button"
                     className="btn btn-social"
                   >
                     <Facebook size={16} />
                   </Link>
                   <Link
-                    href="https://www.instagram.com/"
+                    href="https://twitter.com/AltaisHealth"
                     type="button"
                     className="btn btn-social"
                   >
-                    <Instagram size={16} />
+                    <X size={16} />
                   </Link>
                   <Link
-                    href="https://linkedin.com/"
+                    href="https://www.linkedin.com/company/altaishealth/"
                     type="button"
                     className="btn btn-social"
                   >
