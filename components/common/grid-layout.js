@@ -10,7 +10,17 @@ const BlogPostCard = ({ post }) => {
     if (!text) return '';
 
   // Strip HTML tags using regex (SSR-safe)
-  const plainText = text.replace(/<[^>]+>/g, '');
+  let plainText = text.replace(/<[^>]+>/g, '');
+  // Remove all builder text surrounded by brackets starting with et_pb_
+  plainText = plainText.replace(/\[et_pb_[^\]]*\]/g, '');
+  // Remove ending builder text like [/et_pb_button], [/et_pb_column], [/et_pb_post_title]
+  plainText = plainText.replace(/\[\/et_pb_[^\]]*\]/g, '');
+  // Remove any text inside brackets [ ... ]
+  plainText = plainText.replace(/\[[^\]]*\]/g, '');
+  // Remove special hex codes like &#8211; and similar
+  plainText = plainText.replace(/&#\d+;/g, '');
+  // Remove unicode non-breaking spaces and other invisible chars
+  plainText = plainText.replace(/[\u00A0-\u200F]/g, '');
 
     if (plainText.length <= limit) {
       return plainText;
@@ -21,14 +31,15 @@ const BlogPostCard = ({ post }) => {
   return (
     <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
       <div className="block border border-gray-200 rounded-lg mb-6 overflow-hidden">
-        <a href={post.uri}>
-          <img
-            src={post.featuredImage?.node?.sourceUrl || 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'}
-            alt={post.featuredImage?.node?.altText || post.title}
-            className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
-            onError={(e) => { e.target.src = 'https://placehold.co/400x200/E5E7EB/4B5563?text=No+Image'; }}
-          />
-        </a>
+        {post.featuredImage?.node?.sourceUrl && (
+          <a href={post.uri}>
+            <img
+              src={post.featuredImage.node.sourceUrl}
+              alt={post.featuredImage.node.altText || post.title}
+              className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
+            />
+          </a>
+        )}
       </div>
       <div className="block flex-grow">
         <a href={post.uri}>
