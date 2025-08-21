@@ -7,9 +7,7 @@ import Footer from './footer';
 const Layout = ({ children, siteTitle = 'Altais', siteDescription = '', metaD = null, noIndex = false }) => {
   return (
     <>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
+  {/* Remove duplicate <Head> and <title> to prevent overwriting dynamic page titles */}
       <div className="min-h-screen flex flex-col">
         {/* Header with meta tags */}
         <Header siteTitle={siteTitle} siteDescription={siteDescription} metaD={metaD} noIndex={noIndex} />

@@ -18,9 +18,9 @@ const Section6a = ({ data }) => {
   const testimonials = data.section6aTestimonials || [];
   const { section6aLineBreak } = data;
   return (
-    <section className="pb-6 md:pb-12 ">
-      <div className="container mx-auto"> 
-        <div className="block testimonials-block slider-dot-area">
+    <section className={`pb-6 md:pb-12 ${section6aLineBreak ? "pt-0" : "pt-12 md:pt-[60px]"}`}> 
+      <div className={`container mx-auto ${section6aLineBreak && "pt-12"}`}>
+        <div className="block testimonials-block">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation={true}
@@ -40,11 +40,6 @@ const Section6a = ({ data }) => {
             ))}
           </Swiper>
         </div>
-        {section6aLineBreak && (
-          <div className="hidden md:block container mx-auto">
-            <div className="block line-break"></div>
-          </div>
-        )}
       </div>
     </section>
   );
