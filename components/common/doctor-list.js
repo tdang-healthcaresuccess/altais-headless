@@ -8,11 +8,26 @@ export default function DocSearchList({
   doctors,
   activeLayout,
   onSelectDoctor,
+  specialtyFilter = "",
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const doctorsPerPage = 6;
 
-  const validDoctors = doctors || [];
+  let validDoctors = doctors || [];
+  // Fuzzy specialty filter
+  if (specialtyFilter && specialtyFilter.trim()) {
+    const filter = specialtyFilter.trim().toLowerCase();
+    validDoctors = validDoctors.filter(doc => {
+      const spec1 = doc.node.doctorData.spec1?.toLowerCase() || "";
+      const spec2 = doc.node.doctorData.spec2?.toLowerCase() || "";
+      const spec3 = doc.node.doctorData.spec3?.toLowerCase() || "";
+      return (
+        spec1.includes(filter) ||
+        spec2.includes(filter) ||
+        spec3.includes(filter)
+      );
+    });
+  }
   const totalPages = Math.ceil(validDoctors.length / doctorsPerPage);
 
   const indexOfLastDoctor = currentPage * doctorsPerPage;
@@ -144,11 +159,12 @@ export default function DocSearchList({
           </div>
           </div>
         ))
-      ) : (
+      ) : currentPage === 1 ? (
         <div className="text-center w-full text-grey3d text-xl mt-10">
           No doctors found matching your criteria.
         </div>
-      )}
+      ) : null
+    }
 
     </div>
   );

@@ -30,11 +30,14 @@ export async function getServerSideProps(context) {
   // Filtering logic (SSR)
   let filtered = dummyDoctors;
   if (searchQuery) {
-    filtered = filtered.filter((doc) =>
-      doc.node.doctorData.doctorsName
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
-    );
+    const term = searchQuery.toLowerCase();
+    filtered = filtered.filter((doc) => {
+      const nameMatch = doc.node.doctorData.doctorsName?.toLowerCase().includes(term);
+      const spec1Match = doc.node.doctorData.spec1?.toLowerCase().includes(term);
+      const spec2Match = doc.node.doctorData.spec2?.toLowerCase().includes(term);
+      const spec3Match = doc.node.doctorData.spec3?.toLowerCase().includes(term);
+      return nameMatch || spec1Match || spec2Match || spec3Match;
+    });
   }
   if (practiceNameQuery) {
     filtered = filtered.filter((doc) =>

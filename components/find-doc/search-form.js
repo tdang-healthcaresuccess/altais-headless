@@ -103,18 +103,18 @@ export default function DocSearchForm({
                 alt="Search"
                 className="absolute left-3 top-4"
               />
-              <input
-                type="text"
-                placeholder="Doctor, hospital, conditions, or specialty..."
-                className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
-                value={localSearch}
-                onChange={(e) => setLocalSearch(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    setSearchQuery(localSearch, localLocation);
-                  }
-                }}
-              />
+                <input
+                  type="text"
+                  placeholder="Doctor, hospital, conditions, or specialty..."
+                  className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
+                  value={localSearch}
+                  onChange={(e) => setLocalSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setSearchQuery(localSearch, localLocation);
+                    }
+                  }}
+                />
             </div>
             <button
               type="button"
@@ -123,7 +123,6 @@ export default function DocSearchForm({
                 setSearchQuery(localSearch, localLocation);
               }}
             >
-              
               Search
               <ChevronRight />
             </button>
