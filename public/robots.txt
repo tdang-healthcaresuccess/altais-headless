@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://h8jbjt9da2zaacrc01tt4r5p7.js.wpenginepowered.com/sitemap.xml
+Sitemap: https://h8jbjt9da2zaacrc01tt4r5p7.js.wpenginepowered.com/sitemap_index.xml
