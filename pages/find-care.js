@@ -250,8 +250,8 @@ export default function FindCare({
                 </div>
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
-                <DocSearchList doctors={doctors} activeLayout={activeLayout} />
-                <DocSearchList doctors={filteredDoctors} activeLayout={activeLayout} />
+                {/* Only show filteredDoctors if filtering is active, else show doctors */}
+                <DocSearchList doctors={filteredDoctors.length ? filteredDoctors : doctors} activeLayout={activeLayout} />
                 {/* Pagination Controls (styled and placed like doctor-list.js) */}
                 {total > 10 && (
                   <div className="flex justify-end w-full mt-4">
@@ -260,7 +260,7 @@ export default function FindCare({
                         className={`pagination-li pag-action ${page === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
                       >
                         <a
-                          href={page > 1 ? `/find-care?page=${page - 1}` : "#"}
+                          href={page > 1 ? `/find-care?page=${page - 1}${filters.searchQuery ? `&doctorName=${encodeURIComponent(filters.searchQuery)}` : ""}${filters.locationQuery ? `&zipCode=${encodeURIComponent(filters.locationQuery)}` : ""}${filters.specialityFilter ? `&specialty=${encodeURIComponent(filters.specialityFilter)}` : ""}` : "#"}
                           aria-disabled={page === 1}
                           className="flex items-center"
                         >
@@ -295,7 +295,7 @@ export default function FindCare({
                             className={`pagination-li ${page === p ? "active" : ""} cursor-pointer`}
                           >
                             <a
-                              href={`/find-care?page=${p}`}
+                              href={`/find-care?page=${p}${filters.searchQuery ? `&doctorName=${encodeURIComponent(filters.searchQuery)}` : ""}${filters.locationQuery ? `&zipCode=${encodeURIComponent(filters.locationQuery)}` : ""}${filters.specialityFilter ? `&specialty=${encodeURIComponent(filters.specialityFilter)}` : ""}`}
                               className={
                                 page === p ? "font-bold text-secondary" : ""
                               }
@@ -311,7 +311,7 @@ export default function FindCare({
                         <a
                           href={
                             page < totalPages
-                              ? `/find-care?page=${page + 1}`
+                              ? `/find-care?page=${page + 1}${filters.searchQuery ? `&doctorName=${encodeURIComponent(filters.searchQuery)}` : ""}${filters.locationQuery ? `&zipCode=${encodeURIComponent(filters.locationQuery)}` : ""}${filters.specialityFilter ? `&specialty=${encodeURIComponent(filters.specialityFilter)}` : ""}`
                               : "#"
                           }
                           aria-disabled={page === totalPages}
