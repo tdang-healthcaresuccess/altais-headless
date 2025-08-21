@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Header from './header';
 import Footer from './footer';
 
-const Layout = ({ children, siteTitle = 'Altais', siteDescription = '', metaD = null, noIndex = false }) => {
+const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcare', siteDescription = '', metaD = null, noIndex = false }) => {
   return (
     <>
   {/* Remove duplicate <Head> and <title> to prevent overwriting dynamic page titles */}
