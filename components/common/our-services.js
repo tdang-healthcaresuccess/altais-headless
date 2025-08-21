@@ -36,7 +36,7 @@ export default function OurServices({ hideViewAll = true }) {
               </p>
               </div>
               <Link
-                href="/primary-care/"
+                href="/services/primary-care/"
                 className="pt-4 flex justify-end md:justify-start gap-1 font-medium btn-link-secondary border-t border-lightPrimary text-base"
               >
                 Learn More
