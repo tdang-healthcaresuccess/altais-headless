@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Header from './header';
 import Footer from './footer';
 
-const Layout = ({ children, siteTitle = 'Altais', siteDescription = '', metaD = null }) => {
+const Layout = ({ children, siteTitle = 'Altais', siteDescription = '', metaD = null, noIndex = false }) => {
   return (
     <>
       <Head>
@@ -12,7 +12,7 @@ const Layout = ({ children, siteTitle = 'Altais', siteDescription = '', metaD = 
       </Head>
       <div className="min-h-screen flex flex-col">
         {/* Header with meta tags */}
-        <Header siteTitle={siteTitle} siteDescription={siteDescription} metaD={metaD} />
+        <Header siteTitle={siteTitle} siteDescription={siteDescription} metaD={metaD} noIndex={noIndex} />
 
         {/* Main content */}
         <main className="flex-grow">{children}</main>

@@ -38,7 +38,7 @@ const MenuItem = ({ item, router }) => {
   );
 };
 
-export default function Header({ siteTitle, siteDescription, metaD }) {
+export default function Header({ siteTitle, siteDescription, metaD, noIndex = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -104,7 +104,7 @@ export default function Header({ siteTitle, siteDescription, metaD }) {
         <meta name="description" content={metaDescription} />
         <meta name="title" content={metaTitle} /> 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
         {/* Canonical URL */}
         <link rel="canonical" href={`https://altais.com${router.asPath.split('?')[0]}`} />
