@@ -124,7 +124,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/careers/"
+                            href="https://altaishealthsolutions.wd108.myworkdayjobs.com/en-US/External"
                             className="text-[#FAA61A] text-[15px] leading-[19px] font-semibold"
                           >
                             Careers
