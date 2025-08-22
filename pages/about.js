@@ -54,7 +54,7 @@ export default function AboutUs() {
 
         {/* Lets Redefine Start */}
         <ContactJourney
-          heading="Let’s Redefine"
+          heading="Let's Redefine"
           subheading="What Care Feels Like"
           description={ContactSummaryDescription}
         />
