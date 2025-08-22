@@ -74,7 +74,7 @@ export default function ProviderDetails(props) {
         <SinglePageBanner
           DesktopBanner="bg-single-landing-banner"
           MobileBanner="bg-single-landing-banner-mobile"
-          heading="Find a Doctor"
+          heading={providerName}
         />
         {/* Inner Page Banner End */}
 
@@ -82,7 +82,8 @@ export default function ProviderDetails(props) {
         <Breadcrumb
           items={[
             { label: "Home", link: "/" },
-            { label: "Find Care", link: "/find-care" },
+            { label: "Find Care", link: "/find-care/" },
+            { label: providerName, link: `/physicians/${providerName}` },
           ]}
         />
         {/* Breadcrumb End */}
