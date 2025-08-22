@@ -71,10 +71,13 @@ export async function getServerSideProps(ctx) {
     postsAfter = data.posts.pageInfo.endCursor;
   }
 
-  // Get all doctor profile URLs from dummyDoctors
-  const doctorUrls = dummyDoctors.map(doc => doc.node.doctorData.profileurl);
+  // Get all doctor profile URLs from dummyDoctors, prefix with /physicians/
+  const doctorUrls = dummyDoctors
+    .map(doc => doc.node.doctorData.profileurl)
+    .filter(Boolean)
+    .map(url => url.startsWith('/physicians/') ? url : `/physicians/${url.replace(/^\//, '')}`);
 
-  // Get all specialties from dummyDoctors
+  // Get all specialties from dummyDoctors, prefix with /specialty/
   const specialtySet = new Set();
   dummyDoctors.forEach(doc => {
     if (doc.node.doctorData.speciality) {
