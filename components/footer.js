@@ -145,7 +145,7 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/patient-privacy"
+                            href="/wp-content/uploads/2025/08/AMGNoticeofPrivacyPractices-Master.pdf"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
