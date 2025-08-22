@@ -80,10 +80,13 @@ export async function getServerSideProps(context) {
 
 export default function Blog({ posts, pageInfo, page }) {
   const pageTitle = page > 1 ? `Blog | Page ${page} | Altais` : 'Blog | Altais';
+  const siteDescription = page > 1
+    ? `Altais: Shaping the Future of Healthcare. |Read the latest updates and insights from Altais. Page ${page} of our blog archive.`
+    : 'Altais: Shaping the Future of Healthcare | Read the latest updates and insights from Altais.';
   return (
-    <Layout siteTitle={pageTitle}>
+    <Layout siteTitle={pageTitle} siteDescription={siteDescription}>
 
-      <div className="block"> 
+  <div className="block"> 
         <InnerPageBanner
           DesktopBanner="bg-landing-common-banner"
           MobileBanner="bg-landing-common-banner-mobile"

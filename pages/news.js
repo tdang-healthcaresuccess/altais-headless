@@ -87,8 +87,11 @@ export default function News({ posts, pageInfo, page }) {
   let startPage = Math.max(1, page - NUMERIC_RANGE);
   let endPage = Math.min(totalPages, page + NUMERIC_RANGE);
    const pageTitle = page > 1 ? `News | Page ${page}` : 'News';
+   const siteDescription = page > 1
+     ? `Stay updated with the latest news from Altais. Page ${page} of our news archive.`
+     : 'Stay updated with the latest news from Altais.';
   return (
-    <Layout siteTitle={pageTitle}>
+    <Layout siteTitle={pageTitle} siteDescription={siteDescription}>
       <div className="block">
         <InnerPageBanner
           DesktopBanner="bg-landing-common-banner"

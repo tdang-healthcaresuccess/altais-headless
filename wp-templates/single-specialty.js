@@ -192,9 +192,16 @@ export default function specialty(props) {
   return (
     <Layout
       metaD={{
-        titleTag: title ? `${title} | Altais` : "Altais: Shaping the Future of Healthcare",
+        titleTag:
+          title
+            ? page > 1
+              ? `${title} | Page ${page} | Altais`
+              : `${title} | Altais`
+            : "Altais: Shaping the Future of Healthcare",
         metaDescription: title
-          ? `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
+          ? page > 1
+            ? `Find top physicians and specialists for ${title} (Page ${page}) at Altais. Compassionate, affordable, and connected care across California.`
+            : `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
           : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today."
       }}
     >
