@@ -12,6 +12,7 @@ import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";
 import Section6a from "@/components/acf/Section6a";
+import HubSpotForm from "@/components/acf/HubSpotForm";
 
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
@@ -121,6 +122,12 @@ const PAGE_QUERY = gql`
               reviewerDescription
             }
           }
+          ... on ContentTemplatesTemplateAHubspotFormLayout {
+          fieldGroupName
+          hubspotFormId
+          hubspotPortalId
+          hubspotRegion
+        }
         }
       }
 
@@ -231,6 +238,8 @@ export default function SinglePage(props) {
                   return <Section5a key={index} data={layout} />;
                 case "ContentTemplatesTemplateASection6aTestimonialsLayout":
                   return <Section6a key={index} data={layout} />;
+                case "ContentTemplatesTemplateAHubspotFormLayout":
+                  return <HubSpotForm key={index} data={layout} />;
                 default:
                   return null;
               }
