@@ -48,8 +48,15 @@ export default function HowCanWeHelp() {
               >
                 <option>Services</option>
                 <option>Primary Care</option>
+                <option>OB/GYN</option>
+                <option>Men's Health</option>
                 <option>Mental Health</option>
                 <option>Pediatrics</option>
+                <option>Senior Health Care</option>
+                <option>Urgent Care</option>
+                <option>Coordinated Care</option>
+                <option>Vaccinations</option>
+                <option>Hospitals and Labs</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-bluePrimary">
                 <ChevronDown className="w-5 h-5" color="#008889" />
