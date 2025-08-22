@@ -51,8 +51,13 @@ export default function Component(props) {
   const menuItems = headerMenuDataQuery?.primaryMenuItems?.nodes || {
     nodes: [],
   };
-  const { title: siteTitle, description: siteDescription } = siteData;
+  const { title: siteTitle, description: defaultSiteDescription } = siteData;
   const { title, content, date, author, featuredImage, categories } = contentQuery?.post || {};
+
+  // Strip HTML tags and grab first 120 characters for siteDescription
+  const plainContent = content ? content.replace(/<[^>]+>/g, '') : '';
+  const postDescription = plainContent.slice(0, 120);
+  const siteDescription = postDescription || defaultSiteDescription;
 
   return (
     <>

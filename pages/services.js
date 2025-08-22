@@ -29,7 +29,7 @@ export default function FrontPage(props) {
 
   return (
     <>
-      <Layout>
+      <Layout siteTitle={"Supportive Patient-Centered Care | Altais Services"} siteDescription={"Altais offers a wide range of healthcare services in California, from primary care to senior care. Explore our services."}>
         {/* Landing Page Banner Start */}
         <InnerPageBanner
           DesktopBanner="bg-services-landing-banner"
