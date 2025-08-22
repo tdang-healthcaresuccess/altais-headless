@@ -81,10 +81,8 @@ export async function getServerSideProps(context) {
 export default function Blog({ posts, pageInfo, page }) {
   const pageTitle = page > 1 ? `Blog | Page ${page} | Altais` : 'Blog | Altais';
   return (
-    <Layout>
-      <Head>
-        <title>{pageTitle}</title>
-      </Head>
+    <Layout siteTitle={pageTitle}>
+
       <div className="block"> 
         <InnerPageBanner
           DesktopBanner="bg-landing-common-banner"

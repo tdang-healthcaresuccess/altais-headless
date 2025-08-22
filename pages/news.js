@@ -86,11 +86,9 @@ export default function News({ posts, pageInfo, page }) {
   const NUMERIC_RANGE = 5;
   let startPage = Math.max(1, page - NUMERIC_RANGE);
   let endPage = Math.min(totalPages, page + NUMERIC_RANGE);
+   const pageTitle = page > 1 ? `News | Page ${page}` : 'News';
   return (
-    <Layout>
-      <Head>
-        <title>News</title>
-      </Head>
+    <Layout siteTitle={pageTitle}>
       <div className="block">
         <InnerPageBanner
           DesktopBanner="bg-landing-common-banner"
