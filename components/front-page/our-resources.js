@@ -73,7 +73,7 @@ export default function OurResources() {
                 <div className="w-full h-[1px] bg-lightPrimary my-3"></div>
                 <li>
                   <Link
-                    href="/#"
+                    href="/join-us/"
                     className="text-base leading-[24px] font-medium btn-link-secondary flex gap-1"
                   >
                     <ChevronRight className="w-[20px] h-[20px]" /> Join Our Care
