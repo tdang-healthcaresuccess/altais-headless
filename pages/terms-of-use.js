@@ -1,20 +1,19 @@
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Layout from "@/components/Layout";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 
 export default function websitePrivacy() {
+  const termlyDivRef = useRef(null);
   useEffect(() => {
-    // Only run on client
-    if (typeof window !== "undefined") {
-      (function(d, s, id) {
-        var js, tjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "https://app.termly.io/embed-policy.min.js";
-        tjs.parentNode.insertBefore(js, tjs);
-      }(document, 'script', 'termly-jssdk'));
+    if (typeof window !== "undefined" && termlyDivRef.current) {
+      if (!document.getElementById("termly-jssdk")) {
+        const script = document.createElement("script");
+        script.id = "termly-jssdk";
+        script.src = "https://app.termly.io/embed-policy.min.js";
+        document.body.appendChild(script);
+      }
     }
   }, []);
 
@@ -30,8 +29,8 @@ export default function websitePrivacy() {
                   items={[{ label: "Home", link: "/" }, { label: "Terms of Use" }]}
                 />
          <div className="container mx-auto">
-  <div name="termly-embed" data-id="5dcc657a-5a07-46cf-b263-e98b94483f67"></div>
-        </div>
+           <div name="termly-embed" data-id="5dcc657a-5a07-46cf-b263-e98b94483f67" ref={termlyDivRef}></div>
+         </div>
       </div>
     </Layout>
   );
