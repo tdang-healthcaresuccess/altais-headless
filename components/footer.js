@@ -86,7 +86,7 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
-                        href="/resources/"
+                        href="/patient-resources"
                         className="text-white text-[15px] leading-[19px] font-semibold"
                       >
                         Resources
