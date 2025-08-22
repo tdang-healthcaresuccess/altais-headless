@@ -98,7 +98,7 @@ export default function News({ posts, pageInfo, page }) {
         <Breadcrumb
           items={[{ label: "Home", link: "/" }, { label: "News" }]}
         />
-        <div className="p-8 bg-gray-50 min-h-screen font-sans">
+        <div className="p-8 min-h-screen font-sans">
           {console.log("totalCount:", pageInfo?.totalCount, "totalPages:", Math.ceil(pageInfo?.totalCount / 20))}
           <div className="container mx-auto">
             <GridLayout posts={posts} />
