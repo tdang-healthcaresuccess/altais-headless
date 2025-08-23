@@ -324,7 +324,7 @@ button {
 }
 .swiper-button-prev,
 .swiper-button-next {
-  bottom: 15px;
+  bottom: 12px;
   top: auto;
   height: 27px;
   z-index: 999;
@@ -442,4 +442,13 @@ button {
 }
 .featured-blog-slider .swiper-pagination{
   top: 80%;
+}
+
+@media screen and (max-width:767px){
+  .countlist-h4{
+    text-align: center;
+  }
+  .countlist-p1{
+    text-align: center;
+  }
 }

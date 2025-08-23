@@ -20,14 +20,14 @@ const Section6a = ({ data }) => {
   return (
     <section className={`pb-6 md:pb-12 ${section6aLineBreak ? "pt-0" : "pt-12 md:pt-[60px]"}`}> 
       <div className={`container mx-auto ${section6aLineBreak && "pt-12"}`}>
-        <div className="block testimonials-block">
+        <div className="block slider-dot-area testimonials-block">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation={true}
             spaceBetween={30}
             slidesPerView={1}
             pagination={{ clickable: true }}
-            loop={true}
+            loop={false}
             autoHeight={true}
           >
             {testimonials.map((testimonial, idx) => (

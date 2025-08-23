@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function HowCanWeHelp() {
   return (
-    <section className="block pt-[50px] md:pt-[75px] pb-[73px] md:pb-[95px] px-4 md:px-0 bg-greyF9 box-shadow-custom3">
+    <section className="block pt-[50px] md:pt-[75px] pb-[60px] md:pb-[85px] bg-greyF9 box-shadow-custom3">
       <div className="block container mx-auto">
         {/*
           Using a flex container to align the image and the content.
@@ -35,7 +35,7 @@ export default function HowCanWeHelp() {
             </h2>
 
             {/* Dropdown for Services */}
-            <div className="relative mb-[55px]">
+            <div className="relative mb-0 md:mb-[55px]">
               <select
                 className="block w-full appearance-none bg-white border border-[#999795] rounded-normal py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-primary text-bluePrimary"
                 onChange={e => {

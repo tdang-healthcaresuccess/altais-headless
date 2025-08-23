@@ -37,8 +37,8 @@ export default function InnerPageBanner({
 
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full">
-          <div className="w-full md:w-[60%] lg:w-[40%] h-full flex flex-col justify-start pt-12">
-            <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
+          <div className="w-full md:w-[60%] lg:w-[40%] h-full flex flex-col justify-start pt-6 md:pt-12">
+            <h1 className="font-poppins text-[30px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
               {heading}
               {heading2 && (
                 <>

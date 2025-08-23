@@ -23,13 +23,20 @@ export default function FrontPage(props) {
   };
   const { title: siteTitle, description: siteDescription } = siteData;
 
-  const ContactSummaryDescription = "From preventive checkups to specialty support, our network of healthcare providers delivers high-quality, compassionate care tailored to your life — wherever it leads."
+  const ContactSummaryDescription =
+    "From preventive checkups to specialty support, our network of healthcare providers delivers high-quality, compassionate care tailored to your life — wherever it leads.";
 
-  const HeroJourneyDescription = "With more than 10K highly skilled professionals dedicated to delivering high-quality care with compassion, Altais is ready to honor every healthcare journey."
+  const HeroJourneyDescription =
+    "With more than 10K highly skilled professionals dedicated to delivering high-quality care with compassion, Altais is ready to honor every healthcare journey.";
 
   return (
     <>
-      <Layout siteTitle={"Supportive Patient-Centered Care | Altais Services"} siteDescription={"Altais offers a wide range of healthcare services in California, from primary care to senior care. Explore our services."}>
+      <Layout
+        siteTitle={"Supportive Patient-Centered Care | Altais Services"}
+        siteDescription={
+          "Altais offers a wide range of healthcare services in California, from primary care to senior care. Explore our services."
+        }
+      >
         {/* Landing Page Banner Start */}
         <InnerPageBanner
           DesktopBanner="bg-services-landing-banner"
@@ -39,7 +46,11 @@ export default function FrontPage(props) {
         {/* Landing Page Banner End */}
 
         {/* Hero Journey Start */}
-        <HeroJourney heading="Our Patient Services" heading2={false} description={HeroJourneyDescription} />
+        <HeroJourney
+          heading="Our Patient Services"
+          heading2={false}
+          description={HeroJourneyDescription}
+        />
         {/* Hero Journey End */}
 
         {/* Search Services Start */}
@@ -51,7 +62,12 @@ export default function FrontPage(props) {
         {/* Our Services End */}
 
         {/* Lets Redefine Start */}
-  <ContactJourney heading="Care That Covers" subheading="the Whole You" description={ContactSummaryDescription} linkUrl={"/find-care"} />
+        <ContactJourney
+          heading="Care That Covers"
+          subheading="the Whole You"
+          description={ContactSummaryDescription}
+          linkUrl={"/find-care"}
+        />
         {/* Lets Redefine End */}
       </Layout>
     </>

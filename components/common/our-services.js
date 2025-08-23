@@ -26,7 +26,7 @@ export default function OurServices({ hideViewAll = true }) {
       <div className="block container mx-auto">
         <div className="flex flex-wrap gap-10 items-stretch">
           <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia1}
                 alt="primary care"
@@ -55,7 +55,7 @@ export default function OurServices({ hideViewAll = true }) {
             </div>
           </div>
            <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia7}
                 alt="primary care"
@@ -84,7 +84,7 @@ export default function OurServices({ hideViewAll = true }) {
             </div>
           </div>
                     <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia11}
                 alt="mens health"
@@ -115,7 +115,7 @@ export default function OurServices({ hideViewAll = true }) {
 
           {/* Services 1 */}
           <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia2}
                 alt="Mental Health"
@@ -145,7 +145,7 @@ export default function OurServices({ hideViewAll = true }) {
           </div>
           {/* Services 2 */}
           <div className="flex flex-col mb-6 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia3}
                 alt="Pediatrics"
@@ -174,8 +174,8 @@ export default function OurServices({ hideViewAll = true }) {
             </div>
           </div>
           {/* Services 3 */}
-          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+          <div className="flex flex-col mb-5 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia4}
                 alt="Senior Health Care"
@@ -204,8 +204,8 @@ export default function OurServices({ hideViewAll = true }) {
             </div>
           </div>
                     {/* Urgent Care */}
-          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+          <div className="flex flex-col mb-5 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               <Image
                 src={ServicesMedia6}
                 alt="Urgent Care"
@@ -234,8 +234,8 @@ export default function OurServices({ hideViewAll = true }) {
             </div>
           </div>
           {/* Coordinated Care */}
-          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+          <div className="flex flex-col mb-5 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               {/* Replace with appropriate image if available */}
               <Image
                 src={ServicesMedia14}
@@ -263,8 +263,8 @@ export default function OurServices({ hideViewAll = true }) {
           </div>
 
           {/* Vaccinations */}
-          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+          <div className="flex flex-col mb-5 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-normal mb-4 md:mb-6">
               {/* Replace with appropriate image if available */}
               <Image
                 src={ServicesMedia9}
@@ -292,8 +292,8 @@ export default function OurServices({ hideViewAll = true }) {
           </div>
 
           {/* Hospitals and Labs */}
-          <div className="flex flex-col mb-[60px] md:mb-[75px] w-full md:w-[calc(50%-20px)]">
-            <div className="block border border-primary rounded-normal mb-6">
+          <div className="flex flex-col mb-5 md:mb-[75px] w-full md:w-[calc(50%-20px)]">
+            <div className="block border border-primary rounded-normal mb-0 md:mb-6">
               {/* Replace with appropriate image if available */}
               <Image
                 src={ServicesMedia12}

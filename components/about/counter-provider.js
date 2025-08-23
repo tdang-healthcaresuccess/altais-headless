@@ -7,7 +7,7 @@ import CounterArea from "../common/counter-area";
 
 export default function CounterProvider() {
   return (
-    <section className="block pt-[50px] px-6 md:px-0 box-shadow-custom2">
+    <section className="block pt-[50px] box-shadow-custom2">
       <div className="container mx-auto">
         <div className="block w-full">
           <CounterArea />
@@ -18,25 +18,31 @@ export default function CounterProvider() {
               modules={[Navigation, Pagination]}
               navigation={true}
               spaceBetween={30}
-              slidesPerView={1}
+              slidesPerView={6}
+              slidesPerGroup={6}
               pagination={{ clickable: true }}
-              loop={true}
-              autoHeight={true}
+              loop={false}
+              loopedSlides={6}
               breakpoints={{
                 0: {
                   slidesPerView: 1,
+                  slidesPerGroup: 1,
                 },
                 640: {
                   slidesPerView: 2,
+                  slidesPerGroup: 2,
                 },
                 768: {
                   slidesPerView: 3,
+                  slidesPerGroup: 3,
                 },
                 1024: {
                   slidesPerView: 5,
+                  slidesPerGroup: 5,
                 },
                 1280: {
-                  slidesPerView: 7, // ✅ Show 7 slides on large screens
+                  slidesPerView: 6,
+                  slidesPerGroup: 6,
                 },
               }}
             >

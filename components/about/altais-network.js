@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AltaisNetwork() {
   return (
-    <div className="block pt-[50px] md:pt-[75px] pb-[80px] md:pb-[70px] px-6 md:px-0">
+    <div className="block pt-[50px] md:pt-[75px] pb-[80px] md:pb-[70px]">
       <div className="container mx-auto">
         <div className="block md:flex flex-wrap gap-[70px]">
           <div className="block w-full md:w-[calc(38%-35px)]">
