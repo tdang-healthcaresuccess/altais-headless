@@ -8,11 +8,11 @@ export default function LandingBanner() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <section className="flex items-center">
-      <div className="relative w-full h-full md:h-[400px]">
+      <div className="relative w-full h-full md:h-[400px] sm:h-[400px] ">
         {/* Background image */}
         <div
           className={clsx(
-            "md:absolute inset-0 bg-cover bg-center",
+            "md:absolute inset-0 bg-cover bg-center md:h-[400px] sm:h-[400px]",
             isMobile
               ? "bg-landing-banner-mobile min-h-[400px]"
               : "bg-landing-banner"
