@@ -83,7 +83,7 @@ export default function DocSearchList({
                   className={activeLayout === "grid" ? "block" : "flex gap-4"}
                 >
                   <h3 className="font-semibold text-bluePrimary text-lg pb-2">
-                    {doc.node.doctorData.doctorsName}
+                    {doc.node.title}
                   </h3>
                   <h3 className="font-normal text-bluePrimary text-lg pb-3">
                     {doc.node.doctorData.degree}
