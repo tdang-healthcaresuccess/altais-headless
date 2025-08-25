@@ -184,7 +184,7 @@ export default function FindCare({
   return (
     <Layout
       metaD={{
-        titleTag: "Find a Doctor | Altais",
+        titleTag: "Find Care | Altais",
         metaDescription: "Search for compassionate, affordable, and connected care providers across California with Altais."
       }}
       noIndex={true}
@@ -193,7 +193,7 @@ export default function FindCare({
         <InnerPageBanner
           DesktopBanner="bg-findDoc-landing-banner"
           MobileBanner="bg-findDoc-landing-banner-mobile"
-          heading="Find a Doctor"
+          heading="Find Care"
         />
         <DocSearchForm
           searchQuery={filters.searchQuery}

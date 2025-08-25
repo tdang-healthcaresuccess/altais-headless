@@ -20,7 +20,7 @@ export default function ContactJourney({heading, subheading,description, linkUrl
             <p className="text-grey3d text-lg leading-[32px] font-normal text-center md:text-left">
               {description}
             </p>
-            <Link href={linkUrl || ""} className="btn-gradient btn-sm flex-center w-full md:w-[180px] gap-1 mt-8">
+            <Link href={linkUrl || "/find-care/"} className="btn-gradient btn-sm flex-center w-full md:w-[180px] gap-1 mt-8">
               Find Care{" "}
               <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
             </Link>
