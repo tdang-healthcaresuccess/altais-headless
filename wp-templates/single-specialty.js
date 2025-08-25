@@ -211,9 +211,9 @@ export default function specialty(props) {
           MobileBanner="bg-single-landing-banner-mobile"
           heading={title || "Specialty"}
         />
-        <Breadcrumb
+        {/* <Breadcrumb
           items={[{ label: "Home", link: "/" }, { label: title }]}
-        />
+        /> */}
         <SpecialityShortInfo name={title} />
         <DocSearchForm
           searchQuery={searchQuery}

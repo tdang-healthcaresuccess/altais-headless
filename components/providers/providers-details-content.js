@@ -18,6 +18,7 @@ export default function ProvidersDetailsContent() {
   };
   const router = useRouter();
   const [provider, setProvider] = useState(null);
+  const [providerTitle, setProviderTitle] = useState("");
 
   // Apollo Client GraphQL query for specialties
   const SPECIALTIES_QUERY = gql`
@@ -43,6 +44,7 @@ export default function ProvidersDetailsContent() {
         (doc) => doc.node.doctorData.profileurl === `/${profileUrlSegment}`
       );
       setProvider(foundProvider ? foundProvider.node.doctorData : null);
+      setProviderTitle(foundProvider ? foundProvider.node.title : "");
     }
   }, [router.isReady, router.asPath]);
 
@@ -116,7 +118,7 @@ export default function ProvidersDetailsContent() {
             <div className="block pb-6 md:pb-12 border-b border-lightPrimary">
               <Image
                 src={provider.featuredImage?.node?.sourceUrl || "/media/doctor1.png"}
-                alt={provider.doctorsName || "Doctor"}
+                alt={providerTitle || "Doctor"}
                 width={315}
                 height={315}
                 className="w-full border border-lightPrimary rounded-normal"
@@ -164,7 +166,7 @@ export default function ProvidersDetailsContent() {
           </div>
           <div className="block w-full md:w-[calc(100%-315px)]">
             <h2 className="hidden md:block text-bluePrimary text-[26px] leading-[36px] pb-6">
-              {provider.doctorsName}, {provider.speciality}
+              {providerTitle}, {provider.speciality}
             </h2>
             <div className="block">
               {/* Profile Description can be added here if available in data */}
@@ -191,10 +193,10 @@ export default function ProvidersDetailsContent() {
                   Fellowship :{provider.fellowship}
                 </p>
               )}
-              <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary mt-6">
+              {/* <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary mt-6">
                 Hospital Affiliations
               </h3>
-              {renderAffiliations(provider.hospitalAffiliations)}
+              {renderAffiliations(provider.hospitalAffiliations)} */}
             </div>
           </div>
         </div>
