@@ -10,7 +10,7 @@ import { useMediaQuery } from "react-responsive";
 export default function MeetOurTeam() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
-    <section className="block py-12 px-6 md:px-0 bg-[#d9d9d926]">
+    <section className="block py-12 bg-[#d9d9d926]">
       <div className="container mx-auto">
         <div className="block">
             <div className="flex flex-col md:flex-row border border-primary rounded-normal mb-[45px]">

@@ -3,7 +3,7 @@ import VisionMissionMedia from "@/public/media/vision-mission-media.png";
 
 export default function VisionMission() {
   return (
-    <section className="block pt-[75px] bg-white md:pt-[75px] px-6 md:px-0 box-shadow-custom3">
+    <section className="block pt-[75px] bg-white md:pt-[75px] box-shadow-custom3">
       <div className="container mx-auto">
         <div className="block md:flex justify-between items-start gap-[75px] pb-[75px]">
           {/* Left Column */}
