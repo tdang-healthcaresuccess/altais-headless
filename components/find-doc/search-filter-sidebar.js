@@ -75,9 +75,14 @@ export default function DocSearchFilterSidebar({
 
   const handleInsuranceChange = (event) => {
     const { value, checked } = event.target;
-    let newIns = checked
-      ? [...insuranceFilter, value]
-      : insuranceFilter.filter((item) => item !== value);
+    let newIns;
+    if (checked) {
+      // Add insurance to filter, avoid duplicates
+      newIns = Array.from(new Set([...insuranceFilter, value]));
+    } else {
+      // Remove insurance from filter
+      newIns = insuranceFilter.filter((item) => item !== value);
+    }
     if (setInsuranceFilter) setInsuranceFilter(newIns);
     if (!setInsuranceFilter) updateQuery({ insurance: newIns });
   };
