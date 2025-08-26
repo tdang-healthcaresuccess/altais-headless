@@ -14,6 +14,7 @@ import Layout from "@/components/Layout";
 import Section6a from "@/components/acf/Section6a";
 import HubSpotForm from "@/components/acf/HubSpotForm";
 
+
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
@@ -30,6 +31,11 @@ const PAGE_QUERY = gql`
       metaD {
         metaDescription
         titleTag
+      }
+      seo {
+        title
+        description
+        canonicalUrl
       }
       heroBanner {
         heroBannerImage {
@@ -136,6 +142,7 @@ const PAGE_QUERY = gql`
 `;
 
 export default function SinglePage(props) {
+  // ...existing code...
   if (props.loading) {
     return <>Loading...</>;
   }
@@ -158,7 +165,6 @@ export default function SinglePage(props) {
 
   const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
-
   if (loading && !data)
     return (
       <div className="container-main flex justify-center py-20">Loading...</div>
@@ -168,6 +174,13 @@ export default function SinglePage(props) {
 
   if (!data?.page) {
     return <p>No pages have been published</p>;
+  }
+
+  // Log SEO data for debugging (after data is available)
+  if (data?.page?.seo) {
+    console.log('SEO Title:', data.page.seo.title);
+    console.log('SEO Description:', data.page.seo.description);
+    console.log('SEO CanonicalUrl:', data.page.seo.canonicalUrl);
   }
 
   const siteData = siteDataQuery?.data?.generalSettings || {};
@@ -187,9 +200,13 @@ export default function SinglePage(props) {
   const mobileImageUrl = heroMobile ;
   return (
     <Layout
-      siteTitle={title}
-      siteDescription={siteDescription}
-      metaD={metaD}
+      siteTitle={data.page.seo?.title || title}
+      siteDescription={data.page.seo?.description || siteDescription}
+      metaD={{
+        titleTag: data.page.seo?.title || metaD?.titleTag,
+        metaDescription: data.page.seo?.description || metaD?.metaDescription,
+        canonicalUrl: data.page.seo?.canonicalUrl || undefined
+      }}
     >
       <div className="block">
         {/* Inner Page Banner start */}
@@ -252,7 +269,6 @@ export default function SinglePage(props) {
       </main>
     </Layout>
   );
-}
 
 SinglePage.queries = [
   {
@@ -269,3 +285,4 @@ SinglePage.queries = [
     query: HEADER_MENU_QUERY,
   },
 ];
+}
