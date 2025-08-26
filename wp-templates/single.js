@@ -16,6 +16,11 @@ const POST_QUERY = gql`
       title
       content
       date
+      seo {
+        title
+        description
+        canonicalUrl
+      }
       author {
         node {
           name

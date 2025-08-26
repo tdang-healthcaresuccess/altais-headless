@@ -192,13 +192,14 @@ export default function Footer() {
                           </Link>
                         </li>
                         <li>
-                          <Link
-                            href="/consent-preferences/"
+                          <a
+                            href="#"
+                            id="termly-consent-preferences"
                             className="text-white text-xs leading-[16px] font-normal"
+                            onClick={(e) => { e.preventDefault(); if (window.displayPreferenceModal) window.displayPreferenceModal(); }}
                           >
-                            {" "}
-                            Consent Preferences{" "}
-                          </Link>
+                            Consent Preferences
+                          </a>
                         </li>
                       </ul>
                     </div>
