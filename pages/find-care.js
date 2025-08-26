@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import DocSearchForm from "components/find-doc/search-form";
@@ -32,10 +34,18 @@ export async function getServerSideProps(context) {
   if (searchQuery) {
     const term = searchQuery.toLowerCase();
     filtered = filtered.filter((doc) => {
-      const nameMatch = doc.node.doctorData.doctorsName?.toLowerCase().includes(term);
-      const spec1Match = doc.node.doctorData.spec1?.toLowerCase().includes(term);
-      const spec2Match = doc.node.doctorData.spec2?.toLowerCase().includes(term);
-      const spec3Match = doc.node.doctorData.spec3?.toLowerCase().includes(term);
+      const nameMatch = doc.node.doctorData.doctorsName
+        ?.toLowerCase()
+        .includes(term);
+      const spec1Match = doc.node.doctorData.spec1
+        ?.toLowerCase()
+        .includes(term);
+      const spec2Match = doc.node.doctorData.spec2
+        ?.toLowerCase()
+        .includes(term);
+      const spec3Match = doc.node.doctorData.spec3
+        ?.toLowerCase()
+        .includes(term);
       return nameMatch || spec1Match || spec2Match || spec3Match;
     });
   }
@@ -118,6 +128,7 @@ export async function getServerSideProps(context) {
 }
 
 import { useRouter } from "next/router";
+import { X } from "lucide-react";
 
 export default function FindCare({
   doctors,
@@ -181,11 +192,16 @@ export default function FindCare({
     setFilteredTotal(filtered.length);
   };
 
+  const [showFilter, setShowFilter] = useState(false);
+  const handleToggleFilterMobile = () => setShowFilter(true);
+  const handleCloseMobileFilter = () => setShowFilter(false);
+
   return (
     <Layout
       metaD={{
         titleTag: "Find Care | Altais",
-        metaDescription: "Search for compassionate, affordable, and connected care providers across California with Altais."
+        metaDescription:
+          "Search for compassionate, affordable, and connected care providers across California with Altais.",
       }}
       noIndex={true}
     >
@@ -233,18 +249,37 @@ export default function FindCare({
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
               <div className="block w-full md:w-[calc(30%-16px)] lg:w-[calc(25%-35px)]">
-                <div className="hidden md:block">
-                  <DocSearchFilterSidebar
-                    specialityFilter={filters.specialityFilter}
-                    genderFilter={filters.genderFilter}
-                    educationFilter={filters.educationFilter}
-                    insuranceFilter={filters.insuranceFilter}
-                    onFilterChange={handleFilterChange}
-                  />
-                </div>
+                {showFilter ? (
+                  <div className="fixed top-0 left-0 w-full h-full flex items-center p-5 bg-grey00BF z-50">
+                    <button onClick={handleCloseMobileFilter} type="button" className="absolute top-2 right-2">
+                      <X size={28} color="#fff" />
+                    </button>
+                    <div className="block bg-white p-5 w-full rounded-normal">
+                      <DocSearchFilterSidebar
+                        specialityFilter={filters.specialityFilter}
+                        genderFilter={filters.genderFilter}
+                        educationFilter={filters.educationFilter}
+                        insuranceFilter={filters.insuranceFilter}
+                        onFilterChange={handleFilterChange}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="hidden md:block">
+                    <DocSearchFilterSidebar
+                      specialityFilter={filters.specialityFilter}
+                      genderFilter={filters.genderFilter}
+                      educationFilter={filters.educationFilter}
+                      insuranceFilter={filters.insuranceFilter}
+                      onFilterChange={handleFilterChange}
+                    />
+                  </div>
+                )}
+
                 <div className="block md:hidden">
                   <button
                     type="button"
+                    onClick={handleToggleFilterMobile}
                     className="btn-md flex-center btn-normal btn-filter gap-3 w-full"
                   >
                     <FilterMobile />
@@ -254,7 +289,10 @@ export default function FindCare({
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
                 {/* Only show filteredDoctors if filtering is active, else show doctors */}
-                <DocSearchList doctors={filteredDoctors.length ? filteredDoctors : doctors} activeLayout={activeLayout} />
+                <DocSearchList
+                  doctors={filteredDoctors.length ? filteredDoctors : doctors}
+                  activeLayout={activeLayout}
+                />
                 {/* Pagination Controls (styled and placed like doctor-list.js) */}
                 {total > 10 && (
                   <div className="flex justify-end w-full mt-4">
@@ -263,7 +301,11 @@ export default function FindCare({
                         className={`pagination-li pag-action ${page === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
                       >
                         <a
-                          href={page > 1 ? `/find-care?page=${page - 1}${filters.searchQuery ? `&doctorName=${encodeURIComponent(filters.searchQuery)}` : ""}${filters.locationQuery ? `&zipCode=${encodeURIComponent(filters.locationQuery)}` : ""}${filters.specialityFilter ? `&specialty=${encodeURIComponent(filters.specialityFilter)}` : ""}` : "#"}
+                          href={
+                            page > 1
+                              ? `/find-care?page=${page - 1}${filters.searchQuery ? `&doctorName=${encodeURIComponent(filters.searchQuery)}` : ""}${filters.locationQuery ? `&zipCode=${encodeURIComponent(filters.locationQuery)}` : ""}${filters.specialityFilter ? `&specialty=${encodeURIComponent(filters.specialityFilter)}` : ""}`
+                              : "#"
+                          }
                           aria-disabled={page === 1}
                           className="flex items-center"
                         >
