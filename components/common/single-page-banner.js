@@ -15,7 +15,7 @@ export default function SinglePageBanner({
         {/* Background image */}
         <div
           className={clsx(
-            "md:absolute inset-0 bg-cover bg-right",
+            "md:absolute inset-0 bg-cover bg-right md:h-[160px]",
             isMobile ? `${MobileBanner} min-h-[160px]` : DesktopBanner
           )}
         ></div>

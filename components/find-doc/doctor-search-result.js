@@ -5,7 +5,7 @@ import FilterSorting from "@/public/icons/filter-sorting.svg"
 
 export default function DoctorSearchResults({activeLayout}) {
   return (
-    <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px] px-6 md:px-0">
+    <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px]">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
           <div className="block w-full md:w-[calc(30%-16px)] lg:w-[calc(25%-35px)]">

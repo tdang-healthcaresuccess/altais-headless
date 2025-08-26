@@ -21,8 +21,9 @@ const PAGE_QUERY = gql`
 `;
 
 import React, { useState, useEffect } from "react";
+import { X } from "lucide-react";
+import { FilterMobile } from "@/public/icons/filter-mobile";
 export default function specialty(props) {
-
   const databaseId = props.__SEED_NODE__?.databaseId;
   const asPreview = props.__SEED_NODE__?.asPreview;
 
@@ -42,7 +43,9 @@ export default function specialty(props) {
   const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
   const siteData = siteDataQuery?.data?.generalSettings || {};
-  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || { nodes: [] };
+  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
+    nodes: [],
+  };
   const { title: siteTitle, description: siteDescription } = siteData;
   const { title, content } = data?.specialty || {};
 
@@ -67,7 +70,10 @@ export default function specialty(props) {
   const page = parseInt(router.query.page) || 1;
   const DOCTORS_PER_PAGE = 10;
   const totalPages = Math.ceil(filteredDoctors.length / DOCTORS_PER_PAGE);
-  const paginatedDoctors = filteredDoctors.slice((page - 1) * DOCTORS_PER_PAGE, page * DOCTORS_PER_PAGE);
+  const paginatedDoctors = filteredDoctors.slice(
+    (page - 1) * DOCTORS_PER_PAGE,
+    page * DOCTORS_PER_PAGE
+  );
 
   const clearAllFilters = () => {
     setSearchQuery("");
@@ -115,14 +121,19 @@ export default function specialty(props) {
         );
       }
       if (locationQuery) {
-        const query = locationQuery.toLowerCase().replace(/\s+/g, ' ').trim();
-        const queryWords = query.split(' ');
+        const query = locationQuery.toLowerCase().replace(/\s+/g, " ").trim();
+        const queryWords = query.split(" ");
         specialtyFiltered = specialtyFiltered.filter((doc) => {
           const data = doc.node.doctorData;
-          const fields = [data.address, data.city, data.addressCity, data.state, data.zipcode]
-            .map(f => (f ? f.toLowerCase().replace(/\s+/g, ' ').trim() : ''));
-          return fields.some(field =>
-            queryWords.every(word => field.includes(word))
+          const fields = [
+            data.address,
+            data.city,
+            data.addressCity,
+            data.state,
+            data.zipcode,
+          ].map((f) => (f ? f.toLowerCase().replace(/\s+/g, " ").trim() : ""));
+          return fields.some((field) =>
+            queryWords.every((word) => field.includes(word))
           );
         });
       }
@@ -158,12 +169,12 @@ export default function specialty(props) {
     genderFilter,
     educationFilter,
     insuranceFilter,
-    title
+    title,
   ]);
 
   // Helper to get correct path for specialty page
   const getSpecialtyPath = () => {
-    return router.asPath.split('?')[0];
+    return router.asPath.split("?")[0];
   };
 
   // Helper to filter out unwanted query params
@@ -189,20 +200,23 @@ export default function specialty(props) {
     });
   };
 
+  const [showFilter, setShowFilter] = useState(false);
+  const handleToggleFilterMobile = () => setShowFilter(true);
+  const handleCloseMobileFilter = () => setShowFilter(false);
+
   return (
     <Layout
       metaD={{
-        titleTag:
-          title
-            ? page > 1
-              ? `${title} | Page ${page} | Altais`
-              : `${title} | Altais`
-            : "Altais: Shaping the Future of Healthcare",
+        titleTag: title
+          ? page > 1
+            ? `${title} | Page ${page} | Altais`
+            : `${title} | Altais`
+          : "Altais: Shaping the Future of Healthcare",
         metaDescription: title
           ? page > 1
             ? `Find top physicians and specialists for ${title} (Page ${page}) at Altais. Compassionate, affordable, and connected care across California.`
             : `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
-          : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today."
+          : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.",
       }}
     >
       <div className="block">
@@ -218,8 +232,12 @@ export default function specialty(props) {
         <DocSearchForm
           searchQuery={searchQuery}
           locationQuery={locationQuery}
-          setSearchQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
-          setLocationQuery={(searchValue, locationValue) => handleSearch(searchValue, locationValue)}
+          setSearchQuery={(searchValue, locationValue) =>
+            handleSearch(searchValue, locationValue)
+          }
+          setLocationQuery={(searchValue, locationValue) =>
+            handleSearch(searchValue, locationValue)
+          }
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
         />
@@ -241,28 +259,55 @@ export default function specialty(props) {
           {/* If you have LayoutOptions component, use it here: */}
           {/* <LayoutOptions activeLayout={activeLayout} setActiveLayout={setActiveLayout} /> */}
         </div>
-        <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px] px-6 md:px-0">
+        <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px]">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row gap-9 md:gap-8 lg:gap-[70px]">
               <div className="block w-full md:w-[calc(30%-16px)] lg:w-[calc(25%-35px)]">
-                <div className="hidden md:block">
-                  <DocSearchFilterSidebar
-                    specialityFilter={specialityFilter}
-                    setSpecialityFilter={setSpecialityFilter}
-                    genderFilter={genderFilter}
-                    setGenderFilter={setGenderFilter}
-                    educationFilter={educationFilter}
-                    setEducationFilter={setEducationFilter}
-                    insuranceFilter={insuranceFilter}
-                    setInsuranceFilter={setInsuranceFilter}
-                    clearAllFilters={clearAllFilters}
-                  />
-                </div>
+                {showFilter ? (
+                  <div className="fixed top-0 left-0 w-full h-full flex items-center p-5 bg-grey00BF z-50">
+                    <button
+                      onClick={handleCloseMobileFilter}
+                      type="button"
+                      className="absolute top-2 right-2"
+                    >
+                      <X size={28} color="#fff" />
+                    </button>
+                    <div className="block bg-white p-5 w-full rounded-normal">
+                      <DocSearchFilterSidebar
+                        specialityFilter={specialityFilter}
+                        setSpecialityFilter={setSpecialityFilter}
+                        genderFilter={genderFilter}
+                        setGenderFilter={setGenderFilter}
+                        educationFilter={educationFilter}
+                        setEducationFilter={setEducationFilter}
+                        insuranceFilter={insuranceFilter}
+                        setInsuranceFilter={setInsuranceFilter}
+                        clearAllFilters={clearAllFilters}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="hidden md:block">
+                    <DocSearchFilterSidebar
+                      specialityFilter={specialityFilter}
+                      setSpecialityFilter={setSpecialityFilter}
+                      genderFilter={genderFilter}
+                      setGenderFilter={setGenderFilter}
+                      educationFilter={educationFilter}
+                      setEducationFilter={setEducationFilter}
+                      insuranceFilter={insuranceFilter}
+                      setInsuranceFilter={setInsuranceFilter}
+                      clearAllFilters={clearAllFilters}
+                    />
+                  </div>
+                )}
                 <div className="block md:hidden">
                   <button
                     type="button"
-                    className="btn-md flex-center btn-normal gap-3 w-full"
+                    onClick={handleToggleFilterMobile}
+                    className="btn-md flex-center btn-normal btn-filter gap-3 w-full"
                   >
+                    <FilterMobile />
                     Apply Filter and Sort
                   </button>
                 </div>
@@ -277,14 +322,38 @@ export default function specialty(props) {
                   <div className="flex justify-end w-full mt-4">
                     <ul className="flex gap-3">
                       <li
-                        className={`pagination-li pag-action ${page === 1 ? '!hidden md:!flex' : 'cursor-pointer'}`}
+                        className={`pagination-li pag-action ${page === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
                       >
                         <a
-                          href={page > 1 ? `${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: page - 1 }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}` : '#'}
+                          href={
+                            page > 1
+                              ? `${getSpecialtyPath()}?${Object.entries({
+                                  ...getCleanQuery(router.query),
+                                  page: page - 1,
+                                })
+                                  .map(
+                                    ([k, v]) => `${k}=${encodeURIComponent(v)}`
+                                  )
+                                  .join("&")}`
+                              : "#"
+                          }
                           aria-disabled={page === 1}
                           className="flex items-center"
                         >
-                          <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> Previous Page
+                          <svg
+                            className="w-[20px] h-[20px] text-secondary"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M15 19l-7-7 7-7"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>{" "}
+                          Previous Page
                         </a>
                       </li>
                       {/* Show only 4 page numbers at a time */}
@@ -294,14 +363,26 @@ export default function specialty(props) {
                         if (endPage - startPage < 3) {
                           startPage = Math.max(1, endPage - 3);
                         }
-                        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((p) => (
+                        return Array.from(
+                          { length: endPage - startPage + 1 },
+                          (_, i) => startPage + i
+                        ).map((p) => (
                           <li
                             key={p}
-                            className={`pagination-li ${page === p ? 'active' : ''} cursor-pointer`}
+                            className={`pagination-li ${page === p ? "active" : ""} cursor-pointer`}
                           >
                             <a
-                              href={`${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: p }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}`}
-                              className={page === p ? 'font-bold text-secondary' : ''}
+                              href={`${getSpecialtyPath()}?${Object.entries({
+                                ...getCleanQuery(router.query),
+                                page: p,
+                              })
+                                .map(
+                                  ([k, v]) => `${k}=${encodeURIComponent(v)}`
+                                )
+                                .join("&")}`}
+                              className={
+                                page === p ? "font-bold text-secondary" : ""
+                              }
                             >
                               {p}
                             </a>
@@ -309,14 +390,38 @@ export default function specialty(props) {
                         ));
                       })()}
                       <li
-                        className={`pagination-li pag-action ${page === totalPages ? 'hidden' : 'cursor-pointer'}`}
+                        className={`pagination-li pag-action ${page === totalPages ? "hidden" : "cursor-pointer"}`}
                       >
                         <a
-                          href={page < totalPages ? `${getSpecialtyPath()}?${Object.entries({ ...getCleanQuery(router.query), page: page + 1 }).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}` : '#'}
+                          href={
+                            page < totalPages
+                              ? `${getSpecialtyPath()}?${Object.entries({
+                                  ...getCleanQuery(router.query),
+                                  page: page + 1,
+                                })
+                                  .map(
+                                    ([k, v]) => `${k}=${encodeURIComponent(v)}`
+                                  )
+                                  .join("&")}`
+                              : "#"
+                          }
                           aria-disabled={page === totalPages}
                           className="flex items-center"
                         >
-                          Next Page <svg className="w-[20px] h-[20px] text-secondary" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          Next Page{" "}
+                          <svg
+                            className="w-[20px] h-[20px] text-secondary"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M9 5l7 7-7 7"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
                         </a>
                       </li>
                     </ul>
