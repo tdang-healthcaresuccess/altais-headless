@@ -21,6 +21,7 @@ const Section2a = ({ data }) => {
     section2aLineBreak,
     wrapUpList,
   } = data;
+  console.log(wrapUpList);
   return (
     <section
       style={{ backgroundColor: sectionBackgroundColor }}
