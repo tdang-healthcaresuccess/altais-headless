@@ -1,5 +1,5 @@
 
-// This is a placeholder for a responsive image component.
+// This is a placeholder for a responsive image component. 
 // In a real application, you'd want to use a component that handles
 // image optimization (like Next.js's Image component) or adds
 // proper fallbacks.
