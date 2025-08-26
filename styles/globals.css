@@ -173,10 +173,10 @@ button {
   display: flex;
   bottom: 0px !important;
 }
-.swiper-initialized {
-  min-height: 290px;
-}
 
+.featured-blog-slider .swiper-initialized {
+  min-height: auto;
+}
 @media screen and (max-width: 767px) {
   .swiper-parent {
     min-height: 250px;
@@ -188,10 +188,9 @@ button {
     position: relative;
     top: 10px;
   }
-}
-
-.swiper-initialized {
-  min-height: auto;
+  .featured-blog-slider .swiper-initialized {
+    min-height: 290px;
+  }
 }
 
 /* Landing Page */
@@ -256,10 +255,10 @@ button {
 .bg-clinics-landing-banner-mobile {
   background-image: url("./../public/media/clinics-banner.png");
 }
-.bg-landing-common-banner{
+.bg-landing-common-banner {
   background-image: url("./../public/media/banner-3.png");
 }
-.bg-landing-common-banner-mobile{
+.bg-landing-common-banner-mobile {
   background-image: url("./../public/media/banner-3.png");
 }
 
@@ -433,22 +432,25 @@ button {
   gap: 20px;
 }
 @media (max-width: 1024px) {
-  .wrap-list ul{
+  .wrap-list ul {
     flex-direction: column;
   }
 }
 .wrap-list ul li {
   width: calc(50% - 20px);
 }
-.featured-blog-slider .swiper-pagination{
+.featured-blog-slider .swiper-pagination {
   top: 80%;
 }
 
-@media screen and (max-width:767px){
-  .countlist-h4{
+@media screen and (max-width: 767px) {
+  .countlist-h4 {
     text-align: center;
   }
-  .countlist-p1{
+  .countlist-p1 {
     text-align: center;
+  }
+  .featured-blog-slider .swiper-pagination {
+    top: 95%;
   }
 }

@@ -1,7 +1,8 @@
 import BrandLogo from "@/public/media/altais-logo-white.svg";
-import {  X } from "lucide-react";
+import { X } from "lucide-react";
 import Facebook from "@/public/icons/fb.svg";
 import LinkedIn from "@/public/icons/linkedin.svg";
+import Twitter from "@/public/icons/twitter.svg";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -216,7 +217,7 @@ export default function Footer() {
                     type="button"
                     className="btn btn-social"
                   >
-                   
+                   <Image src={Twitter} alt="Twitter" width={16} height={16} style={{maxHeight:16}}/>
                   </Link>
                   <Link
                     href="https://www.linkedin.com/company/altaishealth/"
