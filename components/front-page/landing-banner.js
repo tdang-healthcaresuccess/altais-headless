@@ -9,15 +9,15 @@ export default function LandingBanner() {
   return (
     <section className="flex items-center">
       <div className="relative w-full h-full md:h-[400px] sm:h-[400px] ">
-        {/* Background image */}
+        {/* Background image */} 
         <div
           className={clsx(
-            "md:absolute inset-0 bg-cover bg-center md:h-[400px] sm:h-[400px]",
+            "md:absolute inset-0 bg-cover bg-center h-[400px]",
             isMobile
               ? "bg-landing-banner-mobile min-h-[400px]"
               : "bg-landing-banner"
           )}
-        ></div>
+        ></div> 
 
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full">

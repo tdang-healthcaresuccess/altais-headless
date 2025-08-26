@@ -16,7 +16,7 @@ export default function InnerPageBanner({
   return (
     <section className="flex items-center">
       <div className="relative w-full h-full md:h-[400px]">
-        {/* Background image */}
+        {/* Background image */} 
         <div
           className={clsx(
             "md:absolute inset-0 bg-cover bg-right",
