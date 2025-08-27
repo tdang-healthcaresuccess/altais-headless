@@ -199,7 +199,7 @@ export default function FindCare({
   return (
     <Layout
       metaD={{
-        titleTag: "Find Care | Altais",
+        titleTag: page > 1 ? `Find Care | Altais - Page ${page}` : "Find Care | Altais",
         metaDescription:
           "Search for compassionate, affordable, and connected care providers across California with Altais.",
       }}
