@@ -201,6 +201,15 @@ export default function Footer() {
                             Consent Preferences
                           </a>
                         </li>
+                        <li>
+                          <Link
+                            href="/physicians-compliance/"
+                            className="text-white text-xs leading-[16px] font-normal"
+                          >
+                            {" "}
+                            Physicians Compliance{" "}
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                   </div>
