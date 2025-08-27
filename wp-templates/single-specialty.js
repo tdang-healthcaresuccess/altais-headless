@@ -6,7 +6,7 @@ import Breadcrumb from "@/components/common/breadcrumb";
 import SinglePageBanner from "@/components/common/single-page-banner";
 import Layout from "@/components/Layout";
 import SpecialityShortInfo from "@/components/common/specialty-short-info";
-import DocSearchForm from "@/components/find-doc/search-form";
+import SpecialtyDocSearchForm from "@/components/find-doc/specialty-doc-search-form";
 import DocSearchFilterSidebar from "@/components/find-doc/search-filter-sidebar";
 import DocSearchList from "@/components/common/doctor-list";
 import { dummyDoctors } from "@/components/DummyData";
@@ -225,21 +225,21 @@ export default function specialty(props) {
           MobileBanner="bg-single-landing-banner-mobile"
           heading={title || "Specialty"}
         />
-        {/* <Breadcrumb
-          items={[{ label: "Home", link: "/" }, { label: title }]}
-        /> */}
+         <Breadcrumb
+            items={[{ label: "Home", link: "/" }, { label: title }]}
+          />
+        <div className="container mx-auto pt-3 pb-6">
+         
+        </div>
         <SpecialityShortInfo name={title} />
-        <DocSearchForm
+        <SpecialtyDocSearchForm
           searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
           locationQuery={locationQuery}
-          setSearchQuery={(searchValue, locationValue) =>
-            handleSearch(searchValue, locationValue)
-          }
-          setLocationQuery={(searchValue, locationValue) =>
-            handleSearch(searchValue, locationValue)
-          }
+          setLocationQuery={setLocationQuery}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
+          showIcons={true}
         />
         {/* Results Count, Clear All Filters Link, and LayoutOptions */}
         <div className="block container mx-auto mt-4 mb-4">
