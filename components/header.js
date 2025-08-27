@@ -110,8 +110,8 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
         <div className="flex items-center justify-end">
           <Link 
             href="/blog/altais-brand-refresh/" 
-            className="border border-white btn-action rounded-md text-white bg-transparent px-6 py-2 font-semibold hover:bg-white hover:text-[#008889] transition flex items-center justify-center h-full"
-            style={{ minHeight: "35px" }}
+            className="border border-white btn-action rounded-md text-white bg-transparent px-6 py-2 font-semibold hover:bg-white hover:text-[#008889] transition flex items-center justify-center h-full whitespace-nowrap"
+            style={{ minHeight: "35px", width: "140px" }}
           >
             Learn More
           </Link>
