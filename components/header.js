@@ -94,7 +94,7 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
         }}>
           <div className="container mx-auto ">
       <div
-        className="w-full flex items-center justify-between px-6"
+        className="w-full flex items-center justify-between px-0"
        
       >
         <div className="flex items-center">
@@ -102,13 +102,17 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
             All Our Care, Now in One Place
           </span>
         </div>
-        <div className="hidden md:flex flex-1 items-center justify-center px-8">
-          <span className="text-white text-sm font-normal ">
+        <div className="hidden md:flex flex-1 items-center justify-center px-10 max-w-[750px]">
+          <span className="text-white text-xs font-normal ">
             We’ve united our family of brands including Brown & Toland, Family Care Specialists and Altais Medical Group under Altais.com to give you simpler access to the same exceptional care you know and trust.
           </span>
         </div>
         <div className="flex items-center justify-end">
-          <Link href="/blog/altais-brand-refresh/" className="border border-white btn-action rounded-md text-white bg-transparent px-6 py-2 font-semibold hover:bg-white hover:text-[#008889] transition">
+          <Link 
+            href="/blog/altais-brand-refresh/" 
+            className="border border-white btn-action rounded-md text-white bg-transparent px-6 py-2 font-semibold hover:bg-white hover:text-[#008889] transition flex items-center justify-center h-full"
+            style={{ minHeight: "35px" }}
+          >
             Learn More
           </Link>
         </div>
