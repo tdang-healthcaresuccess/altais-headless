@@ -225,13 +225,13 @@ export default function Footer() {
                   >
                     <Image src={Facebook} alt="Facebook" width={16} height={16} style={{maxHeight:16}}/>
                   </Link>
-                  <Link
+                  {/* <Link
                     href="#"
                     type="button"
                     className="btn btn-social"
                   >
                    <Image src={Instagram} alt="Instagram" width={16} height={16} style={{maxHeight:16}}/>
-                  </Link>
+                  </Link> */}
                   <Link
                     href="https://www.linkedin.com/company/altaishealth/"
                     type="button"
