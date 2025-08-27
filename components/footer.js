@@ -5,6 +5,7 @@ import LinkedIn from "@/public/icons/linkedin.svg";
 import Instagram from "@/public/icons/instagram.svg";
 import Image from "next/image";
 import Link from "next/link";
+import CareAward from "@/public/media/CareExcellence.png";
 
 export default function Footer() {
   return (
@@ -23,6 +24,7 @@ export default function Footer() {
                     priority
                   />
                 </Link>
+               
                 <div className="flex md:hidden w-full justify-end gap-4">
                   <Link
                     href="https://www.facebook.com/profile.php?id=100054693853136"
@@ -214,6 +216,7 @@ export default function Footer() {
                     </div>
                   </div>
                 </div>
+                <div className="hidden md:flex flex-col order-4">
                 <div className="hidden md:flex gap-4 pt-7 order-4">
                   <Link
                     href="https://www.facebook.com/profile.php?id=100054693853136"
@@ -238,6 +241,11 @@ export default function Footer() {
                     <Image src={LinkedIn} alt="LinkedIn" width={16} height={16} />
                   </Link>
                 </div>
+                 {/* Care Excellence Award image sits below social icons */}
+                <div className="hidden md:flex w-full justify-start pt-5 order-5">
+                  <Image src={CareAward} alt="Care Excellence Award" height={80} style={{maxHeight:80}}/>
+                </div>
+                    </div>
               </div>
             </div>
           </div>
