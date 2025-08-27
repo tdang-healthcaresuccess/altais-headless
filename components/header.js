@@ -86,6 +86,35 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
   // ...existing code...
   return (
     <>
+    
+      {/* Gradient Info Bar */}
+      <div className="flex mx-auto w-full items-center align-middle" style={{
+          background: "linear-gradient(90deg, #111638 0%, #008889 100%)",
+          minHeight: "75px",
+        }}>
+          <div className="container mx-auto ">
+      <div
+        className="w-full flex items-center justify-between px-6"
+       
+      >
+        <div className="flex items-center">
+          <span className="text-white text-lg font-600">
+            All Our Care, Now in One Place
+          </span>
+        </div>
+        <div className="hidden md:flex flex-1 items-center justify-center px-8">
+          <span className="text-white text-sm font-normal ">
+            We’ve united our family of brands including Brown & Toland, Family Care Specialists and Altais Medical Group under Altais.com to give you simpler access to the same exceptional care you know and trust.
+          </span>
+        </div>
+        <div className="flex items-center justify-end">
+          <Link href="/blog/altais-brand-refresh/" className="border border-white btn-action rounded-md text-white bg-transparent px-6 py-2 font-semibold hover:bg-white hover:text-[#008889] transition">
+            Learn More
+          </Link>
+        </div>
+        </div>
+      </div>
+      </div>
       <header className="block py-4 lg:py-0 relative">
         <div className="container mx-auto bg-white">
           <div className="w-full flex items-center justify-between">
