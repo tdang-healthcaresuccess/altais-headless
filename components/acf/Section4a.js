@@ -45,7 +45,9 @@ const Section4a = ({ data }) => {
             {/* Primary Headline Start */}
             <div className="block">
               {section4aHeadline && <h2>{section4aHeadline}</h2>}
-              <p>{section4aDescription}</p>
+              {section4aDescription && (
+                <div dangerouslySetInnerHTML={{ __html: section4aDescription }} />
+              )}
             </div>
             {/* Primary Headline End */}
             {section4aAdditionalHeadline && (
