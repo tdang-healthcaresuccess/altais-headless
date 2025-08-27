@@ -385,6 +385,12 @@ export default function FindCare({
               </div>
             </div>
           </div>
+          <div className="container mx-auto">
+           <p className="italic text-sm normal-content pt-5">The Find a Doctor directory is published by Altais Physicians as a way to find Altais-affiliated physicians in the San Francisco Bay Area. This directory may not be republished, sold, resold, copied, duplicated or downloaded in whole or in part, for commercial or any other purposes, such as the distribution of mailing lists.
+Altais Physicians makes no guarantee or warranty as to the accuracy or completeness of the information in this directory. You should verify the accuracy of the information directly with the physician’s office. Altais Physicians does not recommend or endorse any particular provider in the directory.
+Using the directory is not a reliable method to verify the credentials or licenses of any physician in the directory. Altais Physicians is not responsible for any loss or damage caused by your reliance on information in the directory.
+</p>
+          </div>
         </div>
       </div>
     </Layout>
