@@ -142,7 +142,7 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
                     return (
                       <li
                         key={item.id}
-                        className="relative group/parent flex align-bottom items-end"
+                        className="relative group/parent flex align-bottom items-end  whitespace-nowrap"
                       >
                         <Link
                           className={`flex flex-col py-8 text-bluePrimary text-sm leading-[18px] font-semibold ${
@@ -210,7 +210,7 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
 
               <Link
                 href="/find-care"
-                className="btn-gradient btn-action flex-center gap-1"
+                className="btn-gradient btn-action flex-center gap-1  whitespace-nowrap"
               >
                 Find Care{" "}
                 <ChevronRight className="w-[10px] h-[10px] md:w-[18px] md:h-[18px]" />
