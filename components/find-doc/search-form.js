@@ -15,6 +15,7 @@ import PinMarker from "@/public/icons/pin-marker.svg";
 import SearchLaunchIcon from "@/public/icons/tabler_location-filled.svg";
 import SearchIcon from "@/public/icons/icomoon-free_search.svg";
 import SpecialityShortInfo from "../common/specialty-short-info";
+import specialtyAcronymMap from "@/components/specialtyAcronymMap";
 
 export default function DocSearchForm({
   searchQuery,
@@ -55,6 +56,20 @@ export default function DocSearchForm({
     };
   }, [showLayoutGrid]);
 
+  // Helper to resolve acronyms to specialty names
+  function resolveAcronym(term) {
+    if (!term) return term;
+    const lower = term.trim().toLowerCase();
+    return specialtyAcronymMap[lower] || term;
+  }
+
+  // Modified search handler for main input only
+  function handleMainSearch() {
+    // If the user typed an acronym, replace with mapped specialty
+    const resolvedSearch = resolveAcronym(localSearch);
+    setSearchQuery(resolvedSearch, localLocation);
+  }
+
   return (
     <section className="block box-shadow-custom5 pt-7 md:pt-0">
       <div className="container mx-auto">
@@ -90,7 +105,7 @@ export default function DocSearchForm({
                 onChange={(e) => setLocalLocation(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    setSearchQuery(localSearch, localLocation);
+                    handleMainSearch();
                   }
                 }}
               />
@@ -111,7 +126,7 @@ export default function DocSearchForm({
                   onChange={(e) => setLocalSearch(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      setSearchQuery(localSearch, localLocation);
+                      handleMainSearch();
                     }
                   }}
                 />
@@ -119,9 +134,7 @@ export default function DocSearchForm({
             <button
               type="button"
               className="btn-md flex-center font-semibold btn-outline-secondary gap-1 w-full sm:w-auto px-4 py-2 rounded"
-              onClick={() => {
-                setSearchQuery(localSearch, localLocation);
-              }}
+              onClick={handleMainSearch}
             >
               Search
               <ChevronRight />
