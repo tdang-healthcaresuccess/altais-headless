@@ -66,12 +66,12 @@ export default function CounterProvider() {
                   </p>
                 </div>
               </SwiperSlide>
-              <SwiperSlide>
+              {/* <SwiperSlide>
                 <div className="block">
                   <h4 className="countlist-h4">87%</h4>
                   <p className="countlist-p1">Medicare Advantage MLR</p>
                 </div>
-              </SwiperSlide>
+              </SwiperSlide> */}
               <SwiperSlide>
                 <div className="block">
                   <h4 className="countlist-h4">65</h4>
