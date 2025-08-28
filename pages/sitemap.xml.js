@@ -9,7 +9,7 @@ function generateSitemap(urls) {
   // Set site URL here if env is not available
   let SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
   if (!SITE_URL || SITE_URL === 'undefined') {
-    SITE_URL = 'https://h8jbjt9da2zaacrc01tt4r5p7.js.wpenginepowered.com';
+    SITE_URL = 'https://altais.com';
   }
   return `<?xml version="1.0" encoding="UTF-8"?>
     <!-- Sitemap breakdown: Pages: ${breakdown.pages || 0}, Posts: ${breakdown.posts || 0}, Doctors: ${breakdown.doctors || 0}, Specialties: ${breakdown.specialties || 0}, Total: ${breakdown.total || urls.length} -->
