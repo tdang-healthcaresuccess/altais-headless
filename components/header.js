@@ -98,7 +98,7 @@ export default function Header({ siteTitle, siteDescription, metaD, noIndex = fa
        
       >
         <div className="flex items-center">
-          <span className="text-white text-lg font-600">
+          <span className="text-white text-lg font-600 pr-2">
             All Our Care, Now in One Place
           </span>
         </div>
