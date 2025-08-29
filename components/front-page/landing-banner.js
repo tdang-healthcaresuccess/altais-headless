@@ -2,14 +2,26 @@
 
 import { clsx } from "clsx";
 import { useMediaQuery } from "react-responsive";
+import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 export default function LandingBanner() {
+  const [mounted, setMounted] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Prevent hydration mismatch by rendering nothing or a fallback
+    return null;
+  }
+
   return (
     <section className="flex items-center">
       <div className="relative w-full h-full md:h-[400px] sm:h-[400px] ">
-        {/* Background image */} 
+        {/* Background image */}
         <div
           className={clsx(
             "md:absolute inset-0 bg-cover bg-center h-[400px]",
@@ -17,9 +29,9 @@ export default function LandingBanner() {
               ? "bg-landing-banner-mobile min-h-[400px]"
               : "bg-landing-banner"
           )}
-        ></div> 
+        ></div>
 
-        {/* Content container over the image */}
+        {/* Content container */}
         <div className="container mx-auto relative z-10 h-full">
           <div className="pt-6 md:pt-0 md:w-[40%] h-full flex flex-col justify-center">
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
@@ -27,8 +39,7 @@ export default function LandingBanner() {
             </h1>
             <a href="/find-care/">
               <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">
-                Find Care{" "}
-                <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
+                Find Care <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
               </button>
             </a>
           </div>
