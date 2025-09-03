@@ -19,6 +19,13 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
   const metaTitle = metaD?.titleTag || siteTitle || 'Altais: Shaping the Future of Healthcare';
   const metaDescription = metaD?.metaDescription || siteDescription || 'Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.';
   const canonicalUrl = metaD?.canonicalUrl;
+  const noIndexFollow = metaD?.noIndexFollow || false;
+  let robotsContent = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  if (noIndex) {
+    robotsContent = "noindex, nofollow";
+  } else if (noIndexFollow) {
+    robotsContent = "noindex, follow";
+  }
   return (
     <>
       <Head>
@@ -26,7 +33,7 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
         <meta name="description" content={metaDescription} />
         <meta name="title" content={metaTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+        <meta name="robots" content={robotsContent} />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Head>

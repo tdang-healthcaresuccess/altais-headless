@@ -202,8 +202,8 @@ export default function FindCare({
         titleTag: page > 1 ? `Find Care | Altais - Page ${page}` : "Find Care | Altais",
         metaDescription:
           "Search for compassionate, affordable, and connected care providers across California with Altais.",
+        noIndexFollow: true,
       }}
-      noIndex={true}
     >
       <div className="block">
         <InnerPageBanner

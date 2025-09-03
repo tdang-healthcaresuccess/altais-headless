@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Layout from "@/components/Layout";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 import { useQuery } from "@apollo/client";
@@ -31,9 +32,12 @@ export default function FrontPage(props) {
   const { title: siteTitle, description: siteDescription } = siteData;
 
   return (
-    <>
-      <Header siteTitle={siteTitle} siteDescription={"Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today. "} />
-
+    <Layout
+      metaD={{
+        titleTag: siteTitle || "Altais: Shaping the Future of Healthcare",
+        metaDescription: siteDescription || "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.",
+      }}
+    >
       <main className="block">
         {/* Landing Page Banner Start */}
         <LandingBanner />
@@ -68,9 +72,7 @@ export default function FrontPage(props) {
         />
         {/* Lets Redefine End */}
       </main>
-
-      <Footer />
-    </>
+    </Layout>
   );
 }
 
