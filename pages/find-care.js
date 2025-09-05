@@ -15,7 +15,11 @@ export async function getServerSideProps(context) {
   const page = parseInt(context.query.page) || 1;
 
   // Read filters from query
-  const searchQuery = context.query.doctorName || "";
+  let searchQuery = context.query.doctorName || "";
+  // If searchQuery is a comma-separated string, convert to array
+  if (typeof searchQuery === "string" && searchQuery.includes(",")) {
+    searchQuery = searchQuery.split(",").map(s => s.trim()).filter(Boolean);
+  }
   const locationQuery = context.query.zipCode || "";
   const practiceNameQuery = context.query.practiceName || "";
   const specialityFilter = context.query.specialty || "";
@@ -32,21 +36,25 @@ export async function getServerSideProps(context) {
   // Filtering logic (SSR)
   let filtered = dummyDoctors;
   if (searchQuery) {
-    const term = searchQuery.toLowerCase();
+    // If searchQuery is an array, match any term; else match single term
+    const terms = Array.isArray(searchQuery) ? searchQuery : [searchQuery];
     filtered = filtered.filter((doc) => {
-      const nameMatch = doc.node.doctorData.doctorsName
-        ?.toLowerCase()
-        .includes(term);
-      const spec1Match = doc.node.doctorData.spec1
-        ?.toLowerCase()
-        .includes(term);
-      const spec2Match = doc.node.doctorData.spec2
-        ?.toLowerCase()
-        .includes(term);
-      const spec3Match = doc.node.doctorData.spec3
-        ?.toLowerCase()
-        .includes(term);
-      return nameMatch || spec1Match || spec2Match || spec3Match;
+      return terms.some((t) => {
+        const term = t.toLowerCase();
+        const nameMatch = doc.node.doctorData.doctorsName
+          ?.toLowerCase()
+          .includes(term);
+        const spec1Match = doc.node.doctorData.spec1
+          ?.toLowerCase()
+          .includes(term);
+        const spec2Match = doc.node.doctorData.spec2
+          ?.toLowerCase()
+          .includes(term);
+        const spec3Match = doc.node.doctorData.spec3
+          ?.toLowerCase()
+          .includes(term);
+        return nameMatch || spec1Match || spec2Match || spec3Match;
+      });
     });
   }
   if (practiceNameQuery) {
@@ -145,11 +153,13 @@ export default function FindCare({
   // SSR-compatible handlers for input fields
   // Unified search trigger: always include both fields in query
   const handleSearch = (searchValue, locationValue) => {
+    // If searchValue is an array, join to string for query param
+    const doctorNameParam = Array.isArray(searchValue) ? searchValue.join(",") : searchValue || "";
     router.push({
       pathname: router.pathname,
       query: {
         ...router.query,
-        doctorName: searchValue || "",
+        doctorName: doctorNameParam,
         zipCode: locationValue || "",
         page: 1,
       },

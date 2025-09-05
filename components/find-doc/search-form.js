@@ -59,15 +59,22 @@ export default function DocSearchForm({
   // Helper to resolve acronyms to specialty names
   function resolveAcronym(term) {
     if (!term) return term;
+    // If term is not a string, return as-is (should only be string from input)
+    if (typeof term !== "string") return term;
     const lower = term.trim().toLowerCase();
-    return specialtyAcronymMap[lower] || term;
+    const mapped = specialtyAcronymMap[lower];
+    if (Array.isArray(mapped)) {
+      return mapped;
+    }
+    return mapped || term;
   }
 
   // Modified search handler for main input only
   function handleMainSearch() {
-    // If the user typed an acronym, replace with mapped specialty
-    const resolvedSearch = resolveAcronym(localSearch);
-    setSearchQuery(resolvedSearch, localLocation);
+  // If the user typed an acronym, replace with mapped specialty
+  const resolvedSearch = resolveAcronym(localSearch);
+  // If resolvedSearch is an array, pass it directly; else pass as before
+  setSearchQuery(resolvedSearch, localLocation);
   }
 
   return (
@@ -128,6 +135,9 @@ export default function DocSearchForm({
                     if (e.key === 'Enter') {
                       handleMainSearch();
                     }
+                  }}
+                  onClick={() => {
+                    if (localSearch) setLocalSearch("");
                   }}
                 />
             </div>
