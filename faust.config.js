@@ -6,7 +6,10 @@ import possibleTypes from "./possibleTypes.json";
  * @type {import('@faustwp/core').FaustConfig}
  **/
 export default setConfig({
-  templates,
+  templates: {
+    ...templates,
+    preview: require("./wp-templates/preview").default,
+  },
   experimentalPlugins: [],
   possibleTypes,
 });
