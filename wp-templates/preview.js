@@ -4,6 +4,9 @@ import Layout from "@/components/Layout";
 
 export default function Preview() {
   const { node, loading, error } = usePreviewNode();
+  console.log("[Preview] loading:", loading);
+  console.log("[Preview] error:", error);
+  console.log("[Preview] node:", node);
 
   if (loading) {
     return <div>Loading...</div>;
