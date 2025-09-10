@@ -1,13 +1,22 @@
-const { withFaust } = require("@faustwp/core");
+const { withFaust, getWpHostname } = require("@faustwp/core");
+const { createSecureHeaders } = require("next-secure-headers");
 
 /**
  * @type {import('next').NextConfig}
  **/
 module.exports = withFaust({
   images: {
-    domains: ["altais.com"],
+    domains: [getWpHostname()],
   },
   trailingSlash: true,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: createSecureHeaders({ xssProtection: false }),
+      },
+    ];
+  },
   async redirects() {
     return [
       // Existing redirect rule
