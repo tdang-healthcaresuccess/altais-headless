@@ -33,10 +33,12 @@ const BlogPostCard = ({ post }) => {
       <div className="block border border-gray-200 rounded-lg mb-6 overflow-hidden">
         {post.featuredImage?.node?.sourceUrl && (
           <a href={post.uri}>
-            <img
+            <Image
               src={post.featuredImage.node.sourceUrl}
               alt={post.featuredImage.node.altText || post.title}
               className="object-cover min-h-[170px] w-full max-h-[170px] rounded-lg"
+              width={500}
+              height={170}
             />
           </a>
         )}
