@@ -4,20 +4,7 @@ import Header from './header';
 import Footer from './footer';
 
 const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcare', siteDescription = '', metaD = null, noIndex = false, schemaMarkup = '' }) => {
-  // Inject Termly script at end of body and debug initialization
-  React.useEffect(() => {
-    if (typeof window !== "undefined" && !document.getElementById("termly-jssdk")) {
-      const script = document.createElement("script");
-      script.id = "termly-jssdk";
-      script.type = "text/javascript";
-      script.src = "https://app.termly.io/embed-policy.min.js";
-      script.onload = () => {
-        console.log("[Termly Debug] displayPreferenceModal:", window.displayPreferenceModal);
-        console.log("[Termly Debug] window.Termly:", window.Termly);
-      };
-      document.body.appendChild(script);
-    }
-  }, []);
+  // ...existing code...
   // SSR meta rendering
   const metaTitle = metaD?.titleTag || siteTitle || 'Altais: Shaping the Future of Healthcare';
   const metaDescription = metaD?.metaDescription || siteDescription || 'Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.';
