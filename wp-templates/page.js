@@ -37,6 +37,10 @@ const PAGE_QUERY = gql`
         description
         canonicalUrl
       }
+      seomarkup {
+        fieldGroupName
+        schemaMarkup
+      }
       heroBanner {
         heroBannerImage {
           node {
@@ -188,7 +192,7 @@ export default function SinglePage(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, metaD, contentTemplates, heroBanner } = data?.page || {};
+  const { title, content, metaD, contentTemplates, heroBanner, seomarkup } = data?.page || {};
   const parentPage = data?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
@@ -207,6 +211,7 @@ export default function SinglePage(props) {
         metaDescription: data.page.seo?.description || metaD?.metaDescription,
         canonicalUrl: data.page.seo?.canonicalUrl || undefined
       }}
+      schemaMarkup={seomarkup?.schemaMarkup}
     >
       <div className="block">
         {/* Inner Page Banner start */}
@@ -219,8 +224,6 @@ export default function SinglePage(props) {
           heading={title}
         />
       </div>
- 
-     
       {/* Breadcrumb Start */}
       <Breadcrumb
         items={[
@@ -230,7 +233,6 @@ export default function SinglePage(props) {
         ].filter(Boolean)}
       />
       {/* Breadcrumb End */}
-
       <main className="block">
         {/* Conditional rendering based on templateSelection */}
         {templateSelection === "Template 1A" && templateAContent && (
@@ -238,10 +240,7 @@ export default function SinglePage(props) {
             {/* Iterate through templateA layouts */}
             {templateAContent.map((layout, index) => {
               const fieldGroupName = layout.fieldGroupName;
-            
               // Render components based on fieldGroupName
-         
-
               switch (fieldGroupName) {
                 case "ContentTemplatesTemplateASection1aLayout":
                   return <Section1a key={index} data={layout} />;
