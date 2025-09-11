@@ -1,17 +1,20 @@
-// components/Layout.js
 import React from 'react';
 import Head from 'next/head';
 import Header from './header';
 import Footer from './footer';
 
-const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcare', siteDescription = '', metaD = null, noIndex = false }) => {
-  // Inject Termly script globally for consent modal
+const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcare', siteDescription = '', metaD = null, noIndex = false, schemaMarkup = '' }) => {
+  // Inject Termly script at end of body and debug initialization
   React.useEffect(() => {
     if (typeof window !== "undefined" && !document.getElementById("termly-jssdk")) {
       const script = document.createElement("script");
       script.id = "termly-jssdk";
       script.type = "text/javascript";
       script.src = "https://app.termly.io/embed-policy.min.js";
+      script.onload = () => {
+        console.log("[Termly Debug] displayPreferenceModal:", window.displayPreferenceModal);
+        console.log("[Termly Debug] window.Termly:", window.Termly);
+      };
       document.body.appendChild(script);
     }
   }, []);
@@ -28,7 +31,7 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
   }
   return (
     <>
-      <Head>
+  <Head>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
         <meta name="title" content={metaTitle} />
@@ -36,10 +39,15 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
         <meta name="robots" content={robotsContent} />
         <link rel="stylesheet" href="https://use.typekit.net/uoi7ptf.css" />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        {/* Inject schemaMarkup as JSON-LD if provided */}
+        {typeof schemaMarkup === 'string' && schemaMarkup.trim() && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schemaMarkup }} />
+        )}
       </Head>
       <div className="min-h-screen flex flex-col">
         <Header siteTitle={siteTitle} siteDescription={siteDescription} metaD={metaD} noIndex={noIndex} />
         <main className="flex-grow">{children}</main>
+        {console.log(schemaMarkup)}
         <Footer />
       </div>
     </>
