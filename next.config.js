@@ -26,6 +26,11 @@ module.exports = withFaust({
       },
       // Redirects from redirection.csv
       {
+        source: '/athena/',
+        destination: 'https://24668.portal.athenahealth.com/',
+        permanent: true,
+      },
+      {
         source: '/about/who-we-are/',
         destination: '/about/',
         permanent: true,
