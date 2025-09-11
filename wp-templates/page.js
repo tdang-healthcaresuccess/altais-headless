@@ -1,4 +1,5 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useFaustQuery } from "@faustwp/core";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 // Import your components for each layout
@@ -146,54 +147,32 @@ const PAGE_QUERY = gql`
 `;
 
 export default function SinglePage(props) {
-  // ...existing code...
   if (props.loading) {
     return <>Loading...</>;
   }
 
-  const databaseId = props.__SEED_NODE__.databaseId;
-  const asPreview = props.__SEED_NODE__.asPreview;
+  const contentQuery = useFaustQuery(PAGE_QUERY) || {};
+  const siteDataQuery = useFaustQuery(SITE_DATA_QUERY) || {};
+  const headerMenuDataQuery = useFaustQuery(HEADER_MENU_QUERY) || {};
 
-  const {
-    data,
-    loading = true,
-    error,
-  } = useQuery(PAGE_QUERY, {
-    variables: {
-      databaseId: databaseId,
-      asPreview: asPreview,
-    },
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: "cache-and-network",
-  });
-
-  const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
-  const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
-  if (loading && !data)
-    return (
-      <div className="container-main flex justify-center py-20">Loading...</div>
-    );
-
-  if (error) return <p>Error! {error.message}</p>;
-
-  if (!data?.page) {
+  if (!contentQuery?.page) {
     return <p>No pages have been published</p>;
   }
 
   // Log SEO data for debugging (after data is available)
-  if (data?.page?.seo) {
-    console.log('SEO Title:', data.page.seo.title);
-    console.log('SEO Description:', data.page.seo.description);
-    console.log('SEO CanonicalUrl:', data.page.seo.canonicalUrl);
+  if (contentQuery?.page?.seo) {
+    console.log('SEO Title:', contentQuery.page.seo.title);
+    console.log('SEO Description:', contentQuery.page.seo.description);
+    console.log('SEO CanonicalUrl:', contentQuery.page.seo.canonicalUrl);
   }
 
-  const siteData = siteDataQuery?.data?.generalSettings || {};
-  const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
+  const siteData = siteDataQuery?.generalSettings || {};
+  const menuItems = headerMenuDataQuery?.primaryMenuItems?.nodes || {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, metaD, contentTemplates, heroBanner, seomarkup } = data?.page || {};
-  const parentPage = data?.page?.parent?.node;
+  const { title, content, metaD, contentTemplates, heroBanner, seomarkup } = contentQuery?.page || {};
+  const parentPage = contentQuery?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
   const templateSelection = contentTemplates?.templateSelection?.[0];
@@ -204,12 +183,12 @@ export default function SinglePage(props) {
   const mobileImageUrl = heroMobile ;
   return (
     <Layout
-      siteTitle={data.page.seo?.title || title}
-      siteDescription={data.page.seo?.description || siteDescription}
+      siteTitle={contentQuery.page.seo?.title || title}
+      siteDescription={contentQuery.page.seo?.description || siteDescription}
       metaD={{
-        titleTag: data.page.seo?.title || metaD?.titleTag,
-        metaDescription: data.page.seo?.description || metaD?.metaDescription,
-        canonicalUrl: data.page.seo?.canonicalUrl || undefined
+        titleTag: contentQuery.page.seo?.title || metaD?.titleTag,
+        metaDescription: contentQuery.page.seo?.description || metaD?.metaDescription,
+        canonicalUrl: contentQuery.page.seo?.canonicalUrl || undefined
       }}
       schemaMarkup={seomarkup?.schemaMarkup}
     >
@@ -268,6 +247,7 @@ export default function SinglePage(props) {
       </main>
     </Layout>
   );
+}
 
 SinglePage.queries = [
   {
@@ -284,4 +264,3 @@ SinglePage.queries = [
     query: HEADER_MENU_QUERY,
   },
 ];
-}

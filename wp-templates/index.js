@@ -12,4 +12,5 @@ export default {
   archive,
   "single-physicians": physicians,
   "single-specialty": specialty,
+  preview: require("./preview").default,
 };
