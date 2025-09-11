@@ -13,7 +13,13 @@ module.exports = withFaust({
     return [
       {
         source: "/:path*",
-        headers: createSecureHeaders({ xssProtection: false }),
+        headers: [
+          ...createSecureHeaders({ xssProtection: false }),
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload"
+          }
+        ],
       },
     ];
   },
