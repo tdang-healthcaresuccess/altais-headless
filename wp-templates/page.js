@@ -159,12 +159,6 @@ export default function SinglePage(props) {
     return <p>No pages have been published</p>;
   }
 
-  // Log SEO data for debugging (after data is available)
-  if (contentQuery?.page?.seo) {
-    console.log('SEO Title:', contentQuery.page.seo.title);
-    console.log('SEO Description:', contentQuery.page.seo.description);
-    console.log('SEO CanonicalUrl:', contentQuery.page.seo.canonicalUrl);
-  }
 
   const siteData = siteDataQuery?.generalSettings || {};
   const menuItems = headerMenuDataQuery?.primaryMenuItems?.nodes || {

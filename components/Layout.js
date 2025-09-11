@@ -8,7 +8,12 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
   // SSR meta rendering
   const metaTitle = metaD?.titleTag || siteTitle || 'Altais: Shaping the Future of Healthcare';
   const metaDescription = metaD?.metaDescription || siteDescription || 'Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.';
-  const canonicalUrl = metaD?.canonicalUrl;
+  // Rewrite canonicalUrl to use frontend domain if needed
+  const frontendDomain = 'https://altais.com'; // Set your public site domain here
+  let canonicalUrl = metaD?.canonicalUrl;
+  if (canonicalUrl && canonicalUrl.includes('wpenginepowered.com')) {
+    canonicalUrl = canonicalUrl.replace(/https?:\/\/[^/]+/, frontendDomain);
+  }
   const noIndexFollow = metaD?.noIndexFollow || false;
   let robotsContent = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
   if (noIndex) {
@@ -34,7 +39,7 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
       <div className="min-h-screen flex flex-col">
         <Header siteTitle={siteTitle} siteDescription={siteDescription} metaD={metaD} noIndex={noIndex} />
         <main className="flex-grow">{children}</main>
-        {console.log(schemaMarkup)}
+    
         <Footer />
       </div>
     </>
