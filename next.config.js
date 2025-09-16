@@ -46,6 +46,21 @@ module.exports = withFaust({
         permanent: true,
       },
       {
+        source: '/insurances-accepted/hmo-plans/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+            {
+        source: '/insurances-accepted/medi-cal/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+      {
+        source: '/insurances-accepted/medicare/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+      {
         source: '/about/who-we-are/',
         destination: '/about/',
         permanent: true,
