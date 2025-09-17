@@ -41,6 +41,11 @@ module.exports = withFaust({
       },
       // Redirects from redirection.csv
       {
+        source: '/blueshieldcaAHA/',
+        destination: '/blueshieldcaaha/',
+        permanent: true,
+      },
+      {
         source: '/athena/',
         destination: 'https://24668.portal.athenahealth.com/',
         permanent: true,
