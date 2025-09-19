@@ -4,11 +4,11 @@
 
 @font-face {
   font-family: "Poppins";
-  src: url("/fonts/poppins-regular.eot"); /* IE9 Compat Modes */
+  src: url("/fonts/Poppins-Regular.eot"); /* IE9 Compat Modes */
   src:
-    url("/fonts/poppins-regular.eot?#iefix") format("embedded-opentype"),
-    /* IE6-IE8 */ url("/fonts/poppins-regular.ttf") format("truetype"),
-    /* Safari, Android, iOS */ url("/fonts/poppins-regular.svg#Poppins")
+  url("/fonts/Poppins-Regular.eot?#iefix") format("embedded-opentype"),
+  /* IE6-IE8 */ url("/fonts/Poppins-Regular.ttf") format("truetype"),
+  /* Safari, Android, iOS */ url("/fonts/Poppins-Regular.svg#Poppins")
       format("svg"); /* Legacy iOS */
   font-weight: 400;
   font-style: normal;
