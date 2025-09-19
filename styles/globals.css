@@ -16,7 +16,7 @@
 }
 @font-face {
   font-family: "Poppins";
-  src: url("/fonts/Poppins-semibold.ttf") format("truetype");
+  src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -50,7 +50,7 @@
 
 html,
 body {
-  font-family: "poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 @media (max-width: 768px) {
