@@ -41,6 +41,11 @@ module.exports = withFaust({
       },
       // Redirects from redirection.csv
       {
+        source: '/altais-medical-group-riverside/',
+        destination: '/for-providers/amg-locations/',
+        permanent: true,
+      },
+      {
         source: '/athena/',
         destination: 'https://24668.portal.athenahealth.com/',
         permanent: true,
