@@ -14,6 +14,14 @@ export async function getServerSideProps(context) {
   const DOCTORS_PER_PAGE = 10;
   const page = parseInt(context.query.page) || 1;
 
+    // Extract city from WPEngine GeoTarget headers (server-side only)
+  let geoCity = '';
+  if (context.req && context.req.headers) {
+    // WPEngine GeoTarget header for city is usually 'x-geo-city' (case-insensitive)
+    geoCity = context.req.headers['x-geo-city'] || context.req.headers['X-Geo-City'] || '';
+    if (Array.isArray(geoCity)) geoCity = geoCity[0];
+    console.log('[GeoTarget] city from header:', geoCity);
+  }
   // Read filters from query
   let searchQuery = context.query.doctorName || "";
   // If searchQuery is a comma-separated string, convert to array

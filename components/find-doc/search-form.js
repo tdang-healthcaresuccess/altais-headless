@@ -98,7 +98,7 @@ export default function DocSearchForm({
         </div>
         <div className="flex flex-col md:flex-row pb-9 gap-6">
           <div className="block relative">
-            <div className="relative">
+            <div className="relative flex items-center">
               <Image
                 src={PinMarker}
                 alt="Pin Marker"
@@ -107,7 +107,7 @@ export default function DocSearchForm({
               <input
                 type="text"
                 placeholder="City, State or Zip Code"
-                className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
+                className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px] pr-10"
                 value={localLocation}
                 onChange={(e) => setLocalLocation(e.target.value)}
                 onKeyDown={(e) => {
@@ -116,6 +116,31 @@ export default function DocSearchForm({
                   }
                 }}
               />
+              {/* Location icon button on the right */}
+              <button
+                type="button"
+                aria-label="Detect Location"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-transparent border-none cursor-pointer"
+                onClick={async () => {
+                  // WPEngine GeoTarget: window.WPEQ is injected by WPEngine
+                  if (typeof window !== 'undefined' && window.WPEQ && window.WPEQ.geo) {
+                    const city = window.WPEQ.geo.city;
+                    if (city) setLocalLocation(city);
+                  } else {
+                    // fallback: try to use browser geolocation (optional)
+                    if (navigator.geolocation) {
+                      navigator.geolocation.getCurrentPosition(async (pos) => {
+                        // You could use a reverse geocoding API here if needed
+                        alert('GeoTarget not available. Please allow location or enter manually.');
+                      });
+                    } else {
+                      alert('GeoTarget not available. Please enter your city manually.');
+                    }
+                  }
+                }}
+              >
+                <MapPin className="w-5 h-5 text-bluePrimary" />
+              </button>
             </div>
           </div>
           <div className="flex flex-col md:flex-row flex-1 w-full relative gap-6">
