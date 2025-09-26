@@ -205,11 +205,11 @@ export default function Footer() {
                         </li>
                         <li>
                           <Link
-                            href="/physicians-compliance/"
+                            href="/compliance-resources/"
                             className="text-white text-xs leading-[16px] font-normal"
                           >
                             {" "}
-                            Physicians Compliance{" "}
+                            Compliance Resources{" "}
                           </Link>
                         </li>
                       </ul>
