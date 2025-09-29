@@ -16,11 +16,22 @@ export async function getServerSideProps(context) {
 
     // Extract city from WPEngine GeoTarget headers (server-side only)
   let geoCity = '';
-  if (context.req && context.req.headers) {
-    // WPEngine GeoTarget header for city is usually 'x-geo-city' (case-insensitive)
-    geoCity = context.req.headers['x-geo-city'] || context.req.headers['X-Geo-City'] || '';
-    if (Array.isArray(geoCity)) geoCity = geoCity[0];
-    console.log('[GeoTarget] city from header:', geoCity);
+  try {
+    if (context.req && context.req.headers) {
+      // WPEngine GeoTarget header for city is usually 'x-geo-city' (case-insensitive)
+      const headers = context.req.headers;
+      if ('x-geo-city' in headers || 'X-Geo-City' in headers) {
+        geoCity = headers['x-geo-city'] || headers['X-Geo-City'] || '';
+        if (Array.isArray(geoCity)) geoCity = geoCity[0];
+        console.log('[GeoTarget] city from header:', geoCity);
+      } else {
+        console.warn('[GeoTarget] No x-geo-city header found. Headers:', headers);
+      }
+    } else {
+      console.error('[GeoTarget] No req or headers object found in context:', context);
+    }
+  } catch (err) {
+    console.error('[GeoTarget] Error extracting city from headers:', err);
   }
   // Read filters from query
   let searchQuery = context.query.doctorName || "";
