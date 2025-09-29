@@ -121,16 +121,14 @@ export default function DocSearchForm({
                 type="button"
                 aria-label="Detect Location"
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-transparent border-none cursor-pointer"
-                onClick={async () => {
-                  // WPEngine GeoTarget: window.WPEQ is injected by WPEngine
-                  if (typeof window !== 'undefined' && window.WPEQ && window.WPEQ.geo) {
-                    const city = window.WPEQ.geo.city;
-                    if (city) setLocalLocation(city);
+                onClick={() => {
+                  // Use SSR-provided city if available
+                  if (locationQuery) {
+                    setLocalLocation(locationQuery);
                   } else {
                     // fallback: try to use browser geolocation (optional)
                     if (navigator.geolocation) {
                       navigator.geolocation.getCurrentPosition(async (pos) => {
-                        // You could use a reverse geocoding API here if needed
                         alert('GeoTarget not available. Please allow location or enter manually.');
                       });
                     } else {

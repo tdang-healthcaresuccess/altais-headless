@@ -139,6 +139,7 @@ export async function getServerSideProps(context) {
         educationFilter,
         insuranceFilter,
       },
+      geoCity,
     },
   };
 }
@@ -152,6 +153,7 @@ export default function FindCare({
   total,
   totalPages,
   filters,
+  geoCity,
 }) {
   const [activeLayout, setActiveLayout] = React.useState("list");
   const [filteredDoctors, setFilteredDoctors] = React.useState(doctors);
@@ -231,7 +233,7 @@ export default function FindCare({
         />
         <DocSearchForm
           searchQuery={filters.searchQuery}
-          locationQuery={filters.locationQuery}
+          locationQuery={filters.locationQuery || geoCity}
           setSearchQuery={(searchValue, locationValue) =>
             handleSearch(searchValue, locationValue)
           }
