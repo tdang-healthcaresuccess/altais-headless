@@ -28,7 +28,8 @@ export async function getServerSideProps(context) {
   if (typeof searchQuery === "string" && searchQuery.includes(",")) {
     searchQuery = searchQuery.split(",").map(s => s.trim()).filter(Boolean);
   }
-  const locationQuery = context.query.zipCode || "";
+  // Use zipCode from query if present, else use geoCity from GeoTarget header
+  const locationQuery = context.query.zipCode || geoCity || "";
   const practiceNameQuery = context.query.practiceName || "";
   const specialityFilter = context.query.specialty || "";
   const genderFilter = context.query.gender
