@@ -30,6 +30,10 @@ export default function DocSearchForm({
   // Local state for input fields
   const [localSearch, setLocalSearch] = useState(searchQuery || "");
   const [localLocation, setLocalLocation] = useState(locationQuery || "");
+  // Debug SSR prop flow
+  useEffect(() => {
+    console.log('[DocSearchForm] locationQuery prop received:', locationQuery);
+  }, [locationQuery]);
 
   // Keep local state in sync with props after SSR search
   useEffect(() => {
@@ -122,6 +126,7 @@ export default function DocSearchForm({
                 aria-label="Detect Location"
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-transparent border-none cursor-pointer"
                 onClick={() => {
+                  console.log('[DocSearchForm] Location icon clicked. locationQuery:', locationQuery);
                   // Use SSR-provided city if available
                   if (locationQuery) {
                     setLocalLocation(locationQuery);
