@@ -41,6 +41,31 @@ module.exports = withFaust({
       },
       // Redirects from redirection.csv
       {
+        source: '/altais-medical-group-riverside/',
+        destination: '/for-providers/amg-locations/',
+        permanent: true,
+      },
+      {
+        source: '/athena/',
+        destination: 'https://24668.portal.athenahealth.com/',
+        permanent: true,
+      },
+      {
+        source: '/insurances-accepted/hmo-plans/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+            {
+        source: '/insurances-accepted/medi-cal/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+      {
+        source: '/insurances-accepted/medicare/',
+        destination: '/insurance-accepted/',
+        permanent: true,
+      },
+      {
         source: '/about/who-we-are/',
         destination: '/about/',
         permanent: true,

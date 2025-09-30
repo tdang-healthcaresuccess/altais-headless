@@ -38,6 +38,10 @@ const PAGE_QUERY = gql`
         description
         canonicalUrl
       }
+      seomarkup {
+        fieldGroupName
+        schemaMarkup
+      }
       heroBanner {
         heroBannerImage {
           node {
@@ -155,19 +159,13 @@ export default function SinglePage(props) {
     return <p>No pages have been published</p>;
   }
 
-  // Log SEO data for debugging (after data is available)
-  if (contentQuery?.page?.seo) {
-    console.log('SEO Title:', contentQuery.page.seo.title);
-    console.log('SEO Description:', contentQuery.page.seo.description);
-    console.log('SEO CanonicalUrl:', contentQuery.page.seo.canonicalUrl);
-  }
 
   const siteData = siteDataQuery?.generalSettings || {};
   const menuItems = headerMenuDataQuery?.primaryMenuItems?.nodes || {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, metaD, contentTemplates, heroBanner } = contentQuery?.page || {};
+  const { title, content, metaD, contentTemplates, heroBanner, seomarkup } = contentQuery?.page || {};
   const parentPage = contentQuery?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
@@ -186,6 +184,7 @@ export default function SinglePage(props) {
         metaDescription: contentQuery.page.seo?.description || metaD?.metaDescription,
         canonicalUrl: contentQuery.page.seo?.canonicalUrl || undefined
       }}
+      schemaMarkup={seomarkup?.schemaMarkup}
     >
       <div className="block">
         {/* Inner Page Banner start */}

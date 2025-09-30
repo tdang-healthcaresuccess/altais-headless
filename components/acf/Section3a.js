@@ -49,7 +49,6 @@ const Card = ({ cardData }) => {
     return match ? match[0] : decodedContent;
   }, [decodedContent]);
 
-  console.log(truncatedContent);
 
   return (
     <div className="rounded-normal h-full flex flex-col">
