@@ -124,9 +124,11 @@ export default function FindCare() {
   const total = physiciansData?.doctorsList?.total || 0;
   const totalPages = Math.ceil(total / 10);
   
-  // Client-side location filtering if we have a search location
-  const locationFilteredPhysicians = searchLocation ? physicians.filter(physician => {
-    if (!physician.latitude || !physician.longitude) return false;
+  // Client-side distance calculation and sorting if we have a search location
+  const locationProcessedPhysicians = searchLocation ? physicians.map(physician => {
+    if (!physician.latitude || !physician.longitude) {
+      return { ...physician, distance: Infinity }; // Put physicians without coordinates at the end
+    }
     
     const distance = calculateDistance(
       searchLocation.latitude,
@@ -135,9 +137,8 @@ export default function FindCare() {
       parseFloat(physician.longitude)
     );
     
-    // Filter within 50 miles
-    return distance <= 50;
-  }) : physicians;
+    return { ...physician, distance };
+  }).sort((a, b) => a.distance - b.distance) : physicians; // Sort by distance, closest first
   
   // Hardcode empty arrays for filters since queries are disabled
   const availableSpecialties = [];
@@ -186,10 +187,10 @@ export default function FindCare() {
   // to avoid conflicts and use Google's Geocoding API
 
   // Determine which location to use for sorting (prioritize search location over user location)
-  const sortingLocation = searchLocation || userLocation;
+  const sortingLocation = userLocation; // Only use user location for sorting, search location is already handled
 
-  // Sort physicians by distance if we have any location (user's geolocation OR search location)
-  const sortedPhysicians = sortingLocation ? [...locationFilteredPhysicians].sort((a, b) => {
+  // Sort physicians by distance if we have user location (and search location hasn't already sorted them)
+  const sortedPhysicians = (sortingLocation && !searchLocation) ? [...locationProcessedPhysicians].sort((a, b) => {
       // Check if both physicians have valid coordinates
       const aLat = parseFloat(a.latitude);
       const aLng = parseFloat(a.longitude);
@@ -222,25 +223,28 @@ export default function FindCare() {
       console.log(`Distance comparison - ${a.firstName} ${a.lastName}: ${distanceA.toFixed(1)} miles, ${b.firstName} ${b.lastName}: ${distanceB.toFixed(1)} miles`);
       
       return distanceA - distanceB;
-    }) : locationFilteredPhysicians;
+    }) : locationProcessedPhysicians;
 
   // Log sorting information
   console.log('Sorting info:', {
     userLocation,
     searchLocation,
-    sortingLocation,
+    sortingLocation: searchLocation || sortingLocation,
     sortingBy: searchLocation ? 'search location (zip code)' : userLocation ? 'user location (geolocation)' : 'no location',
     totalPhysicians: physicians.length,
+    processedPhysicians: locationProcessedPhysicians.length,
     sortedPhysicians: sortedPhysicians.length,
     firstPhysician: sortedPhysicians[0] ? {
       name: `${sortedPhysicians[0].firstName} ${sortedPhysicians[0].lastName}`,
       coordinates: `${sortedPhysicians[0].latitude}, ${sortedPhysicians[0].longitude}`,
+      distance: sortedPhysicians[0].distance ? `${sortedPhysicians[0].distance.toFixed(1)} miles` : 'unknown',
       hasCoordinates: !!(sortedPhysicians[0].latitude && sortedPhysicians[0].longitude)
     } : null,
     samplePhysicians: sortedPhysicians.slice(0, 3).map(p => ({
       name: `${p.firstName} ${p.lastName}`,
       lat: p.latitude,
       lng: p.longitude,
+      distance: p.distance ? `${p.distance.toFixed(1)} miles` : 'unknown',
       hasCoords: !!(p.latitude && p.longitude)
     }))
   });
