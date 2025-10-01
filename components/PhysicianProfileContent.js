@@ -260,6 +260,30 @@ export default function PhysicianProfileContent() {
                   </p>
                 )}
               </div>
+
+              {/* Accepts Medical */}
+              {physician.accept_medi_cal && (
+                <div className="block mt-6">
+                  <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary">
+                    Accepts Medical
+                  </h3>
+                  <p className="text-lg leading-[32px] font-normal text-grey3d">
+                    {physician.accept_medi_cal === 'yes' || physician.accept_medi_cal === true || physician.accept_medi_cal === '1' ? 'Yes' : 'No'}
+                  </p>
+                </div>
+              )}
+
+              {/* Accepting New Patients */}
+              {physician.accepts_new_patients && (
+                <div className="block mt-6">
+                  <h3 className="text-[22px] leading-[32px] font-medium text-bluePrimary">
+                    Accepting New Patients
+                  </h3>
+                  <p className="text-lg leading-[32px] font-normal text-grey3d">
+                    {physician.accepts_new_patients === 'yes' || physician.accepts_new_patients === true || physician.accepts_new_patients === '1' ? 'Yes' : 'No'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

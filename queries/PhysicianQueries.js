@@ -38,6 +38,8 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
       specialties
       languages
       hospitals
+      accept_medi_cal
+      accepts_new_patients
     }
   }
 `;
