@@ -6,7 +6,6 @@ import InnerPageBanner from "@/components/common/inner-page-banner";
 import DocSearchForm from "components/find-doc/search-form";
 import LayoutOptions from "@/components/common/LayoutOptions";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
-import PhysicianCard from "@/components/common/PhysicianCard";
 import { FilterMobile } from "@/public/icons/filter-mobile";
 import { useQuery } from "@apollo/client";
 import { 
@@ -122,15 +121,17 @@ export default function FindCare() {
   const total = physiciansData?.doctorsList?.total || 0;
   const totalPages = Math.ceil(total / 10);
   
-  // Client-side distance calculation and sorting if we have a search location
-  const locationProcessedPhysicians = searchLocation ? physicians.map(physician => {
+  // Client-side distance calculation and sorting
+  const locationProcessedPhysicians = (searchLocation || userLocation) ? physicians.map(physician => {
     if (!physician.latitude || !physician.longitude) {
       return { ...physician, distance: Infinity }; // Put physicians without coordinates at the end
     }
     
+    // Use searchLocation if available, otherwise use userLocation
+    const referenceLocation = searchLocation || userLocation;
     const distance = calculateDistance(
-      searchLocation.latitude,
-      searchLocation.longitude,
+      referenceLocation.latitude,
+      referenceLocation.longitude,
       parseFloat(physician.latitude),
       parseFloat(physician.longitude)
     );
@@ -164,39 +165,8 @@ export default function FindCare() {
   // Determine which location to use for sorting (prioritize search location over user location)
   const sortingLocation = userLocation; // Only use user location for sorting, search location is already handled
 
-  // Sort physicians by distance if we have user location (and search location hasn't already sorted them)
-  const sortedPhysicians = (sortingLocation && !searchLocation) ? [...locationProcessedPhysicians].sort((a, b) => {
-      // Check if both physicians have valid coordinates
-      const aLat = parseFloat(a.latitude);
-      const aLng = parseFloat(a.longitude);
-      const bLat = parseFloat(b.latitude);
-      const bLng = parseFloat(b.longitude);
-      
-      // If either physician doesn't have coordinates, put them at the end
-      if (isNaN(aLat) || isNaN(aLng)) {
-        console.warn(`Physician ${a.firstName} ${a.lastName} has invalid coordinates:`, { lat: a.latitude, lng: a.longitude });
-        return 1;
-      }
-      if (isNaN(bLat) || isNaN(bLng)) {
-        console.warn(`Physician ${b.firstName} ${b.lastName} has invalid coordinates:`, { lat: b.latitude, lng: b.longitude });
-        return -1;
-      }
-      
-      const distanceA = calculateDistance(
-        sortingLocation.latitude, 
-        sortingLocation.longitude, 
-        aLat, 
-        aLng
-      );
-      const distanceB = calculateDistance(
-        sortingLocation.latitude, 
-        sortingLocation.longitude, 
-        bLat, 
-        bLng
-      );
-      
-      return distanceA - distanceB;
-    }) : locationProcessedPhysicians;
+  // Use the location-processed physicians (already sorted by distance if location available)
+  const sortedPhysicians = locationProcessedPhysicians;
 
   // Handler for search form
   const handleSearch = (searchValue, locationValue, coordinates) => {
@@ -464,18 +434,142 @@ export default function FindCare() {
                 ) : (
                   <>
                     {/* Physician Grid/List */}
-                    <div className={`grid gap-6 ${
-                      activeLayout === "grid" 
-                        ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
-                        : "grid-cols-1"
-                    }`}>
+                    <div className={
+                      activeLayout === "grid"
+                        ? "flex flex-col md:flex-row flex-wrap gap-6"
+                        : "flex flex-col flex-wrap gap-6"
+                    }>
                       {sortedPhysicians.map((physician) => (
-                        <PhysicianCard 
-                          key={physician.doctorID} 
-                          physician={physician}
-                          userLocation={sortingLocation}
-                          showDistance={!!sortingLocation}
-                        />
+                        <div
+                          key={physician.doctorID}
+                          className={
+                            activeLayout === "grid"
+                              ? "block border border-primary rounded-normal p-3 w-full md:w-full lg:w-[calc(50%-12px)]"
+                              : "block border border-primary rounded-normal p-3 w-full"
+                          }
+                        >
+                          <div className="flex pb-6 gap-6">
+                            <div
+                              className={
+                                activeLayout === "grid"
+                                  ? "w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]"
+                                  : "min-w-[118px] md:min-w-[200px] h-[124px] md:h-[200px]"
+                              }
+                            >
+                              <img
+                                src={physician.profileImageUrl || "/media/doctor1.png"}
+                                alt={`${physician.firstName} ${physician.lastName}`}
+                                className={
+                                  activeLayout === "grid"
+                                    ? "border border-lightPrimary rounded-normal w-full h-full object-cover"
+                                    : "border border-lightPrimary rounded-normal w-full h-full object-cover"
+                                }
+                              />
+                            </div>
+                            <div className="block w-full">
+                              <div
+                                className={activeLayout === "grid" ? "block" : "flex gap-4"}
+                              >
+                                <h3 className="font-semibold text-bluePrimary text-lg pb-3">
+                                  {physician.firstName} {physician.lastName}{physician.degree ? `, ${physician.degree}` : ''}
+                                </h3>
+                              </div>
+                              <div
+                                className={activeLayout === "grid" ? "block" : "block md:flex gap-4"}
+                              >
+                                <div className="block flex-1">
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-primary text-xs font-semibold pb-1"
+                                        : "text-primary text-base font-semibold pb-1"
+                                    }
+                                  >
+                                    Specialties
+                                  </p>
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-grey3d text-xs pb-2"
+                                        : "text-grey3d text-base pb-2"
+                                    }
+                                  >
+                                    {Array.isArray(physician.specialties) 
+                                      ? physician.specialties.join(', ') 
+                                      : physician.specialties}
+                                  </p>
+                                  {(searchLocation || userLocation) && physician.distance !== undefined && (
+                                    <>
+                                      <p
+                                        className={
+                                          activeLayout === "grid"
+                                            ? "text-primary text-xs font-semibold pb-1"
+                                            : "text-primary text-base font-semibold pb-1"
+                                        }
+                                      >
+                                        Distance
+                                      </p>
+                                      <p
+                                        className={
+                                          activeLayout === "grid"
+                                            ? "text-grey3d text-xs pb-2"
+                                            : "text-grey3d text-base pb-2"
+                                        }
+                                      >
+                                        {physician.distance.toFixed(1)} miles away
+                                      </p>
+                                    </>
+                                  )}
+                                </div>
+                                <div className="block flex-1">
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-primary text-xs font-semibold pb-1"
+                                        : "text-primary text-base font-semibold pb-1"
+                                    }
+                                  >
+                                    Location
+                                  </p>
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-grey3d text-xs pb-2"
+                                        : "text-grey3d text-base pb-2"
+                                    }
+                                  >
+                                    {physician.practiceName && (
+                                      <>
+                                        {physician.practiceName} <br />
+                                      </>
+                                    )}
+                                    {physician.address && (
+                                      <>
+                                        {physician.address} <br />
+                                      </>
+                                    )}
+                                    {physician.city}, {physician.state} {physician.zip}
+
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex w-full gap-3 border-t border-lightPrimary pt-3 items-center">
+                            <a
+                              href={`/physicians/${physician.slug || physician.doctorID}/`}
+                              className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
+                            >
+                              View Profile
+                            </a>
+                            <a
+                              href={`tel:${physician.phoneNumber}`}
+                              className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1 flex items-center justify-center text-center"
+                            >
+                              Click to Call
+                            </a>
+                          </div>
+                        </div>
                       ))}
                     </div>
 
