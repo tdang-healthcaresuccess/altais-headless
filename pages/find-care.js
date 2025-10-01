@@ -61,11 +61,9 @@ export default function FindCare() {
         latitude: searchLat,
         longitude: searchLng
       };
-      console.log('🔄 Restoring search location from URL:', coords);
       setSearchLocation(coords);
     } else if (!searchLat && !searchLng) {
       // Clear search location if no coordinates in URL
-      console.log('🧹 Clearing search location (no coordinates in URL)');
       setSearchLocation(null);
     }
   }, [searchLat, searchLng]);
@@ -145,29 +143,6 @@ export default function FindCare() {
   const availableLanguages = [];
   const availableInsurances = [];
 
-  // Debug the GraphQL data
-  console.log('GraphQL data loaded:', {
-    physicians: physicians.length,
-    firstPhysician: physicians[0] ? {
-      name: `${physicians[0].firstName} ${physicians[0].lastName}`,
-      latitude: physicians[0].latitude,
-      longitude: physicians[0].longitude,
-      hasCoordinates: Boolean(physicians[0].latitude && physicians[0].longitude)
-    } : null,
-    samplePhysicians: physicians.slice(0, 3).map(p => ({
-      name: `${p.firstName} ${p.lastName}`,
-      lat: p.latitude,
-      lng: p.longitude,
-      hasCoords: Boolean(p.latitude && p.longitude)
-    }))
-  });
-  console.log('Specialty filtering debug:', {
-    hasSpecialtyTerms: Boolean(specialityFilter?.length),
-    specialtyTerms: specialityFilter,
-    useSpecialtyFiltering: Boolean(specialityFilter?.length),
-    selectedSpecialties: specialityFilter || ''
-  });
-
   // Reverse geocoding function to get address from coordinates
   const reverseGeocode = async (lat, lng) => {
     try {
@@ -220,87 +195,36 @@ export default function FindCare() {
         bLng
       );
       
-      console.log(`Distance comparison - ${a.firstName} ${a.lastName}: ${distanceA.toFixed(1)} miles, ${b.firstName} ${b.lastName}: ${distanceB.toFixed(1)} miles`);
-      
       return distanceA - distanceB;
     }) : locationProcessedPhysicians;
 
-  // Log sorting information
-  console.log('Sorting info:', {
-    userLocation,
-    searchLocation,
-    sortingLocation: searchLocation || sortingLocation,
-    sortingBy: searchLocation ? 'search location (zip code)' : userLocation ? 'user location (geolocation)' : 'no location',
-    totalPhysicians: physicians.length,
-    processedPhysicians: locationProcessedPhysicians.length,
-    sortedPhysicians: sortedPhysicians.length,
-    firstPhysician: sortedPhysicians[0] ? {
-      name: `${sortedPhysicians[0].firstName} ${sortedPhysicians[0].lastName}`,
-      coordinates: `${sortedPhysicians[0].latitude}, ${sortedPhysicians[0].longitude}`,
-      distance: sortedPhysicians[0].distance ? `${sortedPhysicians[0].distance.toFixed(1)} miles` : 'unknown',
-      hasCoordinates: !!(sortedPhysicians[0].latitude && sortedPhysicians[0].longitude)
-    } : null,
-    samplePhysicians: sortedPhysicians.slice(0, 3).map(p => ({
-      name: `${p.firstName} ${p.lastName}`,
-      lat: p.latitude,
-      lng: p.longitude,
-      distance: p.distance ? `${p.distance.toFixed(1)} miles` : 'unknown',
-      hasCoords: !!(p.latitude && p.longitude)
-    }))
-  });
-
   // Handler for search form
   const handleSearch = (searchValue, locationValue, coordinates) => {
-    console.log('🔍 === HANDLE SEARCH CALLED ===');
-    console.log('🕒 Timestamp:', new Date().toISOString());
-    console.log('📝 Received parameters:', { 
-      searchValue, 
-      locationValue, 
-      coordinates,
-      hasCoordinates: Boolean(coordinates),
-      coordinatesType: typeof coordinates
-    });
-    console.log('🌐 Current router state:', {
-      pathname: router.pathname,
-      query: router.query,
-      asPath: router.asPath
-    });
-    
     const query = {
       ...router.query,
       page: 1 // Reset to first page on new search
     };
-    console.log('📋 Base query object:', query);
 
     if (searchValue) {
       query.search = Array.isArray(searchValue) ? searchValue.join(",") : searchValue;
-      console.log('✅ Added search to query:', query.search);
     } else {
       delete query.search;
-      console.log('🗑️ Removed search from query');
     }
 
     if (locationValue) {
       query.location = locationValue;
-      console.log('✅ Added location to query:', query.location);
     } else {
       delete query.location;
-      console.log('🗑️ Removed location from query');
     }
 
     // Persist search coordinates in URL to prevent loss during navigation
     if (coordinates && coordinates.lat && coordinates.lng) {
       query.searchLat = coordinates.lat.toString();
       query.searchLng = coordinates.lng.toString();
-      console.log('✅ Added search coordinates to query:', { lat: coordinates.lat, lng: coordinates.lng });
     } else {
       delete query.searchLat;
       delete query.searchLng;
-      console.log('🗑️ Removed search coordinates from query');
     }
-
-    console.log('📦 Final query object:', query);
-    console.log('🚀 About to call router.push...');
 
     // Don't overwrite coordinates here - they should be set by handleSearchLocationUpdate
     // This prevents the search location from being converted to user location
@@ -309,23 +233,11 @@ export default function FindCare() {
     router.push({
       pathname: router.pathname,
       query
-    }, undefined, { shallow: true }).then((success) => {
-      console.log('🎯 Router.push completed:', success);
-      console.log('🔄 New router state:', {
-        pathname: router.pathname,
-        query: router.query,
-        asPath: router.asPath
-      });
-    }).catch((error) => {
-      console.error('❌ Router.push failed:', error);
-    });
-    
-    console.log('🔍 === END HANDLE SEARCH ===');
+    }, undefined, { shallow: true });
   };
 
   // Handler for location updates from the search form
   const handleLocationUpdate = (coordinates) => {
-    console.log('User location update received:', coordinates);
     if (coordinates && coordinates.lat && coordinates.lng) {
       // Convert from search form format {lat, lng} to our format {latitude, longitude}
       const coords = {
@@ -333,26 +245,20 @@ export default function FindCare() {
         longitude: coordinates.lng
       };
       setUserLocation(coords);
-      console.log('User location set:', coords);
     } else {
       setUserLocation(null);
-      console.log('User location cleared');
     }
   };
 
   // Handler for search location updates (manual input geocoding)
   const handleSearchLocationUpdate = (coordinates) => {
-    console.log('🗺️ SEARCH LOCATION UPDATE:', coordinates, 'at', Date.now());
-    
     if (coordinates && coordinates.lat && coordinates.lng) {
       const coords = {
         latitude: coordinates.lat,
         longitude: coordinates.lng
       };
       setSearchLocation(coords);
-      console.log('✅ Search location set:', coords);
     } else {
-      console.log('🚫 Clearing search location');
       setSearchLocation(null);
     }
   };

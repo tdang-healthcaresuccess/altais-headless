@@ -54,24 +54,20 @@ export default function DocSearchForm({
   useEffect(() => {
     // Don't auto-request location if user has manually entered a location or is using a location search
     if (hasManualLocation || locationQuery || isUsingSearchLocation) {
-      console.log("Skipping auto-geolocation due to manual/search location:", { hasManualLocation, locationQuery, isUsingSearchLocation });
       return;
     }
     
     if (typeof window !== 'undefined' && navigator.geolocation && !locationPermissionDenied && !userLocation) {
-      console.log("Requesting user location from search form...");
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const coords = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          console.log("User location obtained:", coords);
           setUserLocation(coords);
           onLocationUpdate(coords);
         },
         (error) => {
-          console.log('Location permission denied or unavailable:', error);
           setLocationPermissionDenied(true);
           setUserLocation(null);
           onLocationUpdate(null);
@@ -88,17 +84,13 @@ export default function DocSearchForm({
   // Geocode location string to coordinates
   const geocodeLocation = async (locationString) => {
     if (!locationString || !GOOGLE_API_KEY) {
-      console.log('Geocoding skipped - missing location or API key:', { locationString, hasApiKey: !!GOOGLE_API_KEY });
       return null;
     }
     
-    console.log('Geocoding location:', locationString);
     try {
       const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(locationString)}&key=${GOOGLE_API_KEY}`;
-      console.log('Geocoding URL:', url);
       const response = await fetch(url);
       const data = await response.json();
-      console.log('Geocoding response:', data);
       
       if (data.status === 'OK' && data.results.length > 0) {
         const location = data.results[0].geometry.location;
@@ -106,10 +98,7 @@ export default function DocSearchForm({
           lat: location.lat,
           lng: location.lng
         };
-        console.log('Geocoding successful:', result);
         return result;
-      } else {
-        console.warn('Geocoding failed:', data.status, data.error_message);
       }
     } catch (error) {
       console.error('Geocoding error:', error);
@@ -139,15 +128,12 @@ export default function DocSearchForm({
   useEffect(() => {
     // Don't auto-fill if user has manually entered location or if location query exists or using search location
     if (hasManualLocation || locationQuery || autoLocationFilled || isUsingSearchLocation) {
-      console.log("Skipping auto-fill geolocation:", { hasManualLocation, locationQuery, autoLocationFilled, isUsingSearchLocation });
       return;
     }
     
     if (typeof window !== 'undefined' && navigator.geolocation) {
-      console.log("Requesting geolocation for auto-fill...");
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          console.log("Geolocation success for auto-fill:", position);
           const { latitude, longitude } = position.coords;
           const coords = { lat: latitude, lng: longitude };
           
@@ -158,11 +144,9 @@ export default function DocSearchForm({
           }
           
           const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
-          console.log("Fetching Google Geocoding API:", url);
           try {
             const res = await fetch(url);
             const data = await res.json();
-            console.log("Google Geocoding API response:", data);
             if (data.status === "OK" && data.results.length > 0) {
               const address = data.results[0].address_components;
               const cityObj = address.find(
@@ -174,13 +158,10 @@ export default function DocSearchForm({
               const city = cityObj ? cityObj.long_name : "";
               const state = stateObj ? stateObj.short_name : "";
               const locationString = state ? `${city}, ${state}` : city;
-              console.log("Resolved location:", locationString);
               if (locationString && !hasManualLocation && !locationQuery) {
                 setLocalLocation(locationString);
                 setAutoLocationFilled(true);
               }
-            } else {
-              console.error("Google Geocoding API did not return expected results:", data);
             }
           } catch (err) {
             console.error("Error fetching Google Geocoding API:", err);
@@ -190,37 +171,25 @@ export default function DocSearchForm({
           console.error("Geolocation error:", error);
         }
       );
-    } else {
-      console.log("Geolocation conditions not met:", {
-        hasWindow: typeof window !== 'undefined',
-        hasGeolocation: typeof window !== 'undefined' && !!navigator.geolocation,
-        autoLocationFilled,
-        hasManualLocation,
-        locationQuery
-      });
     }
   }, []); // Empty deps to only run on mount and prevent re-runs that interfere
 
   // Manual geolocation trigger with throttling
   const triggerManualLocation = () => {
-    console.log('Location button clicked!');
     const now = Date.now();
     const timeSinceLastRequest = now - lastGeolocationRequest;
     const THROTTLE_DELAY = 2000; // 2 seconds between requests (reduced from 5)
     
     if (timeSinceLastRequest < THROTTLE_DELAY && lastGeolocationRequest > 0) {
       const remainingTime = Math.ceil((THROTTLE_DELAY - timeSinceLastRequest) / 1000);
-      console.log(`Throttled: ${remainingTime} seconds remaining`);
       alert(`Please wait ${remainingTime} seconds before requesting location again.`);
       return;
     }
     
     if (typeof window !== 'undefined' && navigator.geolocation) {
       setLastGeolocationRequest(now);
-      console.log("Manual geolocation triggered...");
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          console.log("Manual geolocation success:", position);
           const { latitude, longitude } = position.coords;
           const coords = { lat: latitude, lng: longitude };
           setUserLocation(coords);
@@ -299,99 +268,56 @@ export default function DocSearchForm({
 
   // Modified search handler for main input only
   async function handleMainSearch() {
-    console.log('🚀 === SEARCH BUTTON CLICKED ===');
-    console.log('🕒 Timestamp:', new Date().toISOString());
-    console.log('📝 Form state:', {
-      localSearch,
-      localLocation,
-      isSearchInProgress,
-      isUsingSearchLocation,
-      userLocation,
-      hasManualLocation,
-      autoLocationFilled
-    });
-    
     // Prevent concurrent searches
     if (isSearchInProgress) {
-      console.log('🚫 Search already in progress, skipping...');
       return;
     }
     
     setIsSearchInProgress(true);
-    console.log('✅ Set isSearchInProgress to true');
-    console.log('🔍 Search triggered with:', { localSearch, localLocation, timestamp: Date.now() });
     
     try {
       // If the user typed an acronym, replace with mapped specialty
       const resolvedSearch = resolveAcronym(localSearch);
-      console.log('🔄 Resolved search term:', { original: localSearch, resolved: resolvedSearch });
       
       // If user entered a location manually, geocode it first
       if (localLocation && localLocation.trim()) {
-        console.log('📍 === GEOCODING LOCATION FLOW ===');
-        console.log('🗺️ Geocoding search location:', localLocation);
-        console.log('🏁 Setting isUsingSearchLocation flag...');
-        
         // Set flag to prevent auto-geolocation from interfering
         setIsUsingSearchLocation(true);
         
-        console.log('🌍 Calling geocodeLocation...');
         const geocoded = await geocodeLocation(localLocation);
-        console.log('📊 Geocoding result:', geocoded);
         
         if (geocoded) {
-          console.log('✅ Search location geocoded successfully:', geocoded);
-          console.log('📡 Calling onSearchLocationUpdate with coordinates...');
           // Update the search location immediately
           onSearchLocationUpdate(geocoded);
           
           // Trigger search immediately with geocoded coordinates
-          console.log('🎯 Triggering search with coordinates...');
-          console.log('📤 Calling setSearchQuery with:', { resolvedSearch, localLocation, geocoded });
           // Pass the geocoded coordinates directly to preserve the search location
           setSearchQuery(resolvedSearch, localLocation, geocoded);
           setIsSearchInProgress(false);
-          console.log('✅ Search completed with geocoded location');
           // Keep the isUsingSearchLocation flag set to prevent auto-geolocation interference
         } else {
-          console.warn('❌ Geocoding failed for:', localLocation);
-          console.log('🧹 Clearing isUsingSearchLocation flag...');
           // Still trigger search even if geocoding failed, but clear the search location flag
           setIsUsingSearchLocation(false);
-          console.log('📤 Calling setSearchQuery without coordinates...');
           setSearchQuery(resolvedSearch, localLocation);
           setIsSearchInProgress(false);
-          console.log('✅ Search completed without geocoded location');
         }
-        console.log('📍 === END GEOCODING LOCATION FLOW ===');
         return; // Exit function after handling location geocoding
       }
       
       // No location to geocode, trigger search immediately
-      console.log('🚀 === NO LOCATION SEARCH FLOW ===');
-      console.log('🧹 Clearing search location state...');
       // Clear the search location flag if no location is provided
       setIsUsingSearchLocation(false);
       // Only clear search location if we're not currently using a search location
       // This prevents clearing coordinates that were just set by a previous geocoding operation
       if (!isUsingSearchLocation) {
-        console.log('📡 Calling onSearchLocationUpdate(null)...');
         onSearchLocationUpdate(null); // Clear search location
-      } else {
-        console.log('🔒 Preserving existing search location coordinates');
       }
-      console.log('📤 Calling setSearchQuery without location...');
       setSearchQuery(resolvedSearch, localLocation);
       setIsSearchInProgress(false);
-      console.log('✅ Search completed without location');
-      console.log('🚀 === END NO LOCATION SEARCH FLOW ===');
     } catch (error) {
-      console.error('💥 Search error:', error);
+      console.error('Search error:', error);
       setIsSearchInProgress(false);
-      console.log('❌ Reset isSearchInProgress due to error');
     }
-    
-    console.log('🏁 === SEARCH FUNCTION COMPLETE ===');
   }
 
   return (
@@ -436,9 +362,7 @@ export default function DocSearchForm({
                   }
                 }}
                 onKeyDown={(e) => {
-                  console.log('⌨️ Location input keydown:', e.key);
                   if (e.key === 'Enter') {
-                    console.log('🎯 Enter pressed in location field - triggering search');
                     handleMainSearch();
                   }
                 }}
@@ -467,9 +391,7 @@ export default function DocSearchForm({
                   value={localSearch}
                   onChange={(e) => setLocalSearch(e.target.value)}
                   onKeyDown={(e) => {
-                    console.log('⌨️ Search input keydown:', e.key);
                     if (e.key === 'Enter') {
-                      console.log('🎯 Enter pressed in search field - triggering search');
                       handleMainSearch();
                     }
                   }}
@@ -481,12 +403,7 @@ export default function DocSearchForm({
             <button
               type="button"
               className="btn-md flex-center font-semibold btn-outline-secondary gap-1 w-full sm:w-auto px-4 py-2 rounded"
-              onClick={(e) => {
-                console.log('🖱️ === SEARCH BUTTON CLICKED ===');
-                console.log('🎯 Button click event:', e.type);
-                console.log('🕒 Click timestamp:', new Date().toISOString());
-                handleMainSearch();
-              }}
+              onClick={handleMainSearch}
             >
               Search
               <ChevronRight />
