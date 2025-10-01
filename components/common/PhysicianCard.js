@@ -2,9 +2,43 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function PhysicianCard({ physician }) {
+export default function PhysicianCard({ physician, userLocation, showDistance }) {
   const physicianName = `${physician.firstName} ${physician.lastName}`;
   const physicianNameWithDegree = `${physicianName} ${physician.degree || ''}`.trim();
+
+  // Calculate distance if both user location and physician location are available
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distance in miles
+  };
+
+  const distance = showDistance && userLocation && physician.latitude && physician.longitude ? 
+    (() => {
+      const lat1 = userLocation.latitude;
+      const lng1 = userLocation.longitude;
+      const lat2 = parseFloat(physician.latitude);
+      const lng2 = parseFloat(physician.longitude);
+      
+      // Validate all coordinates are numbers
+      if (isNaN(lat1) || isNaN(lng1) || isNaN(lat2) || isNaN(lng2)) {
+        console.warn('Invalid coordinates for distance calculation:', {
+          userLocation: { lat: lat1, lng: lng1 },
+          physician: { lat: lat2, lng: lng2, name: `${physician.firstName} ${physician.lastName}` }
+        });
+        return null;
+      }
+      
+      const dist = calculateDistance(lat1, lng1, lat2, lng2);
+      console.log(`Distance calculated for ${physician.firstName} ${physician.lastName}:`, dist);
+      return dist;
+    })() : null;
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -70,6 +104,13 @@ export default function PhysicianCard({ physician }) {
         {(physician.city || physician.state) && (
           <p className="text-sm text-gray-600 mb-3">
             📍 {physician.city}{physician.state ? `, ${physician.state}` : ''}
+          </p>
+        )}
+
+        {/* Distance */}
+        {distance !== null && (
+          <p className="text-sm text-green-600 font-medium mb-3">
+            🚗 {distance.toFixed(1)} miles away
           </p>
         )}
 

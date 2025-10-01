@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import DocSearchForm from "components/find-doc/search-form";
@@ -8,8 +8,14 @@ import LayoutOptions from "@/components/common/LayoutOptions";
 import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
 import PhysicianCard from "@/components/common/PhysicianCard";
 import { FilterMobile } from "@/public/icons/filter-mobile";
-import { useFaustQuery } from "@faustwp/core";
-import { GET_PHYSICIANS_FILTERED, GET_SPECIALTIES, GET_LANGUAGES } from "../queries/PhysicianQueries";
+import { useQuery } from "@apollo/client";
+import { 
+  GET_PHYSICIANS_FILTERED, 
+  GET_PHYSICIANS_LIST,
+  GET_SPECIALTIES, 
+  GET_LANGUAGES, 
+  GET_INSURANCES 
+} from "../queries/PhysicianQueries";
 import { useRouter } from "next/router";
 import { X } from "lucide-react";
 
@@ -25,109 +31,374 @@ export default function FindCare() {
   const router = useRouter();
   const [activeLayout, setActiveLayout] = useState("list");
   const [showFilter, setShowFilter] = useState(false);
+  const [userLocation, setUserLocation] = useState(null); // User's actual location for distance sorting {latitude, longitude}
+  const [searchLocation, setSearchLocation] = useState(null); // Search location for filtering {latitude, longitude}
 
-  // Get filter parameters from URL
-  const {
-    doctorName: searchQuery = "",
-    zipCode: locationQuery = "",
-    specialty: specialityFilter = "",
-    gender: genderFilter = "",
-    language: languageFilter = "",
-    primaryCare: primaryCareFilter = false,
-    page: currentPage = 1
-  } = router.query;
+  // Parse URL parameters for search
+  const parsedPage = parseInt(router.query.page) || 1;
+  const searchQuery = router.query.search || "";
+  const locationQuery = router.query.location || "";
+  const specialityFilter = router.query.specialty || "";
+  const genderFilter = router.query.gender || [];
+  const languageFilter = router.query.language || [];
+  const insuranceFilter = router.query.insurance || [];
+  const primaryCareFilter = router.query.primaryCare || false;
+  
+  // Parse search coordinates from URL
+  const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
+  const searchLng = router.query.searchLng ? parseFloat(router.query.searchLng) : null;
 
-  // Convert URL params to proper format
-  const parsedPage = parseInt(currentPage) || 1;
+  // Parse array and boolean filters
   const parsedGenderFilter = genderFilter ? [].concat(genderFilter) : [];
+  const parsedLanguageFilter = languageFilter ? (typeof languageFilter === 'string' ? languageFilter.split(',') : [].concat(languageFilter)) : [];
+  const parsedInsuranceFilter = insuranceFilter ? (typeof insuranceFilter === 'string' ? insuranceFilter.split(',') : [].concat(insuranceFilter)) : [];
   const parsedPrimaryCare = primaryCareFilter === 'true';
 
+  // Restore search location from URL parameters
+  useEffect(() => {
+    if (searchLat && searchLng && !isNaN(searchLat) && !isNaN(searchLng)) {
+      const coords = {
+        latitude: searchLat,
+        longitude: searchLng
+      };
+      console.log('🔄 Restoring search location from URL:', coords);
+      setSearchLocation(coords);
+    } else if (!searchLat && !searchLng) {
+      // Clear search location if no coordinates in URL
+      console.log('🧹 Clearing search location (no coordinates in URL)');
+      setSearchLocation(null);
+    }
+  }, [searchLat, searchLng]);
+
+  // Determine sorting - if user has location, sort by distance, otherwise alphabetical
+  const orderBy = userLocation ? "distance" : "last_name";
+  const order = userLocation ? "ASC" : "ASC";
+
   // Get physicians data with current filters
-  const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useFaustQuery(GET_PHYSICIANS_FILTERED, {
+  const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
     variables: {
       search: searchQuery || null,
       specialty: specialityFilter || null,
-      language: languageFilter || null,
-      gender: genderFilter || null,
+      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
+      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
       primaryCare: parsedPrimaryCare || null,
       page: parsedPage,
       perPage: 10,
-      orderBy: "last_name",
-      order: "ASC"
+      orderBy: orderBy,
+      order: order
+      // Note: location filtering will be done client-side since GraphQL doesn't support it
     },
     errorPolicy: 'all',
-    notifyOnNetworkStatusChange: true
-  }) || {};
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network'
+  });
 
-  // Get available specialties and languages for filters
-  const { data: specialtiesData } = useFaustQuery(GET_SPECIALTIES, {
+  // Get available specialties, languages, and insurances for filters
+  // TODO: These queries might be causing issues - temporarily commented out
+  /*
+  const { data: specialtiesData, error: specialtiesError } = useQuery(GET_SPECIALTIES, {
     errorPolicy: 'all'
-  }) || {};
-  const { data: languagesData } = useFaustQuery(GET_LANGUAGES, {
+  });
+  const { data: languagesData, error: languagesError } = useQuery(GET_LANGUAGES, {
     errorPolicy: 'all'
-  }) || {};
+  });
+  const { data: insurancesData, error: insurancesError } = useQuery(GET_INSURANCES, {
+    errorPolicy: 'all'
+  });
+  */
+
+  // Calculate distance between two points (Haversine formula)
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distance in miles
+  };
 
   const physicians = physiciansData?.doctorsList?.items || [];
   const total = physiciansData?.doctorsList?.total || 0;
   const totalPages = Math.ceil(total / 10);
-  const availableSpecialties = specialtiesData?.specialties || [];
-  const availableLanguages = languagesData?.languages || [];
+  
+  // Client-side location filtering if we have a search location
+  const locationFilteredPhysicians = searchLocation ? physicians.filter(physician => {
+    if (!physician.latitude || !physician.longitude) return false;
+    
+    const distance = calculateDistance(
+      searchLocation.latitude,
+      searchLocation.longitude,
+      parseFloat(physician.latitude),
+      parseFloat(physician.longitude)
+    );
+    
+    // Filter within 50 miles
+    return distance <= 50;
+  }) : physicians;
+  
+  // Hardcode empty arrays for filters since queries are disabled
+  const availableSpecialties = [];
+  const availableLanguages = [];
+  const availableInsurances = [];
+
+  // Debug the GraphQL data
+  console.log('GraphQL data loaded:', {
+    physicians: physicians.length,
+    firstPhysician: physicians[0] ? {
+      name: `${physicians[0].firstName} ${physicians[0].lastName}`,
+      latitude: physicians[0].latitude,
+      longitude: physicians[0].longitude,
+      hasCoordinates: Boolean(physicians[0].latitude && physicians[0].longitude)
+    } : null,
+    samplePhysicians: physicians.slice(0, 3).map(p => ({
+      name: `${p.firstName} ${p.lastName}`,
+      lat: p.latitude,
+      lng: p.longitude,
+      hasCoords: Boolean(p.latitude && p.longitude)
+    }))
+  });
+  console.log('Specialty filtering debug:', {
+    hasSpecialtyTerms: Boolean(specialityFilter?.length),
+    specialtyTerms: specialityFilter,
+    useSpecialtyFiltering: Boolean(specialityFilter?.length),
+    selectedSpecialties: specialityFilter || ''
+  });
+
+  // Reverse geocoding function to get address from coordinates
+  const reverseGeocode = async (lat, lng) => {
+    try {
+      const response = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+      );
+      const data = await response.json();
+      return `${data.city}, ${data.principalSubdivision}`;
+    } catch (error) {
+      console.error('Reverse geocoding failed:', error);
+      return '';
+    }
+  };
+
+  // Get user's geolocation on page load
+  // Note: Geolocation is now handled by the search form component
+  // to avoid conflicts and use Google's Geocoding API
+
+  // Determine which location to use for sorting (prioritize search location over user location)
+  const sortingLocation = searchLocation || userLocation;
+
+  // Sort physicians by distance if we have any location (user's geolocation OR search location)
+  const sortedPhysicians = sortingLocation ? [...locationFilteredPhysicians].sort((a, b) => {
+      // Check if both physicians have valid coordinates
+      const aLat = parseFloat(a.latitude);
+      const aLng = parseFloat(a.longitude);
+      const bLat = parseFloat(b.latitude);
+      const bLng = parseFloat(b.longitude);
+      
+      // If either physician doesn't have coordinates, put them at the end
+      if (isNaN(aLat) || isNaN(aLng)) {
+        console.warn(`Physician ${a.firstName} ${a.lastName} has invalid coordinates:`, { lat: a.latitude, lng: a.longitude });
+        return 1;
+      }
+      if (isNaN(bLat) || isNaN(bLng)) {
+        console.warn(`Physician ${b.firstName} ${b.lastName} has invalid coordinates:`, { lat: b.latitude, lng: b.longitude });
+        return -1;
+      }
+      
+      const distanceA = calculateDistance(
+        sortingLocation.latitude, 
+        sortingLocation.longitude, 
+        aLat, 
+        aLng
+      );
+      const distanceB = calculateDistance(
+        sortingLocation.latitude, 
+        sortingLocation.longitude, 
+        bLat, 
+        bLng
+      );
+      
+      console.log(`Distance comparison - ${a.firstName} ${a.lastName}: ${distanceA.toFixed(1)} miles, ${b.firstName} ${b.lastName}: ${distanceB.toFixed(1)} miles`);
+      
+      return distanceA - distanceB;
+    }) : locationFilteredPhysicians;
+
+  // Log sorting information
+  console.log('Sorting info:', {
+    userLocation,
+    searchLocation,
+    sortingLocation,
+    sortingBy: searchLocation ? 'search location (zip code)' : userLocation ? 'user location (geolocation)' : 'no location',
+    totalPhysicians: physicians.length,
+    sortedPhysicians: sortedPhysicians.length,
+    firstPhysician: sortedPhysicians[0] ? {
+      name: `${sortedPhysicians[0].firstName} ${sortedPhysicians[0].lastName}`,
+      coordinates: `${sortedPhysicians[0].latitude}, ${sortedPhysicians[0].longitude}`,
+      hasCoordinates: !!(sortedPhysicians[0].latitude && sortedPhysicians[0].longitude)
+    } : null,
+    samplePhysicians: sortedPhysicians.slice(0, 3).map(p => ({
+      name: `${p.firstName} ${p.lastName}`,
+      lat: p.latitude,
+      lng: p.longitude,
+      hasCoords: !!(p.latitude && p.longitude)
+    }))
+  });
 
   // Handler for search form
-  const handleSearch = (searchValue, locationValue) => {
+  const handleSearch = (searchValue, locationValue, coordinates) => {
+    console.log('🔍 === HANDLE SEARCH CALLED ===');
+    console.log('🕒 Timestamp:', new Date().toISOString());
+    console.log('📝 Received parameters:', { 
+      searchValue, 
+      locationValue, 
+      coordinates,
+      hasCoordinates: Boolean(coordinates),
+      coordinatesType: typeof coordinates
+    });
+    console.log('🌐 Current router state:', {
+      pathname: router.pathname,
+      query: router.query,
+      asPath: router.asPath
+    });
+    
     const query = {
       ...router.query,
       page: 1 // Reset to first page on new search
     };
+    console.log('📋 Base query object:', query);
 
     if (searchValue) {
-      query.doctorName = Array.isArray(searchValue) ? searchValue.join(",") : searchValue;
+      query.search = Array.isArray(searchValue) ? searchValue.join(",") : searchValue;
+      console.log('✅ Added search to query:', query.search);
     } else {
-      delete query.doctorName;
+      delete query.search;
+      console.log('🗑️ Removed search from query');
     }
 
     if (locationValue) {
-      query.zipCode = locationValue;
+      query.location = locationValue;
+      console.log('✅ Added location to query:', query.location);
     } else {
-      delete query.zipCode;
+      delete query.location;
+      console.log('🗑️ Removed location from query');
     }
 
+    // Persist search coordinates in URL to prevent loss during navigation
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      query.searchLat = coordinates.lat.toString();
+      query.searchLng = coordinates.lng.toString();
+      console.log('✅ Added search coordinates to query:', { lat: coordinates.lat, lng: coordinates.lng });
+    } else {
+      delete query.searchLat;
+      delete query.searchLng;
+      console.log('🗑️ Removed search coordinates from query');
+    }
+
+    console.log('📦 Final query object:', query);
+    console.log('🚀 About to call router.push...');
+
+    // Don't overwrite coordinates here - they should be set by handleSearchLocationUpdate
+    // This prevents the search location from being converted to user location
+
+    // Use shallow routing to prevent server-side re-render and hydration mismatch
     router.push({
       pathname: router.pathname,
       query
+    }, undefined, { shallow: true }).then((success) => {
+      console.log('🎯 Router.push completed:', success);
+      console.log('🔄 New router state:', {
+        pathname: router.pathname,
+        query: router.query,
+        asPath: router.asPath
+      });
+    }).catch((error) => {
+      console.error('❌ Router.push failed:', error);
     });
+    
+    console.log('🔍 === END HANDLE SEARCH ===');
+  };
+
+  // Handler for location updates from the search form
+  const handleLocationUpdate = (coordinates) => {
+    console.log('User location update received:', coordinates);
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      // Convert from search form format {lat, lng} to our format {latitude, longitude}
+      const coords = {
+        latitude: coordinates.lat,
+        longitude: coordinates.lng
+      };
+      setUserLocation(coords);
+      console.log('User location set:', coords);
+    } else {
+      setUserLocation(null);
+      console.log('User location cleared');
+    }
+  };
+
+  // Handler for search location updates (manual input geocoding)
+  const handleSearchLocationUpdate = (coordinates) => {
+    console.log('🗺️ SEARCH LOCATION UPDATE:', coordinates, 'at', Date.now());
+    
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      const coords = {
+        latitude: coordinates.lat,
+        longitude: coordinates.lng
+      };
+      setSearchLocation(coords);
+      console.log('✅ Search location set:', coords);
+    } else {
+      console.log('🚫 Clearing search location');
+      setSearchLocation(null);
+    }
   };
 
   // Handler for filter changes
-  const handleFilterChange = (newFilters) => {
+  const handleFilterChange = (filterUpdate) => {
     const query = {
       ...router.query,
       page: 1 // Reset to first page on filter change
     };
 
-    // Update query parameters based on filter changes
-    if (newFilters.specialityFilter) {
-      query.specialty = newFilters.specialityFilter;
-    } else {
-      delete query.specialty;
+    // Handle different filter types
+    if (filterUpdate.specialty !== undefined) {
+      if (filterUpdate.specialty) {
+        query.specialty = filterUpdate.specialty;
+      } else {
+        delete query.specialty;
+      }
     }
 
-    if (newFilters.genderFilter && newFilters.genderFilter.length > 0) {
-      query.gender = newFilters.genderFilter;
-    } else {
-      delete query.gender;
+    if (filterUpdate.gender !== undefined) {
+      if (filterUpdate.gender) {
+        query.gender = filterUpdate.gender;
+      } else {
+        delete query.gender;
+      }
     }
 
-    if (newFilters.languageFilter) {
-      query.language = newFilters.languageFilter;
-    } else {
-      delete query.language;
+    if (filterUpdate.languages !== undefined) {
+      if (filterUpdate.languages && filterUpdate.languages.length > 0) {
+        query.language = filterUpdate.languages.join(',');
+      } else {
+        delete query.language;
+      }
     }
 
-    if (newFilters.primaryCareFilter) {
-      query.primaryCare = 'true';
-    } else {
-      delete query.primaryCare;
+    if (filterUpdate.insurances !== undefined) {
+      if (filterUpdate.insurances && filterUpdate.insurances.length > 0) {
+        query.insurance = filterUpdate.insurances.join(',');
+      } else {
+        delete query.insurance;
+      }
+    }
+
+    if (filterUpdate.isPrimaryCare !== undefined) {
+      if (filterUpdate.isPrimaryCare) {
+        query.primaryCare = 'true';
+      } else {
+        delete query.primaryCare;
+      }
     }
 
     router.push({
@@ -174,6 +445,8 @@ export default function FindCare() {
           setLocationQuery={handleSearch}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
+          onLocationUpdate={handleLocationUpdate}
+          onSearchLocationUpdate={handleSearchLocationUpdate}
         />
 
         {/* Results Count, Clear All Filters Link, and LayoutOptions */}
@@ -220,8 +493,10 @@ export default function FindCare() {
                         genderFilter={parsedGenderFilter}
                         languageFilter={languageFilter}
                         primaryCareFilter={parsedPrimaryCare}
+                        insuranceFilter={parsedInsuranceFilter}
                         availableSpecialties={availableSpecialties}
                         availableLanguages={availableLanguages}
+                        availableInsurances={availableInsurances}
                         onFilterChange={handleFilterChange}
                       />
                     </div>
@@ -231,10 +506,12 @@ export default function FindCare() {
                     <DocSearchFilterSidebar
                       specialityFilter={specialityFilter}
                       genderFilter={parsedGenderFilter}
-                      languageFilter={languageFilter}
+                      languageFilter={parsedLanguageFilter}
                       primaryCareFilter={parsedPrimaryCare}
+                      insuranceFilter={parsedInsuranceFilter}
                       availableSpecialties={availableSpecialties}
                       availableLanguages={availableLanguages}
+                      availableInsurances={availableInsurances}
                       onFilterChange={handleFilterChange}
                     />
                   </div>
@@ -282,10 +559,12 @@ export default function FindCare() {
                         ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" 
                         : "grid-cols-1"
                     }`}>
-                      {physicians.map((physician) => (
+                      {sortedPhysicians.map((physician) => (
                         <PhysicianCard 
                           key={physician.doctorID} 
                           physician={physician}
+                          userLocation={sortingLocation}
+                          showDistance={!!sortingLocation}
                         />
                       ))}
                     </div>

@@ -4,6 +4,8 @@ import { gql } from '@apollo/client';
 export const GET_PHYSICIAN_BY_SLUG = gql`
   query GetPhysicianBySlug($slug: String!) {
     doctorBySlug(slug: $slug) {
+      accept_medi_cal
+      accepts_new_patients
       address
       biography
       btDirectory
@@ -12,62 +14,77 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
       county
       degree
       doctorID
-      email
-      faxNumber
       fellowship
+      faxNumber
+      email
       firstName
       gender
       hospitalNames
+      hospitals
       idme
       insurances
       internship
       lastName
+      languages
       latitude
       longitude
       medicalSchool
       mentalHealth
-      phoneNumber
       practiceName
+      phoneNumber
       primaryCare
       profileImageUrl
       provStatus
       residency
       slug
+      specialties
       state
       zip
-      specialties
-      languages
-      hospitals
-      accept_medi_cal
-      accepts_new_patients
     }
   }
 `;
 
 // Query to get all physicians with pagination and search
 export const GET_PHYSICIANS_LIST = gql`
-  query GetPhysiciansList($first: Int, $search: String, $specialty: String, $location: String) {
-    doctorsList(first: $first, search: $search, specialty: $specialty, location: $location) {
+  query GetPhysiciansList($search: String, $specialty: String, $language: String, $gender: String, $primaryCare: Boolean, $page: Int, $perPage: Int, $orderBy: String, $order: String) {
+    doctorsList(search: $search, specialty: $specialty, language: $language, gender: $gender, primaryCare: $primaryCare, page: $page, perPage: $perPage, orderBy: $orderBy, order: $order) {
       items {
-        doctorID
-        slug
-        firstName
         lastName
-        degree
-        email
-        phoneNumber
-        faxNumber
-        primaryCare
-        gender
-        specialties
-        languages
+        firstName
+        hospitals
+        accept_medi_cal
+        accepts_new_patients
         address
+        biography
+        btDirectory
+        certification
         city
-        state
-        zip
+        county
+        degree
+        doctorID
+        email
+        faxNumber
+        fellowship
+        gender
+        hospitalNames
+        idme
+        insurances
+        internship
+        languages
         latitude
         longitude
+        medicalSchool
+        mentalHealth
+        phoneNumber
+        practiceName
+        primaryCare
         profileImageUrl
+        provStatus
+        residency
+        slug
+        specialties
+        state
+        zip
       }
       total
       page
@@ -114,10 +131,17 @@ export const GET_PHYSICIANS_FILTERED = gql`
         city
         state
         zip
+        latitude
+        longitude
         profileImageUrl
         specialties
         languages
         insurances
+        certification
+        medicalSchool
+        residency
+        fellowship
+        internship
       }
       total
       page
@@ -129,7 +153,7 @@ export const GET_PHYSICIANS_FILTERED = gql`
 // Query to get all physician slugs for static generation
 export const GET_PHYSICIAN_SLUGS = gql`
   query GetPhysicianSlugs {
-    doctorsList(first: 1000) {
+    doctorsList(perPage: 1000) {
       items {
         slug
       }
@@ -140,13 +164,27 @@ export const GET_PHYSICIAN_SLUGS = gql`
 // Query to get specialties for filtering
 export const GET_SPECIALTIES = gql`
   query GetSpecialties {
-    specialties
+    specialties {
+      name
+      slug
+    }
   }
 `;
 
 // Query to get languages for filtering
 export const GET_LANGUAGES = gql`
   query GetLanguages {
-    languages
+    languages {
+      name
+    }
+  }
+`;
+
+// Query to get insurances for filtering
+export const GET_INSURANCES = gql`
+  query GetInsurances {
+    insurances {
+      name
+    }
   }
 `;
