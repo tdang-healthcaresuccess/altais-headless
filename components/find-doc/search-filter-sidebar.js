@@ -57,31 +57,34 @@ export default function DocSearchFilterSidebar({
 
   const handleGenderChange = (event) => {
     const { value, checked } = event.target;
+    const currentGender = Array.isArray(genderFilter) ? genderFilter : [];
     let newGender = checked
-      ? [...genderFilter, value]
-      : genderFilter.filter((item) => item !== value);
+      ? [...currentGender, value]
+      : currentGender.filter((item) => item !== value);
     if (setGenderFilter) setGenderFilter(newGender);
     if (!setGenderFilter) updateQuery({ gender: newGender });
   };
 
   const handleEducationChange = (event) => {
     const { value, checked } = event.target;
+    const currentEducation = Array.isArray(educationFilter) ? educationFilter : [];
     let newEdu = checked
-      ? [...educationFilter, value]
-      : educationFilter.filter((item) => item !== value);
+      ? [...currentEducation, value]
+      : currentEducation.filter((item) => item !== value);
     if (setEducationFilter) setEducationFilter(newEdu);
     if (!setEducationFilter) updateQuery({ education: newEdu });
   };
 
   const handleInsuranceChange = (event) => {
     const { value, checked } = event.target;
+    const currentInsurance = Array.isArray(insuranceFilter) ? insuranceFilter : [];
     let newIns;
     if (checked) {
       // Add insurance to filter, avoid duplicates
-      newIns = Array.from(new Set([...insuranceFilter, value]));
+      newIns = Array.from(new Set([...currentInsurance, value]));
     } else {
       // Remove insurance from filter
-      newIns = insuranceFilter.filter((item) => item !== value);
+      newIns = currentInsurance.filter((item) => item !== value);
     }
     if (setInsuranceFilter) setInsuranceFilter(newIns);
     if (!setInsuranceFilter) updateQuery({ insurance: newIns });
@@ -159,7 +162,7 @@ export default function DocSearchFilterSidebar({
                   type="checkbox"
                   name="gender"
                   value={gender}
-                  checked={genderFilter.includes(gender)}
+                  checked={Array.isArray(genderFilter) && genderFilter.includes(gender)}
                   onChange={handleGenderChange}
                 />
                 {displayGender}
@@ -182,7 +185,7 @@ export default function DocSearchFilterSidebar({
                 type="checkbox"
                 name="education"
                 value={edu}
-                checked={educationFilter.includes(edu)}
+                checked={Array.isArray(educationFilter) && educationFilter.includes(edu)}
                 onChange={handleEducationChange}
               />
               {edu}
@@ -204,7 +207,7 @@ export default function DocSearchFilterSidebar({
                 type="checkbox"
                 name="insurance"
                 value={ins}
-                checked={insuranceFilter.includes(ins)}
+                checked={Array.isArray(insuranceFilter) && insuranceFilter.includes(ins)}
                 onChange={handleInsuranceChange}
               />
               {ins}

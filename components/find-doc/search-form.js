@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import GOOGLE_API_KEY from "../common/LocationConfig";
 import {
   LayoutGrid,
   AlignJustify,
@@ -30,10 +31,6 @@ export default function DocSearchForm({
   // Local state for input fields
   const [localSearch, setLocalSearch] = useState(searchQuery || "");
   const [localLocation, setLocalLocation] = useState(locationQuery || "");
-  // Debug SSR prop flow
-  useEffect(() => {
-    console.log('[DocSearchForm] locationQuery prop received:', locationQuery);
-  }, [locationQuery]);
 
   // Keep local state in sync with props after SSR search
   useEffect(() => {
@@ -42,6 +39,7 @@ export default function DocSearchForm({
   useEffect(() => {
     setLocalLocation(locationQuery || "");
   }, [locationQuery]);
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -59,6 +57,44 @@ export default function DocSearchForm({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showLayoutGrid]);
+
+  // Auto-request geolocation and fill city on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      console.log("Requesting geolocation...");
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          console.log("Geolocation success:", position);
+          const { latitude, longitude } = position.coords;
+          const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+          console.log("Fetching Google Geocoding API:", url);
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            console.log("Google Geocoding API response:", data);
+            if (data.status === "OK" && data.results.length > 0) {
+              const address = data.results[0].address_components;
+              const cityObj = address.find(
+                (c) => c.types.includes("locality") || c.types.includes("administrative_area_level_2")
+              );
+              const city = cityObj ? cityObj.long_name : "";
+              console.log("Resolved city:", city);
+              if (city) setLocalLocation(city);
+            } else {
+              console.error("Google Geocoding API did not return expected results:", data);
+            }
+          } catch (err) {
+            console.error("Error fetching Google Geocoding API:", err);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation not supported by this browser.");
+    }
+  }, []);
 
   // Helper to resolve acronyms to specialty names
   function resolveAcronym(term) {
@@ -102,7 +138,7 @@ export default function DocSearchForm({
         </div>
         <div className="flex flex-col md:flex-row pb-9 gap-6">
           <div className="block relative">
-            <div className="relative flex items-center">
+            <div className="relative">
               <Image
                 src={PinMarker}
                 alt="Pin Marker"
@@ -111,7 +147,7 @@ export default function DocSearchForm({
               <input
                 type="text"
                 placeholder="City, State or Zip Code"
-                className="input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px] pr-10"
+                className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
                 value={localLocation}
                 onChange={(e) => setLocalLocation(e.target.value)}
                 onKeyDown={(e) => {
@@ -119,31 +155,8 @@ export default function DocSearchForm({
                     handleMainSearch();
                   }
                 }}
+                style={{ paddingRight: "2.5em" }}
               />
-              {/* Location icon button on the right */}
-              <button
-                type="button"
-                aria-label="Detect Location"
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-transparent border-none cursor-pointer"
-                onClick={() => {
-                  console.log('[DocSearchForm] Location icon clicked. locationQuery:', locationQuery);
-                  // Use SSR-provided city if available
-                  if (locationQuery) {
-                    setLocalLocation(locationQuery);
-                  } else {
-                    // fallback: try to use browser geolocation (optional)
-                    if (navigator.geolocation) {
-                      navigator.geolocation.getCurrentPosition(async (pos) => {
-                        alert('GeoTarget not available. Please allow location or enter manually.');
-                      });
-                    } else {
-                      alert('GeoTarget not available. Please enter your city manually.');
-                    }
-                  }
-                }}
-              >
-                <MapPin className="w-5 h-5 text-bluePrimary" />
-              </button>
             </div>
           </div>
           <div className="flex flex-col md:flex-row flex-1 w-full relative gap-6">

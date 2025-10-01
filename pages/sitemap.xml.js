@@ -112,4 +112,7 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-export default function Sitemap() {}
+export default function Sitemap() {
+  // This component is not rendered directly - sitemap is generated in getServerSideProps
+  return null;
+}

@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
 
+
 const MenuItem = ({ item, router }) => {
   const isActive = router.pathname === item.uri;
   const hasChildren = item.childItems?.nodes?.length > 0;
