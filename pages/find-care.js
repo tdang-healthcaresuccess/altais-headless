@@ -13,7 +13,8 @@ import {
   GET_PHYSICIANS_LIST,
   GET_SPECIALTIES, 
   GET_LANGUAGES, 
-  GET_INSURANCES 
+  GET_INSURANCES,
+  GET_DEGREES
 } from "../queries/PhysicianQueries";
 import { useRouter } from "next/router";
 import { X } from "lucide-react";
@@ -41,17 +42,16 @@ export default function FindCare() {
   const genderFilter = router.query.gender || [];
   const languageFilter = router.query.language || [];
   const insuranceFilter = router.query.insurance || [];
-  const primaryCareFilter = router.query.primaryCare || false;
+  const educationFilter = router.query.education || "";
   
   // Parse search coordinates from URL
   const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
   const searchLng = router.query.searchLng ? parseFloat(router.query.searchLng) : null;
 
-  // Parse array and boolean filters
+  // Parse array filters
   const parsedGenderFilter = genderFilter ? [].concat(genderFilter) : [];
   const parsedLanguageFilter = languageFilter ? (typeof languageFilter === 'string' ? languageFilter.split(',') : [].concat(languageFilter)) : [];
   const parsedInsuranceFilter = insuranceFilter ? (typeof insuranceFilter === 'string' ? insuranceFilter.split(',') : [].concat(insuranceFilter)) : [];
-  const parsedPrimaryCare = primaryCareFilter === 'true';
 
   // Restore search location from URL parameters
   useEffect(() => {
@@ -78,7 +78,8 @@ export default function FindCare() {
       specialty: specialityFilter || null,
       language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
       gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
-      primaryCare: parsedPrimaryCare || null,
+      degree: educationFilter || null,
+      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter.join(',') : null,
       page: parsedPage,
       perPage: 10,
       orderBy: orderBy,
@@ -90,9 +91,7 @@ export default function FindCare() {
     fetchPolicy: 'cache-and-network'
   });
 
-  // Get available specialties, languages, and insurances for filters
-  // TODO: These queries might be causing issues - temporarily commented out
-  /*
+  // Get available specialties, languages, insurances, and degrees for filters
   const { data: specialtiesData, error: specialtiesError } = useQuery(GET_SPECIALTIES, {
     errorPolicy: 'all'
   });
@@ -102,7 +101,9 @@ export default function FindCare() {
   const { data: insurancesData, error: insurancesError } = useQuery(GET_INSURANCES, {
     errorPolicy: 'all'
   });
-  */
+  const { data: degreesData, error: degreesError } = useQuery(GET_DEGREES, {
+    errorPolicy: 'all'
+  });
 
   // Calculate distance between two points (Haversine formula)
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -138,11 +139,29 @@ export default function FindCare() {
     
     return { ...physician, distance };
   }).sort((a, b) => a.distance - b.distance) : physicians; // Sort by distance, closest first
+
+  // Education filtering is now handled server-side in GraphQL
+  // Just apply location processing and sorting  
+  const sortedPhysicians = locationProcessedPhysicians;
+
+  // Debug: Log all available degree types from GraphQL and current results
+  if (educationFilter) {
+    const allAvailableDegrees = degreesData?.degrees || [];
+    const currentPageDegrees = [...new Set(physicians.map(p => p.degree).filter(Boolean))];
+    const currentPageNormalizedDegrees = [...new Set(physicians.map(p => p.degrees).filter(Boolean))];
+    
+    console.log(`All available degrees in database:`, allAvailableDegrees);
+    console.log(`Degrees in current page results (raw):`, currentPageDegrees);
+    console.log(`Degrees in current page results (normalized):`, currentPageNormalizedDegrees);
+    console.log(`Selected education filter: "${educationFilter}"`);
+    console.log(`Total physicians returned: ${physicians.length}`);
+  }
   
-  // Hardcode empty arrays for filters since queries are disabled
-  const availableSpecialties = [];
-  const availableLanguages = [];
-  const availableInsurances = [];
+  // Extract filter data from queries
+  const availableSpecialties = specialtiesData?.specialties || [];
+  const availableLanguages = languagesData?.languages || [];
+  const availableInsurances = insurancesData?.insurances || [];
+  const availableDegrees = degreesData?.degrees || [];
 
   // Reverse geocoding function to get address from coordinates
   const reverseGeocode = async (lat, lng) => {
@@ -164,9 +183,6 @@ export default function FindCare() {
 
   // Determine which location to use for sorting (prioritize search location over user location)
   const sortingLocation = userLocation; // Only use user location for sorting, search location is already handled
-
-  // Use the location-processed physicians (already sorted by distance if location available)
-  const sortedPhysicians = locationProcessedPhysicians;
 
   // Handler for search form
   const handleSearch = (searchValue, locationValue, coordinates) => {
@@ -273,11 +289,11 @@ export default function FindCare() {
       }
     }
 
-    if (filterUpdate.isPrimaryCare !== undefined) {
-      if (filterUpdate.isPrimaryCare) {
-        query.primaryCare = 'true';
+    if (filterUpdate.education !== undefined) {
+      if (filterUpdate.education) {
+        query.education = filterUpdate.education;
       } else {
-        delete query.primaryCare;
+        delete query.education;
       }
     }
 
@@ -337,7 +353,7 @@ export default function FindCare() {
                 <span className="text-bluePrimary text-sm">Loading results...</span>
               ) : (
                 <span className="text-bluePrimary text-sm">
-                  Showing {physicians.length} of {total} results
+                  Showing {sortedPhysicians.length} of {total} results
                 </span>
               )}
               <span
@@ -372,11 +388,12 @@ export default function FindCare() {
                         specialityFilter={specialityFilter}
                         genderFilter={parsedGenderFilter}
                         languageFilter={languageFilter}
-                        primaryCareFilter={parsedPrimaryCare}
                         insuranceFilter={parsedInsuranceFilter}
+                        educationFilter={educationFilter}
                         availableSpecialties={availableSpecialties}
                         availableLanguages={availableLanguages}
                         availableInsurances={availableInsurances}
+                        availableDegrees={availableDegrees}
                         onFilterChange={handleFilterChange}
                       />
                     </div>
@@ -387,11 +404,12 @@ export default function FindCare() {
                       specialityFilter={specialityFilter}
                       genderFilter={parsedGenderFilter}
                       languageFilter={parsedLanguageFilter}
-                      primaryCareFilter={parsedPrimaryCare}
                       insuranceFilter={parsedInsuranceFilter}
+                      educationFilter={educationFilter}
                       availableSpecialties={availableSpecialties}
                       availableLanguages={availableLanguages}
                       availableInsurances={availableInsurances}
+                      availableDegrees={availableDegrees}
                       onFilterChange={handleFilterChange}
                     />
                   </div>
@@ -420,7 +438,7 @@ export default function FindCare() {
                   <div className="text-center py-16">
                     <p className="text-red-600">Error loading physicians. Please try again.</p>
                   </div>
-                ) : physicians.length === 0 ? (
+                ) : sortedPhysicians.length === 0 ? (
                   <div className="text-center py-16">
                     <h3 className="text-xl font-bold mb-4">No physicians found</h3>
                     <p className="text-gray-600 mb-8">Try adjusting your search criteria or filters.</p>

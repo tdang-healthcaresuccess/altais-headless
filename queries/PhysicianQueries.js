@@ -46,8 +46,8 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
 
 // Query to get all physicians with pagination and search
 export const GET_PHYSICIANS_LIST = gql`
-  query GetPhysiciansList($search: String, $specialty: String, $language: String, $gender: String, $primaryCare: Boolean, $page: Int, $perPage: Int, $orderBy: String, $order: String) {
-    doctorsList(search: $search, specialty: $specialty, language: $language, gender: $gender, primaryCare: $primaryCare, page: $page, perPage: $perPage, orderBy: $orderBy, order: $order) {
+  query GetPhysiciansList($search: String, $specialty: String, $language: String, $gender: String, $degree: String, $insurance: String, $page: Int, $perPage: Int, $orderBy: String, $order: String) {
+    doctorsList(search: $search, specialty: $specialty, language: $language, gender: $gender, degree: $degree, insurance: $insurance, page: $page, perPage: $perPage, orderBy: $orderBy, order: $order) {
       items {
         lastName
         firstName
@@ -61,6 +61,7 @@ export const GET_PHYSICIANS_LIST = gql`
         city
         county
         degree
+        degrees
         doctorID
         email
         faxNumber
@@ -164,27 +165,27 @@ export const GET_PHYSICIAN_SLUGS = gql`
 // Query to get specialties for filtering
 export const GET_SPECIALTIES = gql`
   query GetSpecialties {
-    specialties {
-      name
-      slug
-    }
+    specialties
   }
 `;
 
 // Query to get languages for filtering
 export const GET_LANGUAGES = gql`
   query GetLanguages {
-    languages {
-      name
-    }
+    languages
   }
 `;
 
 // Query to get insurances for filtering
 export const GET_INSURANCES = gql`
   query GetInsurances {
-    insurances {
-      name
-    }
+    insurances
+  }
+`;
+
+// Query to get degrees for filtering
+export const GET_DEGREES = gql`
+  query GetDegrees {
+    degrees
   }
 `;

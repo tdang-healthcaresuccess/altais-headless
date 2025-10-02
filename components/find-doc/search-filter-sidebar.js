@@ -6,10 +6,11 @@ const DocSearchFilterSidebar = ({
   genderFilter = [],
   languageFilter = [],
   insuranceFilter = [],
-  primaryCareFilter = false,
+  educationFilter = '',
   availableSpecialties = [], 
   availableLanguages = [], 
   availableInsurances = [],
+  availableDegrees = [],
   onFilterChange = () => {}
 }) => {
   const [openIndex, setOpenIndex] = useState(0);
@@ -18,8 +19,7 @@ const DocSearchFilterSidebar = ({
   const [selectedGender, setSelectedGender] = useState(Array.isArray(genderFilter) ? genderFilter[0] || '' : genderFilter);
   const [selectedLanguages, setSelectedLanguages] = useState(Array.isArray(languageFilter) ? languageFilter : []);
   const [selectedInsurances, setSelectedInsurances] = useState(Array.isArray(insuranceFilter) ? insuranceFilter : []);
-  const [selectedEducation, setSelectedEducation] = useState('');
-  const [isPrimaryCare, setIsPrimaryCare] = useState(primaryCareFilter);
+  const [selectedEducation, setSelectedEducation] = useState(educationFilter);
 
   // Update local state when props change
   useEffect(() => {
@@ -27,14 +27,14 @@ const DocSearchFilterSidebar = ({
     setSelectedGender(Array.isArray(genderFilter) ? genderFilter[0] || '' : genderFilter);
     setSelectedLanguages(Array.isArray(languageFilter) ? languageFilter : []);
     setSelectedInsurances(Array.isArray(insuranceFilter) ? insuranceFilter : []);
-    setIsPrimaryCare(primaryCareFilter);
-  }, [specialityFilter, genderFilter, languageFilter, insuranceFilter, primaryCareFilter]);
+    setSelectedEducation(educationFilter);
+  }, [specialityFilter, genderFilter, languageFilter, insuranceFilter, educationFilter]);
 
   // Filter specialties based on input
   useEffect(() => {
     if (speciality.trim()) {
       const filtered = availableSpecialties.filter(specialty =>
-        specialty.name && specialty.name.toLowerCase().includes(speciality.toLowerCase())
+        specialty && specialty.toLowerCase().includes(speciality.toLowerCase())
       );
       setSpecialitySuggestions(filtered);
     } else {
@@ -49,9 +49,9 @@ const DocSearchFilterSidebar = ({
 
   // Handle specialty selection
   const handleSelectSpeciality = (specialty) => {
-    setSpeciality(specialty.name);
+    setSpeciality(specialty);
     setSpecialitySuggestions([]);
-    onFilterChange({ specialty: specialty.name });
+    onFilterChange({ specialty: specialty });
   };
 
   // Handle gender change
@@ -63,9 +63,9 @@ const DocSearchFilterSidebar = ({
 
   // Handle language toggle
   const handleLanguageToggle = (language) => {
-    const newLanguages = selectedLanguages.includes(language.name)
-      ? selectedLanguages.filter(lang => lang !== language.name)
-      : [...selectedLanguages, language.name];
+    const newLanguages = selectedLanguages.includes(language)
+      ? selectedLanguages.filter(lang => lang !== language)
+      : [...selectedLanguages, language];
     
     setSelectedLanguages(newLanguages);
     onFilterChange({ languages: newLanguages });
@@ -73,9 +73,9 @@ const DocSearchFilterSidebar = ({
 
   // Handle insurance toggle
   const handleInsuranceToggle = (insurance) => {
-    const newInsurances = selectedInsurances.includes(insurance.name)
-      ? selectedInsurances.filter(ins => ins !== insurance.name)
-      : [...selectedInsurances, insurance.name];
+    const newInsurances = selectedInsurances.includes(insurance)
+      ? selectedInsurances.filter(ins => ins !== insurance)
+      : [...selectedInsurances, insurance];
     
     setSelectedInsurances(newInsurances);
     onFilterChange({ insurances: newInsurances });
@@ -88,19 +88,17 @@ const DocSearchFilterSidebar = ({
     onFilterChange({ education: newEducation });
   };
 
-  // Handle primary care toggle
-  const handlePrimaryCareToggle = () => {
-    const newIsPrimaryCare = !isPrimaryCare;
-    setIsPrimaryCare(newIsPrimaryCare);
-    onFilterChange({ isPrimaryCare: newIsPrimaryCare });
-  };
-
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  const genderOptions = ['Female', 'Male'];
-  const educationOptions = ['MD', 'DO', 'NP', 'PA'];
+  const genderOptions = [
+    { label: 'Female', value: 'F' },
+    { label: 'Male', value: 'M' },
+    { label: 'Non-binary', value: 'N' }
+  ];
+  // Use actual degrees from database instead of hardcoded options
+  const educationOptions = availableDegrees.length > 0 ? availableDegrees : ['MD', 'DO', 'NP', 'PA', 'DPM', 'LCSW', 'ACU', 'RD', 'PharmD', 'DDS', 'DMD', 'DPT', 'OTR', 'RN', 'CNM', 'CRNA'];
 
   const accordionItems = [
     {
@@ -122,7 +120,7 @@ const DocSearchFilterSidebar = ({
                   className="p-2 hover:bg-gray-100 cursor-pointer text-sm text-bluePrimary"
                   onClick={() => handleSelectSpeciality(suggestion)}
                 >
-                  {suggestion.name}
+                  {suggestion}
                 </div>
               ))}
             </div>
@@ -138,47 +136,11 @@ const DocSearchFilterSidebar = ({
             <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
               <input
                 type="checkbox"
-                checked={selectedGender === gender}
-                onChange={() => handleGenderChange(gender)}
+                checked={selectedGender === gender.value}
+                onChange={() => handleGenderChange(gender.value)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
-              <span>{gender}</span>
-            </label>
-          ))}
-        </div>
-      ),
-    },
-    {
-      title: 'Languages',
-      content: (
-        <div className="filter-result-box max-h-48 overflow-y-auto">
-          {availableLanguages.map((language, index) => (
-            <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selectedLanguages.includes(language.name)}
-                onChange={() => handleLanguageToggle(language)}
-                className="w-4 h-4 mr-2 accent-primary"
-              />
-              <span>{language.name}</span>
-            </label>
-          ))}
-        </div>
-      ),
-    },
-    {
-      title: 'Accepted Insurance',
-      content: (
-        <div className="filter-result-box max-h-48 overflow-y-auto">
-          {availableInsurances.map((insurance, index) => (
-            <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selectedInsurances.includes(insurance.name)}
-                onChange={() => handleInsuranceToggle(insurance)}
-                className="w-4 h-4 mr-2 accent-primary"
-              />
-              <span>{insurance.name}</span>
+              <span>{gender.label}</span>
             </label>
           ))}
         </div>
@@ -203,18 +165,38 @@ const DocSearchFilterSidebar = ({
       ),
     },
     {
-      title: 'Primary Care',
+      title: 'Languages',
       content: (
-        <div className="filter-result-box">
-          <label className="list-items1 text-bluePrimary cursor-pointer">
-            <input
-              type="checkbox"
-              checked={isPrimaryCare}
-              onChange={handlePrimaryCareToggle}
-              className="w-4 h-4 mr-2 accent-primary"
-            />
-            <span>Primary Care Provider</span>
-          </label>
+        <div className="filter-result-box max-h-48 overflow-y-auto">
+          {availableLanguages.map((language, index) => (
+            <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
+              <input
+                type="checkbox"
+                checked={selectedLanguages.includes(language)}
+                onChange={() => handleLanguageToggle(language)}
+                className="w-4 h-4 mr-2 accent-primary"
+              />
+              <span>{language}</span>
+            </label>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title: 'Accepted Insurance',
+      content: (
+        <div className="filter-result-box max-h-48 overflow-y-auto">
+          {availableInsurances.map((insurance, index) => (
+            <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
+              <input
+                type="checkbox"
+                checked={selectedInsurances.includes(insurance)}
+                onChange={() => handleInsuranceToggle(insurance)}
+                className="w-4 h-4 mr-2 accent-primary"
+              />
+              <span>{insurance}</span>
+            </label>
+          ))}
         </div>
       ),
     },
