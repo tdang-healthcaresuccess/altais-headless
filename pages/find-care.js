@@ -16,6 +16,7 @@ import {
   GET_INSURANCES,
   GET_DEGREES
 } from "../queries/PhysicianQueries";
+import { resolveSpecialtyAcronym, getRelatedSpecialties } from "../components/specialtySearchUtils";
 import { useRouter } from "next/router";
 import { X } from "lucide-react";
 
@@ -44,6 +45,9 @@ export default function FindCare() {
   const insuranceFilter = router.query.insurance || [];
   const educationFilter = router.query.education || "";
   
+  // Parse specialty filter (can be comma-separated)
+  const parsedSpecialtyFilter = specialityFilter ? specialityFilter.split(',').map(s => s.trim()) : null;
+  
   // Parse search coordinates from URL
   const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
   const searchLng = router.query.searchLng ? parseFloat(router.query.searchLng) : null;
@@ -71,17 +75,47 @@ export default function FindCare() {
   const orderBy = userLocation ? "distance" : "last_name";
   const order = userLocation ? "ASC" : "ASC";
 
+  // Smart search detection: check if searchQuery should be treated as specialty filter
+  const detectSpecialtySearch = (query) => {
+    if (!query) return { search: null, detectedSpecialty: null };
+    
+    const resolved = resolveSpecialtyAcronym(query);
+    const relatedSpecialties = getRelatedSpecialties(query);
+    
+    // If the search term resolves to a specialty or has related specialties, treat as specialty search
+    if (resolved !== query || relatedSpecialties.length > 0) {
+      // Return array of specialties for comprehensive search
+      const specialtyArray = Array.isArray(resolved) ? resolved : [resolved];
+      return { 
+        search: null, // Clear general search 
+        detectedSpecialty: specialtyArray 
+      };
+    }
+    
+    return { search: query, detectedSpecialty: null };
+  };
+
+  const { search: processedSearch, detectedSpecialty } = detectSpecialtySearch(searchQuery);
+  
+  // Handle specialty filter - ensure it's always an array for GraphQL
+  let finalSpecialtyFilter = null;
+  if (parsedSpecialtyFilter && parsedSpecialtyFilter.length > 0) {
+    finalSpecialtyFilter = parsedSpecialtyFilter;
+  } else if (detectedSpecialty) {
+    finalSpecialtyFilter = detectedSpecialty; // Already an array from detectSpecialtySearch
+  }
+
   // Get physicians data with current filters
   const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
     variables: {
-      search: searchQuery || null,
-      specialty: specialityFilter || null,
+      search: processedSearch,
+      specialty: finalSpecialtyFilter,
       language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
       gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
       degree: educationFilter || null,
       insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter.join(',') : null,
       page: parsedPage,
-      perPage: 10,
+      perPage: detectedSpecialty ? 50 : 10, // Increase results for specialty searches
       orderBy: orderBy,
       order: order
       // Note: location filtering will be done client-side since GraphQL doesn't support it
@@ -139,6 +173,14 @@ export default function FindCare() {
     
     return { ...physician, distance };
   }).sort((a, b) => a.distance - b.distance) : physicians; // Sort by distance, closest first
+
+  // Debug: Log search processing
+  if (searchQuery) {
+    console.log(`Original search query: "${searchQuery}"`);
+    console.log(`Processed search: "${processedSearch}"`);
+    console.log(`Detected specialty:`, detectedSpecialty);
+    console.log(`Final specialty filter:`, finalSpecialtyFilter);
+  }
 
   // Education filtering is now handled server-side in GraphQL
   // Just apply location processing and sorting  
@@ -259,7 +301,12 @@ export default function FindCare() {
     // Handle different filter types
     if (filterUpdate.specialty !== undefined) {
       if (filterUpdate.specialty) {
-        query.specialty = filterUpdate.specialty;
+        // Handle array of specialties
+        if (Array.isArray(filterUpdate.specialty)) {
+          query.specialty = filterUpdate.specialty.join(',');
+        } else {
+          query.specialty = filterUpdate.specialty;
+        }
       } else {
         delete query.specialty;
       }

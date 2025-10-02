@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { getSpecialtySuggestions, resolveSpecialtyAcronym } from '../specialtySearchUtils';
 
 const DocSearchFilterSidebar = ({ 
   specialityFilter = '',
@@ -30,7 +31,7 @@ const DocSearchFilterSidebar = ({
     setSelectedEducation(educationFilter);
   }, [specialityFilter, genderFilter, languageFilter, insuranceFilter, educationFilter]);
 
-  // Filter specialties based on input
+  // Filter specialties based on input with acronym mapping and user input suggestions
   useEffect(() => {
     if (speciality.trim()) {
       // Don't show suggestions if the input exactly matches an available specialty
@@ -38,11 +39,22 @@ const DocSearchFilterSidebar = ({
         specialty && specialty.toLowerCase() === speciality.toLowerCase()
       );
       
-      if (!exactMatch) {
-        const filtered = availableSpecialties.filter(specialty =>
-          specialty && specialty.toLowerCase().includes(speciality.toLowerCase())
-        );
-        setSpecialitySuggestions(filtered);
+      // Also check if this input resolves to a known specialty (but only if it actually resolved to something different)
+      const resolvedSpecialty = resolveSpecialtyAcronym(speciality);
+      const wasActuallyResolved = Array.isArray(resolvedSpecialty) || 
+        (resolvedSpecialty !== speciality && resolvedSpecialty.toLowerCase() !== speciality.toLowerCase());
+      
+      const isResolvedMatch = wasActuallyResolved && (
+        Array.isArray(resolvedSpecialty) 
+          ? resolvedSpecialty.some(spec => spec.toLowerCase() === speciality.toLowerCase())
+          : resolvedSpecialty.toLowerCase() === speciality.toLowerCase()
+      );
+      
+      if (!exactMatch && !isResolvedMatch) {
+        // Use enhanced suggestions - pass empty array to avoid GraphQL limitation
+        // This allows fuzzy search to work with acronym map values independently
+        const suggestions = getSpecialtySuggestions(speciality, []);
+        setSpecialitySuggestions(suggestions);
       } else {
         setSpecialitySuggestions([]);
       }
@@ -56,11 +68,47 @@ const DocSearchFilterSidebar = ({
     setSpeciality(e.target.value);
   };
 
+  // Handle Enter key press for specialty search
+  const handleSpecialityKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (speciality.trim()) {
+        // If there are suggestions, use the first one, otherwise use the typed value
+        const searchTerm = specialitySuggestions.length > 0 ? specialitySuggestions[0] : speciality;
+        handleSelectSpeciality(searchTerm);
+        // Explicitly close suggestions after Enter
+        setSpecialitySuggestions([]);
+      }
+    }
+  };
+
   // Handle specialty selection
   const handleSelectSpeciality = (specialty) => {
-    setSpeciality(specialty);
+    let selectedValue = specialty;
+    
+    // Handle "Search for" options - extract the actual search term
+    if (specialty.startsWith('Search for "') && specialty.endsWith('"')) {
+      selectedValue = specialty.slice(12, -1); // Remove 'Search for "' and '"'
+    }
+    
+    setSpeciality(selectedValue);
     setSpecialitySuggestions([]);
-    onFilterChange({ specialty: specialty });
+    
+    // Resolve acronyms when setting the filter - now supporting arrays
+    const resolvedSpecialty = resolveSpecialtyAcronym(selectedValue);
+    
+    // Send array or single value as appropriate
+    let filterValue;
+    if (Array.isArray(resolvedSpecialty)) {
+      // GraphQL now supports array of specialties
+      filterValue = resolvedSpecialty;
+    } else {
+      // Single specialty - send as array for consistency  
+      filterValue = [resolvedSpecialty];
+    }
+    
+    console.log(`Setting specialty filter:`, filterValue);
+    onFilterChange({ specialty: filterValue });
   };
 
   // Handle gender change
@@ -119,6 +167,7 @@ const DocSearchFilterSidebar = ({
             placeholder="Type to search..."
             value={speciality}
             onChange={handleSpecialityChange}
+            onKeyPress={handleSpecialityKeyPress}
             className="filter-input"
           />
           {specialitySuggestions.length > 0 && (

@@ -46,7 +46,7 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
 
 // Query to get all physicians with pagination and search
 export const GET_PHYSICIANS_LIST = gql`
-  query GetPhysiciansList($search: String, $specialty: String, $language: String, $gender: String, $degree: String, $insurance: String, $page: Int, $perPage: Int, $orderBy: String, $order: String) {
+  query GetPhysiciansList($search: String, $specialty: [String], $language: String, $gender: String, $degree: String, $insurance: String, $page: Int, $perPage: Int, $orderBy: String, $order: String) {
     doctorsList(search: $search, specialty: $specialty, language: $language, gender: $gender, degree: $degree, insurance: $insurance, page: $page, perPage: $perPage, orderBy: $orderBy, order: $order) {
       items {
         lastName

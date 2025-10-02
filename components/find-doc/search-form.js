@@ -16,7 +16,7 @@ import PinMarker from "@/public/icons/pin-marker.svg";
 import SearchLaunchIcon from "@/public/icons/tabler_location-filled.svg";
 import SearchIcon from "@/public/icons/icomoon-free_search.svg";
 import SpecialityShortInfo from "../common/specialty-short-info";
-import specialtyAcronymMap from "@/components/specialtyAcronymMap";
+import { resolveSpecialtyAcronym } from "../specialtySearchUtils";
 
 export default function DocSearchForm({
   searchQuery,
@@ -253,17 +253,10 @@ export default function DocSearchForm({
     }
   };
 
-  // Helper to resolve acronyms to specialty names
+  // Helper to resolve acronyms to specialty names (now using utility function)
+  // This is kept for backward compatibility, but delegates to the utility
   function resolveAcronym(term) {
-    if (!term) return term;
-    // If term is not a string, return as-is (should only be string from input)
-    if (typeof term !== "string") return term;
-    const lower = term.trim().toLowerCase();
-    const mapped = specialtyAcronymMap[lower];
-    if (Array.isArray(mapped)) {
-      return mapped;
-    }
-    return mapped || term;
+    return resolveSpecialtyAcronym(term);
   }
 
   // Modified search handler for main input only
@@ -276,8 +269,16 @@ export default function DocSearchForm({
     setIsSearchInProgress(true);
     
     try {
-      // If the user typed an acronym, replace with mapped specialty
+      // If the user typed an acronym, resolve it to specialty name(s)
       const resolvedSearch = resolveAcronym(localSearch);
+      
+      // Handle array results from acronym mapping
+      let searchValue = resolvedSearch;
+      if (Array.isArray(resolvedSearch)) {
+        // For now, use the first specialty in the array for the main search
+        // In the future, this could be enhanced to search for multiple specialties
+        searchValue = resolvedSearch[0] || localSearch;
+      }
       
       // If user entered a location manually, geocode it first
       if (localLocation && localLocation.trim()) {
@@ -292,13 +293,13 @@ export default function DocSearchForm({
           
           // Trigger search immediately with geocoded coordinates
           // Pass the geocoded coordinates directly to preserve the search location
-          setSearchQuery(resolvedSearch, localLocation, geocoded);
+          setSearchQuery(searchValue, localLocation, geocoded);
           setIsSearchInProgress(false);
           // Keep the isUsingSearchLocation flag set to prevent auto-geolocation interference
         } else {
           // Still trigger search even if geocoding failed, but clear the search location flag
           setIsUsingSearchLocation(false);
-          setSearchQuery(resolvedSearch, localLocation);
+          setSearchQuery(searchValue, localLocation);
           setIsSearchInProgress(false);
         }
         return; // Exit function after handling location geocoding
@@ -312,7 +313,7 @@ export default function DocSearchForm({
       if (!isUsingSearchLocation) {
         onSearchLocationUpdate(null); // Clear search location
       }
-      setSearchQuery(resolvedSearch, localLocation);
+      setSearchQuery(searchValue, localLocation);
       setIsSearchInProgress(false);
     } catch (error) {
       console.error('Search error:', error);
