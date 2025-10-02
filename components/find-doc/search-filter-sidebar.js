@@ -33,10 +33,19 @@ const DocSearchFilterSidebar = ({
   // Filter specialties based on input
   useEffect(() => {
     if (speciality.trim()) {
-      const filtered = availableSpecialties.filter(specialty =>
-        specialty && specialty.toLowerCase().includes(speciality.toLowerCase())
+      // Don't show suggestions if the input exactly matches an available specialty
+      const exactMatch = availableSpecialties.some(specialty => 
+        specialty && specialty.toLowerCase() === speciality.toLowerCase()
       );
-      setSpecialitySuggestions(filtered);
+      
+      if (!exactMatch) {
+        const filtered = availableSpecialties.filter(specialty =>
+          specialty && specialty.toLowerCase().includes(speciality.toLowerCase())
+        );
+        setSpecialitySuggestions(filtered);
+      } else {
+        setSpecialitySuggestions([]);
+      }
     } else {
       setSpecialitySuggestions([]);
     }
