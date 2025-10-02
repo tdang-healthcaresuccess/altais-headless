@@ -6,11 +6,18 @@ import Breadcrumb from "@/components/common/breadcrumb";
 import SinglePageBanner from "@/components/common/single-page-banner";
 import Layout from "@/components/Layout";
 import SpecialityShortInfo from "@/components/common/specialty-short-info";
-import SpecialtyDocSearchForm from "@/components/find-doc/specialty-doc-search-form";
-import DocSearchFilterSidebar from "@/components/find-doc/search-filter-sidebar";
-import DocSearchList from "@/components/common/doctor-list";
-import { dummyDoctors } from "@/components/DummyData";
+import DocSearchForm from "components/find-doc/search-form"; // Updated to use standard search form
+import LayoutOptions from "@/components/common/LayoutOptions"; // Added layout options
+import DocSearchFilterSidebar from "components/find-doc/search-filter-sidebar";
+import { 
+  GET_PHYSICIANS_LIST,
+  GET_SPECIALTIES, 
+  GET_LANGUAGES, 
+  GET_INSURANCES,
+  GET_DEGREES
+} from "../queries/PhysicianQueries"; // Updated to use GraphQL
 import { useRouter } from "next/router";
+
 const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
     specialty(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
@@ -23,9 +30,11 @@ const PAGE_QUERY = gql`
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { FilterMobile } from "@/public/icons/filter-mobile";
+
 export default function specialty(props) {
   const databaseId = props.__SEED_NODE__?.databaseId;
   const asPreview = props.__SEED_NODE__?.asPreview;
+  const router = useRouter();
 
   const {
     data,
@@ -49,158 +58,237 @@ export default function specialty(props) {
   const { title: siteTitle, description: siteDescription } = siteData;
   const { title, content } = data?.specialty || {};
 
-  // Specialty filter state and doctor filtering logic
-  const [searchQuery, setSearchQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
-  const [practiceNameQuery, setPracticeNameQuery] = useState("");
-  const [specialityFilter, setSpecialityFilter] = useState("");
-  // Update specialty filter when title changes
-  useEffect(() => {
-    if (title) {
-      setSpecialityFilter(title);
-    }
-  }, [title]);
-  const [genderFilter, setGenderFilter] = useState([]);
-  const [educationFilter, setEducationFilter] = useState([]);
-  const [insuranceFilter, setInsuranceFilter] = useState([]);
-  const [filteredDoctors, setFilteredDoctors] = useState(dummyDoctors);
-  const [initialTotal, setInitialTotal] = useState(0);
+  // State management similar to find-care.js
   const [activeLayout, setActiveLayout] = useState("list");
-  const router = useRouter();
-  const page = parseInt(router.query.page) || 1;
-  const DOCTORS_PER_PAGE = 10;
-  const totalPages = Math.ceil(filteredDoctors.length / DOCTORS_PER_PAGE);
-  const paginatedDoctors = filteredDoctors.slice(
-    (page - 1) * DOCTORS_PER_PAGE,
-    page * DOCTORS_PER_PAGE
-  );
+  const [showFilter, setShowFilter] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [searchLocation, setSearchLocation] = useState(null);
 
-  const clearAllFilters = () => {
-    setSearchQuery("");
-    setLocationQuery("");
-    setPracticeNameQuery("");
-    setGenderFilter([]);
-    setEducationFilter([]);
-    setInsuranceFilter([]);
-    setSpecialityFilter(title || "");
-    // Reset URL to only specialty
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      url.search = "";
-      window.location.replace(url.pathname);
-    }
-  };
+  // Parse URL parameters for search (similar to find-care.js)
+  const parsedPage = parseInt(router.query.page) || 1;
+  const searchQuery = router.query.search || "";
+  const locationQuery = router.query.location || "";
+  const genderFilter = router.query.gender || [];
+  const languageFilter = router.query.language || [];
+  const insuranceFilter = router.query.insurance || [];
+  const educationFilter = router.query.education || "";
+  
+  // Parse search coordinates from URL
+  const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
+  const searchLng = router.query.searchLng ? parseFloat(router.query.searchLng) : null;
 
+  // Parse array filters
+  const parsedGenderFilter = genderFilter ? [].concat(genderFilter) : [];
+  const parsedLanguageFilter = languageFilter ? (typeof languageFilter === 'string' ? languageFilter.split(',') : [].concat(languageFilter)) : [];
+  const parsedInsuranceFilter = insuranceFilter ? (typeof insuranceFilter === 'string' ? insuranceFilter.split(',') : [].concat(insuranceFilter)) : [];
+
+  // Restore search location from URL parameters
   useEffect(() => {
-    const filterDoctors = () => {
-      let filtered = dummyDoctors;
-      // Always apply specialty filter first for initialTotal
-      let specialtyFiltered = filtered;
-      if (specialityFilter) {
-        specialtyFiltered = specialtyFiltered.filter((doc) =>
-          doc.node.doctorData.speciality
-            .toLowerCase()
-            .includes(specialityFilter.toLowerCase())
-        );
-      }
-      // Set initialTotal to specialtyFiltered before other filters
-      setInitialTotal(specialtyFiltered.length);
-      // Now apply all filters for live results
-      if (searchQuery) {
-        specialtyFiltered = specialtyFiltered.filter((doc) =>
-          doc.node.doctorData.doctorsName
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-        );
-      }
-      if (practiceNameQuery) {
-        specialtyFiltered = specialtyFiltered.filter((doc) =>
-          doc.node.doctorData.practiceName
-            .toLowerCase()
-            .includes(practiceNameQuery.toLowerCase())
-        );
-      }
-      if (locationQuery) {
-        const query = locationQuery.toLowerCase().replace(/\s+/g, " ").trim();
-        const queryWords = query.split(" ");
-        specialtyFiltered = specialtyFiltered.filter((doc) => {
-          const data = doc.node.doctorData;
-          const fields = [
-            data.address,
-            data.city,
-            data.addressCity,
-            data.state,
-            data.zipcode,
-          ].map((f) => (f ? f.toLowerCase().replace(/\s+/g, " ").trim() : ""));
-          return fields.some((field) =>
-            queryWords.every((word) => field.includes(word))
-          );
-        });
-      }
-      if (genderFilter.length > 0) {
-        specialtyFiltered = specialtyFiltered.filter((doc) =>
-          genderFilter.includes(doc.node.doctorData.sex)
-        );
-      }
-      if (educationFilter.length > 0) {
-        specialtyFiltered = specialtyFiltered.filter((doc) =>
-          educationFilter.includes(doc.node.doctorData.medicalSchool)
-        );
-      }
-      if (insuranceFilter.length > 0) {
-        specialtyFiltered = specialtyFiltered.filter((doc) => {
-          const ins = doc.node.doctorData.acceptedInsurance;
-          if (Array.isArray(ins)) {
-            return ins.some((i) => insuranceFilter.includes(i));
-          } else if (typeof ins === "string") {
-            return insuranceFilter.includes(ins);
-          }
-          return false;
-        });
-      }
-      setFilteredDoctors(specialtyFiltered);
-    };
-    filterDoctors();
-  }, [
-    searchQuery,
-    locationQuery,
-    practiceNameQuery,
-    specialityFilter,
-    genderFilter,
-    educationFilter,
-    insuranceFilter,
-    title,
-  ]);
-
-  // Helper to get correct path for specialty page
-  const getSpecialtyPath = () => {
-    return router.asPath.split("?")[0];
-  };
-
-  // Helper to filter out unwanted query params
-  const getCleanQuery = (query) => {
-    const { wordpressNode, ...rest } = query;
-    // Remove all instances of wordpressNode (array or string)
-    if (Array.isArray(wordpressNode)) {
-      return rest;
+    if (searchLat && searchLng && !isNaN(searchLat) && !isNaN(searchLng)) {
+      const coords = {
+        latitude: searchLat,
+        longitude: searchLng
+      };
+      setSearchLocation(coords);
+    } else if (!searchLat && !searchLng) {
+      setSearchLocation(null);
     }
-    return rest;
+  }, [searchLat, searchLng]);
+
+  // Use current specialty as filter (always filter by current specialty)
+  const currentSpecialtyFilter = title ? [title] : null;
+
+  // Determine sorting - if user has location, sort by distance, otherwise alphabetical
+  const orderBy = userLocation ? "distance" : "last_name";
+  const order = userLocation ? "ASC" : "ASC";
+
+  // Get physicians data with current filters (filtered by current specialty)
+  const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
+    variables: {
+      search: searchQuery || null,
+      specialty: currentSpecialtyFilter, // Always filter by current specialty
+      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
+      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
+      degree: educationFilter || null,
+      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter.join(',') : null,
+      page: parsedPage,
+      perPage: 10, // Use same pagination as find-care.js
+      orderBy: orderBy,
+      order: order
+    },
+    errorPolicy: 'all',
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'cache-and-network',
+    skip: !title // Skip query until we have the specialty title
+  });
+
+  // Get available specialties, languages, insurances, and degrees for filters
+  const { data: specialtiesData, error: specialtiesError } = useQuery(GET_SPECIALTIES, {
+    errorPolicy: 'all'
+  });
+  const { data: languagesData, error: languagesError } = useQuery(GET_LANGUAGES, {
+    errorPolicy: 'all'
+  });
+  const { data: insurancesData, error: insurancesError } = useQuery(GET_INSURANCES, {
+    errorPolicy: 'all'
+  });
+  const { data: degreesData, error: degreesError } = useQuery(GET_DEGREES, {
+    errorPolicy: 'all'
+  });
+
+  // Calculate distance between two points (Haversine formula)
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distance in miles
   };
 
-  // SSR-compatible search handler
-  const handleSearch = (searchValue, locationValue) => {
+  const physicians = physiciansData?.doctorsList?.items || [];
+  const total = physiciansData?.doctorsList?.total || 0;
+  const totalPages = Math.ceil(total / 10); // Same as find-care.js
+  
+  // Debug pagination info
+  console.log('Specialty page pagination debug:', {
+    total,
+    totalPages,
+    parsedPage,
+    physiciansCount: physicians.length,
+    title
+  });
+  
+  // Client-side distance calculation and sorting (same as find-care.js)
+  const locationProcessedPhysicians = (searchLocation || userLocation) ? physicians.map(physician => {
+    if (!physician.latitude || !physician.longitude) {
+      return { ...physician, distance: Infinity };
+    }
+    
+    const referenceLocation = searchLocation || userLocation;
+    const distance = calculateDistance(
+      referenceLocation.latitude,
+      referenceLocation.longitude,
+      parseFloat(physician.latitude),
+      parseFloat(physician.longitude)
+    );
+    
+    return { ...physician, distance };
+  }).sort((a, b) => a.distance - b.distance) : physicians;
+
+  const sortedPhysicians = locationProcessedPhysicians;
+
+  // Extract available filter options from GraphQL data
+  const availableSpecialties = specialtiesData?.specialties || [];
+  const availableLanguages = languagesData?.languages || [];
+  const availableInsurances = insurancesData?.insurances || [];
+  const availableDegrees = degreesData?.degrees || [];
+
+  // Clear all filters and redirect to clean specialty page
+  const clearAllFilters = () => {
+    // Reset URL to clean specialty page with no filters
+    if (typeof window !== "undefined") {
+      const cleanPath = router.asPath.split("?")[0];
+      router.push(cleanPath);
+    }
+  };
+
+  // Handle search form submission (same pattern as find-care.js)
+  const handleSearch = (searchValue, locationValue, coordinates) => {
+    const query = {
+      ...router.query,
+      page: 1 // Reset to first page on new search
+    };
+
+    if (searchValue) {
+      query.search = Array.isArray(searchValue) ? searchValue.join(",") : searchValue;
+    } else {
+      delete query.search;
+    }
+
+    if (locationValue) {
+      query.location = locationValue;
+    } else {
+      delete query.location;
+    }
+
+    // Persist search coordinates in URL to prevent loss during navigation
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      query.searchLat = coordinates.lat.toString();
+      query.searchLng = coordinates.lng.toString();
+    } else {
+      delete query.searchLat;
+      delete query.searchLng;
+    }
+
+    // Don't overwrite coordinates here - they should be set by handleSearchLocationUpdate
+    // This prevents the search location from being converted to user location
+
+    // Use shallow routing to prevent server-side re-render and hydration mismatch
+    const currentPath = router.asPath.split("?")[0];
     router.push({
-      pathname: getSpecialtyPath(),
-      query: {
-        ...getCleanQuery(router.query),
-        doctorName: searchValue || "",
-        zipCode: locationValue || "",
-        page: 1,
-      },
+      pathname: currentPath,
+      query
+    }, undefined, { shallow: true });
+  };
+
+  // Handle filter changes from sidebar
+  const handleFilterChange = (filters) => {
+    const currentPath = router.asPath.split("?")[0];
+    const currentQuery = { ...router.query };
+    
+    // Update query with new filter values
+    Object.keys(filters).forEach(key => {
+      if (filters[key] && filters[key].length > 0) {
+        if (Array.isArray(filters[key])) {
+          currentQuery[key] = filters[key].join(',');
+        } else {
+          currentQuery[key] = filters[key];
+        }
+      } else {
+        delete currentQuery[key];
+      }
+    });
+    
+    // Reset to page 1 when filters change
+    currentQuery.page = 1;
+    
+    router.push({
+      pathname: currentPath,
+      query: currentQuery
     });
   };
 
-  const [showFilter, setShowFilter] = useState(false);
+  // Handler for user's geolocation updates
+  const handleLocationUpdate = (coordinates) => {
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      // Convert from search form format {lat, lng} to our format {latitude, longitude}
+      const coords = {
+        latitude: coordinates.lat,
+        longitude: coordinates.lng
+      };
+      setUserLocation(coords);
+    } else {
+      setUserLocation(null);
+    }
+  };
+
+  // Handler for search location updates (manual input geocoding)
+  const handleSearchLocationUpdate = (coordinates) => {
+    if (coordinates && coordinates.lat && coordinates.lng) {
+      const coords = {
+        latitude: coordinates.lat,
+        longitude: coordinates.lng
+      };
+      setSearchLocation(coords);
+    } else {
+      setSearchLocation(null);
+    }
+  };
+
   const handleToggleFilterMobile = () => setShowFilter(true);
   const handleCloseMobileFilter = () => setShowFilter(false);
 
@@ -208,13 +296,13 @@ export default function specialty(props) {
     <Layout
       metaD={{
         titleTag: title
-          ? page > 1
-            ? `${title} | Page ${page} | Altais`
+          ? parsedPage > 1
+            ? `${title} | Page ${parsedPage} | Altais`
             : `${title} | Altais`
           : "Altais: Shaping the Future of Healthcare",
         metaDescription: title
-          ? page > 1
-            ? `Find top physicians and specialists for ${title} (Page ${page}) at Altais. Compassionate, affordable, and connected care across California.`
+          ? parsedPage > 1
+            ? `Find top physicians and specialists for ${title} (Page ${parsedPage}) at Altais. Compassionate, affordable, and connected care across California.`
             : `Find top physicians and specialists for ${title} at Altais. Compassionate, affordable, and connected care across California.`
           : "Altais is a physician-led healthcare provider network offering compassionate, affordable, and connected care across California. Find care today.",
       }}
@@ -232,32 +320,36 @@ export default function specialty(props) {
          
         </div>
         <SpecialityShortInfo name={title} />
-        <SpecialtyDocSearchForm
+        <DocSearchForm
           searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           locationQuery={locationQuery}
-          setLocationQuery={setLocationQuery}
+          setSearchQuery={handleSearch}
+          setLocationQuery={handleSearch}
           activeLayout={activeLayout}
           setActiveLayout={setActiveLayout}
-          showIcons={true}
+          onLocationUpdate={handleLocationUpdate}
+          onSearchLocationUpdate={handleSearchLocationUpdate}
         />
-        {/* Results Count, Clear All Filters Link, and LayoutOptions */}
         <div className="block container mx-auto mt-4 mb-4">
           <div className="flex items-center justify-between">
-            <span className="text-gray-500 text-base">
-              Showing {filteredDoctors.length} of {initialTotal} results
-            </span>
-            <span
-              onClick={clearAllFilters}
-              className="text-bluePrimary text-sm underline cursor-pointer ml-4"
-              role="button"
-              tabIndex={0}
-            >
-              Clear All Filters
-            </span>
+            <div className="flex items-center gap-4">
+              <span className="text-gray-500 text-base">
+                Showing {physicians.length} of {total} results
+              </span>
+              <span
+                onClick={clearAllFilters}
+                className="text-bluePrimary text-sm underline cursor-pointer"
+                role="button"
+                tabIndex={0}
+              >
+                Clear All Filters
+              </span>
+            </div>
+            <LayoutOptions 
+              activeLayout={activeLayout} 
+              setActiveLayout={setActiveLayout} 
+            />
           </div>
-          {/* If you have LayoutOptions component, use it here: */}
-          {/* <LayoutOptions activeLayout={activeLayout} setActiveLayout={setActiveLayout} /> */}
         </div>
         <div className="block gap-[70px] pb-[155px] pt-6 md:pt-[40px]">
           <div className="container mx-auto">
@@ -274,33 +366,38 @@ export default function specialty(props) {
                     </button>
                     <div className="block bg-white p-5 w-full rounded-normal">
                       <DocSearchFilterSidebar
-                        specialityFilter={specialityFilter}
-                        setSpecialityFilter={setSpecialityFilter}
-                        genderFilter={genderFilter}
-                        setGenderFilter={setGenderFilter}
+                        specialityFilter={""} // Hide specialty filter on specialty pages
+                        genderFilter={parsedGenderFilter}
+                        languageFilter={parsedLanguageFilter}
+                        insuranceFilter={parsedInsuranceFilter}
                         educationFilter={educationFilter}
-                        setEducationFilter={setEducationFilter}
-                        insuranceFilter={insuranceFilter}
-                        setInsuranceFilter={setInsuranceFilter}
-                        clearAllFilters={clearAllFilters}
+                        availableSpecialties={[]} // Hide specialty options
+                        availableLanguages={availableLanguages}
+                        availableInsurances={availableInsurances}
+                        availableDegrees={availableDegrees}
+                        onFilterChange={handleFilterChange}
+                        hideSpecialtyFilter={true} // Add prop to hide specialty section
                       />
                     </div>
                   </div>
                 ) : (
                   <div className="hidden md:block">
                     <DocSearchFilterSidebar
-                      specialityFilter={specialityFilter}
-                      setSpecialityFilter={setSpecialityFilter}
-                      genderFilter={genderFilter}
-                      setGenderFilter={setGenderFilter}
+                      specialityFilter={""} // Hide specialty filter on specialty pages
+                      genderFilter={parsedGenderFilter}
+                      languageFilter={parsedLanguageFilter}
+                      insuranceFilter={parsedInsuranceFilter}
                       educationFilter={educationFilter}
-                      setEducationFilter={setEducationFilter}
-                      insuranceFilter={insuranceFilter}
-                      setInsuranceFilter={setInsuranceFilter}
-                      clearAllFilters={clearAllFilters}
+                      availableSpecialties={[]} // Hide specialty options
+                      availableLanguages={availableLanguages}
+                      availableInsurances={availableInsurances}
+                      availableDegrees={availableDegrees}
+                      onFilterChange={handleFilterChange}
+                      hideSpecialtyFilter={true} // Add prop to hide specialty section
                     />
                   </div>
                 )}
+
                 <div className="block md:hidden">
                   <button
                     type="button"
@@ -313,31 +410,180 @@ export default function specialty(props) {
                 </div>
               </div>
               <div className="block w-full md:w-[calc(70%-16px)] lg:w-[calc(75%-35px)]">
-                <DocSearchList
-                  doctors={paginatedDoctors}
-                  activeLayout={activeLayout}
-                />
-                {/* SSR Pagination Controls */}
-                {filteredDoctors.length > DOCTORS_PER_PAGE && (
+                {physiciansLoading ? (
+                  <div className="text-center py-8">
+                    <p>Loading physicians...</p>
+                  </div>
+                ) : sortedPhysicians.length === 0 ? (
+                  <div className="text-center py-8">
+                    <h3 className="text-xl font-bold mb-4">No physicians found</h3>
+                    <p className="text-gray-600 mb-8">Try adjusting your search criteria or filters.</p>
+                    <button
+                      onClick={clearAllFilters}
+                      className="btn-primary"
+                    >
+                      Clear All Filters
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {/* Physician Grid/List */}
+                    <div className={
+                      activeLayout === "grid"
+                        ? "flex flex-col md:flex-row flex-wrap gap-6"
+                        : "flex flex-col flex-wrap gap-6"
+                    }>
+                      {sortedPhysicians.map((physician) => (
+                        <div
+                          key={physician.doctorID}
+                          className={
+                            activeLayout === "grid"
+                              ? "block border border-primary rounded-normal p-3 w-full md:w-full lg:w-[calc(50%-12px)]"
+                              : "block border border-primary rounded-normal p-3 w-full"
+                          }
+                        >
+                          <div className="flex pb-6 gap-6">
+                            <div
+                              className={
+                                activeLayout === "grid"
+                                  ? "w-[30%] min-w-[118px] md:min-w-[133px] h-[124px] md:h-[140px]"
+                                  : "min-w-[118px] md:min-w-[200px] h-[124px] md:h-[200px]"
+                              }
+                            >
+                              <img
+                                src={physician.profileImageUrl || "/media/doctor1.png"}
+                                alt={`${physician.firstName} ${physician.lastName}`}
+                                className={
+                                  activeLayout === "grid"
+                                    ? "border border-lightPrimary rounded-normal w-full h-full object-cover"
+                                    : "border border-lightPrimary rounded-normal w-full h-full object-cover"
+                                }
+                              />
+                            </div>
+                            <div className="block w-full">
+                              <div
+                                className={activeLayout === "grid" ? "block" : "flex gap-4"}
+                              >
+                                <h3 className="font-semibold text-bluePrimary text-lg pb-3">
+                                  {physician.firstName} {physician.lastName}{physician.degree ? `, ${physician.degree}` : ''}
+                                </h3>
+                              </div>
+                              <div
+                                className={activeLayout === "grid" ? "block" : "block md:flex gap-4"}
+                              >
+                                <div className="block flex-1">
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-primary text-xs font-semibold pb-1"
+                                        : "text-primary text-base font-semibold pb-1"
+                                    }
+                                  >
+                                    Specialties
+                                  </p>
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-grey3d text-xs pb-2"
+                                        : "text-grey3d text-base pb-2"
+                                    }
+                                  >
+                                    {Array.isArray(physician.specialties) 
+                                      ? physician.specialties.join(', ') 
+                                      : physician.specialties}
+                                  </p>
+                                  {(searchLocation || userLocation) && physician.distance !== undefined && (
+                                    <>
+                                      <p
+                                        className={
+                                          activeLayout === "grid"
+                                            ? "text-primary text-xs font-semibold pb-1"
+                                            : "text-primary text-base font-semibold pb-1"
+                                        }
+                                      >
+                                        Distance
+                                      </p>
+                                      <p
+                                        className={
+                                          activeLayout === "grid"
+                                            ? "text-grey3d text-xs pb-2"
+                                            : "text-grey3d text-base pb-2"
+                                        }
+                                      >
+                                        {physician.distance.toFixed(1)} miles away
+                                      </p>
+                                    </>
+                                  )}
+                                </div>
+                                <div className="block flex-1">
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-primary text-xs font-semibold pb-1"
+                                        : "text-primary text-base font-semibold pb-1"
+                                    }
+                                  >
+                                    Location
+                                  </p>
+                                  <p
+                                    className={
+                                      activeLayout === "grid"
+                                        ? "text-grey3d text-xs pb-2"
+                                        : "text-grey3d text-base pb-2"
+                                    }
+                                  >
+                                    {physician.practiceName && (
+                                      <>
+                                        {physician.practiceName} <br />
+                                      </>
+                                    )}
+                                    {physician.address && (
+                                      <>
+                                        {physician.address} <br />
+                                      </>
+                                    )}
+                                    {physician.city}, {physician.state} {physician.zip}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex w-full gap-3 border-t border-lightPrimary pt-3 items-center">
+                            <a
+                              href={`/physicians/${physician.slug || physician.doctorID}/`}
+                              className="btn-md btn-outline-secondary flex-center !w-50 !px-1 font-semibold rounded-normal flex-1 text-center"
+                            >
+                              View Profile
+                            </a>
+                            <a
+                              href={`tel:${physician.phoneNumber}`}
+                              className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1 flex items-center justify-center text-center"
+                            >
+                              Click to Call
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
                   <div className="flex justify-end w-full mt-4">
                     <ul className="flex gap-3">
                       <li
-                        className={`pagination-li pag-action ${page === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
+                        className={`pagination-li pag-action ${parsedPage === 1 ? "!hidden md:!flex" : "cursor-pointer"}`}
                       >
                         <a
                           href={
-                            page > 1
-                              ? `${getSpecialtyPath()}?${Object.entries({
-                                  ...getCleanQuery(router.query),
-                                  page: page - 1,
-                                })
-                                  .map(
-                                    ([k, v]) => `${k}=${encodeURIComponent(v)}`
-                                  )
-                                  .join("&")}`
+                            parsedPage > 1
+                              ? `${router.asPath.split("?")[0]}?${new URLSearchParams({
+                                  ...router.query,
+                                  page: parsedPage - 1,
+                                }).toString()}`
                               : "#"
                           }
-                          aria-disabled={page === 1}
+                          aria-disabled={parsedPage === 1}
                           className="flex items-center"
                         >
                           <svg
@@ -358,7 +604,7 @@ export default function specialty(props) {
                       </li>
                       {/* Show only 4 page numbers at a time */}
                       {(() => {
-                        let startPage = Math.max(1, page - 2);
+                        let startPage = Math.max(1, parsedPage - 2);
                         let endPage = Math.min(totalPages, startPage + 3);
                         if (endPage - startPage < 3) {
                           startPage = Math.max(1, endPage - 3);
@@ -369,19 +615,15 @@ export default function specialty(props) {
                         ).map((p) => (
                           <li
                             key={p}
-                            className={`pagination-li ${page === p ? "active" : ""} cursor-pointer`}
+                            className={`pagination-li ${parsedPage === p ? "active" : ""} cursor-pointer`}
                           >
                             <a
-                              href={`${getSpecialtyPath()}?${Object.entries({
-                                ...getCleanQuery(router.query),
+                              href={`${router.asPath.split("?")[0]}?${new URLSearchParams({
+                                ...router.query,
                                 page: p,
-                              })
-                                .map(
-                                  ([k, v]) => `${k}=${encodeURIComponent(v)}`
-                                )
-                                .join("&")}`}
+                              }).toString()}`}
                               className={
-                                page === p ? "font-bold text-secondary" : ""
+                                parsedPage === p ? "font-bold text-secondary" : ""
                               }
                             >
                               {p}
@@ -390,22 +632,18 @@ export default function specialty(props) {
                         ));
                       })()}
                       <li
-                        className={`pagination-li pag-action ${page === totalPages ? "hidden" : "cursor-pointer"}`}
+                        className={`pagination-li pag-action ${parsedPage === totalPages ? "hidden" : "cursor-pointer"}`}
                       >
                         <a
                           href={
-                            page < totalPages
-                              ? `${getSpecialtyPath()}?${Object.entries({
-                                  ...getCleanQuery(router.query),
-                                  page: page + 1,
-                                })
-                                  .map(
-                                    ([k, v]) => `${k}=${encodeURIComponent(v)}`
-                                  )
-                                  .join("&")}`
+                            parsedPage < totalPages
+                              ? `${router.asPath.split("?")[0]}?${new URLSearchParams({
+                                  ...router.query,
+                                  page: parsedPage + 1,
+                                }).toString()}`
                               : "#"
                           }
-                          aria-disabled={page === totalPages}
+                          aria-disabled={parsedPage === totalPages}
                           className="flex items-center"
                         >
                           Next Page{" "}

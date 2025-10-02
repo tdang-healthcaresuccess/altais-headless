@@ -12,7 +12,8 @@ const DocSearchFilterSidebar = ({
   availableLanguages = [], 
   availableInsurances = [],
   availableDegrees = [],
-  onFilterChange = () => {}
+  onFilterChange = () => {},
+  hideSpecialtyFilter = false // New prop to hide specialty filter
 }) => {
   const [openIndex, setOpenIndex] = useState(0);
   const [speciality, setSpeciality] = useState(specialityFilter);
@@ -158,7 +159,8 @@ const DocSearchFilterSidebar = ({
   const educationOptions = availableDegrees.length > 0 ? availableDegrees : ['MD', 'DO', 'NP', 'PA', 'DPM', 'LCSW', 'ACU', 'RD', 'PharmD', 'DDS', 'DMD', 'DPT', 'OTR', 'RN', 'CNM', 'CRNA'];
 
   const accordionItems = [
-    {
+    // Only include specialty filter if not hidden
+    ...(!hideSpecialtyFilter ? [{
       title: 'Specialty',
       content: (
         <div className="relative">
@@ -185,7 +187,7 @@ const DocSearchFilterSidebar = ({
           )}
         </div>
       ),
-    },
+    }] : []),
     {
       title: 'Gender',
       content: (
