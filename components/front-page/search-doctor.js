@@ -162,39 +162,38 @@ export default function SearchDoctor() {
         // Only geocode if we have the Google API key
         if (GOOGLE_API_KEY) {
           try {
-            console.log('Geocoding zip code:', zipCode.trim());
             // Use Google Geocoding API (same as find-care component)
             const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(zipCode.trim())}&key=${GOOGLE_API_KEY}`;
             const geocodeResponse = await fetch(url);
+            
+            if (!geocodeResponse.ok) {
+              throw new Error(`HTTP error! status: ${geocodeResponse.status}`);
+            }
+            
             const geocodeData = await geocodeResponse.json();
             
-            console.log('Geocode response:', geocodeData);
-            
-            if (geocodeData.results && geocodeData.results.length > 0) {
+            if (geocodeData.status === 'OK' && geocodeData.results && geocodeData.results.length > 0) {
               const location = geocodeData.results[0].geometry.location;
+              
               if (location.lat && location.lng) {
                 // Add coordinates to URL so find-care can immediately sort by distance
                 params.append('searchLat', location.lat.toString());
                 params.append('searchLng', location.lng.toString());
-                console.log('Added coordinates to URL:', location.lat, location.lng);
               }
             }
           } catch (error) {
-            console.error("Geocoding error during search:", error);
             // Continue without coordinates - find-care will still work but without distance sorting
           }
-        } else {
-          console.warn('Google API key not available, skipping geocoding');
         }
       }
 
       const finalUrl = `/find-care?${params.toString()}`;
-      console.log('Navigating to:', finalUrl);
       
       // Navigate to the find-care page with the constructed parameters
       window.location.href = finalUrl;
     } catch (error) {
-      console.error("Search error:", error);
+      // Silent error handling - continue with navigation
+    } finally {
       setSearching(false);
     }
   };
@@ -319,7 +318,7 @@ export default function SearchDoctor() {
                 disabled={searching}
                 className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-normal !h-[50px] gap-1 disabled:opacity-50"
               >
-                {searching ? 'Searching...' : 'Search'}
+                {searching ? (zipCode.trim() ? 'Geocoding...' : 'Searching...') : 'Search'}
                 <ChevronRight className={`w-[20px] h-[20px] md:w-[18px] md:h-[18px] ${searching ? 'animate-pulse' : ''}`} />
               </button>
             </div>

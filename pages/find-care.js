@@ -177,30 +177,9 @@ export default function FindCare() {
     return { ...physician, distance };
   }).sort((a, b) => a.distance - b.distance) : physicians; // Sort by distance, closest first
 
-  // Debug: Log search processing
-  if (searchQuery) {
-    console.log(`Original search query: "${searchQuery}"`);
-    console.log(`Processed search: "${processedSearch}"`);
-    console.log(`Detected specialty:`, detectedSpecialty);
-    console.log(`Final specialty filter:`, finalSpecialtyFilter);
-  }
-
   // Education filtering is now handled server-side in GraphQL
   // Just apply location processing and sorting  
   const sortedPhysicians = locationProcessedPhysicians;
-
-  // Debug: Log all available degree types from GraphQL and current results
-  if (educationFilter) {
-    const allAvailableDegrees = degreesData?.degrees || [];
-    const currentPageDegrees = [...new Set(physicians.map(p => p.degree).filter(Boolean))];
-    const currentPageNormalizedDegrees = [...new Set(physicians.map(p => p.degrees).filter(Boolean))];
-    
-    console.log(`All available degrees in database:`, allAvailableDegrees);
-    console.log(`Degrees in current page results (raw):`, currentPageDegrees);
-    console.log(`Degrees in current page results (normalized):`, currentPageNormalizedDegrees);
-    console.log(`Selected education filter: "${educationFilter}"`);
-    console.log(`Total physicians returned: ${physicians.length}`);
-  }
   
   // Extract filter data from queries
   const availableSpecialties = specialtiesData?.specialties || [];
@@ -217,7 +196,6 @@ export default function FindCare() {
       const data = await response.json();
       return `${data.city}, ${data.principalSubdivision}`;
     } catch (error) {
-      console.error('Reverse geocoding failed:', error);
       return '';
     }
   };
