@@ -86,8 +86,8 @@ export default function specialty(props) {
   useEffect(() => {
     if (searchLat && searchLng && !isNaN(searchLat) && !isNaN(searchLng)) {
       const coords = {
-        latitude: searchLat,
-        longitude: searchLng
+        latitude: parseFloat(searchLat),
+        longitude: parseFloat(searchLng)
       };
       setSearchLocation(coords);
     } else if (!searchLat && !searchLng) {
