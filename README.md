@@ -55,6 +55,80 @@ To get started on WP Engine's Platform please follow the docs here [https://deve
 
 </details>
 
+## Recent Updates & Implementation Notes 🔧
+
+### Physician Search System Enhancements (October 2025)
+
+#### 🩺 Core Physician Search Features
+- **Enhanced GraphQL Queries**: Updated `queries/PhysicianQueries.js` with comprehensive physician search capabilities
+- **Specialty-Specific Pages**: Implemented `wp-templates/single-specialty.js` for individual specialty search pages
+- **Advanced Search Filtering**: Location-based search with distance calculation, specialty filtering, language preferences, insurance filters, and education-based filtering
+- **Pagination System**: Consistent 10 results per page across all search interfaces
+
+#### 🔍 Search Functionality Improvements
+- **Specialty Acronym Mapping**: Created `components/specialtySearchUtils.js` with fuzzy search and acronym resolution (e.g., "ENT" → "Otolaryngology")
+- **Geolocation Integration**: Auto-populate user location using Google Geocoding API
+- **Distance Calculation**: Haversine formula implementation for accurate distance sorting
+- **Real-time Autocomplete**: Dynamic specialty suggestions in search forms
+
+#### 🏠 Homepage Search Component (`components/front-page/search-doctor.js`)
+- **Smart Parameter Mapping**: Doctor name + Practice name → main search field
+- **Location Coordinate Passing**: Geocodes zip codes to provide immediate distance sorting in find-care results
+- **Specialty Autocomplete**: Dynamic dropdown with GraphQL-powered specialty suggestions
+- **Geolocation Features**: Auto-fill zip code with user's current location
+
+#### 🔧 Technical Implementation Details
+
+##### Location Search Race Condition Fix
+Fixed the "flashing results" issue where location searches would initially show unsorted results before displaying distance-sorted results:
+- **Root Cause**: Missing coordinate persistence in URL parameters
+- **Solution**: Added `searchLat` and `searchLng` parameters to URL during navigation
+- **Implementation**: Both `find-care.js` and `single-specialty.js` now use shallow routing with coordinate persistence
+
+##### GraphQL Schema Updates
+- **Enhanced Physician Queries**: Support for array-based specialty filtering
+- **Location Parameters**: Integrated latitude/longitude for server-side distance filtering
+- **Performance Optimization**: Efficient pagination with proper total count handling
+
+##### State Management Improvements
+- **URL State Persistence**: All search parameters maintained across navigation
+- **Coordinate Restoration**: `useEffect` hooks properly restore location coordinates from URL
+- **Error Handling**: Comprehensive error handling for geolocation and API failures
+
+#### 📋 Component Architecture
+
+```
+Search System Architecture:
+├── pages/find-care.js (Main physician search page)
+├── wp-templates/single-specialty.js (Specialty-specific search)
+├── components/front-page/search-doctor.js (Homepage search form)
+├── components/find-doc/search-form.js (Advanced search form)
+├── components/specialtySearchUtils.js (Search utilities)
+└── queries/PhysicianQueries.js (GraphQL queries)
+```
+
+#### 🔄 Known Issues & Future Improvements
+
+> [!IMPORTANT]
+> **Specialty System Refactoring Required**: The current specialty implementation uses ACF (Advanced Custom Fields) for specialty data management. This will need to be refactored once the physician plugin is updated to use a custom post type for specialties instead of ACF fields.
+
+**Planned Changes:**
+- Migration from ACF-based specialty system to custom post type
+- Enhanced specialty taxonomy with hierarchical relationships
+- Improved specialty metadata management
+- Better performance through native WordPress post type queries
+
+#### 🧪 Testing Notes
+- **Location Search**: Test with various zip codes and international addresses
+- **Specialty Search**: Verify acronym mapping and fuzzy search functionality
+- **Distance Calculation**: Validate accuracy of distance measurements
+- **Cross-Page Navigation**: Ensure URL parameters persist correctly across page transitions
+
+#### 🔧 Environment Dependencies
+- **Google Geocoding API**: Required for location-based search functionality
+- **WPGraphQL**: Powers all physician and specialty data queries
+- **Apollo Client**: Manages GraphQL query caching and state
+
 ## Our Community 🩵
 
 At WP Engine, we have a strong community built around headless WordPress to support you with your journey.
