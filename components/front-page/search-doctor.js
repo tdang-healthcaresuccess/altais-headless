@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { GET_SPECIALTIES } from "../../queries/PhysicianQueries";
 import { getSpecialtySuggestions } from "../specialtySearchUtils";
+import GOOGLE_API_KEY from "../common/LocationConfig";
 
 export default function SearchDoctor() {
   const [doctorName, setDoctorName] = useState('');
@@ -17,6 +18,7 @@ export default function SearchDoctor() {
   const [showSpecialtyDropdown, setShowSpecialtyDropdown] = useState(false);
   const [locationPermissionDenied, setLocationPermissionDenied] = useState(false);
   const [gettingLocation, setGettingLocation] = useState(false);
+  const [searching, setSearching] = useState(false);
 
   // Get specialties data from GraphQL
   const { data: specialtiesData } = useQuery(GET_SPECIALTIES, {
@@ -26,19 +28,29 @@ export default function SearchDoctor() {
 
   // Auto-request geolocation and fill zip code on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && navigator.geolocation && !locationPermissionDenied && !zipCode) {
+    if (typeof window !== 'undefined' && navigator.geolocation && !locationPermissionDenied && !zipCode && GOOGLE_API_KEY) {
       setGettingLocation(true);
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           
           try {
-            // Reverse geocode to get zip code
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+            // Reverse geocode to get zip code using Google API
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+            const response = await fetch(url);
             const data = await response.json();
             
-            if (data.postcode) {
-              setZipCode(data.postcode);
+            if (data.results && data.results.length > 0) {
+              // Find postal code component
+              for (const result of data.results) {
+                for (const component of result.address_components) {
+                  if (component.types.includes('postal_code')) {
+                    setZipCode(component.short_name);
+                    break;
+                  }
+                }
+                if (zipCode) break; // Exit if we found a postal code
+              }
             }
           } catch (error) {
             console.error("Geocoding error:", error);
@@ -79,18 +91,28 @@ export default function SearchDoctor() {
 
   // Trigger geolocation manually
   const handleGetLocation = () => {
-    if (typeof window !== 'undefined' && navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation && GOOGLE_API_KEY) {
       setGettingLocation(true);
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           
           try {
-            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+            const response = await fetch(url);
             const data = await response.json();
             
-            if (data.postcode) {
-              setZipCode(data.postcode);
+            if (data.results && data.results.length > 0) {
+              // Find postal code component
+              for (const result of data.results) {
+                for (const component of result.address_components) {
+                  if (component.types.includes('postal_code')) {
+                    setZipCode(component.short_name);
+                    break;
+                  }
+                }
+                if (zipCode) break;
+              }
             }
           } catch (error) {
             console.error("Geocoding error:", error);
@@ -107,36 +129,74 @@ export default function SearchDoctor() {
     }
   };
 
-  const handleSearch = () => {
-    // Construct the search URL with query parameters
-    const params = new URLSearchParams();
+  const handleSearch = async () => {
+    setSearching(true);
     
-    // Combine doctor name and practice name into the main search field
-    const searchTerms = [];
-    if (doctorName.trim()) {
-      searchTerms.push(doctorName.trim());
-    }
-    if (practiceName.trim()) {
-      searchTerms.push(practiceName.trim());
-    }
-    
-    // Add combined search terms to the main search parameter
-    if (searchTerms.length > 0) {
-      params.append('search', searchTerms.join(' '));
-    }
-    
-    // Add specialty if selected
-    if (specialty.trim()) {
-      params.append('specialty', specialty.trim());
-    }
-    
-    // Add location if provided
-    if (zipCode.trim()) {
-      params.append('location', zipCode.trim());
-    }
+    try {
+      // Construct the search URL with query parameters
+      const params = new URLSearchParams();
+      
+      // Combine doctor name and practice name into the main search field
+      const searchTerms = [];
+      if (doctorName.trim()) {
+        searchTerms.push(doctorName.trim());
+      }
+      if (practiceName.trim()) {
+        searchTerms.push(practiceName.trim());
+      }
+      
+      // Add combined search terms to the main search parameter
+      if (searchTerms.length > 0) {
+        params.append('search', searchTerms.join(' '));
+      }
+      
+      // Add specialty if selected
+      if (specialty.trim()) {
+        params.append('specialty', specialty.trim());
+      }
+      
+      // Add location and geocode if zip code is provided
+      if (zipCode.trim()) {
+        params.append('location', zipCode.trim());
+        
+        // Only geocode if we have the Google API key
+        if (GOOGLE_API_KEY) {
+          try {
+            console.log('Geocoding zip code:', zipCode.trim());
+            // Use Google Geocoding API (same as find-care component)
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(zipCode.trim())}&key=${GOOGLE_API_KEY}`;
+            const geocodeResponse = await fetch(url);
+            const geocodeData = await geocodeResponse.json();
+            
+            console.log('Geocode response:', geocodeData);
+            
+            if (geocodeData.results && geocodeData.results.length > 0) {
+              const location = geocodeData.results[0].geometry.location;
+              if (location.lat && location.lng) {
+                // Add coordinates to URL so find-care can immediately sort by distance
+                params.append('searchLat', location.lat.toString());
+                params.append('searchLng', location.lng.toString());
+                console.log('Added coordinates to URL:', location.lat, location.lng);
+              }
+            }
+          } catch (error) {
+            console.error("Geocoding error during search:", error);
+            // Continue without coordinates - find-care will still work but without distance sorting
+          }
+        } else {
+          console.warn('Google API key not available, skipping geocoding');
+        }
+      }
 
-    // Navigate to the find-care page with the constructed parameters
-    window.location.href = `/find-care?${params.toString()}`;
+      const finalUrl = `/find-care?${params.toString()}`;
+      console.log('Navigating to:', finalUrl);
+      
+      // Navigate to the find-care page with the constructed parameters
+      window.location.href = finalUrl;
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearching(false);
+    }
   };
 
   // The 'Advanced Search' link can now point directly to the find-care page
@@ -256,10 +316,11 @@ export default function SearchDoctor() {
               </a>
               <button
                 onClick={handleSearch}
-                className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-normal !h-[50px] gap-1"
+                disabled={searching}
+                className="btn-outline-secondary btn-sm flex-center !w-[135px] !px-2 rounded-normal !h-[50px] gap-1 disabled:opacity-50"
               >
-                Search
-                <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
+                {searching ? 'Searching...' : 'Search'}
+                <ChevronRight className={`w-[20px] h-[20px] md:w-[18px] md:h-[18px] ${searching ? 'animate-pulse' : ''}`} />
               </button>
             </div>
           </div>
