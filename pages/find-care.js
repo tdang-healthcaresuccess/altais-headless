@@ -43,7 +43,7 @@ export default function FindCare() {
   const genderFilter = router.query.gender || [];
   const languageFilter = router.query.language || [];
   const insuranceFilter = router.query.insurance || [];
-  const educationFilter = router.query.education || "";
+  const educationFilter = router.query.education || [];  // Now supports multiple degrees
   
   // Parse specialty filter (can be comma-separated)
   const parsedSpecialtyFilter = specialityFilter ? specialityFilter.split(',').map(s => s.trim()) : null;
@@ -56,6 +56,7 @@ export default function FindCare() {
   const parsedGenderFilter = genderFilter ? [].concat(genderFilter) : [];
   const parsedLanguageFilter = languageFilter ? (typeof languageFilter === 'string' ? languageFilter.split(',') : [].concat(languageFilter)) : [];
   const parsedInsuranceFilter = insuranceFilter ? (typeof insuranceFilter === 'string' ? insuranceFilter.split(',') : [].concat(insuranceFilter)) : [];
+  const parsedEducationFilter = educationFilter ? (typeof educationFilter === 'string' ? educationFilter.split(',') : [].concat(educationFilter)) : [];
 
   // Restore search location from URL parameters
   useEffect(() => {
@@ -110,10 +111,12 @@ export default function FindCare() {
     variables: {
       search: processedSearch,
       specialty: finalSpecialtyFilter,
-      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
-      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
-      degree: educationFilter || null,
-      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter.join(',') : null,
+      // All filters now use array format with OR logic - backend matches ANY selected values
+      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
+      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter : null,
+      degree: parsedEducationFilter.length > 0 ? parsedEducationFilter : null,
+      // Insurance filtering uses OR logic - shows doctors accepting ANY of the selected insurances
+      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
       page: parsedPage,
       perPage: detectedSpecialty ? 50 : 10, // Increase results for specialty searches
       orderBy: orderBy,
@@ -337,8 +340,8 @@ export default function FindCare() {
     }
 
     if (filterUpdate.education !== undefined) {
-      if (filterUpdate.education) {
-        query.education = filterUpdate.education;
+      if (filterUpdate.education && filterUpdate.education.length > 0) {
+        query.education = filterUpdate.education.join(',');
       } else {
         delete query.education;
       }
@@ -436,7 +439,7 @@ export default function FindCare() {
                         genderFilter={parsedGenderFilter}
                         languageFilter={languageFilter}
                         insuranceFilter={parsedInsuranceFilter}
-                        educationFilter={educationFilter}
+                        educationFilter={parsedEducationFilter}
                         availableSpecialties={availableSpecialties}
                         availableLanguages={availableLanguages}
                         availableInsurances={availableInsurances}
@@ -452,7 +455,7 @@ export default function FindCare() {
                       genderFilter={parsedGenderFilter}
                       languageFilter={parsedLanguageFilter}
                       insuranceFilter={parsedInsuranceFilter}
-                      educationFilter={educationFilter}
+                      educationFilter={parsedEducationFilter}
                       availableSpecialties={availableSpecialties}
                       availableLanguages={availableLanguages}
                       availableInsurances={availableInsurances}

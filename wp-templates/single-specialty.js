@@ -71,7 +71,7 @@ export default function specialty(props) {
   const genderFilter = router.query.gender || [];
   const languageFilter = router.query.language || [];
   const insuranceFilter = router.query.insurance || [];
-  const educationFilter = router.query.education || "";
+  const educationFilter = router.query.education || [];  // Now supports multiple degrees
   
   // Parse search coordinates from URL
   const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
@@ -81,6 +81,7 @@ export default function specialty(props) {
   const parsedGenderFilter = genderFilter ? [].concat(genderFilter) : [];
   const parsedLanguageFilter = languageFilter ? (typeof languageFilter === 'string' ? languageFilter.split(',') : [].concat(languageFilter)) : [];
   const parsedInsuranceFilter = insuranceFilter ? (typeof insuranceFilter === 'string' ? insuranceFilter.split(',') : [].concat(insuranceFilter)) : [];
+  const parsedEducationFilter = educationFilter ? (typeof educationFilter === 'string' ? educationFilter.split(',') : [].concat(educationFilter)) : [];
 
   // Restore search location from URL parameters
   useEffect(() => {
@@ -107,10 +108,12 @@ export default function specialty(props) {
     variables: {
       search: searchQuery || null,
       specialty: currentSpecialtyFilter, // Always filter by current specialty
-      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter.join(',') : null,
-      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter.join(',') : null,
-      degree: educationFilter || null,
-      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter.join(',') : null,
+      // All filters now use array format with OR logic - backend matches ANY selected values
+      language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
+      gender: parsedGenderFilter.length > 0 ? parsedGenderFilter : null,
+      degree: parsedEducationFilter.length > 0 ? parsedEducationFilter : null,
+      // Insurance filtering uses OR logic - shows doctors accepting ANY of the selected insurances
+      insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
       page: parsedPage,
       perPage: 10, // Use same pagination as find-care.js
       orderBy: orderBy,
@@ -370,7 +373,7 @@ export default function specialty(props) {
                         genderFilter={parsedGenderFilter}
                         languageFilter={parsedLanguageFilter}
                         insuranceFilter={parsedInsuranceFilter}
-                        educationFilter={educationFilter}
+                        educationFilter={parsedEducationFilter}
                         availableSpecialties={[]} // Hide specialty options
                         availableLanguages={availableLanguages}
                         availableInsurances={availableInsurances}
@@ -387,7 +390,7 @@ export default function specialty(props) {
                       genderFilter={parsedGenderFilter}
                       languageFilter={parsedLanguageFilter}
                       insuranceFilter={parsedInsuranceFilter}
-                      educationFilter={educationFilter}
+                      educationFilter={parsedEducationFilter}
                       availableSpecialties={[]} // Hide specialty options
                       availableLanguages={availableLanguages}
                       availableInsurances={availableInsurances}

@@ -7,7 +7,7 @@ const DocSearchFilterSidebar = ({
   genderFilter = [],
   languageFilter = [],
   insuranceFilter = [],
-  educationFilter = '',
+  educationFilter = [],  // Now supports multiple degrees
   availableSpecialties = [], 
   availableLanguages = [], 
   availableInsurances = [],
@@ -18,18 +18,18 @@ const DocSearchFilterSidebar = ({
   const [openIndex, setOpenIndex] = useState(0);
   const [speciality, setSpeciality] = useState(specialityFilter);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
-  const [selectedGender, setSelectedGender] = useState(Array.isArray(genderFilter) ? genderFilter[0] || '' : genderFilter);
+  const [selectedGenders, setSelectedGenders] = useState(Array.isArray(genderFilter) ? genderFilter : []); // Now supports multiple
   const [selectedLanguages, setSelectedLanguages] = useState(Array.isArray(languageFilter) ? languageFilter : []);
   const [selectedInsurances, setSelectedInsurances] = useState(Array.isArray(insuranceFilter) ? insuranceFilter : []);
-  const [selectedEducation, setSelectedEducation] = useState(educationFilter);
+  const [selectedEducations, setSelectedEducations] = useState(Array.isArray(educationFilter) ? educationFilter : []); // Now supports multiple
 
   // Update local state when props change
   useEffect(() => {
     setSpeciality(specialityFilter);
-    setSelectedGender(Array.isArray(genderFilter) ? genderFilter[0] || '' : genderFilter);
+    setSelectedGenders(Array.isArray(genderFilter) ? genderFilter : []);
     setSelectedLanguages(Array.isArray(languageFilter) ? languageFilter : []);
     setSelectedInsurances(Array.isArray(insuranceFilter) ? insuranceFilter : []);
-    setSelectedEducation(educationFilter);
+    setSelectedEducations(Array.isArray(educationFilter) ? educationFilter : []);
   }, [specialityFilter, genderFilter, languageFilter, insuranceFilter, educationFilter]);
 
   // Filter specialties based on input with acronym mapping and user input suggestions
@@ -112,38 +112,48 @@ const DocSearchFilterSidebar = ({
     onFilterChange({ specialty: filterValue });
   };
 
-  // Handle gender change
-  const handleGenderChange = (gender) => {
-    const newGender = selectedGender === gender ? '' : gender;
-    setSelectedGender(newGender);
-    onFilterChange({ gender: newGender });
+  // Handle gender toggle - Uses OR logic (shows doctors with ANY selected gender)
+  const handleGenderToggle = (gender) => {
+    const newGenders = selectedGenders.includes(gender)
+      ? selectedGenders.filter(g => g !== gender)
+      : [...selectedGenders, gender];
+    
+    setSelectedGenders(newGenders);
+    // Send array of genders - backend uses OR logic to find doctors with ANY of these genders
+    onFilterChange({ gender: newGenders });
   };
 
-  // Handle language toggle
+  // Handle language toggle - Uses OR logic (shows doctors with ANY selected language)
   const handleLanguageToggle = (language) => {
     const newLanguages = selectedLanguages.includes(language)
       ? selectedLanguages.filter(lang => lang !== language)
       : [...selectedLanguages, language];
     
     setSelectedLanguages(newLanguages);
+    // Send array of languages - backend should use OR logic to find doctors with ANY of these languages
     onFilterChange({ languages: newLanguages });
   };
 
-  // Handle insurance toggle
+  // Handle insurance toggle - Uses OR logic (shows doctors accepting ANY selected insurance)
   const handleInsuranceToggle = (insurance) => {
     const newInsurances = selectedInsurances.includes(insurance)
       ? selectedInsurances.filter(ins => ins !== insurance)
       : [...selectedInsurances, insurance];
     
     setSelectedInsurances(newInsurances);
+    // Send array of insurances - backend should use OR logic to find doctors accepting ANY of these insurances
     onFilterChange({ insurances: newInsurances });
   };
 
-  // Handle education change
-  const handleEducationChange = (education) => {
-    const newEducation = selectedEducation === education ? '' : education;
-    setSelectedEducation(newEducation);
-    onFilterChange({ education: newEducation });
+  // Handle education toggle - Uses OR logic (shows doctors with ANY selected degree)
+  const handleEducationToggle = (education) => {
+    const newEducations = selectedEducations.includes(education)
+      ? selectedEducations.filter(edu => edu !== education)
+      : [...selectedEducations, education];
+    
+    setSelectedEducations(newEducations);
+    // Send array of degrees - backend uses OR logic to find doctors with ANY of these degrees
+    onFilterChange({ education: newEducations });
   };
 
   const toggleAccordion = (index) => {
@@ -196,8 +206,8 @@ const DocSearchFilterSidebar = ({
             <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
               <input
                 type="checkbox"
-                checked={selectedGender === gender.value}
-                onChange={() => handleGenderChange(gender.value)}
+                checked={selectedGenders.includes(gender.value)}
+                onChange={() => handleGenderToggle(gender.value)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{gender.label}</span>
@@ -214,8 +224,8 @@ const DocSearchFilterSidebar = ({
             <label key={index} className="list-items1 text-bluePrimary cursor-pointer">
               <input
                 type="checkbox"
-                checked={selectedEducation === education}
-                onChange={() => handleEducationChange(education)}
+                checked={selectedEducations.includes(education)}
+                onChange={() => handleEducationToggle(education)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{education}</span>
