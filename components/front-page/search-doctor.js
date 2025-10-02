@@ -2,25 +2,141 @@
 // This component contains the initial search form on the landing page.
 // It is now a controlled component that passes its state to a parent component via a callback.
 
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { useQuery } from "@apollo/client";
+import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
+import { GET_SPECIALTIES } from "../../queries/PhysicianQueries";
+import { getSpecialtySuggestions } from "../specialtySearchUtils";
 
 export default function SearchDoctor() {
   const [doctorName, setDoctorName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [practiceName, setPracticeName] = useState('');
   const [specialty, setSpecialty] = useState('');
+  const [specialtyInput, setSpecialtyInput] = useState('');
+  const [showSpecialtyDropdown, setShowSpecialtyDropdown] = useState(false);
+  const [locationPermissionDenied, setLocationPermissionDenied] = useState(false);
+  const [gettingLocation, setGettingLocation] = useState(false);
+
+  // Get specialties data from GraphQL
+  const { data: specialtiesData } = useQuery(GET_SPECIALTIES, {
+    errorPolicy: 'all'
+  });
+  const availableSpecialties = specialtiesData?.specialties || [];
+
+  // Auto-request geolocation and fill zip code on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && navigator.geolocation && !locationPermissionDenied && !zipCode) {
+      setGettingLocation(true);
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          
+          try {
+            // Reverse geocode to get zip code
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+            const data = await response.json();
+            
+            if (data.postcode) {
+              setZipCode(data.postcode);
+            }
+          } catch (error) {
+            console.error("Geocoding error:", error);
+          } finally {
+            setGettingLocation(false);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          setLocationPermissionDenied(true);
+          setGettingLocation(false);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 300000
+        }
+      );
+    }
+  }, []);
+
+  // Handle specialty input and show dropdown
+  const handleSpecialtyInputChange = (e) => {
+    const value = e.target.value;
+    setSpecialtyInput(value);
+    setShowSpecialtyDropdown(true);
+  };
+
+  // Get specialty suggestions
+  const specialtySuggestions = getSpecialtySuggestions(specialtyInput, availableSpecialties);
+
+  // Handle specialty selection from dropdown
+  const handleSpecialtySelect = (selectedSpecialty) => {
+    setSpecialty(selectedSpecialty);
+    setSpecialtyInput(selectedSpecialty);
+    setShowSpecialtyDropdown(false);
+  };
+
+  // Trigger geolocation manually
+  const handleGetLocation = () => {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
+      setGettingLocation(true);
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          
+          try {
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+            const data = await response.json();
+            
+            if (data.postcode) {
+              setZipCode(data.postcode);
+            }
+          } catch (error) {
+            console.error("Geocoding error:", error);
+          } finally {
+            setGettingLocation(false);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          setLocationPermissionDenied(true);
+          setGettingLocation(false);
+        }
+      );
+    }
+  };
 
   const handleSearch = () => {
     // Construct the search URL with query parameters
     const params = new URLSearchParams();
-    if (doctorName) params.append('doctorName', doctorName);
-    if (zipCode) params.append('zipCode', zipCode);
-    if (practiceName) params.append('practiceName', practiceName);
-    if (specialty) params.append('specialty', specialty);
+    
+    // Combine doctor name and practice name into the main search field
+    const searchTerms = [];
+    if (doctorName.trim()) {
+      searchTerms.push(doctorName.trim());
+    }
+    if (practiceName.trim()) {
+      searchTerms.push(practiceName.trim());
+    }
+    
+    // Add combined search terms to the main search parameter
+    if (searchTerms.length > 0) {
+      params.append('search', searchTerms.join(' '));
+    }
+    
+    // Add specialty if selected
+    if (specialty.trim()) {
+      params.append('specialty', specialty.trim());
+    }
+    
+    // Add location if provided
+    if (zipCode.trim()) {
+      params.append('location', zipCode.trim());
+    }
 
-    // Navigate to the search page with the new parameters
-  window.location.href = `/find-care?${params.toString()}`;
+    // Navigate to the find-care page with the constructed parameters
+    window.location.href = `/find-care?${params.toString()}`;
   };
 
   // The 'Advanced Search' link can now point directly to the find-care page
@@ -52,14 +168,25 @@ export default function SearchDoctor() {
                     onChange={(e) => setDoctorName(e.target.value)}
                   />
                 </div>
-                <div className="block">
+                <div className="block relative">
                   <input
                     type="text"
                     placeholder="Zip Code"
-                    className="input-style w-full md:max-w-[134px] md:min-w-[134px]"
+                    className="input-style w-full md:max-w-[134px] md:min-w-[134px] pr-10"
                     value={zipCode}
                     onChange={(e) => setZipCode(e.target.value)}
                   />
+                  {!locationPermissionDenied && (
+                    <button
+                      type="button"
+                      onClick={handleGetLocation}
+                      disabled={gettingLocation}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-500 hover:text-blue-600 disabled:opacity-50"
+                      title="Use my location"
+                    >
+                      <MapPin className={`w-4 h-4 ${gettingLocation ? 'animate-pulse' : ''}`} />
+                    </button>
+                  )}
                 </div>
                 {/* <div className="relative block">
                   <select type="text" placeholder="Distance" className="appearance-none bg-white input-style w-full md:max-w-[134px] md:min-w-[134px] cursor-pointer">
@@ -85,22 +212,37 @@ export default function SearchDoctor() {
                   />
                 </div>
                 <div className="relative block flex-1">
-                  <select
+                  <input
                     type="text"
                     placeholder="Specialty"
-                    className="appearance-none bg-white input-style w-full cursor-pointer"
-                    value={specialty}
-                    onChange={(e) => setSpecialty(e.target.value)}
-                  >
-                    <option value="">Specialty</option>
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Pediatrics">Pediatrics</option>
-                    <option value="Orthopaedic Surgery">Orthopaedic Surgery</option>
-                    <option value="Ophthalmology">Ophthalmology</option>
-                  </select>
+                    className="input-style w-full"
+                    value={specialtyInput}
+                    onChange={handleSpecialtyInputChange}
+                    onFocus={() => setShowSpecialtyDropdown(true)}
+                    onBlur={() => {
+                      // Delay hiding dropdown to allow for click selection
+                      setTimeout(() => setShowSpecialtyDropdown(false), 200);
+                    }}
+                  />
                   <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
                     <ChevronDown className="w-5 h-5" />
                   </div>
+                  
+                  {/* Specialty Dropdown */}
+                  {showSpecialtyDropdown && specialtySuggestions.length > 0 && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                      {specialtySuggestions.slice(0, 10).map((suggestion, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          className="w-full px-4 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none text-sm"
+                          onClick={() => handleSpecialtySelect(suggestion)}
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
