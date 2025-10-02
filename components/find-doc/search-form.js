@@ -15,6 +15,7 @@ import GridIcon from "@/public/icons/grid-icon.svg";
 import PinMarker from "@/public/icons/pin-marker.svg";
 import SearchLaunchIcon from "@/public/icons/tabler_location-filled.svg";
 import SearchIcon from "@/public/icons/icomoon-free_search.svg";
+import LocationPin from "@/public/icons/location_pin.svg";
 import SpecialityShortInfo from "../common/specialty-short-info";
 import { resolveSpecialtyAcronym } from "../specialtySearchUtils";
 
@@ -374,7 +375,11 @@ export default function DocSearchForm({
                 className="absolute right-3 top-3 p-1 hover:bg-gray-100 rounded-md transition-colors duration-200"
                 title="Use my current location"
               >
-                <MapPin className="w-5 h-5 text-blue-600 hover:text-blue-700" />
+                <Image
+                  src={LocationPin}
+                  alt="Location Pin"
+                  className="w-5 h-5"
+                />
               </button>
             </div>
           </div>
