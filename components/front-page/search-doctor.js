@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { GET_SPECIALTIES } from "../../queries/PhysicianQueries";
 import { getSpecialtySuggestions } from "../specialtySearchUtils";
-import GOOGLE_API_KEY from "../common/LocationConfig";
+import { useGoogleApiKey } from "../common/LocationConfig";
 
 export default function SearchDoctor() {
   const [doctorName, setDoctorName] = useState('');
@@ -19,6 +19,9 @@ export default function SearchDoctor() {
   const [locationPermissionDenied, setLocationPermissionDenied] = useState(false);
   const [gettingLocation, setGettingLocation] = useState(false);
   const [searching, setSearching] = useState(false);
+
+  // Get Google API key from ACF
+  const { apiKey: GOOGLE_API_KEY, loading: apiKeyLoading } = useGoogleApiKey();
 
   // Get specialties data from GraphQL
   const { data: specialtiesData } = useQuery(GET_SPECIALTIES, {

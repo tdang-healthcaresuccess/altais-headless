@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GOOGLE_API_KEY from "../common/LocationConfig";
+import { useGoogleApiKey } from "../common/LocationConfig";
 import {
   LayoutGrid,
   AlignJustify,
@@ -31,6 +31,10 @@ export default function DocSearchForm({
 }) {
   const [showLayoutGrid, setShowLayoutGrid] = useState(false);
   const LayoutRef = useRef(null);
+  
+  // Get Google API key from ACF
+  const { apiKey: GOOGLE_API_KEY, loading: apiKeyLoading } = useGoogleApiKey();
+  
   // Local state for input fields
   const [localSearch, setLocalSearch] = useState(searchQuery || "");
   const [localLocation, setLocalLocation] = useState(locationQuery || "");
@@ -244,7 +248,7 @@ export default function DocSearchForm({
           alert(errorMessage);
         },
         {
-          enableHighAccuracy: true,
+          enableHighAccuracy: false,
           timeout: 15000,
           maximumAge: 60000
         }
