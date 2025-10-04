@@ -417,7 +417,7 @@ export default function FindCare() {
                       <DocSearchFilterSidebar
                         specialityFilter={specialityFilter}
                         genderFilter={parsedGenderFilter}
-                        languageFilter={languageFilter}
+                        languageFilter={parsedLanguageFilter}
                         insuranceFilter={parsedInsuranceFilter}
                         educationFilter={parsedEducationFilter}
                         availableSpecialties={availableSpecialties}

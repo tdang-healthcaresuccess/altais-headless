@@ -69,8 +69,8 @@ export default function specialty(props) {
   const searchQuery = router.query.search || "";
   const locationQuery = router.query.location || "";
   const genderFilter = router.query.gender || [];
-  const languageFilter = router.query.language || [];
-  const insuranceFilter = router.query.insurance || [];
+  const languageFilter = router.query.language || []; // Use singular form like find-care.js
+  const insuranceFilter = router.query.insurance || []; // Use singular form like find-care.js
   const educationFilter = router.query.education || [];  // Now supports multiple degrees
   
   // Parse search coordinates from URL
@@ -239,29 +239,59 @@ export default function specialty(props) {
   };
 
   // Handle filter changes from sidebar
-  const handleFilterChange = (filters) => {
+  const handleFilterChange = (filterUpdate) => {
     const currentPath = router.asPath.split("?")[0];
-    const currentQuery = { ...router.query };
+    const query = { ...router.query, page: 1 }; // Reset to first page on filter change
     
-    // Update query with new filter values
-    Object.keys(filters).forEach(key => {
-      if (filters[key] && filters[key].length > 0) {
-        if (Array.isArray(filters[key])) {
-          currentQuery[key] = filters[key].join(',');
+    // Handle different filter types (same logic as find-care.js)
+    if (filterUpdate.specialty !== undefined) {
+      if (filterUpdate.specialty) {
+        // Handle array of specialties
+        if (Array.isArray(filterUpdate.specialty)) {
+          query.specialty = filterUpdate.specialty.join(',');
         } else {
-          currentQuery[key] = filters[key];
+          query.specialty = filterUpdate.specialty;
         }
       } else {
-        delete currentQuery[key];
+        delete query.specialty;
       }
-    });
-    
-    // Reset to page 1 when filters change
-    currentQuery.page = 1;
+    }
+
+    if (filterUpdate.gender !== undefined) {
+      if (filterUpdate.gender) {
+        query.gender = filterUpdate.gender;
+      } else {
+        delete query.gender;
+      }
+    }
+
+    if (filterUpdate.languages !== undefined) {
+      if (filterUpdate.languages && filterUpdate.languages.length > 0) {
+        query.language = filterUpdate.languages.join(','); // Convert plural to singular URL param
+      } else {
+        delete query.language;
+      }
+    }
+
+    if (filterUpdate.insurances !== undefined) {
+      if (filterUpdate.insurances && filterUpdate.insurances.length > 0) {
+        query.insurance = filterUpdate.insurances.join(','); // Convert plural to singular URL param
+      } else {
+        delete query.insurance;
+      }
+    }
+
+    if (filterUpdate.education !== undefined) {
+      if (filterUpdate.education && filterUpdate.education.length > 0) {
+        query.education = filterUpdate.education.join(',');
+      } else {
+        delete query.education;
+      }
+    }
     
     router.push({
       pathname: currentPath,
-      query: currentQuery
+      query: query
     });
   };
 
