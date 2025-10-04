@@ -6,7 +6,20 @@ const { createSecureHeaders } = require("next-secure-headers");
  **/
 module.exports = withFaust({
   images: {
-    domains: [getWpHostname()],
+    domains: [getWpHostname(), 'localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: getWpHostname(),
+        port: '',
+        pathname: '/wp-content/uploads/**',
+      },
+    ],
+    // Disable optimization for proxy URLs to prevent double encoding
+    unoptimized: false,
+    // Allow our proxy API URLs
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   trailingSlash: true,
   async headers() {

@@ -1,4 +1,5 @@
 import React from "react";
+import WordPressContent from "../WordPressContent";
 
 /**
  * Section2a component.
@@ -46,9 +47,9 @@ const Section2a = ({ data }) => {
 
           {content2a ? (
             <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary section-content">
-              <div
-                className={!wrapUpList && "wrap-list"}
-                dangerouslySetInnerHTML={{ __html: content2a }}
+              <WordPressContent
+                content={content2a}
+                className={!wrapUpList ? "wrap-list" : ""}
               />
             </div>
           ) : (

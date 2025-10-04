@@ -27,7 +27,9 @@ export default function DocSearchForm({
   activeLayout,
   setActiveLayout,
   onLocationUpdate = () => {}, // For user's actual location (geolocation)
-  onSearchLocationUpdate = () => {} // New prop for search location coordinates
+  onSearchLocationUpdate = () => {}, // New prop for search location coordinates
+  onSpecialtyFilterChange = () => {}, // New prop for auto-filling specialty filter
+  availableSpecialties = [] // Available specialties for enhanced detection
 }) {
   const [showLayoutGrid, setShowLayoutGrid] = useState(false);
   const LayoutRef = useRef(null);
@@ -45,6 +47,7 @@ export default function DocSearchForm({
   const [lastGeolocationRequest, setLastGeolocationRequest] = useState(0); // Track last geolocation request time
   const [isSearchInProgress, setIsSearchInProgress] = useState(false); // Prevent concurrent searches
   const [isUsingSearchLocation, setIsUsingSearchLocation] = useState(false); // Track if we're using a geocoded search location
+  const [specialtyAutoFilled, setSpecialtyAutoFilled] = useState(null); // Track auto-filled specialty
 
   // Keep local state in sync with props after SSR search
   useEffect(() => {
@@ -53,6 +56,17 @@ export default function DocSearchForm({
   useEffect(() => {
     setLocalLocation(locationQuery || "");
   }, [locationQuery]);
+
+  // Clear the specialty notification after a few seconds
+  useEffect(() => {
+    if (specialtyAutoFilled) {
+      const timer = setTimeout(() => {
+        setSpecialtyAutoFilled(null);
+      }, 3000); // Clear after 3 seconds
+      
+      return () => clearTimeout(timer);
+    }
+  }, [specialtyAutoFilled]);
 
 
   // Request user's location on component mount and update parent
@@ -264,6 +278,36 @@ export default function DocSearchForm({
     return resolveSpecialtyAcronym(term);
   }
 
+  // ✨ NEW: Enhanced specialty detection that checks for partial matches
+  function detectSpecialtyInSearch(searchTerm, availableSpecialties = []) {
+    if (!searchTerm || !searchTerm.trim()) return null;
+    
+    const term = searchTerm.toLowerCase().trim();
+    
+    // First check acronym resolution
+    const resolvedSpecialty = resolveAcronym(searchTerm);
+    if (resolvedSpecialty !== searchTerm) {
+      return resolvedSpecialty; // Found in acronym map
+    }
+    
+    // Check for partial matches in available specialties
+    // This catches cases like "cardio" matching "Cardiology" 
+    const matchingSpecialties = availableSpecialties.filter(specialty => {
+      if (!specialty) return false;
+      const specialtyLower = specialty.toLowerCase();
+      
+      // Check if the search term is contained in the specialty name
+      // or if the specialty name starts with the search term
+      return specialtyLower.includes(term) || term.includes(specialtyLower);
+    });
+    
+    if (matchingSpecialties.length > 0) {
+      return matchingSpecialties.length === 1 ? matchingSpecialties[0] : matchingSpecialties;
+    }
+    
+    return null; // No specialty detected
+  }
+
   // Modified search handler for main input only
   async function handleMainSearch() {
     // Prevent concurrent searches
@@ -274,7 +318,28 @@ export default function DocSearchForm({
     setIsSearchInProgress(true);
     
     try {
-      // If the user typed an acronym, resolve it to specialty name(s)
+      // ✨ ENHANCED: Try enhanced specialty detection first
+      const detectedSpecialty = detectSpecialtyInSearch(localSearch, availableSpecialties);
+      
+      // If specialty detected, auto-fill the sidebar filter
+      if (detectedSpecialty) {
+        console.log('🎯 Specialty detected in main search:', detectedSpecialty);
+        
+        // Set notification for user feedback
+        const specialtyName = Array.isArray(detectedSpecialty) ? detectedSpecialty[0] : detectedSpecialty;
+        setSpecialtyAutoFilled(specialtyName);
+        
+        // Auto-fill the sidebar specialty filter
+        if (Array.isArray(detectedSpecialty)) {
+          // Multiple specialties detected
+          onSpecialtyFilterChange({ specialty: detectedSpecialty });
+        } else {
+          // Single specialty detected
+          onSpecialtyFilterChange({ specialty: [detectedSpecialty] });
+        }
+      }
+      
+      // If the user typed an acronym, resolve it to specialty name(s) for the search query
       const resolvedSearch = resolveAcronym(localSearch);
       
       // Handle array results from acronym mapping
@@ -396,7 +461,7 @@ export default function DocSearchForm({
               />
                 <input
                   type="text"
-                  placeholder="Doctor, hospital, conditions, or specialty..."
+                  placeholder="Doctor, hospital or specialty..."
                   className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
                   value={localSearch}
                   onChange={(e) => setLocalSearch(e.target.value)}
@@ -410,6 +475,17 @@ export default function DocSearchForm({
                   }}
                 />
             </div>
+            
+            {/* ✨ Specialty Auto-Detection Notification */}
+            {specialtyAutoFilled && (
+              <div className="absolute top-full left-0 mt-2 bg-green-100 border border-green-400 text-green-800 px-3 py-2 rounded-md shadow-sm z-10 flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                <span className="text-sm">
+                  Specialty filter applied: <strong>{specialtyAutoFilled}</strong>
+                </span>
+              </div>
+            )}
+            
             <button
               type="button"
               className="btn-md flex-center font-semibold btn-outline-secondary gap-1 w-full sm:w-auto px-4 py-2 rounded"

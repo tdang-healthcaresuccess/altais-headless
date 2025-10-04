@@ -371,6 +371,8 @@ export default function FindCare() {
           setActiveLayout={setActiveLayout}
           onLocationUpdate={handleLocationUpdate}
           onSearchLocationUpdate={handleSearchLocationUpdate}
+          onSpecialtyFilterChange={handleFilterChange}
+          availableSpecialties={availableSpecialties}
         />
 
         {/* Results Count, Clear All Filters Link, and LayoutOptions */}

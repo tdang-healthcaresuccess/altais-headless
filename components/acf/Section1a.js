@@ -1,8 +1,8 @@
 
-// This is a placeholder for a responsive image component.
-// In a real application, you'd want to use a component that handles
-// image optimization (like Next.js's Image component) or adds
-// proper fallbacks.
+import WordPressImage from "../WordPressImage";
+import WordPressContent from "../WordPressContent";
+
+// Enhanced ResponsiveImage component using WordPressImage
 const ResponsiveImage = ({ src, alt }) => {
   if (!src) {
     return (
@@ -10,9 +10,11 @@ const ResponsiveImage = ({ src, alt }) => {
     );
   }
   return (
-    <img
+    <WordPressImage
       src={src}
       alt={alt}
+      width={838}
+      height={400}
       className="w-full h-auto object-cover rounded-normal border border-primary"
     />
   );
@@ -51,9 +53,8 @@ const Section1a = ({ data }) => {
 
             {/* Right Column: Content */}
             <div className="max-w-full md:max-w-[743px] mx-auto pt-6">
-              <div
-                // The content is assumed to be an HTML string from WordPress
-                dangerouslySetInnerHTML={{ __html: sectionContent }}
+              <WordPressContent 
+                content={sectionContent}
               />
             </div>
           </div>

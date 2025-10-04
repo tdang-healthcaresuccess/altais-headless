@@ -1,3 +1,5 @@
+import WordPressContent from "../WordPressContent";
+
 /**
  * Section5a component.
  * Renders a simple, single-column content section.
@@ -16,9 +18,9 @@ const Section5a = ({ data }) => {
       <div className="container mx-auto">
         <div className={`max-w-full md:max-w-[743px] mx-auto ${section5aLineBreak && "py-6 md:py-12"}`}>
           {section5aContent && (
-            <div
+            <WordPressContent
+              content={section5aContent}
               className="prose dark:prose-invert text-base lg:text-lg content-dynamic"
-              dangerouslySetInnerHTML={{ __html: section5aContent }}
             />
           )}
         </div>

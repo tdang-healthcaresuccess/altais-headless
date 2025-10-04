@@ -1,3 +1,6 @@
+import WordPressImage from "../WordPressImage";
+import WordPressContent from "../WordPressContent";
+
   /**
    * Section4a component.
    * Renders a call-to-action (CTA) section with an image, headlines, and a button.
@@ -34,9 +37,11 @@ const Section4a = ({ data }) => {
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-[74px]">
           {imageUrl && (
             <div className="w-full md:w-[425px] flex-shrink-0">
-              <img
+              <WordPressImage
                 src={imageUrl}
                 alt="CTA Image"
+                width={425}
+                height={300}
                 className="w-full rounded-normal border border-lightPrimary object-cover"
               />
             </div>
@@ -46,7 +51,7 @@ const Section4a = ({ data }) => {
             <div className="block">
               {section4aHeadline && <h2>{section4aHeadline}</h2>}
               {section4aDescription && (
-                <div dangerouslySetInnerHTML={{ __html: section4aDescription }} />
+                <WordPressContent content={section4aDescription} />
               )}
             </div>
             {/* Primary Headline End */}

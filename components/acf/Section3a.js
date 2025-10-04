@@ -1,10 +1,10 @@
 import he from "he";
 import { Minus, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
-// This is a placeholder for a responsive image component.
-// In a real application, you'd want to use a component that handles
-// image optimization (like Next.js's Image component) or adds
-// proper fallbacks.
+import WordPressImage from "../WordPressImage";
+import WordPressContent from "../WordPressContent";
+
+// Enhanced ResponsiveImage component using WordPressImage
 const ResponsiveImage = ({ src, alt }) => {
   if (!src) {
     return (
@@ -12,11 +12,11 @@ const ResponsiveImage = ({ src, alt }) => {
     );
   }
   return (
-    <img
+    <WordPressImage
       src={src}
       alt={alt}
-      width="100%"
-      height="100%"
+      width={400}
+      height={170}
       className="w-full object-cover rounded-normal border border-primary h-auto md:h-[170px]"
     />
   );
@@ -61,7 +61,12 @@ const Card = ({ cardData }) => {
         {imageIcon ? (
           <>
             <h3 className="flex items-center gap-4">
-              <img src={imageIcon} alt={cardHeadline} width={40} height={40} />
+              <WordPressImage 
+                src={imageIcon} 
+                alt={cardHeadline} 
+                width={40} 
+                height={40} 
+              />
               {cardHeadline}
             </h3>
           </>
@@ -71,11 +76,9 @@ const Card = ({ cardData }) => {
         {/* Only show truncated content if collapsed, full content if expanded */}
         {cardContentCollapse ? (
           <>
-            <div
+            <WordPressContent
+              content={isExpanded ? decodedContent : truncatedContent}
               className="block"
-              dangerouslySetInnerHTML={{
-                __html: isExpanded ? decodedContent : truncatedContent,
-              }}
             />
             <div className="block line-break pt-3 border-t border-lightPrimary">
               <button
@@ -97,9 +100,9 @@ const Card = ({ cardData }) => {
           </>
         ) : (
           cardContent && (
-            <div
+            <WordPressContent
+              content={decodedContent}
               className="block"
-              dangerouslySetInnerHTML={{ __html: decodedContent }}
             />
           )
         )}
