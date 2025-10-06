@@ -276,7 +276,7 @@ export default function SearchDoctor() {
                 <div className="relative block flex-1">
                   <input
                     type="text"
-                    placeholder="Specialty"
+                    placeholder="Search Specialty"
                     className="input-style w-full"
                     value={specialtyInput}
                     onChange={handleSpecialtyInputChange}
@@ -286,9 +286,9 @@ export default function SearchDoctor() {
                       setTimeout(() => setShowSpecialtyDropdown(false), 200);
                     }}
                   />
-                  <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
+                  {/* <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-500">
                     <ChevronDown className="w-5 h-5" />
-                  </div>
+                  </div> */}
                   
                   {/* Specialty Dropdown */}
                   {showSpecialtyDropdown && specialtySuggestions.length > 0 && (
