@@ -11,8 +11,15 @@ const Layout = ({ children, siteTitle = 'Altais: Shaping the Future of Healthcar
   // Rewrite canonicalUrl to use frontend domain if needed
   const frontendDomain = 'https://altais.com'; // Set your public site domain here
   let canonicalUrl = metaD?.canonicalUrl;
-  if (canonicalUrl && canonicalUrl.includes('wpenginepowered.com')) {
+  
+  // Fix placeholder or incorrect domains
+  if (canonicalUrl && (canonicalUrl.includes('wpenginepowered.com') || canonicalUrl.includes('yourdomain.com'))) {
     canonicalUrl = canonicalUrl.replace(/https?:\/\/[^/]+/, frontendDomain);
+  }
+  
+  // If no canonical URL provided, generate one based on current path
+  if (!canonicalUrl && typeof window !== 'undefined') {
+    canonicalUrl = `${frontendDomain}${window.location.pathname}`;
   }
   const noIndexFollow = metaD?.noIndexFollow || false;
   let robotsContent = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
