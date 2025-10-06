@@ -58,9 +58,8 @@ const DocSearchFilterSidebar = ({
       );
       
       if (!exactMatch && !isResolvedMatch) {
-        // Use enhanced suggestions - pass empty array to avoid GraphQL limitation
-        // This allows fuzzy search to work with acronym map values independently
-        const suggestions = getSpecialtySuggestions(speciality, []);
+        // Use enhanced suggestions with available specialties for better fuzzy search
+        const suggestions = getSpecialtySuggestions(speciality, availableSpecialties);
         setSpecialitySuggestions(suggestions);
       } else {
         setSpecialitySuggestions([]);

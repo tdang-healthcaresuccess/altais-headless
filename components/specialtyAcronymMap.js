@@ -42,6 +42,8 @@ const specialtyAcronymMap = {
 			pulm: "Pulmonology",
 			"lung": "Pulmonology",
 			"asthma": "Pulmonology",
+			"pain": "Pain Management",
+			"pain management": "Pain Management",
 			heme: "Hematology",
 			"blood": "Hematology",
 			onco: "Oncology",
