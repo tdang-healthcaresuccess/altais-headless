@@ -48,6 +48,10 @@ export default function FindCare() {
   // Parse specialty filter (can be comma-separated)
   const parsedSpecialtyFilter = specialityFilter ? specialityFilter.split(',').map(s => s.trim()) : null;
   
+  // For the sidebar, only show single specialty or empty if multiple
+  // This prevents the dropdown from staying open when multiple specialties are filtered
+  const sidebarSpecialtyFilter = parsedSpecialtyFilter && parsedSpecialtyFilter.length === 1 ? parsedSpecialtyFilter[0] : "";
+  
   // Parse search coordinates from URL
   const searchLat = router.query.searchLat ? parseFloat(router.query.searchLat) : null;
   const searchLng = router.query.searchLng ? parseFloat(router.query.searchLng) : null;
@@ -415,7 +419,7 @@ export default function FindCare() {
                     </button>
                     <div className="block bg-white p-5 w-full rounded-normal">
                       <DocSearchFilterSidebar
-                        specialityFilter={specialityFilter}
+                        specialityFilter={sidebarSpecialtyFilter}
                         genderFilter={parsedGenderFilter}
                         languageFilter={parsedLanguageFilter}
                         insuranceFilter={parsedInsuranceFilter}
@@ -431,7 +435,7 @@ export default function FindCare() {
                 ) : (
                   <div className="hidden md:block">
                     <DocSearchFilterSidebar
-                      specialityFilter={specialityFilter}
+                      specialityFilter={sidebarSpecialtyFilter}
                       genderFilter={parsedGenderFilter}
                       languageFilter={parsedLanguageFilter}
                       insuranceFilter={parsedInsuranceFilter}

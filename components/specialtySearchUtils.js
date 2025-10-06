@@ -156,9 +156,12 @@ export function getSpecialtySuggestions(inputValue, availableSpecialties = []) {
   
   // 5. If user typed something that could be a specialty search term, add it as an option
   // This allows users to search for terms like "primary care", "heart" etc. even if not in available specialties
+  // BUT don't add this if the search term is a known acronym that already resolved to suggestions
   const hasExactMatch = suggestions.some(s => s.toLowerCase() === searchTerm);
-  if (!hasExactMatch && searchTerm.length > 2) {
-    // Add the user's input as a searchable option (capitalize first letters)
+  const hasAcronymMapping = specialtyAcronymMap[searchTerm] !== undefined;
+  
+  if (!hasExactMatch && !hasAcronymMapping && searchTerm.length > 2 && suggestions.length === 0) {
+    // Only add "Search for" option if there are no other suggestions and it's not a known acronym
     const capitalizedInput = searchTerm.split(' ').map(word => 
       word.charAt(0).toUpperCase() + word.slice(1)
     ).join(' ');

@@ -35,6 +35,12 @@ const DocSearchFilterSidebar = ({
   // Filter specialties based on input with acronym mapping and user input suggestions
   useEffect(() => {
     if (speciality.trim()) {
+      // Check if input contains comma (multiple specialties) - don't show suggestions for this
+      if (speciality.includes(',')) {
+        setSpecialitySuggestions([]);
+        return;
+      }
+      
       // Don't show suggestions if the input exactly matches an available specialty
       const exactMatch = availableSpecialties.some(specialty => 
         specialty && specialty.toLowerCase() === speciality.toLowerCase()

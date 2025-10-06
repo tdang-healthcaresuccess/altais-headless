@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from "@apollo/client";
 import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { GET_SPECIALTIES } from "../../queries/PhysicianQueries";
-import { getSpecialtySuggestions } from "../specialtySearchUtils";
+import { getSpecialtySuggestions, resolveSpecialtyAcronym } from "../specialtySearchUtils";
 import { useGoogleApiKey } from "../common/LocationConfig";
 
 export default function SearchDoctor() {
@@ -87,8 +87,15 @@ export default function SearchDoctor() {
 
   // Handle specialty selection from dropdown
   const handleSpecialtySelect = (selectedSpecialty) => {
-    setSpecialty(selectedSpecialty);
-    setSpecialtyInput(selectedSpecialty);
+    let actualSpecialty = selectedSpecialty;
+    
+    // If it's a "Search for" option, extract the actual search term
+    if (selectedSpecialty.startsWith('Search for "') && selectedSpecialty.endsWith('"')) {
+      actualSpecialty = selectedSpecialty.slice(12, -1); // Remove 'Search for "' and '"'
+    }
+    
+    setSpecialty(actualSpecialty);
+    setSpecialtyInput(actualSpecialty);
     setShowSpecialtyDropdown(false);
   };
 
@@ -153,9 +160,16 @@ export default function SearchDoctor() {
         params.append('search', searchTerms.join(' '));
       }
       
-      // Add specialty if selected
+      // Add specialty if selected - resolve acronyms first
       if (specialty.trim()) {
-        params.append('specialty', specialty.trim());
+        const resolvedSpecialty = resolveSpecialtyAcronym(specialty.trim());
+        
+        // If resolved to an array, use all specialties (for cases like PCP -> multiple specialties)
+        if (Array.isArray(resolvedSpecialty)) {
+          params.append('specialty', resolvedSpecialty.join(','));
+        } else {
+          params.append('specialty', resolvedSpecialty);
+        }
       }
       
       // Add location and geocode if zip code is provided
