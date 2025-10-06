@@ -20,7 +20,6 @@ const PAGE_QUERY = gql`
   query GetPage($databaseId: ID!, $asPreview: Boolean = false) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
-      content
               parent {
                 node {
                   ... on Page {
@@ -165,7 +164,7 @@ export default function SinglePage(props) {
     nodes: [],
   };
   const { title: siteTitle, description: siteDescription } = siteData;
-  const { title, content, metaD, contentTemplates, heroBanner, seomarkup } = contentQuery?.page || {};
+  const { title, metaD, contentTemplates, heroBanner, seomarkup } = contentQuery?.page || {};
   const parentPage = contentQuery?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
