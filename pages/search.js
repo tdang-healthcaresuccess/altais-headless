@@ -7,6 +7,63 @@ import Head from "next/head";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 
+// Helper function to extract all ACF content for searching
+const extractACFContent = (contentTemplates) => {
+  try {
+    if (!contentTemplates) return '';
+    
+    let allContent = [];
+    
+    // Extract from templateC
+    if (contentTemplates.templateC) {
+      allContent.push(contentTemplates.templateC);
+    }
+    
+    // Extract from templateA sections
+    if (contentTemplates.templateA && Array.isArray(contentTemplates.templateA)) {
+      contentTemplates.templateA.forEach(section => {
+        // Extract content from different section types
+        if (section.section1aContent) allContent.push(section.section1aContent);
+        if (section.content2a) allContent.push(section.content2a);
+        if (section.headline2a) allContent.push(section.headline2a);
+        if (section.wrapUpList) allContent.push(section.wrapUpList);
+        if (section.section5aContent) allContent.push(section.section5aContent);
+        
+        // Section 3a cards
+        if (section.section3aCards && Array.isArray(section.section3aCards)) {
+          section.section3aCards.forEach(card => {
+            if (card.cardContent) allContent.push(card.cardContent);
+            if (card.cardHeadline) allContent.push(card.cardHeadline);
+            if (card.cardOptions) allContent.push(card.cardOptions);
+            if (card.cardContentCollapse) allContent.push(card.cardContentCollapse);
+          });
+        }
+        
+        // Section 4a content
+        if (section.section4aDescription) allContent.push(section.section4aDescription);
+        if (section.section4aAdditionalHeadline) allContent.push(section.section4aAdditionalHeadline);
+        if (section.section4aaddDescription) allContent.push(section.section4aaddDescription);
+        if (section.section4aHeadline) allContent.push(section.section4aHeadline);
+        if (section.ctaButtonText) allContent.push(section.ctaButtonText);
+        if (section.ctaButtonUrl) allContent.push(section.ctaButtonUrl);
+        
+        // Section 6a testimonials
+        if (section.section6aTestimonials && Array.isArray(section.section6aTestimonials)) {
+          section.section6aTestimonials.forEach(testimonial => {
+            if (testimonial.reviewerName) allContent.push(testimonial.reviewerName);
+            if (testimonial.reviewerDescription) allContent.push(testimonial.reviewerDescription);
+          });
+        }
+      });
+    }
+    
+    return allContent.join(' ');
+  } catch (error) {
+    console.error('Error extracting ACF content:', error);
+    return '';
+  }
+};
+
 const GridLayout = ({ results, type }) => {
   // A helper function to strip HTML tags from excerpts
   const truncateText = (text, limit) => {
@@ -39,10 +96,15 @@ const GridLayout = ({ results, type }) => {
             <h3 className="text-2xl font-bold leading-8 text-blue-900 mb-3">
               {result.title}
             </h3>
-            {/* Show an excerpt for posts, but not for pages */}
-            {type === 'post' && (
+            {/* Show excerpt for posts, or ACF content preview for pages */}
+            {result.__type === 'post' && result.excerpt && (
               <p className="text-lg leading-8 text-gray-600 mb-7">
                 {truncateText(result.excerpt, 150)}
+              </p>
+            )}
+            {result.__type === 'page' && result.contentTemplates && (
+              <p className="text-lg leading-8 text-gray-600 mb-7">
+                {truncateText(extractACFContent(result.contentTemplates), 150)}
               </p>
             )}
           </div>
@@ -59,7 +121,7 @@ const GridLayout = ({ results, type }) => {
   );
 };
 
-// GraphQL query for pages, including pagination fields
+// GraphQL query for pages, including pagination fields and ACF content templates
 const GET_PAGES_QUERY = gql`
   query GetPages($search: String) {
     pages(where: { search: $search }) {
@@ -71,6 +133,51 @@ const GET_PAGES_QUERY = gql`
           node {
             sourceUrl
             altText
+          }
+        }
+        contentTemplates {
+          templateSelection
+          templateC
+          templateA {
+            ... on ContentTemplatesTemplateASection1aLayout {
+              fieldGroupName
+              section1aContent
+            }
+            ... on ContentTemplatesTemplateASection2aLayout {
+              content2a
+              headline2a
+              fieldGroupName
+              wrapUpList
+            }
+            ... on ContentTemplatesTemplateASection3aLayout {
+              fieldGroupName
+              section3aCards {
+                cardContent
+                cardHeadline
+                cardOptions
+                cardContentCollapse
+              }
+            }
+            ... on ContentTemplatesTemplateASection4aLayout {
+              fieldGroupName
+              section4aDescription
+              section4aAdditionalHeadline
+              section4aaddDescription
+              section4aHeadline
+              ctaButtonText
+              ctaButtonUrl
+            }
+            ... on ContentTemplatesTemplateASection5aLayout {
+              fieldGroupName
+              section5aContent
+            }
+            ... on ContentTemplatesTemplateASection6aTestimonialsLayout {
+              fieldGroupName
+              section6aTestimonials {
+                reviewerName
+                reviewerDescription
+              }
+            }
           }
         }
       }
@@ -85,6 +192,7 @@ const GET_POSTS_QUERY = gql`
       nodes {
         id
         title
+        content
         excerpt
         uri
         featuredImage {
@@ -107,6 +215,18 @@ export default function SearchPage() {
   // Single pagination for combined results
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Helper function to search in ACF content
+  const searchInACFContent = (page, searchTerm) => {
+    try {
+      if (!searchTerm) return false;
+      const acfContent = extractACFContent(page.contentTemplates);
+      return acfContent.toLowerCase().includes(searchTerm.toLowerCase());
+    } catch (error) {
+      console.error('Error searching ACF content:', error);
+      return false;
+    }
+  };
+
   // Fetch all pages
   const { data: pagesData, loading: pagesLoading, error: pagesError } = useQuery(GET_PAGES_QUERY, {
     variables: { search: searchQuery },
@@ -121,6 +241,26 @@ export default function SearchPage() {
 
   const pages = pagesData?.pages?.nodes || [];
   const posts = postsData?.posts?.nodes || [];
+
+  // Filter pages to include those that match in ACF content as well
+  const filteredPages = pages.filter(page => {
+    // Basic title/content match (already handled by GraphQL search)
+    const hasBasicMatch = true; // GraphQL already filtered these
+    
+    // Additional ACF content match
+    const hasACFMatch = searchInACFContent(page, searchQuery);
+    
+    // Debug logging
+    if (process.env.NODE_ENV === 'development') {
+      const acfContent = extractACFContent(page.contentTemplates);
+      if (acfContent.toLowerCase().includes('altais medical group')) {
+        console.log('Found page with Altais Medical Group:', page.title);
+        console.log('ACF Content:', acfContent);
+      }
+    }
+    
+    return hasBasicMatch || hasACFMatch;
+  });
 
   const pageInfoPages = pagesData?.pages?.pageInfo;
   const pageInfoPosts = postsData?.posts?.pageInfo;
@@ -172,18 +312,25 @@ export default function SearchPage() {
   }
 
   if (pagesError || postsError) {
+    console.error('Search errors:', { pagesError, postsError });
     return (
       <Layout>
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Search Results for "{searchQuery}"</h1>
           <p className="text-red-500">An error occurred while fetching search results.</p>
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-4 text-left bg-gray-100 p-4 rounded">
+              <p><strong>Pages Error:</strong> {pagesError?.message}</p>
+              <p><strong>Posts Error:</strong> {postsError?.message}</p>
+            </div>
+          )}
         </div>
       </Layout>
     );
   }
 
-  // Combine all results: pages first, then blogs
-  const allResults = [...pages.map(p => ({ ...p, __type: 'page' })), ...posts.map(p => ({ ...p, __type: 'post' }))];
+  // Combine all results: filtered pages first, then blogs
+  const allResults = [...filteredPages.map(p => ({ ...p, __type: 'page' })), ...posts.map(p => ({ ...p, __type: 'post' }))];
   const hasResults = allResults.length > 0;
   // Single pagination for combined results
   const totalPages = Math.ceil(allResults.length / RESULTS_PER_PAGE);
