@@ -15,13 +15,56 @@ const DocSearchFilterSidebar = ({
   onFilterChange = () => {},
   hideSpecialtyFilter = false // New prop to hide specialty filter
 }) => {
-  const [openIndex, setOpenIndex] = useState(0);
+  // Function to determine which sections should be open based on active filters
+  const getInitialOpenSections = () => {
+    const openSections = new Set();
+    
+    // Check if any filters have values and mark their sections as open
+    if (specialityFilter && specialityFilter.trim() && !hideSpecialtyFilter) {
+      openSections.add(0); // Specialty section
+    }
+    
+    const genderArray = Array.isArray(genderFilter) ? genderFilter : [];
+    const languageArray = Array.isArray(languageFilter) ? languageFilter : [];
+    const insuranceArray = Array.isArray(insuranceFilter) ? insuranceFilter : [];
+    const educationArray = Array.isArray(educationFilter) ? educationFilter : [];
+    
+    // Adjust indices based on whether specialty filter is hidden
+    const baseIndex = hideSpecialtyFilter ? 0 : 1;
+    
+    if (genderArray.length > 0) {
+      openSections.add(baseIndex); // Gender section
+    }
+    if (educationArray.length > 0) {
+      openSections.add(baseIndex + 1); // Education section
+    }
+    if (languageArray.length > 0) {
+      openSections.add(baseIndex + 2); // Languages section
+    }
+    if (insuranceArray.length > 0) {
+      openSections.add(baseIndex + 3); // Insurance section
+    }
+    
+    // If no filters are active, open the first section by default
+    if (openSections.size === 0) {
+      openSections.add(0);
+    }
+    
+    return openSections;
+  };
+
+  const [openSections, setOpenSections] = useState(getInitialOpenSections());
   const [speciality, setSpeciality] = useState(specialityFilter);
   const [specialitySuggestions, setSpecialitySuggestions] = useState([]);
   const [selectedGenders, setSelectedGenders] = useState(Array.isArray(genderFilter) ? genderFilter : []); // Now supports multiple
   const [selectedLanguages, setSelectedLanguages] = useState(Array.isArray(languageFilter) ? languageFilter : []);
   const [selectedInsurances, setSelectedInsurances] = useState(Array.isArray(insuranceFilter) ? insuranceFilter : []);
   const [selectedEducations, setSelectedEducations] = useState(Array.isArray(educationFilter) ? educationFilter : []); // Now supports multiple
+
+  // Update open sections when filters change
+  useEffect(() => {
+    setOpenSections(getInitialOpenSections());
+  }, [specialityFilter, genderFilter, languageFilter, insuranceFilter, educationFilter, hideSpecialtyFilter]);
 
   // Update local state when props change
   useEffect(() => {
@@ -118,7 +161,8 @@ const DocSearchFilterSidebar = ({
   };
 
   // Handle gender toggle - Uses OR logic (shows doctors with ANY selected gender)
-  const handleGenderToggle = (gender) => {
+  const handleGenderToggle = (gender, event) => {
+    event.stopPropagation(); // Prevent accordion collapse
     const newGenders = selectedGenders.includes(gender)
       ? selectedGenders.filter(g => g !== gender)
       : [...selectedGenders, gender];
@@ -129,7 +173,8 @@ const DocSearchFilterSidebar = ({
   };
 
   // Handle language toggle - Uses OR logic (shows doctors with ANY selected language)
-  const handleLanguageToggle = (language) => {
+  const handleLanguageToggle = (language, event) => {
+    event.stopPropagation(); // Prevent accordion collapse
     const newLanguages = selectedLanguages.includes(language)
       ? selectedLanguages.filter(lang => lang !== language)
       : [...selectedLanguages, language];
@@ -140,7 +185,8 @@ const DocSearchFilterSidebar = ({
   };
 
   // Handle insurance toggle - Uses OR logic (shows doctors accepting ANY selected insurance)
-  const handleInsuranceToggle = (insurance) => {
+  const handleInsuranceToggle = (insurance, event) => {
+    event.stopPropagation(); // Prevent accordion collapse
     const newInsurances = selectedInsurances.includes(insurance)
       ? selectedInsurances.filter(ins => ins !== insurance)
       : [...selectedInsurances, insurance];
@@ -151,7 +197,8 @@ const DocSearchFilterSidebar = ({
   };
 
   // Handle education toggle - Uses OR logic (shows doctors with ANY selected degree)
-  const handleEducationToggle = (education) => {
+  const handleEducationToggle = (education, event) => {
+    event.stopPropagation(); // Prevent accordion collapse
     const newEducations = selectedEducations.includes(education)
       ? selectedEducations.filter(edu => edu !== education)
       : [...selectedEducations, education];
@@ -162,7 +209,15 @@ const DocSearchFilterSidebar = ({
   };
 
   const toggleAccordion = (index) => {
-    setOpenIndex(openIndex === index ? -1 : index);
+    setOpenSections(prevOpenSections => {
+      const newOpenSections = new Set(prevOpenSections);
+      if (newOpenSections.has(index)) {
+        newOpenSections.delete(index);
+      } else {
+        newOpenSections.add(index);
+      }
+      return newOpenSections;
+    });
   };
 
   const genderOptions = [
@@ -212,7 +267,7 @@ const DocSearchFilterSidebar = ({
               <input
                 type="checkbox"
                 checked={selectedGenders.includes(gender.value)}
-                onChange={() => handleGenderToggle(gender.value)}
+                onChange={(e) => handleGenderToggle(gender.value, e)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{gender.label}</span>
@@ -230,7 +285,7 @@ const DocSearchFilterSidebar = ({
               <input
                 type="checkbox"
                 checked={selectedEducations.includes(education)}
-                onChange={() => handleEducationToggle(education)}
+                onChange={(e) => handleEducationToggle(education, e)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{education}</span>
@@ -248,7 +303,7 @@ const DocSearchFilterSidebar = ({
               <input
                 type="checkbox"
                 checked={selectedLanguages.includes(language)}
-                onChange={() => handleLanguageToggle(language)}
+                onChange={(e) => handleLanguageToggle(language, e)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{language}</span>
@@ -266,7 +321,7 @@ const DocSearchFilterSidebar = ({
               <input
                 type="checkbox"
                 checked={selectedInsurances.includes(insurance)}
-                onChange={() => handleInsuranceToggle(insurance)}
+                onChange={(e) => handleInsuranceToggle(insurance, e)}
                 className="w-4 h-4 mr-2 accent-primary"
               />
               <span>{insurance}</span>
@@ -287,9 +342,9 @@ const DocSearchFilterSidebar = ({
             onClick={() => toggleAccordion(index)}
           >
             <span className="text-lg leading-[24px]">{item.title}</span>
-            {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
+            {openSections.has(index) ? <Minus size={20} /> : <Plus size={20} />}
           </button>
-          {openIndex === index && (
+          {openSections.has(index) && (
             <div className="pt-3">{item.content}</div>
           )}
         </div>
