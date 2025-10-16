@@ -280,7 +280,7 @@ export default function ForProviders() {
             <div className="space-y-4">
               {/* Section 1 */}
               <div>
-                <h4 className="text-[18px] leading-[26px] font-semibold mb-1" style={{ color: '#008889' }}>New to Medicare (Age-In)</h4>
+                <h4 className="text-[18px] leading-[26px] font-semibold mb-1" style={{ color: '#008889' }}>New to Medicare (Turning 65?)</h4>
                 <p className="text-[18px] leading-[26px] font-normal" style={{ color: '#3D3D3D' }}>Learn what happens when you first become eligible and how to enroll.</p>
               </div>
 
@@ -734,7 +734,7 @@ export default function ForProviders() {
           Your Medicare Journey Starts Here
         </h2>
         <p className="mb-12 md:mb-16" style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: '500' }}>
-          Take the next steps with Altais
+          3 Easy Steps with Altais
         </p>
 
         {/* Three Connected Boxes */}
