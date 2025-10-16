@@ -562,19 +562,21 @@ export default function ForProviders() {
                 </ul>
 
                 {/* Gradient Button */}
-                <button 
-                  className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full max-w-[465px]"
-                  style={{
-                    borderRadius: '5px',
-                    border: '1px solid #008889',
-                    background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
-                    fontSize: '20px',
-                    fontStyle: 'normal',
-                    fontWeight: '600'
-                  }}
-                >
-                  Find a Doctor Near You
-                </button>
+                <Link href="/find-care">
+                  <button 
+                    className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full max-w-[465px]"
+                    style={{
+                      borderRadius: '5px',
+                      border: '1px solid #008889',
+                      background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
+                      fontSize: '20px',
+                      fontStyle: 'normal',
+                      fontWeight: '600'
+                    }}
+                  >
+                    Find a Doctor Near You
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -627,19 +629,21 @@ export default function ForProviders() {
           </ul>
 
           {/* Gradient Button */}
-          <button 
-            className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full"
-            style={{
-              borderRadius: '5px',
-              border: '1px solid #008889',
-              background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
-              fontSize: '20px',
-              fontStyle: 'normal',
-              fontWeight: '600'
-            }}
-          >
-            Find a Doctor Near You
-          </button>
+          <Link href="/find-care">
+            <button 
+              className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full"
+              style={{
+                borderRadius: '5px',
+                border: '1px solid #008889',
+                background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
+                fontSize: '20px',
+                fontStyle: 'normal',
+                fontWeight: '600'
+              }}
+            >
+              Find a Doctor Near You
+            </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -693,12 +697,14 @@ export default function ForProviders() {
                 
                 {/* View Events Button */}
                 <div className="mt-6">
-                  <button 
-                    style={learnMoreStyles.button}
-                    className="w-full max-w-[595px]"
-                  >
-                    Connect with a Medicare Specialist
-                  </button>
+                  <Link href="/find-care">
+                    <button 
+                      style={learnMoreStyles.button}
+                      className="w-full max-w-[595px]"
+                    >
+                      Connect with a Medicare Specialist
+                    </button>
+                  </Link>
                 </div>
               </div>            
             </div>
