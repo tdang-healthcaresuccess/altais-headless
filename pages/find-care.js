@@ -399,6 +399,103 @@ export default function FindCare() {
                 Clear All Filters
               </span>
             </div>
+            
+            {/* Active Filters */}
+            <div className="flex flex-col items-start flex-1">
+              {/* Show Active Filters section only if there are active filters */}
+              {(parsedSpecialtyFilter?.length > 0 || parsedGenderFilter.length > 0 || parsedEducationFilter.length > 0 || parsedLanguageFilter.length > 0 || parsedInsuranceFilter.length > 0) && (
+                <>
+                  <h4 className="text-bluePrimary font-medium text-sm mb-2">Active Filters</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {/* Specialty Filter Tags */}
+                    {parsedSpecialtyFilter && parsedSpecialtyFilter.map((specialty, index) => (
+                      <div key={`specialty-${index}`} className="flex items-center bg-gray-100 text-bluePrimary text-xs px-3 py-1 rounded-full border">
+                        <span className="mr-2">Specialty: {specialty}</span>
+                        <button
+                          onClick={() => {
+                            const updatedSpecialties = parsedSpecialtyFilter.filter(s => s !== specialty);
+                            handleFilterChange({ 
+                              specialty: updatedSpecialties.length > 0 ? updatedSpecialties : null 
+                            });
+                          }}
+                          className="text-gray-500 hover:text-red-500 transition-colors"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                    
+                    {/* Gender Filter Tags */}
+                    {parsedGenderFilter.map((gender, index) => {
+                      const genderLabel = gender === 'F' ? 'Female' : gender === 'M' ? 'Male' : 'Non-binary';
+                      return (
+                        <div key={`gender-${index}`} className="flex items-center bg-gray-100 text-bluePrimary text-xs px-3 py-1 rounded-full border">
+                          <span className="mr-2">Gender: {genderLabel}</span>
+                          <button
+                            onClick={() => {
+                              const updatedGenders = parsedGenderFilter.filter(g => g !== gender);
+                              handleFilterChange({ gender: updatedGenders });
+                            }}
+                            className="text-gray-500 hover:text-red-500 transition-colors"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                    
+                    {/* Education Filter Tags */}
+                    {parsedEducationFilter.map((education, index) => (
+                      <div key={`education-${index}`} className="flex items-center bg-gray-100 text-bluePrimary text-xs px-3 py-1 rounded-full border">
+                        <span className="mr-2">Education: {education}</span>
+                        <button
+                          onClick={() => {
+                            const updatedEducation = parsedEducationFilter.filter(e => e !== education);
+                            handleFilterChange({ education: updatedEducation });
+                          }}
+                          className="text-gray-500 hover:text-red-500 transition-colors"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                    
+                    {/* Language Filter Tags */}
+                    {parsedLanguageFilter.map((language, index) => (
+                      <div key={`language-${index}`} className="flex items-center bg-gray-100 text-bluePrimary text-xs px-3 py-1 rounded-full border">
+                        <span className="mr-2">Language: {language}</span>
+                        <button
+                          onClick={() => {
+                            const updatedLanguages = parsedLanguageFilter.filter(l => l !== language);
+                            handleFilterChange({ languages: updatedLanguages });
+                          }}
+                          className="text-gray-500 hover:text-red-500 transition-colors"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                    
+                    {/* Insurance Filter Tags */}
+                    {parsedInsuranceFilter.map((insurance, index) => (
+                      <div key={`insurance-${index}`} className="flex items-center bg-gray-100 text-bluePrimary text-xs px-3 py-1 rounded-full border">
+                        <span className="mr-2">Insurance: {insurance}</span>
+                        <button
+                          onClick={() => {
+                            const updatedInsurances = parsedInsuranceFilter.filter(i => i !== insurance);
+                            handleFilterChange({ insurances: updatedInsurances });
+                          }}
+                          className="text-gray-500 hover:text-red-500 transition-colors"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            
             <LayoutOptions
               activeLayout={activeLayout}
               setActiveLayout={setActiveLayout}
