@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
-export default function LandingBanner() {
+export default function LandingBanner({ frontPageData }) {
   const [mounted, setMounted] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -35,11 +35,11 @@ export default function LandingBanner() {
         <div className="container mx-auto relative z-10 h-full">
           <div className="pt-6 md:pt-0 md:w-[40%] h-full flex flex-col justify-center">
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
-              Shaping the future of healthcare.
+              {frontPageData?.homePage?.heroBannerHeadline || "Shaping the future of healthcare."}
             </h1>
-            <a href="/find-care/">
+            <a href={frontPageData?.homePage?.heroButtonLink || "/find-care/"}>
               <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">
-                Find Care <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
+                {frontPageData?.homePage?.heroBannerButtonLabel || "Find Care"} <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
               </button>
             </a>
           </div>

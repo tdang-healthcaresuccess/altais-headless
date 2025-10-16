@@ -12,12 +12,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import CounterArea from "../common/counter-area";
 
-export default function CounterCondition() {
+export default function CounterCondition({ frontPageData }) {
   return (
     <section className="block py-[60px]">
       <div className="container mx-auto">
         <div className="block w-full">
-          <CounterArea />
+          <CounterArea frontPageData={frontPageData} />
 
           <div className="w-full h-[1px] bg-lightPrimary mb-[85px]"></div>
 

@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "@/components/Layout";
 import { SITE_DATA_QUERY } from "../queries/SiteSettingsQuery";
 import { HEADER_MENU_QUERY } from "../queries/MenuQueries";
+import { GET_FRONT_PAGE_CONTENT } from "../queries/FrontPageQueries";
 import { useQuery } from "@apollo/client";
 import { getNextStaticProps } from "@faustwp/core";
 import Header from "@/components/header";
@@ -24,11 +25,13 @@ export default function FrontPage(props) {
 
   const siteDataQuery = useQuery(SITE_DATA_QUERY) || {};
   const headerMenuDataQuery = useQuery(HEADER_MENU_QUERY) || {};
+  const frontPageDataQuery = useQuery(GET_FRONT_PAGE_CONTENT) || {};
 
   const siteData = siteDataQuery?.data?.generalSettings || {};
   const menuItems = headerMenuDataQuery?.data?.primaryMenuItems?.nodes || {
     nodes: [],
   };
+  const frontPageData = frontPageDataQuery?.data?.contentNode || {};
   const { title: siteTitle, description: siteDescription } = siteData;
 
   return (
@@ -40,27 +43,27 @@ export default function FrontPage(props) {
     >
       <main className="block">
         {/* Landing Page Banner Start */}
-        <LandingBanner />
+        <LandingBanner frontPageData={frontPageData} />
         {/* Landing Page Banner End */}
 
         {/* Search Doctor Start */}
-        <SearchDoctor />
+        <SearchDoctor frontPageData={frontPageData} />
         {/* Search Doctor End */}
 
         {/* Our Resources Start */}
-        <OurResources />
+        <OurResources frontPageData={frontPageData} />
         {/* Our Resources End */}
 
         {/* Ribbon Banner Start */}
-        <RibbonBanner />
+        <RibbonBanner frontPageData={frontPageData} />
         {/* Ribbon Banner End */}
 
         {/* Our Services Start */}
-        <OurServices />
+        <OurServices frontPageData={frontPageData} />
         {/* Our Services End */}
 
         {/* Counter Condition Start */}
-        <CounterCondition />
+        <CounterCondition frontPageData={frontPageData} />
         {/* Counter Condition End */}
 
         {/* Lets Redefine Start */}
@@ -89,5 +92,8 @@ FrontPage.queries = [
   },
   {
     query: HEADER_MENU_QUERY,
+  },
+  {
+    query: GET_FRONT_PAGE_CONTENT,
   },
 ];

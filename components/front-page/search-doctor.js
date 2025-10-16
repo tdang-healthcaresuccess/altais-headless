@@ -9,7 +9,7 @@ import { GET_SPECIALTIES } from "../../queries/PhysicianQueries";
 import { getSpecialtySuggestions, resolveSpecialtyAcronym } from "../specialtySearchUtils";
 import { useGoogleApiKey } from "../common/LocationConfig";
 
-export default function SearchDoctor() {
+export default function SearchDoctor({ frontPageData }) {
   const [doctorName, setDoctorName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [practiceName, setPracticeName] = useState('');
@@ -222,13 +222,10 @@ export default function SearchDoctor() {
       <div className="container mx-auto">
         <div className="flex flex-wrap gap-12">
           <div className="block w-full md:w-[40%] max-w-[470px]">
-            <p className="text-lg font-normal leading-[35px]">
-              <b className="text-[#1D3F76] font-semibold">Everyone deserves care that's compassionate, </b>
-              <br /> connected, and rooted in the communities they call home.
-              Altais is the healthcare provider that makes this possible by
-              supporting physicians and care teams—so you can get high-quality
-              care, when and where you need it.
-            </p>
+            <div 
+              className="text-lg font-normal leading-[35px]"
+              dangerouslySetInnerHTML={{ __html: frontPageData?.homePageContent?.leftSnippetContent }}
+            />
           </div>
 
           <div className="block flex-1 pt-6 md:pt-0 md:pl-12 border-t md:border-t-0 md:border-l border-secondary">
