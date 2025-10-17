@@ -433,7 +433,7 @@ export default function ForProviders() {
 
    
   {/* 2A Section4a-style CTA Section with image on right */}
-    <section className="template-wrapper py-6 md:py-12">
+    <section className="template-wrapper py-6 md:py-12" id="rsvp-events">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-[74px]">
           {/* Mobile Image - Shows first on mobile */}
@@ -762,7 +762,7 @@ export default function ForProviders() {
           <div className="flex flex-col items-center flex-1">
             <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
-                Find a doctor you can trust
+                <a href="/find-care">Find a doctor you can trust</a>
               </span>
             </div>
           </div>
@@ -776,7 +776,7 @@ export default function ForProviders() {
           <div className="flex flex-col items-center flex-1">
             <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
-                RSVP for an upcoming event
+                <a href="#rsvp-events">RSVP for an upcoming event</a>
               </span>
             </div>
           </div>
@@ -790,7 +790,7 @@ export default function ForProviders() {
           <div className="flex flex-col items-center flex-1">
             <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
-                Explore resources on Medicare.gov
+                <a href="https://www.medicare.gov">Explore resources on Medicare.gov</a>
               </span>
             </div>
           </div>
