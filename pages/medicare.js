@@ -143,7 +143,7 @@ export default function ForProviders() {
               {/* Left column */}
               <div className="flex-1 text-left flex items-center md:max-w-[232px]">
                 <p className="text-[18px] leading-[28px] font-normal" style={{ color: '#3D3D3D' }}>
-                  For more details,<br/> visit Medicare.gov's <br/>official guides.
+                  For more details,<br/> visit <a href="https://www.medicare.gov">Medicare.gov's</a> <br/>official guides.
                 </p>
               </div>
               
@@ -152,9 +152,9 @@ export default function ForProviders() {
               
               {/* Right column - 3 rows vertically */}
               <div className="flex-1 flex flex-col justify-center pl-[35px]">
-                <div className="text-[18px] leading-[32px] font-medium mb-[12px]" style={{ color: '#C85103' }}>Medicare & You</div>
-                <div className="text-[18px] leading-[32px] font-medium mb-[12px]" style={{ color: '#C85103' }}>Medicare Advantage Plans</div>
-                <div className="text-[18px] leading-[32px] font-medium" style={{ color: '#C85103' }}>Medigap Policies</div>
+                <div className="text-[18px] leading-[32px] font-medium mb-[12px]" style={{ color: '#C85103' }}><a href="https://www.medicare.gov/medicare-and-you">Medicare & You</a></div>
+                <div className="text-[18px] leading-[32px] font-medium mb-[12px]" style={{ color: '#C85103' }}><a href="https://www.medicare.gov/basics/get-started-with-medicare/get-more-coverage/your-coverage-options/compare-original-medicare-medicare-advantage">Medicare Advantage Plans</a></div>
+                <div className="text-[18px] leading-[32px] font-medium" style={{ color: '#C85103' }}><a href="https://www.medicare.gov/health-drug-plans/medigap">Medigap Policies</a></div>
               </div>
             </div>
           </div>
@@ -482,12 +482,25 @@ export default function ForProviders() {
                 
                 {/* View Events Button */}
                 <div className="mt-6">
-                  <button 
-                    style={learnMoreStyles.button}
-                    className="w-full max-w-[450px]"
-                  >
-                    View Events & RSVP Today
-                  </button>
+                  <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false">
+                    <button 
+                      style={learnMoreStyles.button}
+                      className="w-full max-w-[450px]"
+                    >
+                      View Events & RSVP Today For Blackstone Events (Bay Area)
+                    </button>
+                  </Link>
+                </div>
+                <div className="mt-6">
+                  <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false">
+                    <button 
+                      style={learnMoreStyles.button}
+                      className="w-full max-w-[450px]"
+                    >
+                      View Events & RSVP Today For Boomer Events (Southern California and Oakland)
+
+                    </button>
+                  </Link>
                 </div>
               </div>            
             </div>
