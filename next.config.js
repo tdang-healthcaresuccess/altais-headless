@@ -39,14 +39,26 @@ module.exports = withFaust({
   async rewrites() {
     return {
       beforeFiles: [
-        // Preserve preview URLs to prevent redirect loops
+        // Preserve preview URLs to prevent redirect loops - handle all preview variations
         {
           source: '/preview/:path*',
           destination: '/preview/:path*',
           has: [
             {
               type: 'query',
-              key: 'code'
+              key: 'preview',
+              value: 'true'
+            }
+          ]
+        },
+        {
+          source: '/preview',
+          destination: '/preview',
+          has: [
+            {
+              type: 'query',
+              key: 'preview',
+              value: 'true'
             }
           ]
         }
@@ -55,7 +67,7 @@ module.exports = withFaust({
   },
   async redirects() {
     return [
-      // Existing redirect rule
+      // Existing redirect rule - but exclude preview URLs
       {
         source: '/:path([^/]+)',
         destination: '/:path/',
@@ -65,6 +77,16 @@ module.exports = withFaust({
             type: 'query',
             key: 'not-a-parameter',
             value: 'true',
+            negate: true,
+          },
+          {
+            type: 'query',
+            key: 'preview',
+            negate: true,
+          },
+          {
+            type: 'query', 
+            key: 'code',
             negate: true,
           },
         ],

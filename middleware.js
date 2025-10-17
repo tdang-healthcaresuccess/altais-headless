@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 export function middleware(request) {
   const url = request.nextUrl;
-  // Exclude _next, static, media, favicon, HubSpot, and API paths from lowercasing
+  
+  // Check if this is a preview request
+  const isPreview = url.searchParams.get('preview') === 'true' || 
+                   url.searchParams.has('code') ||
+                   url.pathname === '/preview';
+  
+  // Exclude _next, static, media, favicon, HubSpot, API paths, and preview requests from lowercasing
   if (
     url.pathname.startsWith('/_next') ||
     url.pathname.startsWith('/static') ||
@@ -10,7 +16,8 @@ export function middleware(request) {
     url.pathname.startsWith('/api') ||
     url.pathname.startsWith('/hubspot') ||
     url.pathname.startsWith('/hsforms') ||
-    url.pathname.startsWith('/js.hsforms.net')
+    url.pathname.startsWith('/js.hsforms.net') ||
+    isPreview
   ) {
     return NextResponse.next();
   }

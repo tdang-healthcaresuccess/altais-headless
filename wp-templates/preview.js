@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { usePreviewNode } from "@faustwp/core";
+import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 
 export default function Preview() {
+  const router = useRouter();
   const { node, loading, error } = usePreviewNode();
+  
+  // Prevent any automatic redirects during preview
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      console.log("[Preview] URL:", window.location.href);
+      console.log("[Preview] Query params:", router.query);
+      
+      // Check for infinite redirect loops
+      const url = new URL(window.location.href);
+      const previewParam = url.searchParams.get('preview');
+      const codeParam = url.searchParams.get('code');
+      
+      if (previewParam === 'true' && codeParam) {
+        console.log("[Preview] Valid preview URL detected, preventing redirects");
+        // Stop any potential redirect loops
+        window.history.replaceState(null, '', window.location.href);
+      }
+    }
+  }, [router.query]);
+  
   console.log("[Preview] loading:", loading);
   console.log("[Preview] error:", error);
   console.log("[Preview] node:", node);
-  console.log("[Preview] Current URL:", typeof window !== 'undefined' ? window.location.href : 'SSR');
 
   try {
     if (loading) {
