@@ -749,9 +749,19 @@ export default function ForProviders() {
     >
       <div className="container mx-auto text-center text-white">
         {/* Headlines */}
+      
         <h2 className="mb-4" style={{ color: '#FFF', fontSize: '40px', fontStyle: 'normal', fontWeight: '400', lineHeight: '50px' }}>
           Your Medicare Journey Starts Here
         </h2>
+          <p className="text-[16px] font-normal mb-2 flex items-center gap-2 justify-center text-center w-full" style={{ color: '#FFF' }}>
+          <span>AEP Opens: October 15, 2025</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>AEP Closes: December 7, 2025</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>Benefits Begin: January 1, 2026</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>MA OEP: January 1 – March 31, 2026</span>
+        </p>
         <p className="mb-12 md:mb-16" style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: '500' }}>
           3 Easy Steps with Altais
         </p>
