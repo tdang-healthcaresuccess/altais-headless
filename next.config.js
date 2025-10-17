@@ -36,6 +36,23 @@ module.exports = withFaust({
       },
     ];
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // Preserve preview URLs to prevent redirect loops
+        {
+          source: '/preview/:path*',
+          destination: '/preview/:path*',
+          has: [
+            {
+              type: 'query',
+              key: 'code'
+            }
+          ]
+        }
+      ]
+    };
+  },
   async redirects() {
     return [
       // Existing redirect rule

@@ -7,13 +7,43 @@ export default function Preview() {
   console.log("[Preview] loading:", loading);
   console.log("[Preview] error:", error);
   console.log("[Preview] node:", node);
+  console.log("[Preview] Current URL:", typeof window !== 'undefined' ? window.location.href : 'SSR');
 
   try {
     if (loading) {
-      return <div>Loading...</div>;
+      return <div>Loading preview...</div>;
     }
+    
     if (error || !node) {
-      return <div>Preview not found.<br />Error: {error?.message || JSON.stringify(error)}</div>;
+      console.error("[Preview] Failed to load preview:", error);
+      
+      // Add debug information for production troubleshooting
+      const debugInfo = {
+        error: error?.message || 'Unknown error',
+        url: typeof window !== 'undefined' ? window.location.href : 'SSR',
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'SSR',
+        timestamp: new Date().toISOString()
+      };
+      
+      return (
+        <Layout>
+          <div className="container mx-auto py-10">
+            <h1 className="text-2xl font-bold mb-4 text-red-600">Preview Error</h1>
+            <div className="bg-red-50 border border-red-200 rounded p-4 mb-4">
+              <p className="mb-2"><strong>Error:</strong> {error?.message || 'Preview not found'}</p>
+              <details className="mt-4">
+                <summary className="cursor-pointer text-sm text-gray-600">Debug Information</summary>
+                <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+                  {JSON.stringify(debugInfo, null, 2)}
+                </pre>
+              </details>
+            </div>
+            <p className="text-gray-600">
+              If you're seeing this error, the preview may not be properly configured or the content may not exist.
+            </p>
+          </div>
+        </Layout>
+      );
     }
 
     // Render the preview node using your existing page/single logic
@@ -21,6 +51,10 @@ export default function Preview() {
     return (
       <Layout>
         <div className="container mx-auto py-10">
+          <div className="bg-blue-50 border border-blue-200 rounded p-4 mb-6">
+            <p className="text-blue-800 font-medium">📝 Preview Mode</p>
+            <p className="text-blue-600 text-sm">You are viewing a preview of unpublished content.</p>
+          </div>
           <h1 className="text-2xl font-bold mb-4">{node.title || "Preview"}</h1>
           <div dangerouslySetInnerHTML={{ __html: node.content || "" }} />
         </div>
@@ -28,6 +62,21 @@ export default function Preview() {
     );
   } catch (e) {
     console.error("[Preview] Exception:", e);
-    return <div>Preview crashed: {e.message}</div>;
+    return (
+      <Layout>
+        <div className="container mx-auto py-10">
+          <div className="bg-red-50 border border-red-200 rounded p-4">
+            <h1 className="text-2xl font-bold mb-4 text-red-600">Preview Crashed</h1>
+            <p className="text-red-700 mb-2">{e.message}</p>
+            <details className="mt-4">
+              <summary className="cursor-pointer text-sm text-gray-600">Technical Details</summary>
+              <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+                {e.stack}
+              </pre>
+            </details>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 }

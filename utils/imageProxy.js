@@ -32,6 +32,11 @@ export function proxyFileUrl(originalUrl, endpoint = 'proxy-file') {
     return originalUrl;
   }
   
+  // Skip preview URLs to prevent interference with WordPress preview functionality
+  if (originalUrl.includes('preview=true') || originalUrl.includes('code=') || originalUrl.includes('p=') && originalUrl.includes('preview')) {
+    return originalUrl;
+  }
+  
   // Skip if it's already a local URL or not from WordPress
   const wordpressUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL;
   if (!wordpressUrl || !originalUrl.includes(new URL(wordpressUrl).hostname)) {
