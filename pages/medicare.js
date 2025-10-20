@@ -418,7 +418,7 @@ export default function ForProviders() {
             </ul>
             
             {/* White border button */}
-            <Link href="/preventative-care">
+            <Link href="/patient-resources/annual-health-and-wellness/">
               <button 
                 className="border-2 border-white bg-transparent px-6 py-3 rounded-normal hover:text-bluePrimary transition-colors duration-300 w-full"
                 style={stayHealthyStyles.button}

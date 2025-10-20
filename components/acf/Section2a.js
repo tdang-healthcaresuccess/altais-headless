@@ -49,7 +49,7 @@ const Section2a = ({ data }) => {
             <div className="block pt-4 md:pt-0 md:pl-10 border-t md:border-t-0 md:border-l border-secondary section-content">
               <WordPressContent
                 content={content2a}
-                className={!wrapUpList ? "wrap-list" : ""}
+                className={wrapUpList ? "wrap-list" : ""}
               />
             </div>
           ) : (
