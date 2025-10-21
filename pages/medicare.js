@@ -151,7 +151,7 @@ export default function ForProviders() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-0 max-w-6xl mx-auto">
           {/* Box 1 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="/find-care">Find a doctor you can trust</a>
               </span>
@@ -165,7 +165,7 @@ export default function ForProviders() {
 
           {/* Box 2 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="#rsvp-events">RSVP for an upcoming event</a>
               </span>
@@ -179,7 +179,7 @@ export default function ForProviders() {
 
           {/* Box 3 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="https://www.medicare.gov">Explore resources on Medicare.gov</a>
               </span>
@@ -424,7 +424,7 @@ export default function ForProviders() {
               {/* White border button */}
               <Link href="/patient-resources/annual-health-and-wellness/">
                 <button 
-                  className="border-2 border-white bg-transparent px-6 py-3 rounded-normal hover:text-bluePrimary transition-colors duration-300"
+                  className="btn-hover border-2 border-white bg-transparent px-6 py-3 rounded-normal hover:text-bluePrimary transition-colors duration-300"
                   style={stayHealthyStyles.button}
                 >
                   Explore Preventative Care with Altais
@@ -551,7 +551,7 @@ export default function ForProviders() {
                   <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false" target="_blank">
                     <button 
                       style={learnMoreStyles.button}
-                      className="w-full max-w-[450px]"
+                      className="w-full max-w-[450px] transition-colors duration-300 hover:!bg-[rgb(199,83,39)] hover:!text-white hover:!border-[rgb(199,83,39)]"
                     >
                       View Events & RSVP Today For Blackpoint Events (Bay Area)
                     </button>
@@ -561,7 +561,7 @@ export default function ForProviders() {
                   <Link href=" https://www.boomers-insurance.com/locations" target="_blank">
                     <button 
                       style={learnMoreStyles.button}
-                      className="w-full max-w-[450px]"
+                      className="w-full max-w-[450px] transition-colors duration-300 hover:!bg-[rgb(199,83,39)] hover:!text-white hover:!border-[rgb(199,83,39)]"
                     >
                       View Events & RSVP Today For Boomer Events (Southern California and Oakland)
 
@@ -643,11 +643,10 @@ export default function ForProviders() {
                 {/* Gradient Button */}
                 <Link href="/find-care">
                   <button 
-                    className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full max-w-[465px]"
+                    className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full max-w-[465px] btn-gradient"
                     style={{
                       borderRadius: '5px',
                       border: '1px solid #008889',
-                      background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
                       fontSize: '20px',
                       fontStyle: 'normal',
                       fontWeight: '600'
@@ -710,11 +709,10 @@ export default function ForProviders() {
           {/* Gradient Button */}
           <Link href="/find-care">
             <button 
-              className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full"
+              className="px-6 py-3 text-white rounded-[5px] border border-[#008889] w-full btn-gradient"
               style={{
                 borderRadius: '5px',
                 border: '1px solid #008889',
-                background: 'linear-gradient(90deg, #083D78 29.83%, #008889 100%)',
                 fontSize: '20px',
                 fontStyle: 'normal',
                 fontWeight: '600'
@@ -831,7 +829,7 @@ export default function ForProviders() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-0 max-w-6xl mx-auto">
           {/* Box 1 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="/find-care">Find a doctor you can trust</a>
               </span>
@@ -845,7 +843,7 @@ export default function ForProviders() {
 
           {/* Box 2 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="#rsvp-events">RSVP for an upcoming event</a>
               </span>
@@ -859,7 +857,7 @@ export default function ForProviders() {
 
           {/* Box 3 */}
           <div className="flex flex-col items-center flex-1">
-            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+            <div className="border-2 btn-hover border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
               <span className="text-white text-lg md:text-xl font-medium text-center">
                 <a href="https://www.medicare.gov">Explore resources on Medicare.gov</a>
               </span>

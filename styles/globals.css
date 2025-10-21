@@ -85,6 +85,10 @@ body {
 button {
   @apply cursor-pointer;
 }
+.btn-hover{
+  @apply hover:bg-secondary text-white;
+  
+}
 .btn-gradient {
   @apply bg-[linear-gradient(to_right,_#083D78_30%,_#008889_100%)] hover:bg-secondary hover:bg-none font-semibold !text-white py-2 px-4 rounded;
 }
