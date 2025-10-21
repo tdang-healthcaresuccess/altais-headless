@@ -110,18 +110,84 @@ export default function ForProviders() {
         <div className="container mx-auto relative z-10 h-full">
           <div className="pt-6 md:pt-0 md:w-[40%] h-full flex flex-col justify-center">
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
-              {"Shaping the future of healthcare."}
+              {"Medicare Open Enrollment is October 5th to December 7th"}
             </h1>
-            <a href={"/find-care/"}>
+            {/* <a href={"/find-care/"}>
               <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">
                 {"Find Care"} <ChevronRight className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" />
               </button>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
     </section>
+     {/* Medicare Journey Section - Full Width Gradient */}
+    <section 
+      className="w-full py-16 md:py-20"
+      style={{
+        background: 'linear-gradient(to right, #008889, #083D78)'
+      }}
+    >
+      <div className="container mx-auto text-center text-white">
+        {/* Headlines */}
+      
+        <h2 className="mb-4" style={{ color: '#FFF', fontSize: '40px', fontStyle: 'normal', fontWeight: '400', lineHeight: '50px' }}>
+          Your Medicare Journey Starts Here
+        </h2>
+          <p className="text-[16px] font-normal mb-2 flex items-center gap-2 justify-center text-center w-full" style={{ color: '#FFF' }}>
+          <span>Annual Enrollment Period Opens:<br /> October 15, 2025</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>Annual Enrollment Period Closes: <br />December 7, 2025</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>Benefits Begin:<br /> January 1, 2026</span>
+          <span className="mx-2 text-[20px]">&bull;</span>
+          <span>MA Open Enrollment Period:<br /> January 1 – March 31, 2026</span>
+        </p>
+        <p className="mb-12 mt-10 md:mb-16" style={{ fontSize: '20px', fontStyle: 'normal', fontWeight: '500' }}>
+          3 Easy Steps with Altais
+        </p>
 
+        {/* Three Connected Boxes */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-0 max-w-6xl mx-auto">
+          {/* Box 1 */}
+          <div className="flex flex-col items-center flex-1">
+            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+              <span className="text-white text-lg md:text-xl font-medium text-center">
+                <a href="/find-care">Find a doctor you can trust</a>
+              </span>
+            </div>
+          </div>
+
+          {/* Connecting Line 1 */}
+          <div className="flex items-center justify-center">
+            <div className="w-px h-8 md:w-16 md:h-px bg-white"></div>
+          </div>
+
+          {/* Box 2 */}
+          <div className="flex flex-col items-center flex-1">
+            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+              <span className="text-white text-lg md:text-xl font-medium text-center">
+                <a href="#rsvp-events">RSVP for an upcoming event</a>
+              </span>
+            </div>
+          </div>
+
+          {/* Connecting Line 2 */}
+          <div className="flex items-center justify-center">
+            <div className="w-px h-8 md:w-16 md:h-px bg-white"></div>
+          </div>
+
+          {/* Box 3 */}
+          <div className="flex flex-col items-center flex-1">
+            <div className="border-2 border-white flex items-center justify-center px-4 py-6" style={{ minWidth: '353px', height: '133.564px', width: '100%', maxWidth: '400px' }}>
+              <span className="text-white text-lg md:text-xl font-medium text-center">
+                <a href="https://www.medicare.gov">Explore resources on Medicare.gov</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>          
     {/* Section4a-style CTA Section with swapped layout */}
     <section className="template-wrapper py-6 md:py-12 md:pt-[75px]" style={{ boxShadow: '0 2px 3px 1px rgba(0, 0, 0, 0.10)' }}>
       <div className="container mx-auto">
@@ -482,17 +548,17 @@ export default function ForProviders() {
                 
                 {/* View Events Button */}
                 <div className="mt-6">
-                  <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false">
+                  <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false" target="_blank">
                     <button 
                       style={learnMoreStyles.button}
                       className="w-full max-w-[450px]"
                     >
-                      View Events & RSVP Today For Blackstone Events (Bay Area)
+                      View Events & RSVP Today For Blackpoint Events (Bay Area)
                     </button>
                   </Link>
                 </div>
                 <div className="mt-6">
-                  <Link href="https://blackpointinsurance.my.site.com/SUMOScheduler/s/eventregister?regId=a0bPe00000LNAvwIAH&isIframe=false">
+                  <Link href=" https://www.boomers-insurance.com/locations" target="_blank">
                     <button 
                       style={learnMoreStyles.button}
                       className="w-full max-w-[450px]"
@@ -709,15 +775,10 @@ export default function ForProviders() {
                 <p className="text-[18px] leading-[26px] font-normal" style={{ color: '#3D3D3D' }}>These events are designed to answer your questions, connect you with resources, and support your health.</p>
                 
                 {/* View Events Button */}
-                <div className="mt-6">
-                  <Link href="/find-care">
-                    <button 
-                      style={learnMoreStyles.button}
-                      className="w-full max-w-[595px]"
-                    >
-                      Connect with a Medicare Specialist
-                    </button>
-                  </Link>
+                <div className="mt-0">
+                  <p className="text-[18px] leading-[26px] font-normal" style={{ color: '#3D3D3D' }}>Connect with a Medicare Specialist (Altais is not affiliated with these independent brokers)</p>
+<p><a target="_blank" href="https://www.blackpointinsurance.com/">BlackPoint (Bay Area)</a> or <a target="_blank" href="https://www.boomers-insurance.com/locations">Boomers (Northern and Southern California)</a> <a href="tel:1-800-815-1943">1-800-815-1943</a></p>
+
                 </div>
               </div>            
             </div>
@@ -754,15 +815,15 @@ export default function ForProviders() {
           Your Medicare Journey Starts Here
         </h2>
           <p className="text-[16px] font-normal mb-2 flex items-center gap-2 justify-center text-center w-full" style={{ color: '#FFF' }}>
-          <span>AEP Opens: October 15, 2025</span>
+          <span>Annual Enrollment Period Opens:<br /> October 15, 2025</span>
           <span className="mx-2 text-[20px]">&bull;</span>
-          <span>AEP Closes: December 7, 2025</span>
+          <span>Annual Enrollment Period Closes: <br />December 7, 2025</span>
           <span className="mx-2 text-[20px]">&bull;</span>
-          <span>Benefits Begin: January 1, 2026</span>
+          <span>Benefits Begin:<br /> January 1, 2026</span>
           <span className="mx-2 text-[20px]">&bull;</span>
-          <span>MA OEP: January 1 – March 31, 2026</span>
+          <span>MA Open Enrollment Period:<br /> January 1 – March 31, 2026</span>
         </p>
-        <p className="mb-12 md:mb-16" style={{ fontSize: '18px', fontStyle: 'normal', fontWeight: '500' }}>
+        <p className="mb-12 mt-10 md:mb-16" style={{ fontSize: '20px', fontStyle: 'normal', fontWeight: '500' }}>
           3 Easy Steps with Altais
         </p>
 
