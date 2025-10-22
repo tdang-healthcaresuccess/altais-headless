@@ -7,6 +7,27 @@ import Head from "next/head";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 
+// Helper function to strip HTML tags
+const stripHtmlTags = (html) => {
+  if (!html) return '';
+  if (typeof html !== 'string') return '';
+  
+  // Remove HTML tags
+  const withoutTags = html.replace(/<[^>]*>/g, ' ');
+  
+  // Decode common HTML entities
+  const decoded = withoutTags
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&nbsp;/g, ' ');
+  
+  // Replace multiple spaces with single space and trim
+  return decoded.replace(/\s+/g, ' ').trim();
+};
+
 // Helper function to extract all ACF content for searching
 const extractACFContent = (contentTemplates) => {
   try {
@@ -16,33 +37,33 @@ const extractACFContent = (contentTemplates) => {
     
     // Extract from templateC
     if (contentTemplates.templateC) {
-      allContent.push(contentTemplates.templateC);
+      allContent.push(stripHtmlTags(contentTemplates.templateC));
     }
     
     // Extract from templateA sections
     if (contentTemplates.templateA && Array.isArray(contentTemplates.templateA)) {
       contentTemplates.templateA.forEach(section => {
         // Extract content from different section types
-        if (section.section1aContent) allContent.push(section.section1aContent);
-        if (section.content2a) allContent.push(section.content2a);
+        if (section.section1aContent) allContent.push(stripHtmlTags(section.section1aContent));
+        if (section.content2a) allContent.push(stripHtmlTags(section.content2a));
         if (section.headline2a) allContent.push(section.headline2a);
         if (section.wrapUpList) allContent.push(section.wrapUpList);
-        if (section.section5aContent) allContent.push(section.section5aContent);
+        if (section.section5aContent) allContent.push(stripHtmlTags(section.section5aContent));
         
         // Section 3a cards
         if (section.section3aCards && Array.isArray(section.section3aCards)) {
           section.section3aCards.forEach(card => {
-            if (card.cardContent) allContent.push(card.cardContent);
+            if (card.cardContent) allContent.push(stripHtmlTags(card.cardContent));
             if (card.cardHeadline) allContent.push(card.cardHeadline);
             if (card.cardOptions) allContent.push(card.cardOptions);
-            if (card.cardContentCollapse) allContent.push(card.cardContentCollapse);
+            if (card.cardContentCollapse) allContent.push(stripHtmlTags(card.cardContentCollapse));
           });
         }
         
         // Section 4a content
-        if (section.section4aDescription) allContent.push(section.section4aDescription);
+        if (section.section4aDescription) allContent.push(stripHtmlTags(section.section4aDescription));
         if (section.section4aAdditionalHeadline) allContent.push(section.section4aAdditionalHeadline);
-        if (section.section4aAdditionalDescription) allContent.push(section.section4aAdditionalDescription);
+        if (section.section4aAdditionalDescription) allContent.push(stripHtmlTags(section.section4aAdditionalDescription));
         if (section.section4aHeadline) allContent.push(section.section4aHeadline);
         if (section.ctaButtonText) allContent.push(section.ctaButtonText);
         if (section.ctaButtonUrl) allContent.push(section.ctaButtonUrl);
@@ -51,7 +72,7 @@ const extractACFContent = (contentTemplates) => {
         if (section.section6aTestimonials && Array.isArray(section.section6aTestimonials)) {
           section.section6aTestimonials.forEach(testimonial => {
             if (testimonial.reviewerName) allContent.push(testimonial.reviewerName);
-            if (testimonial.reviewerDescription) allContent.push(testimonial.reviewerDescription);
+            if (testimonial.reviewerDescription) allContent.push(stripHtmlTags(testimonial.reviewerDescription));
           });
         }
       });
@@ -121,10 +142,10 @@ const GridLayout = ({ results, type }) => {
   );
 };
 
-// GraphQL query for pages, including pagination fields and ACF content templates
+// GraphQL query for pages - fetch ALL pages to search ACF content client-side
 const GET_PAGES_QUERY = gql`
-  query GetPages($search: String) {
-    pages(where: { search: $search }) {
+  query GetPages {
+    pages(first: 1000) {
       nodes {
         id
         title
@@ -215,25 +236,12 @@ export default function SearchPage() {
   // Single pagination for combined results
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Helper function to search in ACF content
-  const searchInACFContent = (page, searchTerm) => {
-    try {
-      if (!searchTerm) return false;
-      const acfContent = extractACFContent(page.contentTemplates);
-      return acfContent.toLowerCase().includes(searchTerm.toLowerCase());
-    } catch (error) {
-      console.error('Error searching ACF content:', error);
-      return false;
-    }
-  };
-
-  // Fetch all pages
+  // Fetch all pages (no search filter in GraphQL - we'll filter client-side)
   const { data: pagesData, loading: pagesLoading, error: pagesError } = useQuery(GET_PAGES_QUERY, {
-    variables: { search: searchQuery },
     skip: !searchQuery,
   });
 
-  // Fetch all posts
+  // Fetch posts with search
   const { data: postsData, loading: postsLoading, error: postsError } = useQuery(GET_POSTS_QUERY, {
     variables: { search: searchQuery },
     skip: !searchQuery,
@@ -242,24 +250,27 @@ export default function SearchPage() {
   const pages = pagesData?.pages?.nodes || [];
   const posts = postsData?.posts?.nodes || [];
 
-  // Filter pages to include those that match in ACF content as well
+  // Filter pages to include those that match in title or ACF content
   const filteredPages = pages.filter(page => {
-    // Basic title/content match (already handled by GraphQL search)
-    const hasBasicMatch = true; // GraphQL already filtered these
+    if (!searchQuery) return false;
     
-    // Additional ACF content match
-    const hasACFMatch = searchInACFContent(page, searchQuery);
+    const searchTerm = searchQuery.toLowerCase();
+    
+    // Search in title
+    const titleMatch = page.title?.toLowerCase().includes(searchTerm);
+    
+    // Search in ACF content
+    const acfContent = extractACFContent(page.contentTemplates);
+    const acfMatch = acfContent.toLowerCase().includes(searchTerm);
     
     // Debug logging
-    if (process.env.NODE_ENV === 'development') {
-      const acfContent = extractACFContent(page.contentTemplates);
-      if (acfContent.toLowerCase().includes('altais medical group')) {
-        console.log('Found page with Altais Medical Group:', page.title);
-        console.log('ACF Content:', acfContent);
-      }
+    if (process.env.NODE_ENV === 'development' && acfMatch) {
+      console.log(`Found match in page: ${page.title}`);
+      console.log(`Search term: ${searchTerm}`);
+      console.log(`ACF Content preview: ${acfContent.substring(0, 200)}...`);
     }
     
-    return hasBasicMatch || hasACFMatch;
+    return titleMatch || acfMatch;
   });
 
   const pageInfoPages = pagesData?.pages?.pageInfo;
