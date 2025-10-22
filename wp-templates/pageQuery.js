@@ -47,6 +47,7 @@ export const PAGE_QUERY = gql`
             section4aAdditionalHeadline
             section4aDescription
             section4aAdditionalHeadlineOption
+            section4aAdditionalDescription
             section4aHeadline
             section4aImage {
               node {

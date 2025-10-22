@@ -13,7 +13,7 @@ import WordPressContent from "../WordPressContent";
    * @param {string} props.data.ctaButtonText - The text for the CTA button.
    * @param {object} props.data.section4aImage - The image object for the CTA section.
    * @param {object} props.data.section4aDescription - Description
-   * @param {object} props.data.section4aaddDescription - Additional Description 
+   * @param {object} props.data.section4aAdditionalDescription - Additional Description
    */
 const Section4a = ({ data }) => {
   if (!data) return null;
@@ -21,7 +21,7 @@ const Section4a = ({ data }) => {
   const {
     section4aHeadline,
     section4aAdditionalHeadline,
-    section4aaddDescription,
+    section4aAdditionalDescription,
     ctaButtonText,
     ctaButtonUrl,
     enableCta,
@@ -65,7 +65,9 @@ const Section4a = ({ data }) => {
               {section4aAdditionalHeadline && (
                 <h2>{section4aAdditionalHeadline}</h2>
               )}
-              <p>{section4aaddDescription}</p>
+              {section4aAdditionalDescription && (
+                <WordPressContent content={section4aAdditionalDescription} />
+              )}
             </div>
             {/* Additonal Headline End */}
 
