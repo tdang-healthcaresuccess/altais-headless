@@ -42,7 +42,7 @@ const extractACFContent = (contentTemplates) => {
         // Section 4a content
         if (section.section4aDescription) allContent.push(section.section4aDescription);
         if (section.section4aAdditionalHeadline) allContent.push(section.section4aAdditionalHeadline);
-        if (section.section4aaddDescription) allContent.push(section.section4aaddDescription);
+        if (section.section4aAdditionalDescription) allContent.push(section.section4aAdditionalDescription);
         if (section.section4aHeadline) allContent.push(section.section4aHeadline);
         if (section.ctaButtonText) allContent.push(section.ctaButtonText);
         if (section.ctaButtonUrl) allContent.push(section.ctaButtonUrl);
@@ -162,7 +162,7 @@ const GET_PAGES_QUERY = gql`
               fieldGroupName
               section4aDescription
               section4aAdditionalHeadline
-              section4aaddDescription
+              section4aAdditionalDescription
               section4aHeadline
               ctaButtonText
               ctaButtonUrl
