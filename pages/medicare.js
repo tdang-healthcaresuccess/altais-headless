@@ -110,7 +110,7 @@ export default function ForProviders() {
         <div className="container mx-auto relative z-10 h-full">
           <div className="pt-6 md:pt-0 md:w-[40%] h-full flex flex-col justify-center">
             <h1 className="font-poppins text-[32px] md:text-[45px] leading-[45px] md:leading-[65px] text-bluePrimary">
-              {"Medicare Open Enrollment is October 5th to December 7th"}
+              {"Medicare Open Enrollment is October 15th to December 7th"}
             </h1>
             {/* <a href={"/find-care/"}>
               <button className="btn-gradient btn-md w-full md:w-[250px] flex-center gap-1 mt-8 md:mt-15">
@@ -140,8 +140,7 @@ export default function ForProviders() {
           <span>Annual Enrollment Period Closes: <br />December 7, 2025</span>
           <span className="mx-2 text-[20px]">&bull;</span>
           <span>Benefits Begin:<br /> January 1, 2026</span>
-          <span className="mx-2 text-[20px]">&bull;</span>
-          <span>MA Open Enrollment Period:<br /> January 1 – March 31, 2026</span>
+
         </p>
         <p className="mb-12 mt-10 md:mb-16" style={{ fontSize: '20px', fontStyle: 'normal', fontWeight: '500' }}>
           3 Easy Steps with Altais
@@ -361,6 +360,11 @@ export default function ForProviders() {
                 <h4 className="text-[18px] leading-[26px] font-semibold mb-1" style={{ color: '#008889' }}>Choosing the Right Plan</h4>
                 <p className="text-[18px] leading-[26px] font-normal" style={{ color: '#3D3D3D' }}>Compare your options with guidance from our trusted partners.</p>
               </div>
+               <div className="mt-0">
+                  <p className="text-[18px] leading-[26px] font-normal" style={{ color: '#3D3D3D' }}>Connect with a Medicare Specialist (Altais is not affiliated with these independent brokers)</p>
+<p><a target="_blank" href="https://www.blackpointinsurance.com/">BlackPoint (Bay Area)</a> or <a target="_blank" href="https://www.boomers-insurance.com/locations">Boomers (Northern and Southern California)</a> <a href="tel:1-800-815-1943">1-800-815-1943</a></p>
+
+                </div>
             </div>
           </div>
 
@@ -818,8 +822,7 @@ export default function ForProviders() {
           <span>Annual Enrollment Period Closes: <br />December 7, 2025</span>
           <span className="mx-2 text-[20px]">&bull;</span>
           <span>Benefits Begin:<br /> January 1, 2026</span>
-          <span className="mx-2 text-[20px]">&bull;</span>
-          <span>MA Open Enrollment Period:<br /> January 1 – March 31, 2026</span>
+
         </p>
         <p className="mb-12 mt-10 md:mb-16" style={{ fontSize: '20px', fontStyle: 'normal', fontWeight: '500' }}>
           3 Easy Steps with Altais
