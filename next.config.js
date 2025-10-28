@@ -157,29 +157,29 @@ const nextConfig = {
         destination: '/sitemap.xml',
         permanent: true,
       },
-      // Existing redirect rule - but exclude preview URLs
+      // Existing redirect rule - but exclude preview URLs and other special cases
       {
-        source: '/:path([^/]+)',
+        source: '/:path((?!preview)[^/]+)',
         destination: '/:path/',
         permanent: true,
-        has: [
-          {
-            type: 'query',
-            key: 'not-a-parameter',
-            value: 'true',
-            negate: true,
-          },
+        missing: [
           {
             type: 'query',
             key: 'preview',
-            negate: true,
           },
           {
             type: 'query', 
             key: 'code',
-            negate: true,
           },
-        ],
+          {
+            type: 'query',
+            key: 'page_id',
+          },
+          {
+            type: 'query',
+            key: 'p',
+          }
+        ]
       },
       // Redirects from redirection.csv
       {
