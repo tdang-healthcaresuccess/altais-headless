@@ -1,17 +1,19 @@
 import { WordPressTemplate } from "@faustwp/core";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Preview(props) {
   const router = useRouter();
+  const [queryParams, setQueryParams] = useState({});
   
   console.log("[Preview Page] Props:", props);
   console.log("[Preview Page] Router Query:", router.query);
   console.log("[Preview Page] Router asPath:", router.asPath);
   console.log("[Preview Page] Current URL:", typeof window !== 'undefined' ? window.location.href : 'SSR');
   console.log("[Preview Page] Environment:", typeof window !== 'undefined' ? window.location.hostname : 'SSR');
+  console.log("[Preview Page] Extracted Query Params:", queryParams);
   
-  // Production-specific query parameter handling
+  // Extract query parameters from URL on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
@@ -19,59 +21,27 @@ export default function Preview(props) {
                           !window.location.hostname.includes('127.0.0.1') &&
                           !window.location.hostname.includes('.local');
       
-      const hasPreviewParams = url.searchParams.has('code') || 
-                              url.searchParams.has('preview') || 
-                              url.searchParams.has('page_id') || 
-                              url.searchParams.has('p');
+      // Always extract URL parameters for consistent behavior
+      const urlParams = Object.fromEntries(url.searchParams);
+      console.log("[Preview Page] URL Search Params:", urlParams);
       
-      // Only apply on production if query parameters are missing from router
-      if (isProduction && hasPreviewParams && Object.keys(router.query).length === 0) {
-        console.log("[Preview Page] Production: Query params missing, forcing router update");
-        const queryParams = Object.fromEntries(url.searchParams);
-        
-        // Force update the router query on production only
-        router.replace({
-          pathname: router.pathname,
-          query: queryParams
-        }, router.asPath, { shallow: true });
-      }
+      // Use URL params if router.query is empty (production issue) or merge them
+      const finalParams = Object.keys(router.query).length > 0 ? router.query : urlParams;
+      
+      setQueryParams(finalParams);
     }
-  }, [router]);
+  }, [router.query]);
   
   // Environment-aware props enhancement
-  const enhancedProps = (() => {
-    if (typeof window === 'undefined') {
-      // Server-side: just return props as-is
-      return props;
+  const enhancedProps = {
+    ...props,
+    router: {
+      ...router,
+      query: queryParams
     }
-    
-    const isProduction = window.location.hostname !== 'localhost' && 
-                        !window.location.hostname.includes('127.0.0.1') &&
-                        !window.location.hostname.includes('.local');
-    
-    // On production, enhance with URL search params if router query is empty
-    if (isProduction && Object.keys(router.query).length === 0) {
-      const url = new URL(window.location.href);
-      const queryFromUrl = Object.fromEntries(url.searchParams);
-      
-      return {
-        ...props,
-        router: {
-          ...router,
-          query: queryFromUrl
-        }
-      };
-    }
-    
-    // On localhost or when router.query has content, use as-is
-    return {
-      ...props,
-      router: {
-        ...router,
-        query: router.query
-      }
-    };
-  })();
+  };
+  
+  console.log("[Preview Page] Enhanced Props Query:", enhancedProps.router.query);
   
   return <WordPressTemplate {...enhancedProps} />;
 }
