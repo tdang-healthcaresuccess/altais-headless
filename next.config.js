@@ -1,10 +1,11 @@
 const { withFaust, getWpHostname } = require("@faustwp/core");
 const { createSecureHeaders } = require("next-secure-headers");
+const { withAtlasConfig } = require("@wpengine/atlas-next");
 
 /**
  * @type {import('next').NextConfig}
  **/
-module.exports = withFaust({
+const nextConfig = {
   images: {
     domains: [getWpHostname(), 'localhost'],
     remotePatterns: [
@@ -148,6 +149,11 @@ module.exports = withFaust({
         ],
       },
       // Redirects from redirection.csv
+      {
+        source: '/patient-resources/access-athena-patient-portal/',
+        destination: '/access-athena-patient-portal/',
+        permanent: true,
+      },
       {
         source: '/altais-medical-group-riverside/',
         destination: '/for-providers/amg-locations/',
@@ -445,4 +451,6 @@ module.exports = withFaust({
       },
     ];
   },
-});
+};
+
+module.exports = withFaust(withAtlasConfig(nextConfig));
