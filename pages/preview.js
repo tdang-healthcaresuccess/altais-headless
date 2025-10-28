@@ -1,4 +1,4 @@
-import { WordPressTemplate } from "@faustwp/core";
+import { WordPressTemplate, getClient } from "@faustwp/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -6,6 +6,9 @@ export default function Preview(props) {
   const router = useRouter();
   const [queryParams, setQueryParams] = useState({});
   const [debugMode, setDebugMode] = useState(false);
+  const [useCustomPreview, setUseCustomPreview] = useState(false);
+  const [previewData, setPreviewData] = useState(null);
+  const [loading, setLoading] = useState(false);
   
   console.log("[Preview Page] Props:", props);
   console.log("[Preview Page] Router Query:", router.query);
@@ -18,9 +21,6 @@ export default function Preview(props) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
-      const isProduction = window.location.hostname !== 'localhost' && 
-                          !window.location.hostname.includes('127.0.0.1') &&
-                          !window.location.hostname.includes('.local');
       
       // Always extract URL parameters for consistent behavior
       const urlParams = Object.fromEntries(url.searchParams);
@@ -35,8 +35,65 @@ export default function Preview(props) {
       if (url.searchParams.get('debug') === '1') {
         setDebugMode(true);
       }
+      
+      // Enable custom preview if 'custom=1' is in URL
+      if (url.searchParams.get('custom') === '1') {
+        setUseCustomPreview(true);
+      }
     }
   }, [router.query]);
+  
+  // Custom preview data fetcher (bypasses WordPressTemplate)
+  const fetchPreviewData = async () => {
+    if (!queryParams.page_id || !queryParams.code) return;
+    
+    setLoading(true);
+    try {
+      // Direct GraphQL query to WordPress for preview data
+      const client = getClient();
+      const query = `
+        query GetPreviewPage($id: ID!, $idType: PageIdType!) {
+          page(id: $id, idType: $idType) {
+            id
+            title
+            content
+            status
+            slug
+            date
+            modified
+          }
+        }
+      `;
+      
+      const result = await client.query({
+        query: query,
+        variables: {
+          id: queryParams.page_id,
+          idType: 'DATABASE_ID'
+        },
+        context: {
+          headers: {
+            'Authorization': `Bearer ${queryParams.code}` // Use preview code for auth
+          }
+        }
+      });
+      
+      console.log("[Custom Preview] GraphQL result:", result);
+      setPreviewData(result.data.page);
+    } catch (error) {
+      console.error("[Custom Preview] Error fetching data:", error);
+      setPreviewData({ error: error.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Fetch preview data when using custom mode
+  useEffect(() => {
+    if (useCustomPreview && queryParams.page_id && queryParams.code) {
+      fetchPreviewData();
+    }
+  }, [useCustomPreview, queryParams]);
   
   // DEBUG MODE: Show raw data instead of WordPressTemplate
   if (debugMode) {
@@ -59,12 +116,58 @@ export default function Preview(props) {
         <p>{typeof window !== 'undefined' ? window.location.hostname : 'SSR'}</p>
         
         <p><strong>This debug mode bypasses WordPressTemplate completely.</strong></p>
-        <p>Remove <code>&debug=1</code> from URL to return to normal mode.</p>
+        <p>✅ <strong>SUCCESS: No infinite loop!</strong></p>
+        <hr />
+        <h3>Testing Options:</h3>
+        <p>• Remove <code>&debug=1</code> to return to WordPressTemplate (will cause infinite loop)</p>
+        <p>• Add <code>&custom=1</code> to test custom preview handler (no WordPressTemplate)</p>
       </div>
     );
   }
   
-  // Environment-aware props enhancement
+  // CUSTOM PREVIEW MODE: Bypass WordPressTemplate entirely
+  if (useCustomPreview) {
+    if (loading) {
+      return <div style={{ padding: '20px' }}>Loading preview content...</div>;
+    }
+    
+    if (previewData?.error) {
+      return (
+        <div style={{ padding: '20px' }}>
+          <h1>Preview Error</h1>
+          <p>Error: {previewData.error}</p>
+          <p>This might be due to authentication issues with the preview code.</p>
+        </div>
+      );
+    }
+    
+    if (previewData) {
+      return (
+        <div style={{ padding: '20px' }}>
+          <h1>🎯 Custom Preview Mode</h1>
+          <h2>Page Title: {previewData.title}</h2>
+          <p><strong>Status:</strong> {previewData.status}</p>
+          <p><strong>Last Modified:</strong> {previewData.modified}</p>
+          <div 
+            dangerouslySetInnerHTML={{ __html: previewData.content }} 
+            style={{ marginTop: '20px', border: '1px solid #ccc', padding: '20px' }}
+          />
+          <hr />
+          <p><strong>✅ This bypasses WordPressTemplate and should have no infinite loop!</strong></p>
+          <p>Remove <code>&custom=1</code> to return to normal WordPressTemplate mode.</p>
+        </div>
+      );
+    }
+    
+    return (
+      <div style={{ padding: '20px' }}>
+        <h1>Custom Preview</h1>
+        <p>No preview data available. Check the page_id and code parameters.</p>
+      </div>
+    );
+  }
+  
+  // NORMAL MODE: Use WordPressTemplate (will cause infinite loop)
   const enhancedProps = {
     ...props,
     router: {

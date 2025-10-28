@@ -157,30 +157,30 @@ const nextConfig = {
         destination: '/sitemap.xml',
         permanent: true,
       },
-      // Existing redirect rule - but exclude preview URLs and other special cases
-      {
-        source: '/:path((?!preview)[^/]+)',
-        destination: '/:path/',
-        permanent: true,
-        missing: [
-          {
-            type: 'query',
-            key: 'preview',
-          },
-          {
-            type: 'query', 
-            key: 'code',
-          },
-          {
-            type: 'query',
-            key: 'page_id',
-          },
-          {
-            type: 'query',
-            key: 'p',
-          }
-        ]
-      },
+      // TEMPORARILY DISABLED - Existing redirect rule causing infinite loops with previews
+      // {
+      //   source: '/:path((?!preview)[^/]+)',
+      //   destination: '/:path/',
+      //   permanent: true,
+      //   missing: [
+      //     {
+      //       type: 'query',
+      //       key: 'preview',
+      //     },
+      //     {
+      //       type: 'query', 
+      //       key: 'code',
+      //     },
+      //     {
+      //       type: 'query',
+      //       key: 'page_id',
+      //     },
+      //     {
+      //       type: 'query',
+      //       key: 'p',
+      //     }
+      //   ]
+      // },
       // Redirects from redirection.csv
       {
         source: '/patient-resources/access-athena-patient-portal/',
