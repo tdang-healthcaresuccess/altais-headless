@@ -89,7 +89,14 @@ export async function getServerSideProps(ctx) {
   });
   const specialtyUrls = Array.from(specialtySet)
     .filter(s => s)
-    .map(s => `/specialty/${encodeURIComponent(s.replace(/\s+/g, '-').toLowerCase())}`);
+    .map(s => {
+      // Create clean URL slug without percent encoding
+      const cleanSlug = s
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // replace non-alphanumeric with dash
+        .replace(/^-+|-+$/g, ''); // trim leading/trailing dashes
+      return `/specialty/${cleanSlug}`;
+    });
 
   // Combine all URLs
   const allUrls = [...pages, ...posts, ...doctorUrls, ...specialtyUrls];
