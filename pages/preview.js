@@ -7,6 +7,7 @@ export default function Preview(props) {
   const [queryParams, setQueryParams] = useState({});
   const [debugMode, setDebugMode] = useState(false);
   const [useCustomPreview, setUseCustomPreview] = useState(false);
+  const [simpleMode, setSimpleMode] = useState(false);
   const [previewData, setPreviewData] = useState(null);
   const [loading, setLoading] = useState(false);
   
@@ -39,6 +40,11 @@ export default function Preview(props) {
       // Enable custom preview if 'custom=1' is in URL
       if (url.searchParams.get('custom') === '1') {
         setUseCustomPreview(true);
+      }
+      
+      // Enable simple mode if 'simple=1' is in URL
+      if (url.searchParams.get('simple') === '1') {
+        setSimpleMode(true);
       }
     }
   }, [router.query]);
@@ -95,6 +101,42 @@ export default function Preview(props) {
     }
   }, [useCustomPreview, queryParams]);
   
+  // SIMPLE MODE: Just show a basic page without any WordPress integration
+  if (simpleMode) {
+    return (
+      <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+        <h1>🔥 Simple Preview Mode</h1>
+        <h2 style={{ color: 'green' }}>✅ SUCCESS: No redirects or infinite loops!</h2>
+        
+        <div style={{ background: '#f0f0f0', padding: '15px', marginBottom: '20px' }}>
+          <h3>Extracted Parameters:</h3>
+          <ul>
+            <li><strong>Page ID:</strong> {queryParams.page_id || 'Not found'}</li>
+            <li><strong>Preview Code:</strong> {queryParams.code ? 'Present' : 'Missing'}</li>
+            <li><strong>Preview:</strong> {queryParams.preview || 'Not set'}</li>
+            <li><strong>Type:</strong> {queryParams.typeName || 'Unknown'}</li>
+          </ul>
+        </div>
+        
+        <div style={{ background: '#e8f5e8', padding: '15px', marginBottom: '20px' }}>
+          <h3>Testing Results:</h3>
+          <p>• This mode completely bypasses WordPressTemplate</p>
+          <p>• No GraphQL queries or WordPress authentication</p>
+          <p>• Should have ZERO redirect issues</p>
+          <p>• If this works, the problem is definitely in WordPressTemplate or Faust.js</p>
+        </div>
+        
+        <h3>Test Options:</h3>
+        <p>• Remove <code>&simple=1</code> to return to WordPressTemplate (may cause loops)</p>
+        <p>• Add <code>&debug=1</code> to see raw debug data</p>
+        <p>• Add <code>&custom=1</code> to test custom GraphQL handler</p>
+        
+        <hr style={{ margin: '30px 0' }} />
+        <p><em>If you can see this page without any redirects, we've isolated the problem to WordPressTemplate.</em></p>
+      </div>
+    );
+  }
+  
   // DEBUG MODE: Show raw data instead of WordPressTemplate
   if (debugMode) {
     return (
@@ -121,6 +163,7 @@ export default function Preview(props) {
         <h3>Testing Options:</h3>
         <p>• Remove <code>&debug=1</code> to return to WordPressTemplate (will cause infinite loop)</p>
         <p>• Add <code>&custom=1</code> to test custom preview handler (no WordPressTemplate)</p>
+        <p>• Add <code>&simple=1</code> to test simplest possible page (no WordPress at all)</p>
       </div>
     );
   }
