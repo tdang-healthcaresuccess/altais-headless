@@ -1,6 +1,8 @@
-import { WordPressTemplate, getClient } from "@faustwp/core";
+import { WordPressTemplate } from "@faustwp/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { gql } from "@apollo/client";
+import { getApolloClient } from "@faustwp/core";
 
 export default function Preview(props) {
   const router = useRouter();
@@ -55,9 +57,11 @@ export default function Preview(props) {
     
     setLoading(true);
     try {
+      // Get the Apollo client from Faust.js
+      const client = getApolloClient();
+      
       // Direct GraphQL query to WordPress for preview data
-      const client = getClient();
-      const query = `
+      const GET_PREVIEW_PAGE = gql`
         query GetPreviewPage($id: ID!, $idType: PageIdType!) {
           page(id: $id, idType: $idType) {
             id
@@ -67,12 +71,19 @@ export default function Preview(props) {
             slug
             date
             modified
+            preview {
+              node {
+                title
+                content
+                status
+              }
+            }
           }
         }
       `;
       
       const result = await client.query({
-        query: query,
+        query: GET_PREVIEW_PAGE,
         variables: {
           id: queryParams.page_id,
           idType: 'DATABASE_ID'
