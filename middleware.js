@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 export function middleware(request) {
   const url = request.nextUrl;
-  
   // Check if this is a preview request
   const isPreview = url.searchParams.get('preview') === 'true' || 
                    url.searchParams.has('code') ||
                    url.pathname === '/preview';
-  
+  // Logging for debugging
+  console.log('[middleware] URL:', url.href);
+  console.log('[middleware] isPreview:', isPreview);
   // Exclude _next, static, media, favicon, HubSpot, API paths, and preview requests from lowercasing
   if (
     url.pathname.startsWith('/_next') ||
@@ -19,6 +20,7 @@ export function middleware(request) {
     url.pathname.startsWith('/js.hsforms.net') ||
     isPreview
   ) {
+    console.log('[middleware] Skipping lowercasing for:', url.pathname);
     return NextResponse.next();
   }
   const lowerPath = url.pathname.toLowerCase();
