@@ -33,7 +33,13 @@ export function proxyFileUrl(originalUrl, endpoint = 'proxy-file') {
   }
   
   // Skip preview URLs to prevent interference with WordPress preview functionality
-  if (originalUrl.includes('preview=true') || originalUrl.includes('code=') || originalUrl.includes('p=') && originalUrl.includes('preview')) {
+  if (originalUrl.includes('preview=true') || 
+      originalUrl.includes('code=') || 
+      originalUrl.includes('page_id=') && originalUrl.includes('preview') ||
+      originalUrl.includes('p=') && originalUrl.includes('preview') ||
+      originalUrl.includes('/preview?') ||
+      originalUrl.includes('/preview/')) {
+    console.log('[proxyFileUrl] Skipping preview URL:', originalUrl);
     return originalUrl;
   }
   

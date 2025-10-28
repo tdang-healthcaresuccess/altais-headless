@@ -17,11 +17,34 @@ export default function Preview() {
       const url = new URL(window.location.href);
       const previewParam = url.searchParams.get('preview');
       const codeParam = url.searchParams.get('code');
+      const pageIdParam = url.searchParams.get('page_id');
+      const pParam = url.searchParams.get('p');
       
-      if (previewParam === 'true' && codeParam) {
+      // Detect if we're in a valid preview context
+      const isValidPreview = previewParam === 'true' || 
+                           (codeParam && (pageIdParam || pParam));
+      
+      if (isValidPreview) {
         console.log("[Preview] Valid preview URL detected, preventing redirects");
-        // Stop any potential redirect loops
+        // Prevent trailing slash redirects and other automatic redirects
         window.history.replaceState(null, '', window.location.href);
+        
+        // Set a flag to prevent Faust from making automatic redirects
+        window.__FAUST_PREVIEW_MODE__ = true;
+      }
+      
+      // Check for code parameter changes that indicate redirect loops
+      const urlParams = new URLSearchParams(window.location.search);
+      const allCodes = urlParams.getAll('code');
+      if (allCodes.length > 1) {
+        console.warn("[Preview] Detected multiple code parameters - possible redirect loop");
+        // Clean up duplicate parameters
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete('code');
+        if (allCodes[0]) {
+          cleanUrl.searchParams.set('code', allCodes[0]);
+        }
+        window.history.replaceState(null, '', cleanUrl.toString());
       }
     }
   }, [router.query]);

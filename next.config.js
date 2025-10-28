@@ -40,7 +40,7 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        // Preserve preview URLs to prevent redirect loops - handle all preview variations
+        // Comprehensive preview URL handling to prevent redirect loops
         {
           source: '/preview/:path*',
           destination: '/preview/:path*',
@@ -60,6 +60,39 @@ const nextConfig = {
               type: 'query',
               key: 'preview',
               value: 'true'
+            }
+          ]
+        },
+        // Handle WordPress authentication callback with code parameter
+        {
+          source: '/preview',
+          destination: '/preview',
+          has: [
+            {
+              type: 'query',
+              key: 'code'
+            }
+          ]
+        },
+        // Handle preview URLs with page_id parameter
+        {
+          source: '/preview',
+          destination: '/preview',
+          has: [
+            {
+              type: 'query',
+              key: 'page_id'
+            }
+          ]
+        },
+        // Handle preview URLs with p parameter
+        {
+          source: '/preview',
+          destination: '/preview',
+          has: [
+            {
+              type: 'query',
+              key: 'p'
             }
           ]
         }
