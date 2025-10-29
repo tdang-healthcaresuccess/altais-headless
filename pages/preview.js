@@ -60,7 +60,7 @@ export default function Preview(props) {
       // Get the Apollo client from Faust.js
       const client = getApolloClient();
       
-      // Direct GraphQL query to WordPress for preview data using the correct schema
+      // Direct GraphQL query to WordPress for preview data using the EXACT schema from page.js
       const GET_PREVIEW_PAGE = gql`
         query GetPreviewPage($id: ID!, $idType: PageIdType!, $asPreview: Boolean = true) {
           page(id: $id, idType: $idType, asPreview: $asPreview) {
@@ -81,23 +81,73 @@ export default function Preview(props) {
             }
             contentTemplates {
               templateSelection
+              templateC
               templateA {
                 ... on ContentTemplatesTemplateASection1aLayout {
                   fieldGroupName
                   section1aContent
-                  section1aHeadline
+                  section1aLineBreak
+                  section1aImg {
+                    node {
+                      sourceUrl
+                      uri
+                    }
+                  }
                 }
                 ... on ContentTemplatesTemplateASection2aLayout {
+                  content2a
+                  headline2a
+                  section2aLineBreak
+                  sectionBackgroundColor
                   fieldGroupName
-                  section2aContent
-                  section2aHeadline
+                  wrapUpList
                 }
                 ... on ContentTemplatesTemplateASection3aLayout {
                   fieldGroupName
+                  section3aLineBreak
+                  columnSelection
                   section3aCards {
                     cardContent
                     cardHeadline
+                    cardOptions
+                    cardContentCollapse
+                    fieldGroupName
+                    lineBreak
+                    cardImage {
+                      node {
+                        sourceUrl
+                        uri
+                      }
+                    }
+                    cardIcon {
+                      node {
+                        sourceUrl
+                      }
+                    }
                   }
+                }
+                ... on ContentTemplatesTemplateASection4aLayout {
+                  ctaButtonText
+                  ctaButtonUrl
+                  enableCta
+                  fieldGroupName
+                  section4aLineBreak
+                  section4aAdditionalHeadline
+                  section4aDescription
+                  section4aAdditionalHeadlineOption
+                  section4aAdditionalDescription
+                  section4aHeadline
+                  section4aImage {
+                    node {
+                      sourceUrl
+                      uri
+                    }
+                  }
+                }
+                ... on ContentTemplatesTemplateASection5aLayout {
+                  fieldGroupName
+                  section5aLineBreak
+                  section5aContent
                 }
               }
             }
@@ -231,19 +281,67 @@ export default function Preview(props) {
           {previewData.contentTemplates?.templateA && (
             <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '20px' }}>
               <h3>Content Templates:</h3>
+              <p><strong>Template Selection:</strong> {previewData.contentTemplates.templateSelection}</p>
               {previewData.contentTemplates.templateA.map((template, index) => (
                 <div key={index} style={{ margin: '10px 0', padding: '10px', background: '#f5f5f5' }}>
                   <p><strong>Type:</strong> {template.fieldGroupName}</p>
-                  {template.section1aHeadline && <h4>{template.section1aHeadline}</h4>}
-                  {template.section1aContent && <div dangerouslySetInnerHTML={{ __html: template.section1aContent }} />}
-                  {template.section2aHeadline && <h4>{template.section2aHeadline}</h4>}
-                  {template.section2aContent && <div dangerouslySetInnerHTML={{ __html: template.section2aContent }} />}
-                  {template.section3aCards && template.section3aCards.map((card, cardIndex) => (
-                    <div key={cardIndex} style={{ margin: '5px 0' }}>
-                      <h5>{card.cardHeadline}</h5>
-                      <div dangerouslySetInnerHTML={{ __html: card.cardContent }} />
+                  
+                  {/* Section 1a */}
+                  {template.section1aContent && (
+                    <div>
+                      <h4>Section 1a Content:</h4>
+                      <div dangerouslySetInnerHTML={{ __html: template.section1aContent }} />
+                      {template.section1aImg && (
+                        <img src={template.section1aImg.node.sourceUrl} alt="Section 1a" style={{ maxWidth: '300px' }} />
+                      )}
                     </div>
-                  ))}
+                  )}
+                  
+                  {/* Section 2a */}
+                  {template.headline2a && (
+                    <div>
+                      <h4>{template.headline2a}</h4>
+                      {template.content2a && <div dangerouslySetInnerHTML={{ __html: template.content2a }} />}
+                      <p><em>Background Color: {template.sectionBackgroundColor}</em></p>
+                    </div>
+                  )}
+                  
+                  {/* Section 3a */}
+                  {template.section3aCards && (
+                    <div>
+                      <h4>Section 3a Cards:</h4>
+                      {template.section3aCards.map((card, cardIndex) => (
+                        <div key={cardIndex} style={{ margin: '5px 0', padding: '5px', border: '1px solid #ddd' }}>
+                          <h5>{card.cardHeadline}</h5>
+                          <div dangerouslySetInnerHTML={{ __html: card.cardContent }} />
+                          {card.cardImage && (
+                            <img src={card.cardImage.node.sourceUrl} alt={card.cardHeadline} style={{ maxWidth: '200px' }} />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Section 4a */}
+                  {template.section4aHeadline && (
+                    <div>
+                      <h4>{template.section4aHeadline}</h4>
+                      {template.section4aDescription && <div dangerouslySetInnerHTML={{ __html: template.section4aDescription }} />}
+                      {template.enableCta && template.ctaButtonText && (
+                        <a href={template.ctaButtonUrl} style={{ background: '#007cba', color: 'white', padding: '10px', textDecoration: 'none' }}>
+                          {template.ctaButtonText}
+                        </a>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Section 5a */}
+                  {template.section5aContent && (
+                    <div>
+                      <h4>Section 5a Content:</h4>
+                      <div dangerouslySetInnerHTML={{ __html: template.section5aContent }} />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
