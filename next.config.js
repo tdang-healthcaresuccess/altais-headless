@@ -418,11 +418,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/fcs-ipa/',
-        destination: '/about/fcsmg-family-care-specialists-medical-group/',
-        permanent: true,
-      },
-      {
         source: '/for-physicians/altais-networks/',
         destination: '/for-providers/altais-networks/',
         permanent: true,
