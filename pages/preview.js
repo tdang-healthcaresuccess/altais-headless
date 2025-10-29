@@ -60,22 +60,45 @@ export default function Preview(props) {
       // Get the Apollo client from Faust.js
       const client = getApolloClient();
       
-      // Direct GraphQL query to WordPress for preview data
+      // Direct GraphQL query to WordPress for preview data using the correct schema
       const GET_PREVIEW_PAGE = gql`
-        query GetPreviewPage($id: ID!, $idType: PageIdType!) {
-          page(id: $id, idType: $idType) {
+        query GetPreviewPage($id: ID!, $idType: PageIdType!, $asPreview: Boolean = true) {
+          page(id: $id, idType: $idType, asPreview: $asPreview) {
             id
             title
-            content
             status
             slug
             date
             modified
-            preview {
-              node {
-                title
-                content
-                status
+            metaD {
+              metaDescription
+              titleTag
+            }
+            seo {
+              title
+              description
+              canonicalUrl
+            }
+            contentTemplates {
+              templateSelection
+              templateA {
+                ... on ContentTemplatesTemplateASection1aLayout {
+                  fieldGroupName
+                  section1aContent
+                  section1aHeadline
+                }
+                ... on ContentTemplatesTemplateASection2aLayout {
+                  fieldGroupName
+                  section2aContent
+                  section2aHeadline
+                }
+                ... on ContentTemplatesTemplateASection3aLayout {
+                  fieldGroupName
+                  section3aCards {
+                    cardContent
+                    cardHeadline
+                  }
+                }
               }
             }
           }
@@ -86,7 +109,8 @@ export default function Preview(props) {
         query: GET_PREVIEW_PAGE,
         variables: {
           id: queryParams.page_id,
-          idType: 'DATABASE_ID'
+          idType: 'DATABASE_ID',
+          asPreview: true
         },
         context: {
           headers: {
@@ -202,10 +226,29 @@ export default function Preview(props) {
           <h2>Page Title: {previewData.title}</h2>
           <p><strong>Status:</strong> {previewData.status}</p>
           <p><strong>Last Modified:</strong> {previewData.modified}</p>
-          <div 
-            dangerouslySetInnerHTML={{ __html: previewData.content }} 
-            style={{ marginTop: '20px', border: '1px solid #ccc', padding: '20px' }}
-          />
+          
+          {/* Display content templates */}
+          {previewData.contentTemplates?.templateA && (
+            <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '20px' }}>
+              <h3>Content Templates:</h3>
+              {previewData.contentTemplates.templateA.map((template, index) => (
+                <div key={index} style={{ margin: '10px 0', padding: '10px', background: '#f5f5f5' }}>
+                  <p><strong>Type:</strong> {template.fieldGroupName}</p>
+                  {template.section1aHeadline && <h4>{template.section1aHeadline}</h4>}
+                  {template.section1aContent && <div dangerouslySetInnerHTML={{ __html: template.section1aContent }} />}
+                  {template.section2aHeadline && <h4>{template.section2aHeadline}</h4>}
+                  {template.section2aContent && <div dangerouslySetInnerHTML={{ __html: template.section2aContent }} />}
+                  {template.section3aCards && template.section3aCards.map((card, cardIndex) => (
+                    <div key={cardIndex} style={{ margin: '5px 0' }}>
+                      <h5>{card.cardHeadline}</h5>
+                      <div dangerouslySetInnerHTML={{ __html: card.cardContent }} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+          
           <hr />
           <p><strong>✅ This bypasses WordPressTemplate and should have no infinite loop!</strong></p>
           <p>Remove <code>&custom=1</code> to return to normal WordPressTemplate mode.</p>
