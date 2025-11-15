@@ -4,6 +4,7 @@ import single from "./single";
 import archive from "./archive";
 import physicians from "./single-physicians";
 import specialty from "./single-specialty";
+import archiveLeadership from "./archive-leadership";
 
 export default {
   "front-page": frontPage,
@@ -12,5 +13,6 @@ export default {
   archive,
   "single-physicians": physicians,
   "single-specialty": specialty,
+  "archive-leadership": archiveLeadership,
   preview: require("./preview").default,
 };
