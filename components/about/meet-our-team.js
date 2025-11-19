@@ -2,9 +2,9 @@
 
 import LeadershipTeamMedia from "@/public/media/leadership-team.png"
 import LeadershipTeamMobileMedia from "@/public/media/leadership-team-mobile.png"
-import { ChevronRight } from "lucide-react"; 
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link"; 
+import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
 
 export default function MeetOurTeam() {
@@ -27,7 +27,7 @@ export default function MeetOurTeam() {
                 <br /> Discover the decision-makers behind Altais
               </h3>
               <Link
-                href="/our-team"
+                href="/about/leadership"
                 className="pt-4 flex font-medium justify-end md:justify-start gap-1 btn-link-secondary border-t border-lightPrimary text-base sm:text-[15px] md:text-[12px] lg:text-[17px] leading-[24px]"
               >
                 Meet Our Team
