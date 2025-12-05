@@ -99,6 +99,16 @@ export default function specialty(props) {
   // Use current specialty as filter (always filter by current specialty)
   const currentSpecialtyFilter = title ? [title] : null;
 
+  // WORKAROUND: For multi-word name searches, only send first word to backend
+  // The backend doesn't support multi-word name searches, so we send partial search
+  // and filter the rest client-side
+  let backendSearch = searchQuery || null;
+  if (searchQuery && searchQuery.trim().split(/\s+/).length > 1) {
+    // Multi-word search detected - send only first word to backend
+    backendSearch = searchQuery.trim().split(/\s+/)[0];
+    console.log('🔧 Multi-word search detected. Backend search:', backendSearch, 'Full search:', searchQuery);
+  }
+
   // Determine sorting - if user has location, sort by distance, otherwise alphabetical
   const orderBy = userLocation ? "distance" : "last_name";
   const order = userLocation ? "ASC" : "ASC";
@@ -106,7 +116,7 @@ export default function specialty(props) {
   // Get physicians data with current filters (filtered by current specialty)
   const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
     variables: {
-      search: searchQuery || null,
+      search: backendSearch, // Use backendSearch instead of searchQuery for multi-word handling
       specialty: currentSpecialtyFilter, // Always filter by current specialty
       // All filters now use array format with OR logic - backend matches ANY selected values
       language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
@@ -171,12 +181,26 @@ export default function specialty(props) {
     
     const term = searchTerm.toLowerCase().trim();
     
+    // Check if search term has multiple words (likely a full name search)
+    const searchWords = term.split(/\s+/).filter(word => word.length > 0);
+    
     return physicians.filter(physician => {
       const firstName = (physician.firstName || '').toLowerCase();
       const lastName = (physician.lastName || '').toLowerCase();
       const fullName = `${firstName} ${lastName}`;
       
-      // Check if search term appears anywhere in first name, last name, or full name
+      // Multi-word search: each search word should match somewhere in the full name
+      if (searchWords.length > 1) {
+        // Split the full name into words too (to handle "Amanda H" matching "Amanda")
+        const nameWords = fullName.split(/\s+/).filter(word => word.length > 0);
+        
+        // Each search word must match at least one word in the name (as substring)
+        return searchWords.every(searchWord => {
+          return nameWords.some(nameWord => nameWord.includes(searchWord));
+        });
+      }
+      
+      // Single word search: check if it appears in first name, last name, or full name
       return firstName.includes(term) || 
              lastName.includes(term) || 
              fullName.includes(term);

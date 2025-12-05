@@ -102,11 +102,22 @@ export default function FindCare() {
 
   const { search: processedSearch, detectedSpecialty } = detectSpecialtySearch(searchQuery);
   
+  // WORKAROUND: For multi-word name searches, only send first word to backend
+  // The backend doesn't support multi-word name searches, so we send partial search
+  // and filter the rest client-side
+  let backendSearch = processedSearch;
+  if (processedSearch && processedSearch.trim().split(/\s+/).length > 1) {
+    // Multi-word search detected - send only first word to backend
+    backendSearch = processedSearch.trim().split(/\s+/)[0];
+    console.log('🔧 Multi-word search detected. Backend search:', backendSearch, 'Full search:', processedSearch);
+  }
+  
   // Debug logging for specialty search
   if (searchQuery) {
     console.log('🔍 Search Debug:', {
       searchQuery,
       processedSearch,
+      backendSearch,
       detectedSpecialty,
       resolvedAcronym: resolveSpecialtyAcronym(searchQuery),
       relatedSpecialties: getRelatedSpecialties(searchQuery)
@@ -124,12 +135,13 @@ export default function FindCare() {
   // Debug logging for final filter
   if (finalSpecialtyFilter) {
     console.log('✅ Final Specialty Filter:', finalSpecialtyFilter);
+    console.log('🔍 Backend Search Value:', backendSearch, '(should be null for specialty-only searches)');
   }
 
   // Get physicians data with current filters
   const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
     variables: {
-      search: processedSearch,
+      search: backendSearch, // Use backendSearch instead of processedSearch for multi-word handling
       specialty: finalSpecialtyFilter,
       // All filters now use array format with OR logic - backend matches ANY selected values
       language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
@@ -150,8 +162,14 @@ export default function FindCare() {
       console.log('📊 GraphQL Query Completed:', {
         totalResults: data?.doctorsList?.total,
         resultsReturned: data?.doctorsList?.items?.length,
-        specialty: finalSpecialtyFilter,
-        search: processedSearch
+        variables: {
+          search: backendSearch,
+          specialty: finalSpecialtyFilter,
+          language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
+          gender: parsedGenderFilter.length > 0 ? parsedGenderFilter : null,
+          degree: parsedEducationFilter.length > 0 ? parsedEducationFilter : null,
+          insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
+        }
       });
     },
     onError: (error) => {
@@ -196,16 +214,50 @@ export default function FindCare() {
     
     const term = searchTerm.toLowerCase().trim();
     
-    return physicians.filter(physician => {
+    // Check if search term has multiple words (likely a full name search)
+    const searchWords = term.split(/\s+/).filter(word => word.length > 0);
+    
+    console.log('🔍 Fuzzy Filter Debug:', {
+      searchTerm,
+      searchWords,
+      totalPhysicians: physicians.length
+    });
+    
+    const results = physicians.filter(physician => {
       const firstName = (physician.firstName || '').toLowerCase();
       const lastName = (physician.lastName || '').toLowerCase();
       const fullName = `${firstName} ${lastName}`;
       
-      // Check if search term appears anywhere in first name, last name, or full name
+      // Multi-word search: each search word should match somewhere in the full name
+      if (searchWords.length > 1) {
+        // Split the full name into words too (to handle "Amanda H" matching "Amanda")
+        const nameWords = fullName.split(/\s+/).filter(word => word.length > 0);
+        
+        // Each search word must match at least one word in the name (as substring)
+        const matches = searchWords.every(searchWord => {
+          return nameWords.some(nameWord => nameWord.includes(searchWord));
+        });
+        
+        if (matches) {
+          console.log('✅ Match found:', {
+            physician: `${physician.firstName} ${physician.lastName}`,
+            searchWords,
+            nameWords,
+            fullName
+          });
+        }
+        
+        return matches;
+      }
+      
+      // Single word search: check if it appears in first name, last name, or full name
       return firstName.includes(term) || 
              lastName.includes(term) || 
              fullName.includes(term);
     });
+    
+    console.log('✅ Fuzzy Filter Results:', results.length);
+    return results;
   };
   
   // Apply client-side fuzzy search if we have a search query
