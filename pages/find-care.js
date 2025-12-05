@@ -109,20 +109,9 @@ export default function FindCare() {
   if (processedSearch && processedSearch.trim().split(/\s+/).length > 1) {
     // Multi-word search detected - send only first word to backend
     backendSearch = processedSearch.trim().split(/\s+/)[0];
-    console.log('🔧 Multi-word search detected. Backend search:', backendSearch, 'Full search:', processedSearch);
   }
   
-  // Debug logging for specialty search
-  if (searchQuery) {
-    console.log('🔍 Search Debug:', {
-      searchQuery,
-      processedSearch,
-      backendSearch,
-      detectedSpecialty,
-      resolvedAcronym: resolveSpecialtyAcronym(searchQuery),
-      relatedSpecialties: getRelatedSpecialties(searchQuery)
-    });
-  }
+
   
   // Handle specialty filter - ensure it's always an array for GraphQL
   let finalSpecialtyFilter = null;
@@ -132,11 +121,7 @@ export default function FindCare() {
     finalSpecialtyFilter = detectedSpecialty; // Already an array from detectSpecialtySearch
   }
   
-  // Debug logging for final filter
-  if (finalSpecialtyFilter) {
-    console.log('✅ Final Specialty Filter:', finalSpecialtyFilter);
-    console.log('🔍 Backend Search Value:', backendSearch, '(should be null for specialty-only searches)');
-  }
+
 
   // Get physicians data with current filters
   const { data: physiciansData, loading: physiciansLoading, error: physiciansError } = useQuery(GET_PHYSICIANS_LIST, {
@@ -150,7 +135,7 @@ export default function FindCare() {
       // Insurance filtering uses OR logic - shows doctors accepting ANY of the selected insurances
       insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
       page: parsedPage,
-      perPage: detectedSpecialty ? 50 : 10, // Increase results for specialty searches
+      perPage: detectedSpecialty ? 50 : (processedSearch && processedSearch.trim().split(/\s+/).length > 1 ? 9999 : 10), // Fetch all results for multi-word name searches (client-side filtering)
       orderBy: orderBy,
       order: order
       // Note: location filtering will be done client-side since GraphQL doesn't support it
@@ -159,18 +144,7 @@ export default function FindCare() {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'cache-and-network',
     onCompleted: (data) => {
-      console.log('📊 GraphQL Query Completed:', {
-        totalResults: data?.doctorsList?.total,
-        resultsReturned: data?.doctorsList?.items?.length,
-        variables: {
-          search: backendSearch,
-          specialty: finalSpecialtyFilter,
-          language: parsedLanguageFilter.length > 0 ? parsedLanguageFilter : null,
-          gender: parsedGenderFilter.length > 0 ? parsedGenderFilter : null,
-          degree: parsedEducationFilter.length > 0 ? parsedEducationFilter : null,
-          insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
-        }
-      });
+      // Query completed successfully
     },
     onError: (error) => {
       console.error('❌ GraphQL Query Error:', error);
@@ -206,7 +180,6 @@ export default function FindCare() {
 
   const physicians = physiciansData?.doctorsList?.items || [];
   const total = physiciansData?.doctorsList?.total || 0;
-  const totalPages = Math.ceil(total / 10);
   
   // Client-side fuzzy name search fallback (to compensate for backend search issues)
   const fuzzyNameFilter = (physicians, searchTerm) => {
@@ -217,11 +190,7 @@ export default function FindCare() {
     // Check if search term has multiple words (likely a full name search)
     const searchWords = term.split(/\s+/).filter(word => word.length > 0);
     
-    console.log('🔍 Fuzzy Filter Debug:', {
-      searchTerm,
-      searchWords,
-      totalPhysicians: physicians.length
-    });
+
     
     const results = physicians.filter(physician => {
       const firstName = (physician.firstName || '').toLowerCase();
@@ -238,14 +207,7 @@ export default function FindCare() {
           return nameWords.some(nameWord => nameWord.includes(searchWord));
         });
         
-        if (matches) {
-          console.log('✅ Match found:', {
-            physician: `${physician.firstName} ${physician.lastName}`,
-            searchWords,
-            nameWords,
-            fullName
-          });
-        }
+
         
         return matches;
       }
@@ -256,12 +218,17 @@ export default function FindCare() {
              fullName.includes(term);
     });
     
-    console.log('✅ Fuzzy Filter Results:', results.length);
     return results;
   };
   
   // Apply client-side fuzzy search if we have a search query
   const nameFilteredPhysicians = processedSearch ? fuzzyNameFilter(physicians, processedSearch) : physicians;
+  
+  // Calculate totalPages based on filtered results ONLY for multi-word name searches
+  // For other searches (specialty, filters), use backend total since backend does the filtering
+  const isMultiWordNameSearch = processedSearch && processedSearch.trim().split(/\s+/).length > 1;
+  const filteredTotal = isMultiWordNameSearch ? nameFilteredPhysicians.length : total;
+  const totalPages = Math.ceil(filteredTotal / 10);
   
   // Client-side distance calculation and sorting
   const locationProcessedPhysicians = (searchLocation || userLocation) ? nameFilteredPhysicians.map(physician => {

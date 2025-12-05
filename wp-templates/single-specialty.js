@@ -106,7 +106,6 @@ export default function specialty(props) {
   if (searchQuery && searchQuery.trim().split(/\s+/).length > 1) {
     // Multi-word search detected - send only first word to backend
     backendSearch = searchQuery.trim().split(/\s+/)[0];
-    console.log('🔧 Multi-word search detected. Backend search:', backendSearch, 'Full search:', searchQuery);
   }
 
   // Determine sorting - if user has location, sort by distance, otherwise alphabetical
@@ -125,7 +124,7 @@ export default function specialty(props) {
       // Insurance filtering uses OR logic - shows doctors accepting ANY of the selected insurances
       insurance: parsedInsuranceFilter.length > 0 ? parsedInsuranceFilter : null,
       page: parsedPage,
-      perPage: 10, // Use same pagination as find-care.js
+      perPage: (searchQuery && searchQuery.trim().split(/\s+/).length > 1 ? 9999 : 10), // Fetch all results for multi-word name searches (client-side filtering)
       orderBy: orderBy,
       order: order
     },
@@ -164,16 +163,6 @@ export default function specialty(props) {
 
   const physicians = physiciansData?.doctorsList?.items || [];
   const total = physiciansData?.doctorsList?.total || 0;
-  const totalPages = Math.ceil(total / 10); // Same as find-care.js
-  
-  // Debug pagination info
-  console.log('Specialty page pagination debug:', {
-    total,
-    totalPages,
-    parsedPage,
-    physiciansCount: physicians.length,
-    title
-  });
   
   // Client-side fuzzy name search fallback (to compensate for backend search issues)
   const fuzzyNameFilter = (physicians, searchTerm) => {
@@ -209,6 +198,12 @@ export default function specialty(props) {
   
   // Apply client-side fuzzy search if we have a search query
   const nameFilteredPhysicians = searchQuery ? fuzzyNameFilter(physicians, searchQuery) : physicians;
+  
+  // Calculate totalPages based on filtered results ONLY for multi-word name searches
+  // For other searches (specialty filtering is done by backend), use backend total
+  const isMultiWordNameSearch = searchQuery && searchQuery.trim().split(/\s+/).length > 1;
+  const filteredTotal = isMultiWordNameSearch ? nameFilteredPhysicians.length : total;
+  const totalPages = Math.ceil(filteredTotal / 10);
   
   // Client-side distance calculation and sorting (same as find-care.js)
   const locationProcessedPhysicians = (searchLocation || userLocation) ? nameFilteredPhysicians.map(physician => {
