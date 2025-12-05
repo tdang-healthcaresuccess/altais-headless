@@ -102,12 +102,28 @@ export default function FindCare() {
 
   const { search: processedSearch, detectedSpecialty } = detectSpecialtySearch(searchQuery);
   
+  // Debug logging for specialty search
+  if (searchQuery) {
+    console.log('🔍 Search Debug:', {
+      searchQuery,
+      processedSearch,
+      detectedSpecialty,
+      resolvedAcronym: resolveSpecialtyAcronym(searchQuery),
+      relatedSpecialties: getRelatedSpecialties(searchQuery)
+    });
+  }
+  
   // Handle specialty filter - ensure it's always an array for GraphQL
   let finalSpecialtyFilter = null;
   if (parsedSpecialtyFilter && parsedSpecialtyFilter.length > 0) {
     finalSpecialtyFilter = parsedSpecialtyFilter;
   } else if (detectedSpecialty) {
     finalSpecialtyFilter = detectedSpecialty; // Already an array from detectSpecialtySearch
+  }
+  
+  // Debug logging for final filter
+  if (finalSpecialtyFilter) {
+    console.log('✅ Final Specialty Filter:', finalSpecialtyFilter);
   }
 
   // Get physicians data with current filters
@@ -129,7 +145,18 @@ export default function FindCare() {
     },
     errorPolicy: 'all',
     notifyOnNetworkStatusChange: true,
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'cache-and-network',
+    onCompleted: (data) => {
+      console.log('📊 GraphQL Query Completed:', {
+        totalResults: data?.doctorsList?.total,
+        resultsReturned: data?.doctorsList?.items?.length,
+        specialty: finalSpecialtyFilter,
+        search: processedSearch
+      });
+    },
+    onError: (error) => {
+      console.error('❌ GraphQL Query Error:', error);
+    }
   });
 
   // Get available specialties, languages, insurances, and degrees for filters
@@ -163,8 +190,29 @@ export default function FindCare() {
   const total = physiciansData?.doctorsList?.total || 0;
   const totalPages = Math.ceil(total / 10);
   
+  // Client-side fuzzy name search fallback (to compensate for backend search issues)
+  const fuzzyNameFilter = (physicians, searchTerm) => {
+    if (!searchTerm || !searchTerm.trim()) return physicians;
+    
+    const term = searchTerm.toLowerCase().trim();
+    
+    return physicians.filter(physician => {
+      const firstName = (physician.firstName || '').toLowerCase();
+      const lastName = (physician.lastName || '').toLowerCase();
+      const fullName = `${firstName} ${lastName}`;
+      
+      // Check if search term appears anywhere in first name, last name, or full name
+      return firstName.includes(term) || 
+             lastName.includes(term) || 
+             fullName.includes(term);
+    });
+  };
+  
+  // Apply client-side fuzzy search if we have a search query
+  const nameFilteredPhysicians = processedSearch ? fuzzyNameFilter(physicians, processedSearch) : physicians;
+  
   // Client-side distance calculation and sorting
-  const locationProcessedPhysicians = (searchLocation || userLocation) ? physicians.map(physician => {
+  const locationProcessedPhysicians = (searchLocation || userLocation) ? nameFilteredPhysicians.map(physician => {
     if (!physician.latitude || !physician.longitude) {
       return { ...physician, distance: Infinity }; // Put physicians without coordinates at the end
     }
@@ -179,7 +227,7 @@ export default function FindCare() {
     );
     
     return { ...physician, distance };
-  }).sort((a, b) => a.distance - b.distance) : physicians; // Sort by distance, closest first
+  }).sort((a, b) => a.distance - b.distance) : nameFilteredPhysicians; // Sort by distance, closest first
 
   // Education filtering is now handled server-side in GraphQL
   // Just apply location processing and sorting  
@@ -387,7 +435,10 @@ export default function FindCare() {
                 <span className="text-bluePrimary text-sm">Loading results...</span>
               ) : (
                 <span className="text-bluePrimary text-sm">
-                  Showing {sortedPhysicians.length} of {total} results
+                  Showing {sortedPhysicians.length} of {sortedPhysicians.length > 0 ? sortedPhysicians.length : total} results
+                  {processedSearch && sortedPhysicians.length < total && (
+                    <span className="text-gray-600 text-xs ml-1">(filtered from {total} total)</span>
+                  )}
                 </span>
               )}
               <span

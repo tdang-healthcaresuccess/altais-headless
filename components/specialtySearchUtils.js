@@ -26,8 +26,16 @@ export function filterSpecialtiesWithAcronyms(inputValue, availableSpecialties) 
   const mappedSpecialties = [];
   
   // Check if the search term matches any key in the acronym map
+  // Use word boundaries to prevent false matches (e.g., "Hassler" shouldn't match "er")
   for (const [key, value] of Object.entries(specialtyAcronymMap)) {
-    if (key.includes(searchTerm) || searchTerm.includes(key)) {
+    // Only match if:
+    // 1. Search term exactly equals the key
+    // 2. Search term starts with the key followed by a space
+    // 3. Key is a word in the search term (surrounded by spaces or at boundaries)
+    const isExactMatch = searchTerm === key;
+    const isWordMatch = new RegExp(`\\b${key}\\b`).test(searchTerm);
+    
+    if (isExactMatch || isWordMatch) {
       if (Array.isArray(value)) {
         mappedSpecialties.push(...value);
       } else {
@@ -72,10 +80,14 @@ export function getRelatedSpecialties(searchTerm) {
     return [mapped];
   }
   
-  // Check for partial matches in acronym map keys
+  // Check for word-based matches in acronym map keys
+  // Use word boundaries to prevent false matches (e.g., "Hassler" shouldn't match "er")
   const partialMatches = [];
   for (const [key, value] of Object.entries(specialtyAcronymMap)) {
-    if (key.includes(lower) || lower.includes(key)) {
+    const isExactMatch = lower === key;
+    const isWordMatch = new RegExp(`\\b${key}\\b`).test(lower);
+    
+    if (isExactMatch || isWordMatch) {
       if (Array.isArray(value)) {
         partialMatches.push(...value);
       } else {
@@ -116,8 +128,11 @@ export function getSpecialtySuggestions(inputValue, availableSpecialties = []) {
   
   // 3. Enhanced fuzzy search: Check for partial matches in both keys and values of acronym map
   for (const [key, value] of Object.entries(specialtyAcronymMap)) {
-    // Check if search term is contained in the key (existing logic)
-    if (key.includes(searchTerm) || searchTerm.includes(key)) {
+    // Check if search term is a word match in the key (fixed to prevent substring false positives)
+    const isExactMatch = searchTerm === key;
+    const isWordMatch = new RegExp(`\\b${key}\\b`).test(searchTerm);
+    
+    if (isExactMatch || isWordMatch) {
       const mappedValues = Array.isArray(value) ? value : [value];
       mappedValues.forEach(mapped => {
         if (!suggestions.some(s => s.toLowerCase() === mapped.toLowerCase())) {

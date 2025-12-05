@@ -58,6 +58,8 @@ const specialtyAcronymMap = {
 			"lab": "Pathology",
 			em: "Emergency Medicine",
 			"er": "Emergency Medicine",
+			"emergency medicine": "Emergency Medicine",
+			"emergency": "Emergency Medicine",
 			fm: "Family Medicine",
 			"family doctor": "Family Medicine",
 			im: "Internal Medicine",

@@ -165,8 +165,29 @@ export default function specialty(props) {
     title
   });
   
+  // Client-side fuzzy name search fallback (to compensate for backend search issues)
+  const fuzzyNameFilter = (physicians, searchTerm) => {
+    if (!searchTerm || !searchTerm.trim()) return physicians;
+    
+    const term = searchTerm.toLowerCase().trim();
+    
+    return physicians.filter(physician => {
+      const firstName = (physician.firstName || '').toLowerCase();
+      const lastName = (physician.lastName || '').toLowerCase();
+      const fullName = `${firstName} ${lastName}`;
+      
+      // Check if search term appears anywhere in first name, last name, or full name
+      return firstName.includes(term) || 
+             lastName.includes(term) || 
+             fullName.includes(term);
+    });
+  };
+  
+  // Apply client-side fuzzy search if we have a search query
+  const nameFilteredPhysicians = searchQuery ? fuzzyNameFilter(physicians, searchQuery) : physicians;
+  
   // Client-side distance calculation and sorting (same as find-care.js)
-  const locationProcessedPhysicians = (searchLocation || userLocation) ? physicians.map(physician => {
+  const locationProcessedPhysicians = (searchLocation || userLocation) ? nameFilteredPhysicians.map(physician => {
     if (!physician.latitude || !physician.longitude) {
       return { ...physician, distance: Infinity };
     }
@@ -180,7 +201,7 @@ export default function specialty(props) {
     );
     
     return { ...physician, distance };
-  }).sort((a, b) => a.distance - b.distance) : physicians;
+  }).sort((a, b) => a.distance - b.distance) : nameFilteredPhysicians;
 
   const sortedPhysicians = locationProcessedPhysicians;
 
@@ -367,7 +388,10 @@ export default function specialty(props) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <span className="text-gray-500 text-base">
-                Showing {physicians.length} of {total} results
+                Showing {sortedPhysicians.length} of {sortedPhysicians.length > 0 ? sortedPhysicians.length : total} results
+                {searchQuery && sortedPhysicians.length < total && (
+                  <span className="text-gray-600 text-xs ml-1">(filtered from {total} total)</span>
+                )}
               </span>
               <span
                 onClick={clearAllFilters}
