@@ -142,21 +142,34 @@ export default function PhysicianProfileContent() {
               {/* Location */}
               <div className="block border-b border-lightPrimary py-6">
                 <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
-                  Location
+                  Location{physician.locations && physician.locations.length > 1 ? 's' : ''}
                 </h4>
-                <div className="text-base text-grey3d leading-relaxed">
-                  {physician.practiceName && (
-                    <div className="font-medium mb-1">{physician.practiceName}</div>
-                  )}
-                  {physician.address && (
-                    <div>{physician.address}</div>
-                  )}
-                  <div>
-                    {physician.city && <span>{physician.city}</span>}
-                    {physician.state && <span>, {physician.state}</span>}
-                    {physician.zip && <span> {physician.zip}</span>}
+                {physician.locations && physician.locations.length > 0 ? (
+                  <div className="space-y-4">
+                    {physician.locations.map((location, index) => (
+                      <div key={index} className="text-base text-grey3d leading-relaxed">
+                        {location.organization && (
+                          <div className="font-medium mb-1">{location.organization}</div>
+                        )}
+                        {location.addressLine1 && (
+                          <div>{location.addressLine1}</div>
+                        )}
+                        <div>
+                          {location.locality && <span>{location.locality}</span>}
+                          {location.administrativeArea && <span>, {location.administrativeArea}</span>}
+                          {location.postalCode && <span> {location.postalCode}</span>}
+                        </div>
+                        {location.phoneNumber && index === physician.locations.length - 1 && (
+                          <div className="hidden">Phone: {location.phoneNumber}</div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                </div>
+                ) : (
+                  <div className="text-base text-grey3d leading-relaxed">
+                    No location information available
+                  </div>
+                )}
               </div>
 
               {/* Specialties */}
@@ -222,12 +235,12 @@ export default function PhysicianProfileContent() {
               )}
 
               {/* Call Button */}
-              {physician.phoneNumber && (
+              {physician.locations && physician.locations.length > 0 && physician.locations.find(loc => loc.isPrimary || physician.locations[0])?.phoneNumber && (
                 <a
-                  href={`tel:${physician.phoneNumber}`}
+                  href={`tel:${(physician.locations.find(loc => loc.isPrimary) || physician.locations[0]).phoneNumber}`}
                   className="btn-md btn-outline-secondary flex-center rounded-normal mt-8 !w-full"
                 >
-                  Call at {formatPhone(physician.phoneNumber)}
+                  Call at {formatPhone((physician.locations.find(loc => loc.isPrimary) || physician.locations[0]).phoneNumber)}
                 </a>
               )}
             </div>

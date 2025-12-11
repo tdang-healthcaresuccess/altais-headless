@@ -6,6 +6,16 @@ export default function PhysicianCard({ physician, userLocation, showDistance })
   const physicianName = `${physician.firstName} ${physician.lastName}`;
   const physicianNameWithDegree = `${physicianName} ${physician.degree || ''}`.trim();
 
+  // Helper function to get primary location or first location
+  const getPrimaryLocation = (physician) => {
+    if (!physician.locations || physician.locations.length === 0) {
+      return null;
+    }
+    return physician.locations.find(loc => loc.isPrimary) || physician.locations[0];
+  };
+
+  const primaryLocation = getPrimaryLocation(physician);
+
   // Calculate distance if both user location and physician location are available
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 3959; // Earth's radius in miles
@@ -19,12 +29,12 @@ export default function PhysicianCard({ physician, userLocation, showDistance })
     return R * c; // Distance in miles
   };
 
-  const distance = showDistance && userLocation && physician.latitude && physician.longitude ? 
+  const distance = showDistance && userLocation && primaryLocation && primaryLocation.latitude && primaryLocation.longitude ? 
     (() => {
       const lat1 = userLocation.latitude;
       const lng1 = userLocation.longitude;
-      const lat2 = parseFloat(physician.latitude);
-      const lng2 = parseFloat(physician.longitude);
+      const lat2 = parseFloat(primaryLocation.latitude);
+      const lng2 = parseFloat(primaryLocation.longitude);
       
       // Validate all coordinates are numbers
       if (isNaN(lat1) || isNaN(lng1) || isNaN(lat2) || isNaN(lng2)) {
@@ -94,16 +104,16 @@ export default function PhysicianCard({ physician, userLocation, showDistance })
         )}
 
         {/* Practice */}
-        {physician.practiceName && (
+        {primaryLocation && primaryLocation.organization && (
           <p className="text-sm text-blue-600 font-medium mb-2">
-            {physician.practiceName}
+            {primaryLocation.organization}
           </p>
         )}
 
         {/* Location */}
-        {(physician.city || physician.state) && (
+        {primaryLocation && (primaryLocation.locality || primaryLocation.administrativeArea) && (
           <p className="text-sm text-gray-600 mb-3">
-            📍 {physician.city}{physician.state ? `, ${physician.state}` : ''}
+            📍 {primaryLocation.locality}{primaryLocation.administrativeArea ? `, ${primaryLocation.administrativeArea}` : ''}
           </p>
         )}
 
@@ -115,13 +125,13 @@ export default function PhysicianCard({ physician, userLocation, showDistance })
         )}
 
         {/* Phone */}
-        {physician.phoneNumber && (
+        {primaryLocation && primaryLocation.phoneNumber && (
           <p className="text-sm text-gray-600 mb-3">
             📞 <a 
-              href={`tel:${physician.phoneNumber}`}
+              href={`tel:${primaryLocation.phoneNumber}`}
               className="hover:text-primary transition-colors duration-200"
             >
-              {physician.phoneNumber}
+              {primaryLocation.phoneNumber}
             </a>
           </p>
         )}

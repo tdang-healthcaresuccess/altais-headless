@@ -6,12 +6,9 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
     doctorBySlug(slug: $slug) {
       accept_medi_cal
       accepts_new_patients
-      address
       biography
       btDirectory
       certification
-      city
-      county
       degree
       doctorID
       fellowship
@@ -26,12 +23,8 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
       internship
       lastName
       languages
-      latitude
-      longitude
       medicalSchool
       mentalHealth
-      practiceName
-      phoneNumber
       primaryCare
       profileImageUrl
       provStatus
@@ -39,8 +32,17 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
       slug
       specialties
       clinicalInterests
-      state
-      zip
+      locations {
+        organization
+        addressLine1
+        locality
+        administrativeArea
+        postalCode
+        phoneNumber
+        isPrimary
+        latitude
+        longitude
+      }
     }
   }
 `;
@@ -55,12 +57,9 @@ export const GET_PHYSICIANS_LIST = gql`
         hospitals
         accept_medi_cal
         accepts_new_patients
-        address
         biography
         btDirectory
         certification
-        city
-        county
         degree
         degrees
         doctorID
@@ -73,12 +72,8 @@ export const GET_PHYSICIANS_LIST = gql`
         insurances
         internship
         languages
-        latitude
-        longitude
         medicalSchool
         mentalHealth
-        phoneNumber
-        practiceName
         primaryCare
         profileImageUrl
         provStatus
@@ -86,8 +81,17 @@ export const GET_PHYSICIANS_LIST = gql`
         slug
         specialties
         clinicalInterests
-        state
-        zip
+        locations {
+          organization
+          addressLine1
+          locality
+          administrativeArea
+          postalCode
+          phoneNumber
+          isPrimary
+          latitude
+          longitude
+        }
       }
       total
       page
@@ -126,16 +130,8 @@ export const GET_PHYSICIANS_FILTERED = gql`
         firstName
         lastName
         degree
-        phoneNumber
         primaryCare
         gender
-        practiceName
-        address
-        city
-        state
-        zip
-        latitude
-        longitude
         profileImageUrl
         specialties
         clinicalInterests
@@ -146,6 +142,17 @@ export const GET_PHYSICIANS_FILTERED = gql`
         residency
         fellowship
         internship
+        locations {
+          organization
+          addressLine1
+          locality
+          administrativeArea
+          postalCode
+          phoneNumber
+          isPrimary
+          latitude
+          longitude
+        }
       }
       total
       page

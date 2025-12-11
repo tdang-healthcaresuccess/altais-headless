@@ -178,6 +178,15 @@ export default function FindCare() {
     return R * c; // Distance in miles
   };
 
+  // Helper function to get primary location or first location
+  const getPrimaryLocation = (physician) => {
+    if (!physician.locations || physician.locations.length === 0) {
+      return null;
+    }
+    // Find primary location, or use first location as fallback
+    return physician.locations.find(loc => loc.isPrimary) || physician.locations[0];
+  };
+
   const physicians = physiciansData?.doctorsList?.items || [];
   const total = physiciansData?.doctorsList?.total || 0;
   
@@ -232,7 +241,9 @@ export default function FindCare() {
   
   // Client-side distance calculation and sorting
   const locationProcessedPhysicians = (searchLocation || userLocation) ? nameFilteredPhysicians.map(physician => {
-    if (!physician.latitude || !physician.longitude) {
+    const primaryLocation = getPrimaryLocation(physician);
+    
+    if (!primaryLocation || !primaryLocation.latitude || !primaryLocation.longitude) {
       return { ...physician, distance: Infinity }; // Put physicians without coordinates at the end
     }
     
@@ -241,8 +252,8 @@ export default function FindCare() {
     const distance = calculateDistance(
       referenceLocation.latitude,
       referenceLocation.longitude,
-      parseFloat(physician.latitude),
-      parseFloat(physician.longitude)
+      parseFloat(primaryLocation.latitude),
+      parseFloat(primaryLocation.longitude)
     );
     
     return { ...physician, distance };
@@ -757,17 +768,25 @@ export default function FindCare() {
                                         : "text-grey3d text-base pb-2"
                                     }
                                   >
-                                    {physician.practiceName && (
-                                      <>
-                                        {physician.practiceName} <br />
-                                      </>
-                                    )}
-                                    {physician.address && (
-                                      <>
-                                        {physician.address} <br />
-                                      </>
-                                    )}
-                                    {physician.city}, {physician.state} {physician.zip}
+                                    {(() => {
+                                      const primaryLocation = getPrimaryLocation(physician);
+                                      if (!primaryLocation) return 'No location available';
+                                      return (
+                                        <>
+                                          {primaryLocation.organization && (
+                                            <>
+                                              {primaryLocation.organization} <br />
+                                            </>
+                                          )}
+                                          {primaryLocation.addressLine1 && (
+                                            <>
+                                              {primaryLocation.addressLine1} <br />
+                                            </>
+                                          )}
+                                          {primaryLocation.locality}, {primaryLocation.administrativeArea} {primaryLocation.postalCode}
+                                        </>
+                                      );
+                                    })()}
 
                                   </p>
                                 </div>
@@ -782,7 +801,7 @@ export default function FindCare() {
                               View Profile
                             </a>
                             <a
-                              href={`tel:${physician.phoneNumber}`}
+                              href={`tel:${getPrimaryLocation(physician)?.phoneNumber || ''}`}
                               className="btn-md btn-outline-ternery !w-50 !px-1 rounded-normal font-semibold flex-1 flex items-center justify-center text-center"
                             >
                               Click to Call

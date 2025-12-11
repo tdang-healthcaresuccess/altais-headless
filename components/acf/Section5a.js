@@ -16,7 +16,7 @@ const Section5a = ({ data }) => {
   return (
     <section className={`template-wrapper ${section5aLineBreak ? "py-0 md:pt-0" : "py-6 md:py-12"}`}>
       <div className="container mx-auto">
-        <div className={`max-w-full md:max-w-[743px] mx-auto ${section5aLineBreak && "py-6 md:py-12"}`}>
+        <div className={`max-w-full mx-auto ${section5aLineBreak && "py-6 md:py-12"}`}>
           {section5aContent && (
             <WordPressContent
               content={section5aContent}
