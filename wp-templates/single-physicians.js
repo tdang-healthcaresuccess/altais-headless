@@ -10,6 +10,15 @@ import ProvidersDetailsContent from "@/components/providers/providers-details-co
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+/**
+ * WARNING: This WordPress template may be LEGACY and UNUSED.
+ * 
+ * Active physician profiles now use: /pages/physicians/[slug].js
+ * which renders /components/PhysicianProfileContent.js
+ * 
+ * This template redirects to /find-care/ instead of displaying physician content.
+ * Both this file and ProvidersDetailsContent may be safe to remove.
+ */
 // This template is now primarily for WordPress custom post type "physicians"
 // Individual physician profiles from the plugin should use /pages/physicians/[slug].js
 const PAGE_QUERY = gql`
