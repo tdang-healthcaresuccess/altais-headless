@@ -411,6 +411,40 @@ export default function DocSearchForm({
           </ul>
         </div>
         <div className="flex flex-col md:flex-row pb-9 gap-6">
+          <div className="flex flex-col md:flex-row flex-1 w-full relative gap-6">
+            <div className="relative">
+              <Image
+                src={SearchIcon}
+                alt="Search"
+                className="absolute left-3 top-4"
+              />
+                <input
+                  type="text"
+                  placeholder="Doctor, hospital or specialty..."
+                  className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
+                  value={localSearch}
+                  onChange={(e) => setLocalSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleMainSearch();
+                    }
+                  }}
+                  onClick={() => {
+                    if (localSearch) setLocalSearch("");
+                  }}
+                />
+            </div>
+            
+            {/* ✨ Specialty Auto-Detection Notification */}
+            {specialtyAutoFilled && (
+              <div className="absolute top-full left-0 mt-2 bg-green-100 border border-green-400 text-green-800 px-3 py-2 rounded-md shadow-sm z-10 flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                <span className="text-sm">
+                  Specialty filter applied: <strong>{specialtyAutoFilled}</strong>
+                </span>
+              </div>
+            )}
+          </div>
           <div className="block relative">
             <div className="relative">
               <Image
@@ -453,38 +487,6 @@ export default function DocSearchForm({
             </div>
           </div>
           <div className="flex flex-col md:flex-row flex-1 w-full relative gap-6">
-            <div className="relative">
-              <Image
-                src={SearchIcon}
-                alt="Search"
-                className="absolute left-3 top-4"
-              />
-                <input
-                  type="text"
-                  placeholder="Doctor, hospital or specialty..."
-                  className=" input-style2 !pl-10 w-full md:w-[250px] lg:w-[400px]"
-                  value={localSearch}
-                  onChange={(e) => setLocalSearch(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleMainSearch();
-                    }
-                  }}
-                  onClick={() => {
-                    if (localSearch) setLocalSearch("");
-                  }}
-                />
-            </div>
-            
-            {/* ✨ Specialty Auto-Detection Notification */}
-            {specialtyAutoFilled && (
-              <div className="absolute top-full left-0 mt-2 bg-green-100 border border-green-400 text-green-800 px-3 py-2 rounded-md shadow-sm z-10 flex items-center gap-2">
-                <Check className="w-4 h-4" />
-                <span className="text-sm">
-                  Specialty filter applied: <strong>{specialtyAutoFilled}</strong>
-                </span>
-              </div>
-            )}
             
             <button
               type="button"
