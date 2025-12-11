@@ -1,8 +1,5 @@
 import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
 
-// Import dummyDoctors for doctor and specialty URLs
-import { dummyDoctors } from '../components/DummyData';
-
 function generateSitemap(urls) {
   // Add a visible comment at the top of the XML for debugging
   const breakdown = global.sitemapBreakdown || {};
@@ -71,22 +68,45 @@ export async function getServerSideProps(ctx) {
     postsAfter = data.posts.pageInfo.endCursor;
   }
 
-  // Get all doctor profile URLs from dummyDoctors, prefix with /physicians/
-  const doctorUrls = dummyDoctors
-    .map(doc => doc.node.doctorData.profileurl)
-    .filter(Boolean)
-    .map(url => url.startsWith('/physicians/') ? url : `/physicians/${url.replace(/^\//, '')}`);
-
-  // Get all specialties from dummyDoctors, prefix with /specialty/
-  const specialtySet = new Set();
-  dummyDoctors.forEach(doc => {
-    if (doc.node.doctorData.speciality) {
-      specialtySet.add(doc.node.doctorData.speciality);
-    }
-    if (doc.node.doctorData.spec1) specialtySet.add(doc.node.doctorData.spec1);
-    if (doc.node.doctorData.spec2) specialtySet.add(doc.node.doctorData.spec2);
-    if (doc.node.doctorData.spec3) specialtySet.add(doc.node.doctorData.spec3);
+  // Fetch all physicians from GraphQL
+  const { data: physiciansData } = await client.query({
+    query: gql`
+      query GetAllPhysicians {
+        doctorsList(perPage: 10000) {
+          items {
+            slug
+            specialties
+          }
+        }
+      }
+    `,
   });
+
+  const physicians = physiciansData?.doctorsList?.items || [];
+
+  // Generate doctor profile URLs from GraphQL data
+  const doctorUrls = physicians
+    .map(doc => doc.slug)
+    .filter(Boolean)
+    .map(slug => `/physicians/${slug}`);
+
+  // Get all unique specialties from physicians
+  const specialtySet = new Set();
+  physicians.forEach(doc => {
+    if (doc.specialties) {
+      // Handle both array and comma-separated string formats
+      const specs = Array.isArray(doc.specialties) 
+        ? doc.specialties 
+        : doc.specialties.split(',').map(s => s.trim());
+      
+      specs.forEach(spec => {
+        if (spec && spec !== 'nan') {
+          specialtySet.add(spec);
+        }
+      });
+    }
+  });
+
   const specialtyUrls = Array.from(specialtySet)
     .filter(s => s)
     .map(s => {

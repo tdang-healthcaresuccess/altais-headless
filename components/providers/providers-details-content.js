@@ -3,8 +3,8 @@ import Image from "next/image";
 import SingleDocMedia from "@/public/media/doctor-single.png";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { dummyDoctors } from "../DummyData"; // Assuming dummyDoctors is exported from DummyData.js
 import { gql, useQuery } from "@apollo/client";
+import { GET_PHYSICIAN_BY_SLUG } from "@/queries/PhysicianQueries";
 
 export default function ProvidersDetailsContent() {
   // Helper to format phone number as XXX-XXX-XXXX
@@ -17,8 +17,25 @@ export default function ProvidersDetailsContent() {
     return phone;
   };
   const router = useRouter();
-  const [provider, setProvider] = useState(null);
-  const [providerTitle, setProviderTitle] = useState("");
+  const [slug, setSlug] = useState(null);
+
+  // Extract slug from URL
+  useEffect(() => {
+    if (router.isReady) {
+      const { asPath } = router;
+      const segments = asPath.split('/').filter(Boolean);
+      const profileUrlSegment = segments[segments.length - 1];
+      setSlug(profileUrlSegment);
+    }
+  }, [router.isReady, router.asPath]);
+
+  // Query physician data by slug
+  const { data: physicianData, loading: physicianLoading, error: physicianError } = useQuery(GET_PHYSICIAN_BY_SLUG, {
+    variables: { slug },
+    skip: !slug
+  });
+
+  const provider = physicianData?.doctorBySlug || null;
 
   // Apollo Client GraphQL query for specialties
   const SPECIALTIES_QUERY = gql`
@@ -34,21 +51,17 @@ export default function ProvidersDetailsContent() {
   const { data: specialtiesData, loading: specialtiesLoading, error: specialtiesError } = useQuery(SPECIALTIES_QUERY);
   const specialtyPosts = specialtiesData?.specialities?.nodes || [];
 
-  useEffect(() => {
-    if (router.isReady) {
-      const { asPath } = router;
-      const segments = asPath.split('/').filter(Boolean);
-      const profileUrlSegment = segments[segments.length - 1];
+  if (physicianLoading) {
+    return (
+      <div className="block md:pt-[50px] pb-[100px]">
+        <div className="container mx-auto">
+          <p className="text-center text-xl text-bluePrimary">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-      const foundProvider = dummyDoctors.find(
-        (doc) => doc.node.doctorData.profileurl === `/${profileUrlSegment}`
-      );
-      setProvider(foundProvider ? foundProvider.node.doctorData : null);
-      setProviderTitle(foundProvider ? foundProvider.node.title : "");
-    }
-  }, [router.isReady, router.asPath]);
-
-  if (!provider) {
+  if (physicianError || !provider) {
     return (
       <div className="block md:pt-[50px] pb-[100px]">
         <div className="container mx-auto">
@@ -88,6 +101,20 @@ export default function ProvidersDetailsContent() {
     );
   };
 
+  // Helper function to render plain list without links (for clinical interests)
+  const renderPlainList = (items) => {
+    if (!items || items.length === 0) return null;
+    return (
+      <ul className="flex flex-wrap gap-2.5">
+        {items.map((item, index) => (
+          <li key={index} className="btn-outline-ternery btn-core cursor-default">
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   // Helper function to render the affiliations list
   const renderAffiliations = (affiliations) => {
     if (!affiliations || affiliations.length === 0) return null;
@@ -103,11 +130,29 @@ export default function ProvidersDetailsContent() {
   };
 
   const getSpecialties = () => {
-    const specialties = [];
-    if (provider.spec1 && provider.spec1 !== "nan") specialties.push(provider.spec1);
-    if (provider.spec2 && provider.spec2 !== "nan") specialties.push(provider.spec2);
-    if (provider.spec3 && provider.spec3 !== "nan") specialties.push(provider.spec3);
-    return specialties;
+    if (!provider.specialties) return [];
+    // Handle both array and string formats
+    if (Array.isArray(provider.specialties)) {
+      return provider.specialties.filter(spec => spec && spec !== "nan");
+    }
+    // If it's a string, split by comma
+    if (typeof provider.specialties === 'string') {
+      return provider.specialties.split(',').map(s => s.trim()).filter(s => s && s !== "nan");
+    }
+    return [];
+  };
+
+  const getClinicalInterests = () => {
+    if (!provider.clinicalInterests) return [];
+    // Handle both array and string formats
+    if (Array.isArray(provider.clinicalInterests)) {
+      return provider.clinicalInterests.filter(interest => interest && interest !== "nan");
+    }
+    // If it's a string, split by comma
+    if (typeof provider.clinicalInterests === 'string') {
+      return provider.clinicalInterests.split(',').map(s => s.trim()).filter(s => s && s !== "nan");
+    }
+    return [];
   };
   
   return (
@@ -117,14 +162,14 @@ export default function ProvidersDetailsContent() {
           <div className="block w-full md:w-[315px]">
             <div className="block pb-6 md:pb-12 border-b border-lightPrimary">
               <Image
-                src={provider.featuredImage?.node?.sourceUrl || "/media/doctor1.png"}
-                alt={providerTitle || "Doctor"}
+                src={provider.profileImageUrl || "/media/doctor1.png"}
+                alt={`${provider.firstName || ''} ${provider.lastName || ''}`}
                 width={315}
                 height={315}
                 className="w-full border border-lightPrimary rounded-normal"
               />
               <h2 className="block md:hidden text-bluePrimary pt-5 text-[26px] leading-[36px]">
-                {provider.doctorsName}, {provider.speciality}
+                {provider.firstName} {provider.lastName}{provider.degree ? `, ${provider.degree}` : ''}
               </h2>
             </div>
              <div className="block border-b border-lightPrimary py-6">
@@ -139,9 +184,9 @@ export default function ProvidersDetailsContent() {
                   <div>{provider.address}</div>
                 )}
                 <div>
-                  {provider.addressCity && <span>{provider.addressCity}</span>}
+                  {provider.city && <span>{provider.city}</span>}
                   {provider.state && <span>, {provider.state}</span>}
-                  {provider.zipcode && <span> {provider.zipcode}</span>}
+                  {provider.zip && <span> {provider.zip}</span>}
                 </div>
               </div>
             </div>
@@ -151,6 +196,14 @@ export default function ProvidersDetailsContent() {
               </h4>
               {renderList(getSpecialties())}
             </div>
+            {getClinicalInterests().length > 0 && (
+              <div className="block border-b border-lightPrimary py-6">
+                <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
+                  Clinical Interests
+                </h4>
+                {renderPlainList(getClinicalInterests())}
+              </div>
+            )}
             {/* <div className="block border-b border-lightPrimary py-6">
               <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
                 Accepted Insurance
@@ -158,15 +211,15 @@ export default function ProvidersDetailsContent() {
               {renderList(provider.acceptedInsurance.filter(ins => ins !== 'nan'))}
             </div> */}
             <Link
-              href={`tel:${provider.phone}`}
+              href={`tel:${provider.phoneNumber}`}
               className="btn-md btn-outline-secondary flex-center rounded-normal mt-8 !w-full"
             >
-              Call at {formatPhone(provider.phone)}
+              Call at {formatPhone(provider.phoneNumber)}
             </Link>
           </div>
           <div className="block w-full md:w-[calc(100%-315px)]">
             <h2 className="hidden md:block text-bluePrimary text-[26px] leading-[36px] pb-6">
-              {providerTitle}, {provider.speciality}
+              {provider.firstName} {provider.lastName}{provider.degree ? `, ${provider.degree}` : ''}
             </h2>
             <div className="block">
               {/* Profile Description can be added here if available in data */}

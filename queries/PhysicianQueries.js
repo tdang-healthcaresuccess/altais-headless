@@ -38,6 +38,7 @@ export const GET_PHYSICIAN_BY_SLUG = gql`
       residency
       slug
       specialties
+      clinicalInterests
       state
       zip
     }
@@ -84,6 +85,7 @@ export const GET_PHYSICIANS_LIST = gql`
         residency
         slug
         specialties
+        clinicalInterests
         state
         zip
       }
@@ -136,6 +138,7 @@ export const GET_PHYSICIANS_FILTERED = gql`
         longitude
         profileImageUrl
         specialties
+        clinicalInterests
         languages
         insurances
         certification
