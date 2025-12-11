@@ -185,6 +185,24 @@ export default function PhysicianProfileContent() {
                 </div>
               )}
 
+              {/* Clinical Interests */}
+              {physician.clinicalInterests && physician.clinicalInterests.length > 0 && (
+                <div className="block border-b border-lightPrimary py-6">
+                  <h4 className="text-base text-bluePrimary pb-2.5 font-semibold">
+                    Clinical Interests
+                  </h4>
+                  <ul className="flex flex-wrap gap-2.5">
+                    {physician.clinicalInterests.map((interest, index) => (
+                      <li key={index}>
+                        <span className="btn-outline-ternery btn-core cursor-default">
+                          {interest}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* Languages */}
               {physician.languages && physician.languages.length > 0 && (
                 <div className="block border-b border-lightPrimary py-6">

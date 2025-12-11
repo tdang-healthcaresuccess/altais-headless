@@ -6,6 +6,18 @@ import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 import { GET_PHYSICIAN_BY_SLUG } from "@/queries/PhysicianQueries";
 
+/**
+ * WARNING: This component may be LEGACY and UNUSED.
+ * 
+ * Active physician profiles now use: /components/PhysicianProfileContent.js
+ * via the route: /pages/physicians/[slug].js
+ * 
+ * This component is only referenced in:
+ * - /pages/provider-details.js (appears to be a static demo page)
+ * - /wp-templates/single-physicians.js (redirects to /find-care/ instead of displaying content)
+ * 
+ * Consider removing if confirmed unused.
+ */
 export default function ProvidersDetailsContent() {
   // Helper to format phone number as XXX-XXX-XXXX
   const formatPhone = (phone) => {
@@ -143,7 +155,7 @@ export default function ProvidersDetailsContent() {
   };
 
   const getClinicalInterests = () => {
-    if (!provider.clinicalInterests) return [];
+    if (!provider || !provider.clinicalInterests) return [];
     // Handle both array and string formats
     if (Array.isArray(provider.clinicalInterests)) {
       return provider.clinicalInterests.filter(interest => interest && interest !== "nan");

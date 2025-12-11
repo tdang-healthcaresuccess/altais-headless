@@ -3,6 +3,15 @@ import SinglePageBanner from "@/components/common/single-page-banner";
 import Layout from "@/components/Layout";
 import ProvidersDetailsContent from "@/components/providers/providers-details-content";
 
+/**
+ * WARNING: This page may be LEGACY and UNUSED.
+ * 
+ * Active physician profiles now use: /pages/physicians/[slug].js
+ * which renders /components/PhysicianProfileContent.js
+ * 
+ * This appears to be a static demo page with hardcoded breadcrumb.
+ * Consider removing if confirmed unused.
+ */
 export default function ProviderDetails() {
   return (
     <Layout>
