@@ -11,6 +11,7 @@ export default function InnerPageBanner({
   mobileImageUrl,
   useDefaultImage = true,
   heading2,
+  enableHeroGradient = false,
 }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
@@ -34,6 +35,16 @@ export default function InnerPageBanner({
                 }
           }
         ></div>
+
+        {/* White gradient overlay (left to right, 0-35%) */}
+        {enableHeroGradient && (
+          <div
+            className="md:absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 65%)'
+            }}
+          ></div>
+        )}
 
         {/* Content container over the image */}
         <div className="container mx-auto relative z-10 h-full">

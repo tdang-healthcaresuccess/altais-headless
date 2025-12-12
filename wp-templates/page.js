@@ -42,6 +42,7 @@ const PAGE_QUERY = gql`
         schemaMarkup
       }
       heroBanner {
+        enableHeroGradient
         heroBannerImage {
           node {
             sourceUrl
@@ -168,6 +169,7 @@ export default function SinglePage(props) {
   const parentPage = contentQuery?.page?.parent?.node;
   const heroDesktop = heroBanner?.heroBannerImage?.node?.sourceUrl;
   const heroMobile = heroBanner?.heroBannerImageMobile?.node?.sourceUrl;
+  const enableHeroGradient = heroBanner?.enableHeroGradient || false;
   const templateSelection = contentTemplates?.templateSelection?.[0];
   const templateAContent = contentTemplates?.templateA;
   const templateCContent = contentTemplates?.templateC;
@@ -194,6 +196,7 @@ export default function SinglePage(props) {
           DesktopBanner="bg-services-landing-banner"
           MobileBanner="bg-services-landing-banner-mobile"
           heading={title}
+          enableHeroGradient={enableHeroGradient}
         />
       </div>
       {/* Breadcrumb Start */}
