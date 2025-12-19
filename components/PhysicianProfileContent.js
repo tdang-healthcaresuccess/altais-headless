@@ -146,24 +146,65 @@ export default function PhysicianProfileContent() {
                 </h4>
                 {physician.locations && physician.locations.length > 0 ? (
                   <div className="space-y-4">
-                    {physician.locations.map((location, index) => (
-                      <div key={index} className="text-base text-grey3d leading-relaxed">
-                        {location.organization && (
-                          <div className="font-medium mb-1">{location.organization}</div>
-                        )}
-                        {location.addressLine1 && (
-                          <div>{location.addressLine1}</div>
-                        )}
-                        <div>
-                          {location.locality && <span>{location.locality}</span>}
-                          {location.administrativeArea && <span>, {location.administrativeArea}</span>}
-                          {location.postalCode && <span> {location.postalCode}</span>}
+                    {physician.locations.map((location, index) => {
+                      // Build address string for Google Maps
+                      const addressParts = [
+                        location.addressLine1,
+                        location.locality,
+                        location.administrativeArea,
+                        location.postalCode
+                      ].filter(Boolean);
+                      const fullAddress = addressParts.join(', ');
+                      const mapsUrl = fullAddress 
+                        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
+                        : null;
+                      
+                      return (
+                        <div key={index} className="text-base text-grey3d leading-relaxed">
+                          {location.organization && (
+                            <div className="font-medium mb-1">{location.organization}</div>
+                          )}
+                          {mapsUrl ? (
+                            <a
+                              href={mapsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-bluePrimary transition-colors"
+                            >
+                              {location.addressLine1 && (
+                                <div>{location.addressLine1}</div>
+                              )}
+                              <div>
+                                {location.locality && <span>{location.locality}</span>}
+                                {location.administrativeArea && <span>, {location.administrativeArea}</span>}
+                                {location.postalCode && <span> {location.postalCode}</span>}
+                              </div>
+                            </a>
+                          ) : (
+                            <>
+                              {location.addressLine1 && (
+                                <div>{location.addressLine1}</div>
+                              )}
+                              <div>
+                                {location.locality && <span>{location.locality}</span>}
+                                {location.administrativeArea && <span>, {location.administrativeArea}</span>}
+                                {location.postalCode && <span> {location.postalCode}</span>}
+                              </div>
+                            </>
+                          )}
+                          {location.phoneNumber && (
+                            <div className="mt-1">
+                              <a
+                                href={`tel:${location.phoneNumber}`}
+                                className="hover:text-bluePrimary transition-colors"
+                              >
+                                {formatPhone(location.phoneNumber)}
+                              </a>
+                            </div>
+                          )}
                         </div>
-                        {location.phoneNumber && index === physician.locations.length - 1 && (
-                          <div className="hidden">Phone: {location.phoneNumber}</div>
-                        )}
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 ) : (
                   <div className="text-base text-grey3d leading-relaxed">
