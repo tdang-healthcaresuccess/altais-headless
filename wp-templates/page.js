@@ -12,7 +12,8 @@ import TemplateC from "@/components/acf/TemplateC";
 import Breadcrumb from "@/components/common/breadcrumb";
 import InnerPageBanner from "@/components/common/inner-page-banner";
 import Layout from "@/components/Layout";
-import Section6a from "@/components/acf/Section6a";
+import Section6a from "../components/acf/Section6a";
+import Section7a from "../components/acf/Section7a";
 import HubSpotForm from "@/components/acf/HubSpotForm";
 
 
@@ -139,6 +140,19 @@ const PAGE_QUERY = gql`
           hubspotPortalId
           hubspotRegion
         }
+          ... on ContentTemplatesTemplateASection7aAccordionLayout {
+            fieldGroupName
+            accordionTitle
+            accordionSubHeader
+            accordionLeftContent
+            accordionContent
+            accordionImage {
+              node {
+                sourceUrl
+                uri
+              }
+            }
+          }
         }
       }
 
@@ -231,6 +245,8 @@ export default function SinglePage(props) {
                   return <Section6a key={index} data={layout} />;
                 case "ContentTemplatesTemplateAHubspotFormLayout":
                   return <HubSpotForm key={index} data={layout} />;
+                case "ContentTemplatesTemplateASection7aAccordionLayout":
+                  return <Section7a key={index} data={layout} />;
                 default:
                   return null;
               }
