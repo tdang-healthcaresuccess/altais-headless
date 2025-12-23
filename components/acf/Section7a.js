@@ -56,7 +56,8 @@ const Section7a = ({ data }) => {
                     alt={accordionTitle || "Accordion Image"}
                     width={100}
                     height={100}
-                    className="object-cover rounded-full"
+                    className="object-cover rounded-full w-full h-full"
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               </div>
