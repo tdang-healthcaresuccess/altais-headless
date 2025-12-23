@@ -1,0 +1,614 @@
+/* Medicare Page Styles - Matches existing design */
+
+/* Hero Section */
+.heroSection {
+  display: flex;
+  align-items: center;
+}
+
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.heroBackground {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+}
+
+.heroContent {
+  padding-top: 1.5rem;
+}
+
+.heroHeadline {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  line-height: 45px;
+  color: #083D78;
+}
+
+/* Medicare Journey Section */
+.journeySection {
+  width: 100%;
+  padding: 4rem 0;
+  background: linear-gradient(to right, #008889, #083D78);
+}
+
+.journeyHeadline {
+  color: #FFF;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+  margin-bottom: 1rem;
+}
+
+.journeyDates {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.journeyStepHeadline {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 3rem;
+  margin-top: 2.5rem;
+}
+
+.stepBox {
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  min-width: 353px;
+  height: 133.564px;
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
+}
+
+.stepBox:hover {
+  background: rgb(199, 83, 39);
+  --tw-bg-opacity: 1;
+  transform: translateY(-2px);
+}
+
+.stepBox a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.stepConnector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepConnectorLine {
+  width: 1px;
+  height: 2rem;
+  background: white;
+}
+
+/* Section 2 - Navigate Medicare */
+.section2 {
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.10);
+}
+
+.section2Headline {
+  color: #083D78;
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.section2SubHeadline {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.section2Content p {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.section2Content a {
+  color: #C85103;
+  text-decoration: underline;
+}
+
+.section2Content a:hover {
+  color: #083D78;
+}
+
+.section2ImageLeft {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: normal;
+}
+
+.section2ImageLeft a {
+  color: #C85103;
+  text-decoration: underline;
+}
+
+.section2ImageRight {
+  color: #C85103;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.section2ImageRight a {
+  color: #C85103;
+  text-decoration: none;
+}
+
+.section2ImageRight a:hover {
+  text-decoration: underline;
+}
+
+.section2ImageRight div {
+  margin-bottom: 12px;
+}
+
+.section2ImageRight div:last-child {
+  margin-bottom: 0;
+}
+
+/* Section 3 - No Matter Where You're Starting */
+.section3 {
+  padding: 1.5rem 0;
+}
+
+.section3Headline {
+  color: #083D78;
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.section3Content h4 {
+  color: #008889;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.section3Content p {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.section3Content a {
+  color: #C85103;
+  text-decoration: underline;
+}
+
+.section3Content a:hover {
+  color: #083D78;
+}
+
+.section3Content > div {
+  margin-bottom: 1rem;
+}
+
+.section3Content > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Section 4 - Stay Healthy */
+.section4Desktop {
+  width: 100%;
+  padding: 4rem 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.section4Mobile {
+  width: 100%;
+}
+
+.section4MobileContent {
+  width: 100%;
+  padding: 2rem 1rem;
+  background: linear-gradient(to bottom, #008889, #083D78);
+}
+
+.section4Headline {
+  color: #FFF;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+  margin-bottom: 1.5rem;
+}
+
+.section4Content {
+  color: #FFF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  margin-bottom: 2rem;
+}
+
+.section4Content p {
+  margin-bottom: 1rem;
+}
+
+.section4Content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+}
+
+.section4Content li {
+  display: flex;
+  align-items: start;
+  margin-bottom: 0.75rem;
+}
+
+.section4Content li span:first-child {
+  color: #84D0D2;
+  font-size: 18px;
+  margin-right: 0.75rem;
+}
+
+.section4Button {
+  color: #FFF;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 1px;
+  border: 2px solid white;
+  background: transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.section4Button:hover {
+  background: rgb(199, 83, 39);
+  --tw-bg-opacity: 1;
+}
+
+/* Section 5 - Learn More Stay Connected */
+.section5 {
+  padding: 1.5rem 0;
+}
+
+.section5Headline {
+  color: #083D78;
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.section5Content p {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.section5Content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section5Content li {
+  display: flex;
+  align-items: start;
+  margin-bottom: 0.5rem;
+}
+
+.section5Content li span:first-child {
+  color: #008889;
+  font-size: 18px;
+  margin-right: 0.75rem;
+}
+
+.section5Content li span:last-child {
+  color: #083D78;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.section5Button {
+  border-radius: 5px;
+  border: 1px solid #008889;
+  color: #008889;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 1px;
+  background-color: transparent;
+  padding: 12px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 450px;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.section5Button:hover {
+  background-color: rgb(199, 83, 39);
+  color: white;
+  border-color: rgb(199, 83, 39);
+}
+
+/* Section 6 - Trusted Doctors */
+.section6Desktop {
+  padding: 1.5rem 0;
+  max-height: 580px;
+  overflow: hidden;
+}
+
+.section6Content {
+  background: #f9f9f9;
+  padding: 1.5rem 2rem 1.5rem 50px;
+}
+
+.section6Headline {
+  color: #083D78;
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.section6Content p {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.section6Content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+}
+
+.section6Content li {
+  display: flex;
+  align-items: start;
+  margin-bottom: 0.75rem;
+}
+
+.section6Content li span:first-child {
+  color: #008889;
+  font-size: 18px;
+  margin-right: 0.75rem;
+}
+
+.section6Content li span:last-child {
+  color: #083D78;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.section6Button {
+  padding: 0.75rem 1.5rem;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #008889;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  width: 100%;
+  max-width: 465px;
+  cursor: pointer;
+}
+
+/* Section 7 - Personal Guidance */
+.section7 {
+  padding: 1.5rem 0;
+  padding-top: 4.6875rem;
+}
+
+.section7Headline {
+  color: #083D78;
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.section7Content p {
+  color: #3D3D3D;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.section7Content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section7Content li {
+  display: flex;
+  align-items: start;
+  margin-bottom: 0.5rem;
+}
+
+.section7Content li span:first-child {
+  color: #008889;
+  font-size: 18px;
+  margin-right: 0.75rem;
+}
+
+.section7Content li span:last-child {
+  color: #083D78;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.section7Content a {
+  color: #C85103;
+  text-decoration: underline;
+}
+
+.section7Content a:hover {
+  color: #083D78;
+}
+
+/* Section 8 - Journey Repeat (same as journey section) */
+.section8 {
+  width: 100%;
+  padding: 4rem 0;
+  background: linear-gradient(to right, #008889, #083D78);
+}
+
+/* Section 9 - Compliance */
+.section9 {
+  padding-top: 3rem;
+  padding-bottom: 3.375rem;
+}
+
+.section9Headline {
+  color: #083D78;
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 1.5rem;
+}
+
+.section9Content {
+  font-size: 18px;
+  line-height: 32px;
+  color: #3D3D3D;
+}
+
+.section9Content p {
+  margin-bottom: 1rem;
+}
+
+.section9Content a {
+  color: #C85103;
+  text-decoration: underline;
+}
+
+.section9Content a:hover {
+  color: #083D78;
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .heroHeadline {
+    font-size: 45px;
+    line-height: 65px;
+  }
+
+  .heroContent {
+    padding-top: 0;
+    width: 40%;
+  }
+
+  .heroContainer {
+    height: 400px;
+  }
+
+  .heroBackground {
+    position: absolute;
+    inset: 0;
+  }
+
+  .journeySection {
+    padding: 5rem 0;
+  }
+
+  .journeyStepHeadline {
+    margin-bottom: 4rem;
+  }
+
+  .stepConnectorLine {
+    width: 4rem;
+    height: 1px;
+  }
+
+  .section2 {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .section3 {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .section4Desktop {
+    padding: 5rem 0;
+  }
+
+  .section5 {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .section6Desktop {
+    padding: 2rem 0;
+  }
+
+  .section7 {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .section9 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.375rem;
+  }
+
+  .section9Headline {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .stepBox {
+    min-width: 100%;
+  }
+}
