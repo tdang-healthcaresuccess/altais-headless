@@ -5,7 +5,7 @@ import Values4 from "@/public/media/values/4.png";
 import Values5 from "@/public/media/values/5.png";
 import Image from "next/image";
 
-const values = [
+const defaultValues = [
   {
     icon: Values1,
     title: "Compassion",
@@ -78,7 +78,9 @@ const values = [
   },
 ];
 
-export default function OurValues() {
+export default function OurValues({ headline, cards }) {
+  const values = cards || defaultValues;
+  
   return (
     <section className="block pt-0 md:pt-[75px] pb-[75px] md:]pb-[100px] bg-white box-shadow-custom3">
       <div className="container mx-auto">
@@ -86,9 +88,7 @@ export default function OurValues() {
           {/* Left Static Box */}
           <div className="p-8 rounded-xl text-white flex items-center justify-start min-h-[280px] bg-arc2 inset-0 bg-cover bg-center">
             <h2 className="text-[50px] leading-[55px] font-regular">
-              Our
-              <br />
-              Values
+              {headline || "Our Values"}
             </h2>
           </div>
 
@@ -100,15 +100,19 @@ export default function OurValues() {
             >
               <div className="flex items-center gap-4">
                 <div className="w-[40px] h-[40px] flex-center rounded-full border border-primary">
-                  <Image src={item.icon} alt="values" className="w-full h-full p-2 object-contain" />
+                  <Image 
+                    src={item.iconImage?.node?.sourceUrl || item.icon} 
+                    alt={item.cardTitle || item.title}
+                    className="w-full h-full p-2 object-contain"
+                    width={40}
+                    height={40}
+                  />
                 </div>
                 <h3 className="text-[18px] leading-[32px] text-bluePrimary font-semibold">
-                  {item.title}
+                  {item.cardTitle || item.title}
                 </h3>
               </div>
-              <p className="text-grey3d text-lg leading-[32px]">
-                {item.description}
-              </p>
+              <div className="text-grey3d text-lg leading-[32px]" dangerouslySetInnerHTML={{ __html: item.cardContent || item.description }} />
             </div>
           ))}
         </div>

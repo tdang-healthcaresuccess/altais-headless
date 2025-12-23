@@ -1,13 +1,19 @@
 import CountBar from "./count-bar";
 
 
-export default function CounterArea({ frontPageData }) {
+export default function CounterArea({ frontPageData, statBoxes }) {
   // Use ACF data if available, otherwise fallback to hardcoded data
-  const data = frontPageData?.ticker?.counter?.length > 0 
+  const data = statBoxes?.length > 0 
+    ? statBoxes.map((item, index, array) => ({
+        value: item.stateValues,
+        label: item.statHeadlines,
+        suffix: index === array.length - 1 ? "+" : undefined
+      }))
+    : frontPageData?.ticker?.counter?.length > 0 
     ? frontPageData.ticker.counter.map((item, index, array) => ({
         value: item.counterValue,
         label: item.label,
-        suffix: index === array.length - 1 ? "+" : undefined // Only add suffix to last item
+        suffix: index === array.length - 1 ? "+" : undefined
       }))
     : [
         { value: 9, label: "HMO Plans" },
