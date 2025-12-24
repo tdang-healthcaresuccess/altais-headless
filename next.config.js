@@ -659,6 +659,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/amg/riverside-blog/understanding-endometriosis/:path*',
+        destination: '/blog/understanding-endometriosis/:path*',
+        permanent: true,
+      },
+      {
         source: '/amg/riverside-blog/understanding-stuttering-treatment-and-awareness/',
         destination: '/blog/understanding-stuttering-treatment-and-awareness/',
         permanent: true,
@@ -916,6 +921,11 @@ const nextConfig = {
       {
         source: '/specialty/physician-assistant/',
         destination: '/services/',
+        permanent: true,
+      },
+      {
+        source: '/altais-care-alliance/',
+        destination: '/about/altais-care-alliance/',
         permanent: true,
       },
     ];
